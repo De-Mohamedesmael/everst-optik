@@ -1,0 +1,85 @@
+.preview-logo-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 170px);
+}
+
+.preview-header-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 170px);
+}
+
+.preview-footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 170px);
+}
+
+.preview {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    padding: 4px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    margin: 30px 0px;
+    border: 1px solid #ddd;
+}
+
+.preview img {
+    width: 100%;
+    height: 100%;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ddd;
+    object-fit: cover;
+
+}
+
+.delete-btn {
+    position: absolute;
+    top: 156px;
+    right: 0px;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background: transparent;
+    color: rgba(235, 32, 38, 0.97);
+}
+
+.crop-btn {
+    position: absolute;
+    top: 156px;
+    left: 0px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    color: #007bff;
+}
+
+.file-input__input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.file-input__label {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+    /* padding: 10px 12px; */
+    background-color: #476762;
+    box-shadow: 0px 0px 0px 0px;
+}
+
+.file-input__label:hover {
+    box-shadow: 2px 2px 3px 1px #7489e8 !important;
+}

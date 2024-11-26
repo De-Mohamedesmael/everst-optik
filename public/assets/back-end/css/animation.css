@@ -1,0 +1,101 @@
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.home-button:hover.home-button div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.products-button:hover.products-button div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.cashier-button:hover.cashier-button div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.cash-button:hover.cash-button div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.purchases-button:hover.purchases-button div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.initial-balance-button:hover.initial-balance-button div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.purchases-order-menu:hover.purchases-order-menu div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.returns-menu:hover.returns-menu div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.suppliers-returns-menu:hover.suppliers-returns-menu div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.employees-menu:hover.employees-menu div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.customers-menu:hover.customers-menu div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.customer-price-offer-button:hover.customer-price-offer-button div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.suppliers-button:hover.suppliers-button div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.delivery-menu:hover.delivery-menu div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.sell-car-menu:hover.sell-car-menu div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.rep-requests-menu:hover.rep-requests-menu div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.settings-icon-menu:hover.settings-icon-menu div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.reports-menu:hover.reports-menu div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.due-button:hover.due-button div {
+    animation: heartBeat 0.5s infinite;
+}
+
+.main-card:hover.main-card .icon {
+    animation: heartBeat 0.5s infinite;
+}
+
+.userbox:hover.userbox .log-out-button {
+    animation: heartBeat 0.5s infinite;
+}
+
+.profilename:hover {
+    animation: heartBeat 0.5s infinite;
+}

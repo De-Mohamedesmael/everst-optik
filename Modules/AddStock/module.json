@@ -1,0 +1,13 @@
+{
+    "name": "AddStock",
+    "alias": "addstock",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\AddStock\\Providers\\AddStockServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

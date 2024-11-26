@@ -1,0 +1,13 @@
+{
+    "name": "HomeDashboard",
+    "alias": "homedashboard",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\HomeDashboard\\Providers\\HomeDashboardServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

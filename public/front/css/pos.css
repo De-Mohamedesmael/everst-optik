@@ -1,0 +1,246 @@
+/* .side-navbar {
+    margin-top: 33px;
+} */
+
+header.header {
+    background-color: var(--primary-color);
+    padding-top: 5px;
+    padding-bottom: 5px
+}
+
+nav.navbar {
+    background-color: transparent;
+}
+
+.height-responsive {
+    height: 30px;
+    font-size: 10px;
+}
+
+.font-responsive {
+    font-size: 10px;
+}
+.bootstrap-select .dropdown-toggle:focus, .btn-light:not(:disabled):not(.disabled).active:focus, .btn-light:not(:disabled):not(.disabled):active:focus, .show>.btn-light.dropdown-toggle:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+@media (min-width:992px) {
+    .height-responsive {
+        height: 45px;
+        font-size: 16px;
+    }
+
+    /*  */
+    .font-responsive {
+        font-size: 13px;
+    }
+}
+
+
+
+.tax .btn-group {
+    background-color: transparent;
+}
+
+.tax .btn-group button {
+    background-color: transparent;
+}
+
+@media (min-width:992px) {
+    .first-head .btn {
+        border: none;
+        border-radius: 16px;
+        color: #999;
+        font-weight: 200;
+        font-size: 16px;
+    }
+}
+
+
+
+.terms .dropdown-menu {
+    margin: 15px 0 0;
+}
+
+.terms {
+    width: 100% !important;
+
+}
+
+
+.terms .btn {
+    border: none;
+    border-radius: 16px;
+    color: #999;
+    font-weight: 200;
+    font-size: 16px;
+    width: 100%;
+    color: #373737;
+}
+
+.terms .dropdown-menu {
+    width: 100%;
+    margin: 15px 0 0;
+}
+
+.label {
+    font-weight: 700;
+    color: #000
+}
+
+.printer-responsive {
+    padding: 10px 8px;
+}
+
+@media (min-width:992px) {
+    .printer-responsive {
+        padding: 48px 8px;
+    }
+}
+
+.table-margin {
+    margin-top: 0px
+}
+
+@media (min-width:992px) {
+    .table-margin {
+        margin-top: -110px
+    }
+}
+
+/*
+.font-responsive {
+    font-size: 12px;
+}
+
+@media (min-width:992px) {
+    .font-responsive {
+        font-size: 16px;
+    }
+} */
+
+@media (min-width:992px) {
+    .promotion-padding {
+        padding: 10px;
+    }
+}
+
+.promotion-padding {
+    padding-top: 7px;
+}
+
+@media (min-width:992px) {
+    .image-responsive {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+.image-responsive {
+    width: 40px;
+    height: 40px;
+
+}
+
+.filterLabel {
+
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: 0.5em;
+}
+
+/*  */
+.filterInput {
+    appearance: none;
+    background-color: transparent;
+    margin: 0;
+    font: inherit;
+    color: var(--secondary-color);
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid var(--secondary-color);
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+    margin-top: 2px;
+}
+
+/*  */
+
+.filterInput::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--form-control-color);
+
+    background-color: CanvasText;
+
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.filterInput:checked::before {
+    transform: scale(1);
+    background-color: white;
+}
+
+.filterInput:checked {
+    background-color: var(--secondary-color)
+}
+
+.bootstrap-select {
+    border: none !important;
+}
+
+.bootstrap-select button {
+    padding: 0 20px;
+}
+
+.select-button {
+    outline: none;
+    border: none;
+    color: white;
+    background-color: var(--complementary-color-1);
+    border-radius: 6px;
+    height: 100%;
+}
+
+.select-button-group {
+    background-color: #e6e6e6 !important;
+    border-radius: 6px !important;
+}
+
+.pos-button {
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 10px;
+}
+
+.main-footer {
+    display: none;
+}
+
+.select_product_button {
+    border: none;
+    outline: none;
+    background-color: var(--primary-color);
+    border-radius: 6px;
+    padding: 0px 12px;
+    transition: 0.6s;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.select_product_button:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.customer-div .dropdown.bootstrap-select {
+    width: 86% !important;
+    margin: auto 3%;
+    padding: 0 !important;
+}

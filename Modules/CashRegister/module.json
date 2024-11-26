@@ -1,0 +1,13 @@
+{
+    "name": "CashRegister",
+    "alias": "cashregister",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\CashRegister\\Providers\\CashRegisterServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

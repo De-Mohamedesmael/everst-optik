@@ -1,0 +1,166 @@
+  .dropdown-menu {
+      min-width: 100% !important
+  }
+
+  .accordion-item {
+      background-color: transparent;
+  }
+
+  .accordion-button {
+      padding: 8px !important;
+      /* width: fit-content !important; */
+      background-color: #476762 !important;
+      color: white !important;
+      outline: none;
+      border-radius: 6px !important;
+      cursor: pointer;
+      border: 2px solid #476762;
+      justify-content: space-between;
+      transition: 0.4s;
+      box-shadow: 0 0 0 0 !important;
+  }
+
+  .accordion-button:hover {
+      box-shadow: 2px 2px 3px 1px #7489e8 !important;
+  }
+
+  @keyframes bounceToLeft {
+      0% {
+          transform: translateX(0);
+      }
+
+      25% {
+          transform: translateX(-10px);
+      }
+
+      50% {
+          transform: translateX(0);
+      }
+
+      75% {
+          transform: translateX(-5px);
+      }
+
+      100% {
+          transform: translateX(0);
+      }
+  }
+
+  @keyframes bounceUpDown {
+      0% {
+          transform: translateY(0);
+      }
+
+      25% {
+          transform: translateY(-10px);
+      }
+
+      50% {
+          transform: translateY(0);
+      }
+
+      75% {
+          transform: translateY(-5px);
+      }
+
+      100% {
+          transform: translateY(0);
+      }
+  }
+
+  .accordion-button:hover i {
+      animation: bounceToLeft 0.5s ease-in-out;
+  }
+
+  .accordion-button i {
+      transition: 0.4s;
+  }
+
+  .file-input__label:hover i {
+      animation: bounceUpDown 0.5s ease-in-out;
+  }
+
+  .file-input__label i {
+      transition: 0.4s;
+  }
+
+  .accordion-content {
+      display: none;
+      width: fit-content
+  }
+
+  .initial-balance-input {
+      width: 100%
+  }
+
+
+  .preview {
+      position: relative !important;
+      width: 60px !important;
+      height: 60px !important;
+      padding: 2px !important;
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2) !important;
+      margin: 0 10px !important;
+      border: 1px solid #ddd !important;
+  }
+
+  .delete-btn {
+      position: absolute;
+      top: 39px !important;
+      right: 4px !important;
+      border: none;
+      cursor: pointer;
+      background-color: white !important;
+      width: 15px;
+      height: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .delete-btn i {
+      font-size: 10px !important;
+  }
+
+  .crop-btn {
+      position: absolute;
+      top: 39px !important;
+      left: 4px !important;
+      border: none;
+      cursor: pointer;
+      background-color: white !important;
+      width: 15px;
+      height: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .crop-btn i {
+      font-size: 10px !important;
+  }
+
+  .table-scroll-wrapper {
+      width: fit-content;
+  }
+
+  .select2-container {
+      width: 100% !important
+  }
+
+  .select2-selection__rendered {
+      font-size: 12px;
+      font-weight: 500;
+  }
+
+  .select2-selection__rendered {
+      display: flex !important;
+  }
+
+  .select2-selection__rendered li {
+      display: block !important;
+  }
+
+  .select2-selection__choice {
+      color: black !important;
+  }

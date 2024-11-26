@@ -1,0 +1,11 @@
+{
+    "Hr": true,
+    "HomeDashboard": true,
+    "Setting": true,
+    "Product": true,
+    "Sale": true,
+    "Customer": true,
+    "CashRegister": true,
+    "Supplier": false,
+    "AddStock": true
+}

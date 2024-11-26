@@ -1,0 +1,200 @@
+.select2-selection {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.add-button {
+    background-color: #F9C751;
+    width: 60px;
+    height: 100%;
+    border-radius: 16px;
+    padding: 6px 6px;
+    color: white;
+    border: none
+}
+
+.initial-balance-input {
+    background-color: #dedede;
+    border: none;
+    border-radius: 16px;
+    color: #373737;
+    box-shadow: 0 8px 6px -5px #bbb;
+    width: 60%;
+    height: 30px;
+    margin: auto;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+}
+
+.search-input {
+    background-color: #dedede;
+    border: none;
+    border-radius: 16px;
+    color: #373737;
+    box-shadow: 0 8px 6px -5px #bbb;
+    width: 60%;
+    height: 30px;
+    margin: auto;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+}
+
+.mater-name-input {
+    background-color: #dedede;
+    border: none;
+    border-radius: 16px;
+    color: #373737;
+    box-shadow: 0 8px 6px -5px #bbb;
+    width: 100%;
+    height: 30px;
+    margin: auto;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+}
+
+.select2 {
+    border: 2px solid #cececf;
+    border-radius: 12px;
+    height: 30px;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+    margin-top: 0 !important;
+}
+
+select.form-control {
+    border: 2px solid #cececf !important;
+    border-radius: 6px !important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--bs-accordion-active-color);
+    background-color: #ffffff;
+    box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
+}
+
+.accordion-button {
+    position: relative;
+    background-color: white;
+}
+
+.accordion-body {
+    flex-direction: column;
+}
+
+@media (min-width: 992px) {
+
+    .accordion-body {
+        flex-direction: row !important;
+    }
+
+}
+
+
+.accordion-button h6 {
+    position: absolute;
+    top: -10px;
+    border-radius: 6px;
+    left: 25px;
+    padding: 4px 20px;
+    display: flex;
+    width: 185px;
+    justify-content: center;
+    align-items: center;
+    background-color: #476762;
+    color: white;
+    box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
+}
+
+.accordion-button::after {
+    flex-shrink: 0;
+    width: var(--bs-accordion-btn-icon-width);
+    height: var(--bs-accordion-btn-icon-width);
+    margin-left: auto;
+    content: "";
+    background-image: var(--bs-accordion-btn-icon);
+    background-repeat: no-repeat;
+    background-size: var(--bs-accordion-btn-icon-width);
+    transition: var(--bs-accordion-btn-icon-transition);
+    top: -5px;
+    left: 180px;
+    position: absolute;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+
+}
+
+.btn-primary {
+    background-color: #476762;
+    border-color: #476762;
+}
+
+.bg-primary {
+    background-color: #476762;
+}
+
+.text-primary {
+    color: #476762;
+}
+
+.select2-search__field {
+    height: 100%;
+}
+
+.width-quarter {
+    width: 30%;
+}
+
+.width-half {
+    width: 50%;
+}
+
+.width-65 {
+    width: 65%;
+}
+
+.width-fit {
+    width: fit-content;
+}
+
+.width-30 {
+    width: 30%;
+}
+
+.table-width {
+    width: 110px;
+}
+
+@media (min-width:992px) {
+    .table-width {
+        width: 140px;
+    }
+}
+
+.product-filter {
+    background-color: #dedede !important;
+    border: none;
+    border-radius: 16px;
+    color: #373737;
+    box-shadow: 0 8px 6px -5px #bbb;
+    height: 30px;
+    margin: auto;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+}
+
+.navbar-responsive {
+    display: none;
+}
+
+@media (min-width:786px) {
+    .navbar-responsive {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+}
