@@ -1,4 +1,5 @@
 <?php return array (
+    'admin'=>'administrator',
   'manufacturers' => 'Manufacturers',
   'add_manufacturer' => 'Add New Manufacturer',
   'edit_manufacturer' => 'Edit Manufacturer',

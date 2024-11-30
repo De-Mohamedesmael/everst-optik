@@ -5,7 +5,7 @@ $(document).ready(function () {
             .autocomplete({
                 source: function (request, response) {
                     $.getJSON(
-                        "/purchase-order/get-products",
+                        "/dashboard/add-stock/get-products",
                         { store_id: $("#store_id").val(), term: request.term },
                         response
                     );

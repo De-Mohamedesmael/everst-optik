@@ -21,4 +21,5 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('colors', ColorController::class);
     Route::get('sizes/get-dropdown', [SizeController::class,'getDropdown'])->name('sizes.dropdown');
     Route::resource('sizes', SizeController::class);
+
 });

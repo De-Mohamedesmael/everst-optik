@@ -38,7 +38,7 @@
             </div>
         @else
             <div class="col-md-6">
-                <a style="color: white" href="{{ action('AddStockController@getImport') }}"
+                <a style="color: white" href="{{ route('admin.add-stock.getImport') }}"
                    class="btn btn-success w-100 py-1"><i class="fa fa-arrow-down"></i>
                     @lang('lang.import')</a>
             </div>

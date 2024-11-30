@@ -199,18 +199,22 @@
         }
     </style>
 @endsection
+
+@section('breadcrumbs')
+    @parent
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
+            style="text-decoration: none;color: #476762" href="{{ route('admin.products.index') }}">/
+            @lang('lang.products')</a>
+    </li>
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
+        @lang('lang.edit_product')</li>
+@endsection
 @section('content')
 <section class="forms py-0">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 px-1">
-                <div
-                    class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
 
-                    <h4 class="mb-0">@lang('lang.edit_product')
-                        <span class="header-pill"></span>
-                    </h4>
-                </div>
 
                 {!! Form::open([
                     'url' =>  route('admin.products.update', $product->id),
