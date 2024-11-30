@@ -14,8 +14,7 @@ $(document).ready(function () {
             .autocomplete({
                 source: function (request, response) {
                     $.getJSON(
-                        "/purchase-order/get-products?is_raw_material=" +
-                            $("#is_raw_material").val(),
+                        "/dashboard/add-stock/get-products",
                         { term: request.term },
                         response
                     );
@@ -221,7 +220,7 @@ function get_label_multipe_product_row(product_selected) {
         $("#row_count").val(row_count + product_selected.length);
         $.ajax({
             method: "GET",
-            url: "/add-stock/add-multiple-products-row",
+            url: "/dashboard/add-stock/add-multiple-products-row",
             dataType: "html",
             async: false,
             data: {
@@ -276,7 +275,7 @@ function get_label_product_row(product_id, variation_id,is_batch=false) {
         $("#row_count").val(row_count + 1);
         $.ajax({
             method: "GET",
-            url: "/add-stock/add-products-row",
+            url: "/dashboard/add-stock/add-products-row",
             dataType: "html",
             async: false,
             data: {

@@ -46,6 +46,9 @@ $(document).ready(function () {
             },
         ],
         columns: [
+
+
+
             {
                 data: "selection_checkbox",
                 name: "selection_checkbox",
@@ -59,8 +62,8 @@ $(document).ready(function () {
             { data: "purchase_history", name: "purchase_history" },
             { data: "batch_number", name: "add_stock_lines.batch_number" },
             {
-                data: "default_sell_price",
-                name: "variations.default_sell_price",
+                data: "sell_price",
+                name: "sell_price",
             },
             { data: "tax", name: "taxes.name" },
             { data: "brand", name: "brands.name" },
@@ -78,7 +81,7 @@ $(document).ready(function () {
                 name: "default_purchase_price",
                 searchable: false,
             },
-            { data: "created_by", name: "users.name" },
+            { data: "created_by", name: "admins.name" },
             { data: "edited_by_name", name: "edited.name" },
             { data: "action", name: "action" },
         ],

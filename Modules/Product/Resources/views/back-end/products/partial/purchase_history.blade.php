@@ -67,21 +67,21 @@
                                             user="menu">
                                             @can('add_stock.add_stock.view')
                                             <li>
-                                                <a href="{{action('AddStockController@show', $add_stock->id)}}"
+                                                <a href="{{route('admin.add-stock.show', $add_stock->id)}}"
                                                     class=""><i class="fa fa-eye btn"></i> @lang('lang.view')</a>
                                             </li>
                                             <li class="divider"></li>
                                             @endcan
                                             @can('add_stock.add_stock.create_and_edit')
                                             <li>
-                                                <a href="{{action('AddStockController@edit', $add_stock->id)}}"><i
+                                                <a href="{{route('admin.add-stock.edit', $add_stock->id)}}"><i
                                                         class="dripicons-document-edit btn"></i>@lang('lang.edit')</a>
                                             </li>
                                             <li class="divider"></li>
                                             @endcan
                                             @can('add_stock.add_stock.delete')
                                             <li>
-                                                <a data-href="{{action('AddStockController@destroy', $add_stock->id)}}"
+                                                <a data-href="{{route('admin.add-stock.destroy', $add_stock->id)}}"
                                                     data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                     class="btn text-red delete_item"><i class="dripicons-trash"></i>
                                                     @lang('lang.delete')</a>

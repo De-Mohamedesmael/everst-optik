@@ -46,7 +46,7 @@ class Transaction extends Model  implements HasMedia
         if ($source_type == 'pos') {
             $source = StorePos::where('id', $source_id)->first();
         }
-        if ($source_type == 'user') {
+        if ($source_type == 'admin') {
             $source = Admin::where('id', $source_id)->first();
         }
         if ($source_type == 'store') {
@@ -127,10 +127,7 @@ class Transaction extends Model  implements HasMedia
         return $this->belongsTo(Customer::class, 'customer_id', 'id')->withDefault(['name' => '']);
     }
 
-    public function add_stock_variations()
-    {
-        return $this->hasManyThrough(Product::class, AddStockLine::class, 'transaction_id', 'id', 'id', 'variation_id');
-    }
+
 
     public function add_stock_products()
     {

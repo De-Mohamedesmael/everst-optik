@@ -187,7 +187,6 @@
                                 <th>@lang('lang.image')</th>
                                 <th>@lang('lang.name')</th>
                                 <th>@lang('lang.product_code')</th>
-{{--                                <th>@lang('lang.is_service')</th>--}}
                                 <th>@lang('lang.category')</th>
                                 <th>@lang('lang.purchase_history')</th>
                                 <th>@lang('lang.batch_number')</th>

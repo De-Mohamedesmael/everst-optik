@@ -1,5 +1,5 @@
 @php
-    $currencies_exchange_rates = Modules\Customer\Entities\ExchangeRate::leftjoin('currencies', 'exchange_rates.received_currency_id', 'currencies.id')
+    use Modules\Setting\Entities\ExchangeRate;$currencies_exchange_rates = ExchangeRate::leftjoin('currencies', 'exchange_rates.received_currency_id', 'currencies.id')
         ->where(function ($q) {
             $q->whereNull('expiry_date')->orWhereDate('expiry_date', '>=', date('Y-m-d'));
         })
