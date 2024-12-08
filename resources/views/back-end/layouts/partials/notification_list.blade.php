@@ -49,7 +49,7 @@
         <a class="nav-link text-light  notification-list position-relative" href="#" id="navbarDropdown"
             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="badge text-bg-danger position-absolute p-0"
-                style="width: 21px;height: 13px;right: 4px;top: -7px;z-index: 0;">{{-- auth()->user()->unreadNotifications->count() --}}9</span>
+                style="width: 21px;height: 13px;right: 4px;top: -7px;z-index: 0;"> {{ auth('admin')->user()->unreadNotifications->count() }}</span>
 
             <i class="fa fa-bell" style="color:rgb(101,110,249);font-size:18px"></i>
             {{-- ///////// Unread Notification Count ///////// --}}

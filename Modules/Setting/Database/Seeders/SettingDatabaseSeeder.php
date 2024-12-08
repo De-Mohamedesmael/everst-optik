@@ -85,6 +85,7 @@ class SettingDatabaseSeeder extends Seeder
                 ['key' => 'currency', 'value' => '119', 'created_by' => 1, 'date_and_time' => Carbon::now(), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
                 ['key' => 'numbers_length_after_dot', 'value' => '2', 'created_by' => 1, 'date_and_time' => Carbon::now(), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
                 ['key' => 'font_size_at_invoice', 'value' => 'max', 'created_by' => 1, 'date_and_time' => Carbon::now(), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+                ['key' => 'default_payment_type', 'value' => 'cash', 'created_by' => 1, 'date_and_time' => Carbon::now(), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 
 
             ]
