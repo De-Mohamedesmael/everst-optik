@@ -393,8 +393,20 @@
                                     {{-- ================= Column 1 ============== --}}
                                     <li class="mega-menu-col col-md-3 p-0">
                                         <ul class="sub-menu p-0" style="list-style: none">
-
-
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif stores-button"
+                                                   href="{{-- route('store.index') --}}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.stores')
+                                                </a>
+                                            </li>
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif stores_pos-button"
+                                                   href="{{-- route('store-pos.index') --}}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.store_pos')
+                                                </a>
+                                            </li>
                                             <li class="navbar_item">
                                                 <a class="moneysafes-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
                                                    href="{{ route('admin.money_safe.index') }}" target="_blank"
@@ -407,63 +419,18 @@
                                     </li>
                                     {{-- ================= Column 2 ============== --}}
                                     <li class="mega-menu-col col-md-3 p-0">
-                                        <ul class="sub-menu p-0" style="list-style: none">
-                                            {{-- ////// المخازن ////// --}}
-                                            <li class="navbar_item">
-                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif stores-button"
-                                                   href="{{-- route('store.index') --}}" target="_blank"
-                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
-                                                    <i class="mdi mdi-circle"></i>@lang('lang.stores')
-                                                </a>
-                                            </li>
-                                            {{-- ////// العلامة التجاية ////// --}}
-                                            <li class="navbar_item">
-                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif brands-button"
-                                                   href="{{-- route('brands.index') --}}" target="_blank"
-                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
-                                                    <i class="mdi mdi-circle"></i>@lang('lang.brands')
-                                                </a>
-                                            </li>
-                                            {{-- ////// الاقسام ////// --}}
 
-                                        </ul>
-                                    </li>
-                                    {{-- ================= Column 3 ============== --}}
-                                    <li class="mega-menu-col col-md-3 p-0">
                                         <ul class="sub-menu p-0" style="list-style: none">
-                                            {{-- ////// الالوان ////// --}}
                                             <li class="navbar_item">
-                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif colors-button"
-                                                   href="{{-- route('colors.index') --}}" target="_blank"
-                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
-                                                    <i class="mdi mdi-circle"></i>@lang('lang.colors')
+                                                <a style="cursor: pointer;font-weight: 600;text-decoration: none;"
+                                                   href="#" target="_blank"
+                                                   class="branch-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif text-decoration-none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.branches')
                                                 </a>
                                             </li>
-                                            {{-- ////// المقاسات ////// --}}
-                                            <li class="navbar_item">
-                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif sizes-button"
-                                                   href="{{-- route('sizes.index') --}}" target="_blank"
-                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
-                                                    <i class="mdi mdi-circle"></i>@lang('sizes.sizes')
-                                                </a>
-                                            </li>
-
-                                        </ul>
-                                    </li>
-                                    <li class="mega-menu-col col-md-3 p-0">
-                                        <ul class="sub-menu p-0" style="list-style: none">
-                                            {{-- ////////// نقاط البيع للصرافين ////////// --}}
-                                            <li class="navbar_item">
-                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif stores_pos-button"
-                                                   href="{{-- route('store-pos.index') --}}" target="_blank"
-                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
-                                                    <i class="mdi mdi-circle"></i>@lang('lang.store_pos')
-                                                </a>
-                                            </li>
-                                            {{-- ////////// الضرائب العامة ////////// --}}
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif general-tax-button"
-                                                   href="{{-- route('general-tax.index') --}}" target="_blank"
+                                                   href="#" target="_blank"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.general_tax')
                                                 </a>
@@ -471,7 +438,7 @@
                                             {{-- ////////// ضرائب المنتجات ////////// --}}
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif product_tax-button"
-                                                   href="{{-- route('product-tax.index') --}}" target="_blank"
+                                                   href="#" target="_blank"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.product_tax')
                                                 </a>
@@ -483,15 +450,22 @@
                                         <ul class="sub-menu p-0" style="list-style: none">
 
                                             <li class="navbar_item">
-                                                <a style="cursor: pointer;font-weight: 600;text-decoration: none;"
-                                                   href="#" target="_blank"
-                                                   class="branch-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif text-decoration-none">
-                                                    <i class="mdi mdi-circle"></i>@lang('lang.branches')
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif colors-button"
+                                                   href="{{ route('admin.colors.index') }}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.colors')
+                                                </a>
+                                            </li>
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif sizes-button"
+                                                   href="{{  route('admin.sizes.index') }}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.sizes')
                                                 </a>
                                             </li>
                                             <li class="navbar_item">
                                                 <a class="general_settings-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
-                                                   href="{{-- route('settings.index') --}}" target="_blank"
+                                                   href="##" target="_blank"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.general_settings')
                                                 </a>

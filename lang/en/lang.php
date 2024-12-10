@@ -1,5 +1,5 @@
 <?php return array (
-    'admin'=>'administrator',
+  'admin' => 'administrator',
   'manufacturers' => 'Manufacturers',
   'add_manufacturer' => 'Add New Manufacturer',
   'edit_manufacturer' => 'Edit Manufacturer',
@@ -1330,4 +1330,10 @@
   'product_stock' => 'Product stock',
   'are_you_sure_you_wanna_delete_it' => 'Are you sure you wanna delete it',
   'it_will_delete_the_product_and_all_its_operations' => 'It will delete the product and all its operations',
+  'watch_statement' => 'Watch statement',
+  'watch_moneysafe_transaction' => 'Watch moneysafe transaction',
+  'take_money_safe' => 'Take money safe',
+  'add_to_money_safe' => 'Add to money safe',
+  ' . $m_safe->type . ' => ' . $m safe- type . ',
+  'updated_by' => 'Updated by',
 );

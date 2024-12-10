@@ -1,8 +1,14 @@
 <?php
 
 namespace Modules\Setting\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Modules\Setting\Http\Requests\MoneySafeRequest;
 use Modules\Setting\Http\Requests\MoneySafeUpdateRequest;
 use Modules\Setting\Entities\Currency;
@@ -32,14 +38,13 @@ class MoneySafeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         $money_safe=MoneySafe::latest()->get();
         $stores=Store::getDropdown();
-        $currenciesId=[System::getProperty('currency') ,2];
-        $selected_currencies=Currency::whereIn('id',$currenciesId)->orderBy('id','desc')->pluck('currency','id');
+        $selected_currencies=Currency::orderBy('id','desc')->pluck('currency','id');
         $settings = System::pluck('value', 'key');
         return view('setting::back-end.money_safe.index',compact('settings','money_safe','stores','selected_currencies'));
     }
@@ -47,7 +52,7 @@ class MoneySafeController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -57,20 +62,23 @@ class MoneySafeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param MoneySafeRequest $request
+     * @return RedirectResponse
      */
-    public function store(MoneySafeRequest $request)
+    public function store(MoneySafeRequest $request): RedirectResponse
     {
         try {
+            DB::beginTransaction();
             $data = $request->except('_token');
-            $data['created_by'] = Auth::admin()->id;
-            $money_safe=MoneySafe::create($data);
+            $data['created_by'] = Auth::guard('admin')->id();
+            MoneySafe::create($data);
+            DB::commit();
             $output = [
               'success' => true,
               'msg' => __('lang.success')
           ];
           }catch (\Exception $e) {
+            DB::rollBack();
               Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
               $output = [
                   'success' => false,
@@ -84,7 +92,6 @@ class MoneySafeController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -95,29 +102,28 @@ class MoneySafeController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit($id): Factory|View|Application
     {
         $money_safe=MoneySafe::find($id);
         $stores=Store::getDropdown();
-        $currenciesId=[System::getProperty('currency') ,2];
-        $selected_currencies=Currency::whereIn('id',$currenciesId)->orderBy('id','desc')->pluck('currency','id');
+        $selected_currencies=Currency::orderBy('id','desc')->pluck('currency','id');
         return view('setting::back-end.money_safe.edit')->with(compact('money_safe','stores','selected_currencies'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param MoneySafeUpdateRequest $request
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(MoneySafeUpdateRequest $request, $id)
+    public function update(MoneySafeUpdateRequest $request, int $id): RedirectResponse
     {
         try {
             $data = $request->except('_token');
-            $data['edited_by'] = Auth::admin()->id;
+            $data['edited_by'] = Auth::guard('admin')->id();
             MoneySafe::find($id)->update($data);
             $output = [
                 'success' => true,
@@ -137,14 +143,14 @@ class MoneySafeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response|array
      */
-    public function destroy($id)
+    public function destroy(int $id): Response|array
     {
         try{
             $money_safe=MoneySafe::find($id);
-            $money_safe->deleted_by=Auth::admin()->id;
+            $money_safe->deleted_by=Auth::guard('admin')->id();
             $money_safe->save();
             $money_safe->delete();
             $output = [
@@ -152,6 +158,7 @@ class MoneySafeController extends Controller
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
+            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -160,18 +167,22 @@ class MoneySafeController extends Controller
         }
         return $output;
     }
-    public function getAddMoneyToSafe($money_safe_id){
-        $jobs = JobType::pluck('title', 'id')->toArray();
+    public function getAddMoneyToSafe($money_safe_id): Factory|View|Application
+    {
+        $jobs = JobType::pluck('job_title', 'id')->toArray();
         $stores=Store::getDropdown();
-        $admins = Admin::Notview()->pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
         $safe = MoneySafe::find($money_safe_id);
         $currency_symbol=$safe->currency->symbol;
+
         return view('setting::back-end.money_safe.add_money')->with(compact('jobs','stores','admins','money_safe_id','currency_symbol'));
     }
-    public function postAddMoneyToSafe(Request $request){
+    public function postAddMoneyToSafe(Request $request): RedirectResponse
+    {
         try {
+            DB::beginTransaction();
             $data = $request->except('_token');
-            $data['created_by'] = Auth::admin()->id;
+            $data['created_by'] = Auth::guard('admin')->id();
             $data['type'] = 'add_money';
             $safe = MoneySafe::find($request->money_safe_id);
             $transaction=$safe->transactions()->latest()->first();
@@ -182,11 +193,13 @@ class MoneySafeController extends Controller
             }
 
             $money_safe_transaction=MoneySafeTransaction::create($data);
+            DB::commit();
             $output = [
               'success' => true,
               'msg' => __('lang.success')
           ];
           }catch (\Exception $e) {
+            DB::rollBack();
               Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
               $output = [
                   'success' => false,
@@ -196,18 +209,21 @@ class MoneySafeController extends Controller
           return redirect()->back()->with('status', $output);
     }
     ////
-    public function getTakeMoneyFromSafe($money_safe_id){
-        $jobs = JobType::pluck('title', 'id')->toArray();
+    public function getTakeMoneyFromSafe($money_safe_id): Factory|View|Application
+    {
+        $jobs = JobType::pluck('job_title', 'id')->toArray();
         $stores=Store::getDropdown();
-        $admins = Admin::Notview()->pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
         $safe = MoneySafe::find($money_safe_id);
         $currency_symbol=$safe->currency->symbol;
         return view('setting::back-end.money_safe.take_money')->with(compact('jobs','stores','admins','money_safe_id','currency_symbol'));
     }
-    public function postTakeMoneyFromSafe(Request $request){
+    public function postTakeMoneyFromSafe(Request $request): RedirectResponse
+    {
         try {
+            DB::beginTransaction();
             $data = $request->except('_token');
-            $data['created_by'] = Auth::admin()->id;
+            $data['created_by'] = Auth::guard('admin')->id();
             $data['type'] = 'take_money';
             $safe = MoneySafe::find($request->money_safe_id);
             $transaction=$safe->transactions()->latest()->first();
@@ -216,12 +232,14 @@ class MoneySafeController extends Controller
             }else{
                 $data['balance']=0;
             }
-            $money_safe_transaction=MoneySafeTransaction::create($data);
+            MoneySafeTransaction::create($data);
+            DB::commit();
             $output = [
               'success' => true,
               'msg' => __('lang.success')
           ];
           }catch (\Exception $e) {
+            DB::rollBack();
               Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
               $output = [
                   'success' => false,
@@ -231,22 +249,20 @@ class MoneySafeController extends Controller
           return redirect()->back()->with('status', $output);
     }
     ///
-    public function getMoneySafeTransactions($id){
-        $moneySafeTransactions = MoneySafe::
-            when(request()->start_date != null, function ($query) {
-                $query->with(['transactions' => function ($query) {
-                    $query->whereBetween('transaction_date', [request()->start_date,request()->end_date])->latest();
-                }]);
-            })->
-            when((request()->end_date == null)&& (request()->start_date == null), function ($query) {
-                $query->with(['transactions' => function ($query) {
-                    $query->latest();
-                }]);
-            })
-            ->where('id', $id)
-            ->first();
+    public function getMoneySafeTransactions($id): Factory|View|Application
+    {
+        $moneySafeTransactions = MoneySafe::with(['transactions' => function ($query) {
+            if (request()->start_date) {
+                $query->where('transaction_date', '>=', request()->start_date);
+            }
 
-            $basic_currency=Currency::find($moneySafeTransactions->currency_id)->symbol;
+            if (request()->end_date) {
+                $query->where('transaction_date', '<=', request()->end_date);
+            }
+            $query->latest();
+        }])->where('id', $id)->first();
+
+        $basic_currency=Currency::find($moneySafeTransactions->currency_id)->symbol;
             $default_currency=$moneySafeTransactions->currency_id=='2'?Currency::find(System::getProperty('currency'))->symbol:Currency::find(2)->symbol;
         return view('setting::back-end.money_safe.money_safe_transactions',
         compact('moneySafeTransactions','basic_currency','default_currency'));

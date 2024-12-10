@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.money_safes'))
 
 
-@push('css')
+@section('styles')
     <style>
         .table-top-head {
             top: 32px;
@@ -21,23 +21,26 @@
                 margin-top: 140px
             }
         }
+        .modal.show {
+            z-index: 10000 !important;
+        }
+        div#ui-datepicker-div {
+            z-index: 100000000 !important;
+        }
     </style>
-@endpush
-
-@section('page_title')
-    @lang('lang.money_safes')
 @endsection
+
 
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
-        @lang('lang.money_safes')</li>
+        {{ translate('money_safes')}}</li>
 @endsection
 
 @section('button')
     <div class="widgetbar d-flex @if (app()->isLocale('ar')) justify-content-start @else justify-content-end @endif">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createMoneySafeModal">
-            @lang('lang.add_money_safe')
+            {{ translate('add_money_safe')}}
         </button>
     </div>
 @endsection
@@ -54,10 +57,7 @@
                 <!-- Start col -->
                 <div class="col-lg-12">
                     <div class="card m-b-30">
-                        <div class="card-header">
-                            <h6 class="card-title  @if (app()->isLocale('ar')) text-end @else text-start @endif">
-                                @lang('lang.money_safe')</h6>
-                        </div>
+
                         <div class="card-body">
                             {{-- <h6 class="card-subtitle">Export data to Copy, CSV, Excel & Note.</h6> --}}
                             <div class="wrapper1 @if (app()->isLocale('ar')) dir-rtl @endif">
@@ -71,13 +71,13 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>@lang('lang.name')</th>
-                                                    <th>@lang('lang.type')</th>
-                                                    <th>@lang('lang.currency')</th>
-                                                    <th>@lang('lang.balance')</th>
-                                                    <th>@lang('added_by')</th>
-                                                    <th>@lang('updated_by')</th>
-                                                    <th>@lang('lang.action')</th>
+                                                    <th>{{ translate('name')}}</th>
+                                                    <th>{{ translate('type')}}</th>
+                                                    <th>{{ translate('currency')}}</th>
+                                                    <th>{{ translate('balance')}}</th>
+                                                    <th>{{ translate('added_by')}}</th>
+                                                    <th>{{ translate('updated_by')}}</th>
+                                                    <th>{{ translate('action')}}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -88,7 +88,7 @@
                                                             <span
                                                                 class="custom-tooltip d-flex justify-content-center align-items-center"
                                                                 style="font-size: 12px;font-weight: 600"
-                                                                data-tooltip="@lang('lang.name')">
+                                                                data-tooltip="{{ translate('name')}}">
                                                                 {{ $m_safe->name }}
                                                             </span>
                                                         </td>
@@ -96,16 +96,16 @@
                                                             <span
                                                                 class="custom-tooltip d-flex justify-content-center align-items-center"
                                                                 style="font-size: 12px;font-weight: 600"
-                                                                data-tooltip="@lang('lang.type')">
+                                                                data-tooltip="{{ translate('type')}}">
 
-                                                                @lang('lang.' . $m_safe->type . '')
+                                                                {{ translate( $m_safe->type)}}
                                                             </span>
                                                         </td>
                                                         <td>
                                                             <span
                                                                 class="custom-tooltip d-flex justify-content-center align-items-center"
                                                                 style="font-size: 12px;font-weight: 600"
-                                                                data-tooltip="@lang('lang.currency')">
+                                                                data-tooltip="{{ translate('currency')}}">
 
                                                                 {{ $m_safe->currency->currency }}
                                                             </span>
@@ -114,7 +114,7 @@
                                                             <span
                                                                 class="custom-tooltip d-flex justify-content-center align-items-center"
                                                                 style="font-size: 12px;font-weight: 600"
-                                                                data-tooltip="@lang('lang.balance')">
+                                                                data-tooltip="{{ translate('balance')}}">
                                                                 {{ $m_safe->currency->symbol }}
                                                                 {{ @num_format($m_safe->latest_balance) }}
                                                             </span>
@@ -167,42 +167,42 @@
                                                                 </button>
                                                                 <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
                                                                     user="menu" x-placement="bottom-end"
-                                                                    style="position: absolute; transform: translate3d(73px, 31px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                    style="position: absolute; transform: translate3d(73px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                                     <li>
-                                                                        <a data-href="{{ route('money_safe.get-add-money-to-safe', $m_safe->id) }}"
+                                                                        <a data-href="{{ route('admin.money_safe.get-add-money-to-safe', $m_safe->id) }}"
                                                                             data-container=".view_modal"
                                                                             class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif btn-modal"
                                                                             data-toggle="modal"> <i class="fas fa-plus"></i>
-                                                                            @lang('lang.add_to_money_safe')</a>
+                                                                            {{ translate('add_to_money_safe')}}</a>
                                                                     </li>
                                                                     <li>
-                                                                        <a data-href="{{ route('money_safe.get-take-money-to-safe', $m_safe->id) }}"
+                                                                        <a data-href="{{ route('admin.money_safe.get-take-money-to-safe', $m_safe->id) }}"
                                                                             data-container=".view_modal"
                                                                             class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif btn-modal"
                                                                             data-toggle="modal"> <i
                                                                                 class="fas fa-minus"></i>
-                                                                            @lang('lang.take_money_safe')</a>
+                                                                            {{translate('take_money_safe')}}</a>
                                                                     </li>
                                                                     <li>
-                                                                        <a href="{{ route('money_safe.watch-money-to-safe-transaction', $m_safe->id) }}"
+                                                                        <a href="{{ route('admin.money_safe.watch-money-to-safe-transaction', $m_safe->id) }}"
                                                                             class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"
                                                                             target="_blank"> <i class="fas fa-eye"></i>
-                                                                            @lang('lang.watch_statement')</a>
+                                                                            {{ translate('watch_statement')}}</a>
                                                                     </li>
                                                                     <li>
-                                                                        <a data-href="{{ route('money_safe.edit', $m_safe->id) }}"
+                                                                        <a data-href="{{ route('admin.money_safe.edit', $m_safe->id) }}"
                                                                             data-container=".view_modal"
                                                                             class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif btn-modal"
                                                                             data-toggle="modal"><i
                                                                                 class="dripicons-document-edit"></i>
-                                                                            @lang('lang.update')</a>
+                                                                            {{ translate('update')}}</a>
                                                                     </li>
                                                                     <li>
-                                                                        <a data-href="{{ route('money_safe.destroy', $m_safe->id) }}"
+                                                                        <a data-href="{{ route('admin.money_safe.destroy', $m_safe->id) }}"
                                                                             {{-- data-check_password="{{action('UserController@checkPassword', Auth::user()->id)}}" --}}
                                                                             class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif text-red delete_item"><i
                                                                                 class="fa fa-trash"></i>
-                                                                            @lang('lang.delete')</a>
+                                                                            {{ translate('delete')}}</a>
                                                                     </li>
                                                                 </ul>
                                                             </div>

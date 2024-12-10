@@ -10,7 +10,7 @@
                 </button>
             </div>
             {!! Form::open([
-                'route' => ['moneysafe.update', $moneysafe->id],
+                'route' => ['admin.money_safe.update', $money_safe->id],
                 'method' => 'put',
                 'id' => 'money-safe-update-form',
             ]) !!}
@@ -22,10 +22,10 @@
                     <label class="modal-label-width" for="name">@lang('lang.name') *</label>
                     <div
                         class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                        <input type="hidden" name="id" value="{{ $moneysafe->id }}" />
+                        <input type="hidden" name="id" value="{{ $money_safe->id }}" />
                         <input type="text" required style="width: 100%"
                             class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
-                            placeholder="@lang('lang.name')" name="name" value="{{ $moneysafe->name }}" required>
+                            placeholder="@lang('lang.name')" name="name" value="{{ $money_safe->name }}" required>
                         @error('name')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -37,7 +37,7 @@
                     <label class="modal-label-width" for="store_id">@lang('lang.store') *</label>
                     <div
                         class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                        {!! Form::select('store_id', $stores, $moneysafe->store_id, [
+                        {!! Form::select('store_id', $stores, $money_safe->store_id, [
                             'class' => ' select category p-0 initial-balance-input my-0 app()->isLocale("ar")? text-end : text-start',
                             'style' => 'width:100%;border-radius:16px;border:2px solid #cececf',
                             'placeholder' => __('lang.please_select'),
@@ -56,8 +56,8 @@
                         class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                         {!! Form::select(
                             'currency_id',
-                            !empty($settings['currency']) ? $selected_currencies : [],
-                            $moneysafe->currency_id,
+                            $selected_currencies ,
+                            $money_safe->currency_id,
                             [
                                 'class' => ' category select p-0 initial-balance-input my-0 app()->isLocale("ar")? text-end : text-start',
                                 'style' => 'width:100%;border-radius:16px;border:2px solid #cececf',
@@ -79,7 +79,7 @@
                     ]) !!}
                     <div
                         class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                        {!! Form::select('type', ['cash' => __('lang.cash'), 'later' => __('lang.later')], $moneysafe->type, [
+                        {!! Form::select('type', ['cash' => __('lang.cash'), 'later' => __('lang.later')], $money_safe->type, [
                             'class' => ' select  p-0 initial-balance-input my-0 app()->isLocale("ar")? text-end : text-start',
                             'style' => 'width:100%;border-radius:16px;border:2px solid #cececf',
                             'required',
@@ -99,4 +99,4 @@
         </div>
     </div>
 </div>
-{!! JsValidator::formRequest('App\Http\Requests\MoneySafeUpdateRequest', '#money-safe-update-form') !!}
+{!! JsValidator::formRequest('Modules\Setting\Http\Requests\MoneySafeUpdateRequest', '#money-safe-update-form') !!}

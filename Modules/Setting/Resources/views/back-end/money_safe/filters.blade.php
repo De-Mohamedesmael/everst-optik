@@ -1,9 +1,9 @@
 <div class="card-body">
-    <form action="{{ route('moneysafe.watch-money-to-safe-transaction', $id) }}" method="get">
+    <form action="{{ route('admin.money_safe.watch-money-to-safe-transaction', $id) }}" method="get">
         <div class="row  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif ">
             <div class="col-2">
                 <div class="form-group">
-                    {!! Form::text('start_date', null, [
+                    {!! Form::text('start_date', request()->get('start_date'), [
                         'class' => 'form-control datepicker',
                         'placeholder' => __('lang.start_date'),
                     ]) !!}
@@ -11,7 +11,7 @@
             </div>
             <div class="col-2">
                 <div class="form-group">
-                    {!! Form::text('end_date', null, ['class' => 'form-control datepicker', 'placeholder' => __('lang.end_date')]) !!}
+                    {!! Form::text('end_date', request()->get('end_date'), ['class' => 'form-control datepicker', 'placeholder' => __('lang.end_date')]) !!}
                 </div>
             </div>
             {{-- <div class="col-2"></div> --}}
