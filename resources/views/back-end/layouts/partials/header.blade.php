@@ -333,6 +333,174 @@
                         </li>
 {{--                    @endif--}}
 
+                        <li class="dropdown menu-item-has-mega-menu scroll mx-2 mb-0 p-0" style="height: 40px;">
+                            <a href="javaScript:void();"
+                               class="d-flex settings-icon-menu align-items-center text-decoration-none @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif dropdown-toggle"
+                               style="height: 100%;font-weight: 600" data-toggle="dropdown">
+
+                                <div style="width: 25px" class="d-flex align-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 100%" viewBox="0 0 48 48">
+                                        <defs>
+                                            <style>
+                                                .cls-1 {
+                                                    fill: #e9edf5
+                                                }
+
+                                                .cls-2 {
+                                                    fill: #cdd2e1
+                                                }
+
+                                                .cls-10 {
+                                                    fill: #190402
+                                                }
+                                            </style>
+                                        </defs>
+                                        <g id="_29-setting" data-name="29-setting">
+                                            <rect class="cls-1" x="1" y="5" width="46" height="34" rx="2" ry="2" />
+                                            <path class="cls-1" d="M13 43h22v4H13z" />
+                                            <path class="cls-2" d="M17 39h14v4H17z" />
+                                            <rect x="5" y="9" width="38" height="26" rx="2" ry="2" style="fill:#b5efff" />
+                                            <path
+                                                d="M41 9H7a2 2 0 0 0-2 2v3a2 2 0 0 1 2-2h34a2 2 0 0 1 2 2v-3a2 2 0 0 0-2-2z"
+                                                style="fill:#80dbff" />
+                                            <path
+                                                d="M27 1H3a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h18v5l5-5h1a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"
+                                                style="fill:#ffde91" />
+                                            <path
+                                                d="M4 27V3a2 2 0 0 1 2-2H3a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h3a2 2 0 0 1-2-2z"
+                                                style="fill:#ffac5a" />
+                                            <path
+                                                d="M26 17v-4h-3.26a8.285 8.285 0 0 0-.85-2.06l2.3-2.3-2.83-2.83-2.3 2.3A8.285 8.285 0 0 0 17 7.26V4h-4v3.26a8.285 8.285 0 0 0-2.06.85l-2.3-2.3-2.83 2.83 2.3 2.3A8.285 8.285 0 0 0 7.26 13H4v4h3.26a8.285 8.285 0 0 0 .85 2.06l-2.3 2.3 2.83 2.83 2.3-2.3a8.285 8.285 0 0 0 2.06.85V26h4v-3.26a8.285 8.285 0 0 0 2.06-.85l2.3 2.3 2.83-2.83-2.3-2.3a8.285 8.285 0 0 0 .85-2.06zm-11 2a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"
+                                                style="fill:#fff" />
+                                            <path class="cls-2" d="M42 5v7l-2 2h-2l-2-2V5z" />
+                                            <path style="fill:#ff8257" d="M36 27h6v12h-6z" />
+                                            <path style="fill:#f05e3a" d="M36 27h6v3h-6z" />
+                                            <path class="cls-10"
+                                                  d="M2 37v-5H0v5a3 3 0 0 0 3 3h13v2h-3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-3v-2h5v-2H3a1 1 0 0 1-1-1zm32 9H14v-2h20zm-4-4H18v-2h12zM26 18a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2.522a9.418 9.418 0 0 0-.361-.872L24.9 9.347a1 1 0 0 0 0-1.414L22.067 5.1a1 1 0 0 0-1.414 0l-1.781 1.78A9.418 9.418 0 0 0 18 6.522V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v2.522a9.418 9.418 0 0 0-.872.361L9.347 5.1a1 1 0 0 0-1.414 0L5.1 7.933a1 1 0 0 0 0 1.414l1.78 1.781a9.418 9.418 0 0 0-.358.872H4a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h2.522a9.418 9.418 0 0 0 .361.872L5.1 20.653a1 1 0 0 0 0 1.414l2.83 2.83a1 1 0 0 0 1.414 0l1.781-1.78a9.418 9.418 0 0 0 .872.361V26a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2.522a9.418 9.418 0 0 0 .872-.361l1.781 1.78a1 1 0 0 0 1.414 0l2.83-2.83a1 1 0 0 0 0-1.414l-1.78-1.781a9.418 9.418 0 0 0 .364-.872zm-4.817 1.767 1.593 1.593-1.416 1.416-1.593-1.593a1 1 0 0 0-1.208-.159 7.327 7.327 0 0 1-1.811.748 1 1 0 0 0-.748.968V25h-2v-2.26a1 1 0 0 0-.748-.968 7.327 7.327 0 0 1-1.811-.748 1 1 0 0 0-1.208.159L8.64 22.776 7.224 21.36l1.593-1.593a1 1 0 0 0 .159-1.208 7.327 7.327 0 0 1-.748-1.811A1 1 0 0 0 7.26 16H5v-2h2.26a1 1 0 0 0 .968-.748 7.327 7.327 0 0 1 .748-1.811 1 1 0 0 0-.159-1.208L7.224 8.64 8.64 7.224l1.593 1.593a1 1 0 0 0 1.208.159 7.327 7.327 0 0 1 1.811-.748A1 1 0 0 0 14 7.26V5h2v2.26a1 1 0 0 0 .748.968 7.327 7.327 0 0 1 1.811.748 1 1 0 0 0 1.208-.159l1.593-1.593 1.416 1.416-1.593 1.593a1 1 0 0 0-.159 1.208 7.327 7.327 0 0 1 .748 1.811 1 1 0 0 0 .968.748H25v2h-2.26a1 1 0 0 0-.968.748 7.327 7.327 0 0 1-.748 1.811 1 1 0 0 0 .159 1.208z" />
+                                            <path class="cls-10"
+                                                  d="M15 18a3 3 0 0 1 0-6v-2a5 5 0 1 0 5 5h-2a3 3 0 0 1-3 3z" />
+                                            <path class="cls-10"
+                                                  d="M45 4v2a1 1 0 0 1 1 1v30a1 1 0 0 1-1 1h-2V28h1v-2h-4V15a1 1 0 0 0 .707-.293l2-2A1 1 0 0 0 43 12V5a1 1 0 0 0-1-1H30V3a3 3 0 0 0-3-3H3a3 3 0 0 0-3 3v24a3 3 0 0 0 3 3h17v4a1 1 0 0 0 .617.924A.987.987 0 0 0 21 35a1 1 0 0 0 .707-.293L26.414 30H27a3 3 0 0 0 3-3V14h3v-2h-4a1 1 0 0 0-1 1v14a1 1 0 0 1-1 1h-1a1 1 0 0 0-.707.293L22 31.586V29a1 1 0 0 0-1-1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h24a1 1 0 0 1 1 1v2a1 1 0 0 0 1 1h6v6a1 1 0 0 0 .293.707l2 2A1 1 0 0 0 38 15v11h-4v2h1v4h2v-4h4v11a1 1 0 0 0 1 1h3a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-8 7.586V6h4v5.586L39.586 13h-1.172z" />
+                                            <path class="cls-10" d="M35 34h2v2h-2zM28 8h5v2h-5z" />
+                                        </g>
+                                    </svg>
+                                </div>
+                                <span class="mx-2">{{ __('lang.settings') }}</span>
+                            </a>
+                            <div class="mega-menu dropdown-menu settings-menu" style="z-index: 8;">
+                                <ul class="mega-menu-row d-flex flex-wrap p-0 @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"
+                                    style="list-style: none" role="menu">
+                                    {{-- ================= Column 1 ============== --}}
+                                    <li class="mega-menu-col col-md-3 p-0">
+                                        <ul class="sub-menu p-0" style="list-style: none">
+
+
+                                            <li class="navbar_item">
+                                                <a class="moneysafes-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
+                                                   href="{{ route('admin.money_safe.index') }}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.money_safe')
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    {{-- ================= Column 2 ============== --}}
+                                    <li class="mega-menu-col col-md-3 p-0">
+                                        <ul class="sub-menu p-0" style="list-style: none">
+                                            {{-- ////// المخازن ////// --}}
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif stores-button"
+                                                   href="{{-- route('store.index') --}}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.stores')
+                                                </a>
+                                            </li>
+                                            {{-- ////// العلامة التجاية ////// --}}
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif brands-button"
+                                                   href="{{-- route('brands.index') --}}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.brands')
+                                                </a>
+                                            </li>
+                                            {{-- ////// الاقسام ////// --}}
+
+                                        </ul>
+                                    </li>
+                                    {{-- ================= Column 3 ============== --}}
+                                    <li class="mega-menu-col col-md-3 p-0">
+                                        <ul class="sub-menu p-0" style="list-style: none">
+                                            {{-- ////// الالوان ////// --}}
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif colors-button"
+                                                   href="{{-- route('colors.index') --}}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.colors')
+                                                </a>
+                                            </li>
+                                            {{-- ////// المقاسات ////// --}}
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif sizes-button"
+                                                   href="{{-- route('sizes.index') --}}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('sizes.sizes')
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="mega-menu-col col-md-3 p-0">
+                                        <ul class="sub-menu p-0" style="list-style: none">
+                                            {{-- ////////// نقاط البيع للصرافين ////////// --}}
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif stores_pos-button"
+                                                   href="{{-- route('store-pos.index') --}}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.store_pos')
+                                                </a>
+                                            </li>
+                                            {{-- ////////// الضرائب العامة ////////// --}}
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif general-tax-button"
+                                                   href="{{-- route('general-tax.index') --}}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.general_tax')
+                                                </a>
+                                            </li>
+                                            {{-- ////////// ضرائب المنتجات ////////// --}}
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif product_tax-button"
+                                                   href="{{-- route('product-tax.index') --}}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.product_tax')
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="mega-menu-col col-md-3 p-0">
+
+                                        <ul class="sub-menu p-0" style="list-style: none">
+
+                                            <li class="navbar_item">
+                                                <a style="cursor: pointer;font-weight: 600;text-decoration: none;"
+                                                   href="#" target="_blank"
+                                                   class="branch-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif text-decoration-none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.branches')
+                                                </a>
+                                            </li>
+                                            <li class="navbar_item">
+                                                <a class="general_settings-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
+                                                   href="{{-- route('settings.index') --}}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.general_settings')
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 
 
                 </ul>

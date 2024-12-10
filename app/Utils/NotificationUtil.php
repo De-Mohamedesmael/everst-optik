@@ -5,8 +5,8 @@ namespace App\Utils;
 use App\Jobs\InternalStockRequestJob;
 use App\Models\Admin;
 use Modules\Customer\Entities\Customer;
-use Modules\Customer\Entities\Notification as ModelsNotification;
-use Modules\Customer\Entities\Supplier;
+use Mpdf\MpdfException;
+use Modules\Hr\Entities\Notification as ModelsNotification;
 use App\Notifications\AddSaleNotification;
 use App\Notifications\AdminContactUsNotification;
 use App\Notifications\ContactUsNotification;
@@ -41,77 +41,13 @@ class NotificationUtil extends Util
         ]);
     }
 
-    /**
-     * send purchase order notification to supplier
-     *
-     * @param [int] $transaction_id
-     * @return void
-     */
-    public function sendPurchaseOrderToSupplier($transaction_id)
-    {
-        $purchase_order = Transaction::find($transaction_id);
-
-        $supplier = Supplier::find($purchase_order->supplier_id);
-
-        $html = view('purchase_order.pdf')
-            ->with(compact('purchase_order', 'supplier'))->render();
-
-        $mpdf = $this->getMpdf();
-
-        $mpdf->WriteHTML($html);
-        $file = config('constants.mpdf_temp_path') . '/' . time() . '_purchase-order-' . $purchase_order->po_no . '.pdf';
-        $mpdf->Output($file, 'F');
-
-        $data['email_body'] =  'You received purchase order';
-        $data['attachment'] =  $file;
-        $data['attachment_name'] =  'purchase-order-' . $purchase_order->po_no . '.pdf';
-
-        $email = $supplier->email;
-        Notification::route('mail', $email)
-            ->notify(new PurchaseOrderToSupplierNotification($data));
-
-        if (file_exists($file)) {
-            unlink($file);
-        }
-    }
-    /**
-     * send remove stock notification to supplier
-     *
-     * @param [int] $transaction_id
-     * @return void
-     */
-    public function sendRemoveStockToSupplier($transaction_id, $email)
-    {
-        if (!empty($email)) {
-            $remove_stock = Transaction::find($transaction_id);
-
-            $supplier = Supplier::find($remove_stock->supplier_id);
-            $html = view('remove_stock.pdf')
-                ->with(compact('remove_stock', 'supplier'))->render();
-
-            $mpdf = $this->getMpdf();
-
-            $mpdf->WriteHTML($html);
-            $file = config('constants.mpdf_temp_path') . '/' . time() . '_remove-stock-' . $remove_stock->invoice_no . '.pdf';
-            $mpdf->Output($file, 'F');
-
-            $data['email_body'] =  'You received remove stock';
-            $data['attachment'] =  $file;
-            $data['attachment_name'] =  'remove-stock-' . $remove_stock->invoice_no . '.pdf';
-
-
-            Notification::route('mail', $email)
-                ->notify(new RemoveStockToSupplierNotification($data));
-        }
-
-        return true;
-    }
 
     /**
      * sendPurchaseOrderToSupplier
      *
      * @param [int] $transaction_id
      * @return void
+     * @throws MpdfException
      */
     public function sendSellInvoiceToCustomer($transaction_id, $emails)
     {
