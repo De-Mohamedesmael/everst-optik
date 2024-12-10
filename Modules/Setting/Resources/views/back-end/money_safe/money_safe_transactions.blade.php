@@ -1,14 +1,12 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.watch_moneysafe_transaction'))
 
-@section('page_title')
-@lang('lang.watch_moneysafe_transaction')
-@endsection
+
 
 @section('breadcrumbs')
 @parent
 <li class="breadcrumb-item  @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
-    @lang('lang.watch_moneysafe_transaction')</li>
+    {{translate('watch_moneysafe_transaction')}}</li>
 @endsection
 
 @section('content')
@@ -20,15 +18,11 @@
         <!-- Start col -->
         <div class="col-lg-12">
             <div class="card m-b-30">
-                <div class="card-header">
-                    <h6 class="card-title  @if (app()->isLocale('ar')) text-end @else text-start @endif">
-                        @lang('lang.watch_moneysafe_transaction')</h6>
-                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="container-fluid">
-                                @include('money_safe.filters', ['id' => $moneySafeTransactions->id])
+                                @include('setting::back-end.money_safe.filters', ['id' => $moneySafeTransactions->id])
                             </div>
                         </div>
                     </div>
@@ -44,10 +38,6 @@
                                     <th>@lang('lang.type')</th>
                                     <th>@lang('lang.amount') &nbsp; {{ $basic_currency }}</th>
                                     <th>@lang('lang.balance')&nbsp; {{ $basic_currency }}</th>
-                                    <th class="dollar-cell showHideDollarCells">@lang('lang.amount') &nbsp; {{
-                                        $default_currency }}</th>
-                                    <th class="dollar-cell showHideDollarCells">@lang('lang.balance')&nbsp; {{
-                                        $default_currency }}</th>
                                     <th>@lang('added_by')</th>
                                 </tr>
                             </thead>
@@ -73,7 +63,7 @@
                                     <td class="textcenter">
                                         <span class="custom-tooltip d-flex justify-content-center align-items-center"
                                             style="font-size: 12px;font-weight: 600" data-tooltip="@lang('lang.job')">
-                                            {{ isset($msafe_trans->job_type_id) ? $msafe_trans->job_type->title : '-' }}
+                                            {{ isset($msafe_trans->job_type_id) ? $msafe_trans->job_type->job_title : '-' }}
                                         </span>
                                     </td>
                                     <td>
@@ -109,38 +99,7 @@
                                             {{ $basic_currency }}&nbsp;{{ @num_format($msafe_trans->balance) }}
                                         </span>
                                     </td>
-                                    <td class="dollar-cell showHideDollarCells">
-                                        <span class="custom-tooltip d-flex justify-content-center align-items-center"
-                                            style="font-size: 12px;font-weight: 600"
-                                            data-tooltip="@lang('lang.amount')">
 
-                                            @if ($msafe_trans->type == 'add_money')
-                                            <span class="text-primary">{{ $default_currency }}&nbsp;{{
-                                                @num_format($moneySafeTransactions->currency->id !== '2' ?
-                                                $msafe_trans->amount / $settings['dollar_exchange'] :
-                                                $msafe_trans->amount * $settings['dollar_exchange']) }}</span>
-                                            @else
-                                            <span class="text-danger">{{ $default_currency }}&nbsp;{{
-                                                @num_format($moneySafeTransactions->currency->id !== '2' ?
-                                                $msafe_trans->amount / $settings['dollar_exchange'] :
-                                                $msafe_trans->amount * $settings['dollar_exchange']) }}</span>
-                                            @endif
-                                        </span>
-                                    </td>
-                                    <td class="dollar-cell showHideDollarCells">
-                                        <span class="custom-tooltip d-flex justify-content-center align-items-center"
-                                            style="font-size: 12px;font-weight: 600"
-                                            data-tooltip="@lang('lang.balance')">
-
-                                            @if ($moneySafeTransactions->currency->id !== '2')
-                                            {{ $default_currency }} &nbsp;
-                                            {{ @num_format($msafe_trans->balance / $settings['dollar_exchange']) }}
-                                            @else
-                                            {{ $default_currency }} &nbsp;
-                                            {{ @num_format($msafe_trans->balance * $settings['dollar_exchange']) }}
-                                            @endif
-                                        </span>
-                                    </td>
                                     <td>
                                         <span class="custom-tooltip d-flex justify-content-center align-items-center"
                                             style="font-size: 12px;font-weight: 600" data-tooltip="@lang('added_by')">

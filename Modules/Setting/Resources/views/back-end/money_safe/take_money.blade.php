@@ -10,7 +10,7 @@
                 </button>
             </div>
             {!! Form::open([
-                'route' => 'moneysafe.post-take-money-to-safe',
+                'route' => 'admin.money_safe.post-take-money-to-safe',
                 'method' => 'post',
                 'files' => true,
                 'id' => 'safe-money-form',
@@ -46,7 +46,7 @@
                     ]) !!} <br>
                     <div
                         class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                        {!! Form::select('source_id', $users, null, [
+                        {!! Form::select('source_id', $admins, null, [
                             'class' => 'select p-0 initial-balance-input my-0 app()->isLocale("ar")? text-end : text-start',
                             'style' => 'width:100%;border-radius:16px;border:2px solid #cececf',
                             'placeholder' => __('lang.please_select'),
@@ -72,24 +72,14 @@
                     </div>
                 </div>
 
-                {{-- <div class="form-group">
-                            <label  for="currency_id">@lang('lang.currency') .*</label>
-                            {!! Form::select(
-                                'currency_id',
-                                !empty($settings['currency']) ? $selected_currencies:$selected_currencies,null,
-                                ['class' => 'form-control select2 category','placeholder'=>__('lang.please_select'),'required']
-                            ) !!}
-                            @error('currency_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div> --}}
+
                 <div
                     class=" d-flex mb-2 align-items-center form-group @if (app()->isLocale('ar')) mr-3 @else ml-3 @endif">
                     <label class="modal-label-width" for="amount">@lang('lang.amount') *
                         .{{ $currency_symbol }}</label>
                     <div
                         class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                        <input type="text" required class="form-control m-0 initial-balance-input"
+                        <input type="text"  class="form-control m-0 initial-balance-input"
                             style="width: 100%" placeholder="@lang('lang.amount')" name="amount"
                             value="{{ old('amount') }}" required>
                         @error('amount')
@@ -131,12 +121,12 @@
                     </div>
                 </div>
                 <div
-                    class=" d-flex mb-2 align-items-center form-group @if (app()->isLocale('ar')) mr-3 @else ml-3 @endif">
+                    class=" d-flex mb-2 pt-4 align-items-center form-group @if (app()->isLocale('ar')) mr-3 @else ml-3 @endif">
                     <label class="modal-label-width" for="details">@lang('lang.details') *</label>
                     <div
                         class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                        <input type="text" class="form-control initial-balance-input m-0" style="width: 100%"
-                            placeholder="@lang('lang.details')" name="details" value="{{ old('details') }}">
+                          <textarea type="text" class="form-control initial-balance-input m-0" style="width: 100%"
+                                    placeholder="@lang('lang.details')" name="details" >{{ old('details') }}</textarea>
                         @error('details')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

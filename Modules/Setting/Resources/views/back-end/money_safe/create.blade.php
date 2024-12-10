@@ -51,7 +51,7 @@
                         {!! Form::select(
                             'currency_id',
                             !empty($settings['currency']) ? $selected_currencies : $selected_currencies,
-                            null,
+                            $settings['currency'],
                             [
                                 'class' => ' select p-0 initial-balance-input my-0 app()->isLocale("ar")? text-end : text-start',
                                 'style' => 'width:100%;border-radius:16px;border:2px solid #cececf',

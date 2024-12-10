@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.color'))
 
 @section('breadcrumbs')
@@ -49,35 +49,23 @@
                                             <td>{{ $color->color_hex }}</td>
 
                                             <td>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">@lang('lang.action')
-                                                        <span class="caret"></span>
-                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                    </button>
-                                                    <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
-                                                        user="menu">
-                                                        @can('product_module.color.create_and_edit')
-                                                            <li>
 
-                                                                <a data-href="{{ route('admin.colors.edit', $color->id) }}"
-                                                                    data-container=".view_modal" class="btn btn-modal"><i
-                                                                        class="dripicons-document-edit"></i>
-                                                                    @lang('lang.edit')</a>
-                                                            </li>
-                                                            <li class="divider"></li>
-                                                        @endcan
-                                                        @can('product_module.color.delete')
-                                                            <li>
-                                                                <a data-href="{{ route('admin.colors.destroy', $color->id) }}"
-                                                                    data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
-                                                                    class="btn text-red delete_item"><i class="fa fa-trash"></i>
-                                                                    @lang('lang.delete')</a>
-                                                            </li>
-                                                        @endcan
-                                                    </ul>
-                                                </div>
+                                                @can('product_module.color.create_and_edit')
+
+
+                                                    <a data-href="{{ route('admin.colors.edit', $color->id) }}"
+                                                        data-container=".view_modal" class="btn btn-primary btn-modal  edit_job">
+                                                        <i class="fa fa-pencil-square-o"></i>
+                                                    </a>
+
+                                                @endcan
+                                                @can('product_module.color.delete')
+                                                        <a data-href="{{ route('admin.colors.destroy', $color->id) }}"
+                                                            data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
+                                                            class="btn btn-danger text-white delete_item"><i class="fa fa-trash"></i>
+                                                            </a>
+
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach

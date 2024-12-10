@@ -28,7 +28,9 @@ class CreateMoneySafesTable extends Migration
             $table->text('take_money_admins');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('edited_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->boolean('is_default')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

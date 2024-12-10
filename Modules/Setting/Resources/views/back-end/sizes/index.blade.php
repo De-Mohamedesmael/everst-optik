@@ -1,33 +1,37 @@
-@extends('layouts.app')
-@section('title', __('lang.size'))
-@section('style')
-    <link rel="stylesheet" type="text/css" href="{{ url('front/css/pos-modals.css') }}">
+@extends('back-end.layouts.app')
+@section('title', __('lang.sizes'))
 
-    <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
+@section('breadcrumbs')
+    @parent
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
+            style="text-decoration: none;color: #476762" href="#">/
+            @lang('lang.setting')</a>
+    </li>
+    <li class="breadcrumb-item  @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
+        @lang('lang.sizes')</li>
 @endsection
+
+@section('button')
+
+    @can('product_module.size.create_and_edit')
+        <div class="widgetbar d-flex @if (app()->isLocale('ar')) justify-content-start @else justify-content-end @endif">
+            <a style="color: white"
+               data-href="{{ route('admin.sizes.create') }}"
+               data-container=".view_modal" class="btn btn-modal btn-main"><i
+                    class="dripicons-plus"></i>
+                {{translate('add_size')}}
+            </a>
+        </div>
+    @endcan
+@endsection
+
 @section('content')
     <section class="forms py-0">
 
         <div class="container-fluid">
 
             <div class="col-md-12 px-1 no-print">
-                <div
-                    class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                    <h5 class="mb-0 position-relative print-title" style="margin-right: 30px">
-                        @lang('lang.sizes')
-                        <span class="header-pill"></span>
-                    </h5>
-                </div>
-                @can('product_module.size.create_and_edit')
-                    <div class="card mb-2">
-                        <div class="card-body d-flex justify-content-center p-2">
-                            <a style="color: white" data-href="{{ route('admin.sizes.create') }}"
-                                data-container=".view_modal" class="btn btn-modal btn-main col-md-3"><i
-                                    class="dripicons-plus"></i>
-                                @lang('lang.add_size')</a>
-                        </div>
-                    </div>
-                @endcan
+
                 <div class="card mb-2">
                     <div class="card-body p-2">
                         <div class="table-responsive">
@@ -46,35 +50,22 @@
                                             <td>{{ $size->size_code }}</td>
 
                                             <td>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">@lang('lang.action')
-                                                        <span class="caret"></span>
-                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                    </button>
-                                                    <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
-                                                        user="menu">
-                                                        @can('product_module.size.create_and_edit')
-                                                            <li>
+                                                @can('product_module.size.create_and_edit')
 
-                                                                <a data-href="{{ route('admin.sizes.edit', $size->id) }}"
-                                                                    data-container=".view_modal" class="btn btn-modal"><i
-                                                                        class="dripicons-document-edit"></i>
-                                                                    @lang('lang.edit')</a>
-                                                            </li>
-                                                            <li class="divider"></li>
-                                                        @endcan
-                                                        @can('product_module.size.delete')
-                                                            <li>
-                                                                <a data-href="{{ route('admin.sizes.destroy', $size->id) }}"
-                                                                    data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
-                                                                    class="btn text-red delete_item"><i class="fa fa-trash"></i>
-                                                                    @lang('lang.delete')</a>
-                                                            </li>
-                                                        @endcan
-                                                    </ul>
-                                                </div>
+
+                                                    <a data-href="{{ route('admin.sizes.edit', $size->id) }}"
+                                                       data-container=".view_modal" class="btn btn-primary btn-modal  edit_job">
+                                                        <i class="fa fa-pencil-square-o"></i>
+                                                    </a>
+
+                                                @endcan
+                                                @can('product_module.size.delete')
+                                                    <a data-href="{{ route('admin.sizes.destroy', $size->id) }}"
+                                                       data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
+                                                       class="btn btn-danger text-white delete_item"><i class="fa fa-trash"></i>
+                                                    </a>
+
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach

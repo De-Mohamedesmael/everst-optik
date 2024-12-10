@@ -1305,4 +1305,5 @@
   'Cashier' => 'Cashier',
   'Male' => 'Male',
   'gender' => 'Gender',
+  'are_you_sure_you_wanna_delete_it' => 'Are you sure you wanna delete it',
 );

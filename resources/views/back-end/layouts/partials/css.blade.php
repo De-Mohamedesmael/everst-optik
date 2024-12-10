@@ -136,6 +136,9 @@
 
         height: 80% !important;
     }
+
+
+
 </style>
 
 
@@ -143,6 +146,31 @@
     <style>
         a.item-list-a {
         direction: rtl;
+        }
+        a.d-flex.flex-row.text-start {
+            width: 100%;
+            border-right: 1px solid #00000036;
+        }
+    </style>
+@else
+    <style>
+        .navbar_item::after {
+            content: "";
+            position: absolute;
+            width: 3px;
+            height: 0;
+            background-color: #476762;
+            top: 0;
+            left: 0px;
+            transition: 0.5s;
+        }
+
+        a.d-flex.flex-row.text-start {
+            width: 100%;
+        }
+        a.d-flex.flex-row.text-start {
+            width: 100%;
+            border-left: 1px solid #00000036;
         }
     </style>
 @endif
