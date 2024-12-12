@@ -2,13 +2,15 @@
 
 namespace Modules\Setting\Entities;
 
+use App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Hr\Entities\Employee;
 
 class Store extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     /**
      * The attributes that aren't mass assignable.
@@ -31,5 +33,13 @@ class Store extends Model
             ->pluck('name', 'id')->toArray();
 
         return $stores;
+    }
+    public function created_by_admin()
+    {
+        return $this->belongsTo(Admin::class, 'created_by', 'id')->withDefault(['name' => '']);
+    }
+    public function deleted_by_admin()
+    {
+        return $this->belongsTo(Admin::class, 'deleted_by', 'id')->withDefault(['name' => '']);
     }
 }

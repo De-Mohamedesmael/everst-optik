@@ -5,10 +5,11 @@ namespace Modules\Setting\Entities;
 use App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StorePos extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that aren't mass assignable.
@@ -17,7 +18,7 @@ class StorePos extends Model
      */
     protected $guarded = ['id'];
 
-    public function user()
+    public function admin()
     {
         return $this->belongsTo(Admin::class)->withDefault(['name' => '']);
     }
@@ -25,5 +26,13 @@ class StorePos extends Model
     public function store()
     {
         return $this->belongsTo(Store::class)->withDefault(['name' => '']);
+    }
+    public function created_by_admin()
+    {
+        return $this->belongsTo(Admin::class, 'created_by', 'id')->withDefault(['name' => '']);
+    }
+    public function deleted_by_admin()
+    {
+        return $this->belongsTo(Admin::class, 'deleted_by', 'id')->withDefault(['name' => '']);
     }
 }

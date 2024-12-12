@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Setting\Http\Controllers\ColorController;
 use Modules\Setting\Http\Controllers\SizeController;
 use Modules\Setting\Http\Controllers\MoneySafeController;
+use Modules\Setting\Http\Controllers\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,18 @@ use Modules\Setting\Http\Controllers\MoneySafeController;
 */
 
 Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'timezone'],'prefix' => 'dashboard','as'=>'admin.'], function () {
+
+
+
+    Route::get('stores/get-dropdown', [StoreController::class,'getDropdown'])->name('stores.getDropdown');
+    Route::post('stores/fetch_branch_stores',[StoreController::class,'fetch_branch_stores'])->name('stores.fetch_branch_stores');
+    Route::resource('store',StoreController::class);
+
+
+    Route::resource('store-pos', StorePosController::class);
+
+
+
 
     Route::get('colors/get-dropdown', [ColorController::class,'getDropdown'])->name('colors.dropdown');
     Route::resource('colors', ColorController::class);

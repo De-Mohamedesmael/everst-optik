@@ -23,6 +23,8 @@ class CreateStoresTable extends Migration
             $table->string('manager_mobile_number')->nullable();
             $table->string('details')->nullable();
             $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('deleted_by');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
