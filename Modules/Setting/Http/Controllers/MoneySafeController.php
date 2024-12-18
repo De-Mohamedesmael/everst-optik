@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Modules\Setting\Entities\Size;
 use Modules\Setting\Http\Requests\MoneySafeRequest;
 use Modules\Setting\Http\Requests\MoneySafeUpdateRequest;
 use Modules\Setting\Entities\Currency;
@@ -38,9 +39,9 @@ class MoneySafeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): Factory|View|Application
     {
         $money_safe=MoneySafe::latest()->get();
         $stores=Store::getDropdown();
@@ -52,11 +53,19 @@ class MoneySafeController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(): Factory|View|Application
     {
-        //
+        $stores=Store::getDropdown();
+        $selected_currencies=Currency::orderBy('id','desc')->pluck('currency','id');
+        $settings = System::pluck('value', 'key');
+
+        return view('setting::back-end.money_safe.create')->with(compact(
+            'stores',
+            'selected_currencies',
+            'settings',
+        ));
     }
 
     /**
@@ -106,6 +115,7 @@ class MoneySafeController extends Controller
      */
     public function edit($id): Factory|View|Application
     {
+
         $money_safe=MoneySafe::find($id);
         $stores=Store::getDropdown();
         $selected_currencies=Currency::orderBy('id','desc')->pluck('currency','id');

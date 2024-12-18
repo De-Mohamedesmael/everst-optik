@@ -395,14 +395,14 @@
                                         <ul class="sub-menu p-0" style="list-style: none">
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif stores-button"
-                                                   href="{{-- route('store.index') --}}" target="_blank"
+                                                   href="{{ route('admin.store.index') }}" target="_blank"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.stores')
                                                 </a>
                                             </li>
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif stores_pos-button"
-                                                   href="{{-- route('store-pos.index') --}}" target="_blank"
+                                                   href="{{ route('admin.store-pos.index') }}" target="_blank"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.store_pos')
                                                 </a>

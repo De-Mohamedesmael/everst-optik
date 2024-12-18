@@ -1336,4 +1336,6 @@
   'add_to_money_safe' => 'Add to money safe',
   ' . $m_safe->type . ' => ' . $m safe- type . ',
   'updated_by' => 'Updated by',
+  'add_store_pos' => 'Add store pos',
+  'exists_validation' => 'Exists validation',
 );

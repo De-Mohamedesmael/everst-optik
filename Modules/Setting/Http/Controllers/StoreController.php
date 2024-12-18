@@ -39,7 +39,7 @@ class StoreController extends Controller
                         $query->where('branch_id',request()->branch_id);
                 })->orderBy('created_by','desc')->get();
 
-      return view('store.index')->with(compact(
+      return view('setting::back-end.store.index')->with(compact(
           'stores'));
   }
 
@@ -51,16 +51,17 @@ class StoreController extends Controller
   public function create()
   {
 
-      return view('store.create');
+      return view('setting::back-end.store.create');
   }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @return RedirectResponse
-   */
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return RedirectResponse | array
+     */
 // ++++++++++++++++++++++ Task : store() +++++++++++++++
-  public function store(Request $request)
+  public function store(Request $request): RedirectResponse|array
   {
       $request->validate([
           'name' => 'max:255|required',
@@ -91,16 +92,7 @@ class StoreController extends Controller
 
   }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function show($id)
-  {
 
-  }
 
   /**
    * Show the form for editing the specified resource.
@@ -111,7 +103,7 @@ class StoreController extends Controller
   public function edit($id)
   {
       $store = Store::find($id);
-      return view('store.edit')->with(compact('store'));
+      return view('setting::back-end.store.edit')->with(compact('store'));
   }
 
   /**
@@ -145,18 +137,17 @@ class StoreController extends Controller
       return redirect()->back()->with('status', $output);
   }
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return RedirectResponse
-   */
-  public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return array|RedirectResponse
+     */
+  public function destroy($id): array|RedirectResponse
   {
       try {
           $store = Store::find($id);
           $store->delete();
-
           $output = [
               'success' => true,
               'msg' => __('lang.success')
@@ -170,7 +161,8 @@ class StoreController extends Controller
               'msg' => __('messages.something_went_wrong')
           ];
       }
-      return redirect()->back()->with('status', $output);
+      return $output;
+
   }
     public function getDropdown()
     {

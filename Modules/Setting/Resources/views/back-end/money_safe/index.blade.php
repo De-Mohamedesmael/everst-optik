@@ -2,7 +2,7 @@
 @section('title', __('lang.money_safes'))
 
 
-@section('styles')
+@section('stylses')
     <style>
         .table-top-head {
             top: 32px;
@@ -38,20 +38,25 @@
 @endsection
 
 @section('button')
-    <div class="widgetbar d-flex @if (app()->isLocale('ar')) justify-content-start @else justify-content-end @endif">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createMoneySafeModal">
-            {{ translate('add_money_safe')}}
-        </button>
-    </div>
+
+    @can('safe_module.money_safe.create_and_edit')
+        <div class="widgetbar d-flex @if (app()->isLocale('ar')) justify-content-start @else justify-content-end @endif">
+            <a style="color: white"
+               data-href="{{ route('admin.money_safe.create') }}"
+               data-container=".view_modal" class="btn btn-modal btn-main"><i
+                    class="dripicons-plus"></i>
+                {{translate('add_money_safe')}}
+            </a>
+        </div>
+    @endcan
+
 @endsection
 
 @section('content')
-    @include('setting::back-end.money_safe.create')
-    <div class="animate-in-page">
+    <section class="forms py-0">
 
-        <!-- End Breadcrumbbar -->
-        <!-- Start Contentbar -->
-        <div class="contentbar">
+        <div class="container-fluid">
+
             <!-- Start row -->
             <div class="row">
                 <!-- Start col -->
@@ -168,42 +173,51 @@
                                                                 <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
                                                                     user="menu" x-placement="bottom-end"
                                                                     style="position: absolute; transform: translate3d(73px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                                    <li>
-                                                                        <a data-href="{{ route('admin.money_safe.get-add-money-to-safe', $m_safe->id) }}"
-                                                                            data-container=".view_modal"
-                                                                            class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif btn-modal"
-                                                                            data-toggle="modal"> <i class="fas fa-plus"></i>
-                                                                            {{ translate('add_to_money_safe')}}</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a data-href="{{ route('admin.money_safe.get-take-money-to-safe', $m_safe->id) }}"
-                                                                            data-container=".view_modal"
-                                                                            class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif btn-modal"
-                                                                            data-toggle="modal"> <i
-                                                                                class="fas fa-minus"></i>
-                                                                            {{translate('take_money_safe')}}</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="{{ route('admin.money_safe.watch-money-to-safe-transaction', $m_safe->id) }}"
-                                                                            class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"
-                                                                            target="_blank"> <i class="fas fa-eye"></i>
-                                                                            {{ translate('watch_statement')}}</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a data-href="{{ route('admin.money_safe.edit', $m_safe->id) }}"
-                                                                            data-container=".view_modal"
-                                                                            class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif btn-modal"
-                                                                            data-toggle="modal"><i
-                                                                                class="dripicons-document-edit"></i>
-                                                                            {{ translate('update')}}</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a data-href="{{ route('admin.money_safe.destroy', $m_safe->id) }}"
-                                                                            {{-- data-check_password="{{action('UserController@checkPassword', Auth::user()->id)}}" --}}
-                                                                            class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif text-red delete_item"><i
-                                                                                class="fa fa-trash"></i>
-                                                                            {{ translate('delete')}}</a>
-                                                                    </li>
+                                                                    @can('safe_module.money_safe.create_and_edit')
+                                                                        <li>
+                                                                            <a data-href="{{ route('admin.money_safe.get-add-money-to-safe', $m_safe->id) }}"
+                                                                                data-container=".view_modal"
+                                                                                class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif btn-modal"
+                                                                                data-toggle="modal"> <i class="fas fa-plus"></i>
+                                                                                {{ translate('add_to_money_safe')}}</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a data-href="{{ route('admin.money_safe.get-take-money-to-safe', $m_safe->id) }}"
+                                                                                data-container=".view_modal"
+                                                                                class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif btn-modal"
+                                                                                data-toggle="modal"> <i
+                                                                                    class="fas fa-minus"></i>
+                                                                                {{translate('take_money_safe')}}</a>
+                                                                        </li>
+
+                                                                        <li>
+                                                                            <a href="{{ route('admin.money_safe.watch-money-to-safe-transaction', $m_safe->id) }}"
+                                                                                class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"
+                                                                                target="_blank"> <i class="fas fa-eye"></i>
+                                                                                {{ translate('watch_statement')}}</a>
+                                                                        </li>
+                                                                    @endcan
+                                                                    @can('safe_module.money_safe.create_and_edit')
+                                                                        <li>
+                                                                            <a data-href="{{ route('admin.money_safe.edit', $m_safe->id) }}"
+                                                                                data-container=".view_modal"
+                                                                                class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif btn-modal"
+                                                                                data-toggle="modal"><i
+                                                                                    class="dripicons-document-edit"></i>
+                                                                                {{ translate('update')}}</a>
+                                                                        </li>
+                                                                    @endcan
+                                                                    @can('safe_module.money_safe.delete')
+
+                                                                        <li>
+
+                                                                            <a data-href="{{ route('admin.money_safe.destroy', $m_safe->id) }}"
+                                                                                {{-- data-check_password="{{action('UserController@checkPassword', Auth::user()->id)}}" --}}
+                                                                                class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif text-red delete_item"><i
+                                                                                    class="fa fa-trash"></i>
+                                                                                {{ translate('delete')}}</a>
+                                                                        </li>
+                                                                    @endcan
                                                                 </ul>
                                                             </div>
                                                         </td>
@@ -211,8 +225,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        <div class="view_modal no-print">
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +237,7 @@
             <!-- End row -->
         </div>
         <!-- End Contentbar -->
-    </div>
+    </section>
     <!-- End Rightbar -->
 
 @endsection

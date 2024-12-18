@@ -27,7 +27,7 @@ class StorePosController extends Controller
     public function index()
     {
         $store_poses = StorePos::all();
-        return view('store_pos.index')->with(compact('store_poses'));
+        return view('setting::back-end.store_pos.index')->with(compact('store_poses'));
     }
 
     /**
@@ -35,12 +35,12 @@ class StorePosController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function create()
+    public function create(): Factory|View|Application
     {
         $stores = Store::getDropdown();
-        $users = Admin::orderBy('name', 'asc')->pluck('name', 'id');
-           return view('store_pos.create')
-               ->with(compact('stores', 'users'));
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
+           return view('setting::back-end.store_pos.create')
+               ->with(compact('stores', 'admins'));
     }
 
     /**
@@ -51,7 +51,6 @@ class StorePosController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         try {
             $store_pos = StorePos::create($request->except('_token'));
             $store_pos->created_by   = Auth::user()->id ;
@@ -81,16 +80,7 @@ class StorePosController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -98,15 +88,15 @@ class StorePosController extends Controller
      * @param  int  $id
      * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit($id): Factory|View|Application
     {
         $store_pos = StorePos::find($id);
 
         $stores = Store::getDropdown();
-        $users = Admin::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('store_pos.edit')
-            ->with(compact('store_pos', 'stores', 'users'
+        return view('setting::back-end.store_pos.edit')
+            ->with(compact('store_pos', 'stores', 'admins'
         ));
     }
 

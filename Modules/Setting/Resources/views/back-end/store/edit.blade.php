@@ -1,53 +1,111 @@
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editBrandModalLabel"
-     style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            {!! Form::open(['url' => route('admin.store.update',$store->id), 'method' => 'put','id' => isset($quick_add)&&$quick_add? 'quick_add_store_form' : 'add_store' ]) !!}
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleLargeModalLabel">@lang('lang.add_store')</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        {!! Form::open(['url' => route('admin.store.update',$store->id), 'id'=>'form-store','method' => 'put']) !!}
 
-            <div class="modal-body">
-                <div class="form-group">
-                    {!! Form::label('branch_id', __('lang.branch'))  !!}
-                    {!! Form::select('branch_id',$branches,$store->branch_id, ['class' => 'form-control select2' , 'placeholder' => __('lang.branch') ]);  !!}
-                </div>
-                <div class="form-group">
-                    <input type="hidden" name="quick_add" value="{{ isset($quick_add)&&$quick_add?$quick_add:'' }}">
-                    {!! Form::label('name', __('lang.name')) .'*' !!}
-                    {!! Form::text('name', $store->name, ['class' => 'form-control' , 'placeholder' => __('lang.name') , 'required']);  !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('phone_number', __('lang.phone_number'))  !!}
-                    {!! Form::text('phone_number', $store->phone_number, ['class' => 'form-control' , 'placeholder' => __('lang.phone_number') ]);  !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('email', __('lang.name'))  !!}
-                    {!! Form::text('email',$store->email , ['class' => 'form-control' , 'placeholder' => __('lang.email') ]);  !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('manager_name', __('lang.manager_name'))  !!}
-                    {!! Form::text('manager_name', $store->manager_name, ['class' => 'form-control' , 'placeholder' => __('lang.manager_name') ]);  !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('manager_mobile_number', __('lang.manager_mobile_number'))  !!}
-                    {!! Form::text('manager_mobile_number', $store->manager_mobile_number, ['class' => 'form-control' , 'placeholder' => __('lang.manager_mobile_number') ]);  !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('details', __('lang.details'))  !!}
-                    {!! Form::textarea('details', $store->details, ['class' => 'form-control' , 'placeholder' => __('lang.details') , 'rows' => '2']);  !!}
-                </div>
+        <div
+            class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
 
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('lang.close')</button>
-                <button  id="create-store-btn" class="btn btn-primary">{{__('lang.save')}}</button>
-            </div>
-            {!! Form::close() !!}
+            <h4 class="modal-title px-2 position-relative">@lang('lang.add_store')
+                <span class=" header-modal-pill"></span>
+            </h4>
+            <button type="button"
+                    class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
+                    data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="position-absolute modal-border"></span>
         </div>
-    </div>
-</div>
+
+        <div
+            class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse justify-content-end @else justify-content-start flex-row @endif align-items-center">
+            <div
+                class=" d-flex mb-2 align-items-center form-group @if (app()->isLocale('ar')) flex-row-reverse mr-3 @else ml-3 @endif">
+                <label class="modal-label-width" for="name">@lang('lang.name') *</label>
+                <div
+                    class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                    <input type="text" required style="width: 100%"
+                           class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
+                           placeholder="@lang('lang.name')" name="name" value="{{ old('name',$store->name) }}" >
+                    @error('name')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div
+                class=" d-flex mb-2 align-items-center form-group @if (app()->isLocale('ar')) flex-row-reverse mr-3 @else ml-3 @endif">
+                <label class="modal-label-width" for="phone_number">@lang('lang.phone_number') </label>
+                <div
+                    class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                    <input type="text" required style="width: 100%"
+                           class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
+                           placeholder="@lang('lang.phone_number')" name="phone_number" value="{{ old('phone_number',$store->phone_number) }}" >
+                    @error('phone_number')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div
+                class=" d-flex mb-2 align-items-center form-group @if (app()->isLocale('ar')) flex-row-reverse mr-3 @else ml-3 @endif">
+                <label class="modal-label-width" for="email">@lang('lang.email') </label>
+                <div
+                    class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                    <input type="text" required style="width: 100%"
+                           class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
+                           placeholder="@lang('lang.email')" name="email" value="{{ old('email',$store->email) }}" >
+                    @error('email')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div
+                class=" d-flex mb-2 align-items-center form-group @if (app()->isLocale('ar')) flex-row-reverse mr-3 @else ml-3 @endif">
+                <label class="modal-label-width" for="manager_name">@lang('lang.manager_name') </label>
+                <div
+                    class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                    <input type="text" required style="width: 100%"
+                           class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
+                           placeholder="@lang('lang.manager_name')" name="manager_name" value="{{ old('manager_name',$store->manager_name) }}" >
+                    @error('manager_name')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+
+
+            <div
+                class=" d-flex mb-2 align-items-center form-group @if (app()->isLocale('ar')) flex-row-reverse mr-3 @else ml-3 @endif">
+                <label class="modal-label-width" for="manager_mobile_number">@lang('lang.manager_mobile_number') </label>
+                <div
+                    class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                    <input type="text" required style="width: 100%"
+                           class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
+                           placeholder="@lang('lang.manager_mobile_number')" name="manager_mobile_number" value="{{ old('manager_mobile_number',$store->manager_mobile_number) }}" >
+                    @error('manager_mobile_number')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+
+            <div
+                class=" d-flex mb-2 align-items-center form-group @if (app()->isLocale('ar')) flex-row-reverse mr-3 @else ml-3 @endif">
+                <label class="modal-label-width" for="details">@lang('lang.details') </label>
+                <div
+                    class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                    {!! Form::textarea('details',$store->details, ['class' => 'form-control' , 'placeholder' => __('lang.details') , 'rows' => '2']);  !!}
+
+                    @error('details')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer d-flex justify-content-center align-content-center gap-3">
+            <button type="submit" class="col-3 py-1 btn btn-main">@lang('lang.save')</button>
+            <button type="button" class="col-3 py-1 btn btn-danger" data-dismiss="modal">@lang('lang.close')</button>
+        </div>
+
+        {!! Form::close() !!}
+
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

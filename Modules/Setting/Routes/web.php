@@ -5,6 +5,7 @@ use Modules\Setting\Http\Controllers\ColorController;
 use Modules\Setting\Http\Controllers\SizeController;
 use Modules\Setting\Http\Controllers\MoneySafeController;
 use Modules\Setting\Http\Controllers\StoreController;
+use Modules\Setting\Http\Controllers\StorePosController;
 
 /*
 |--------------------------------------------------------------------------
