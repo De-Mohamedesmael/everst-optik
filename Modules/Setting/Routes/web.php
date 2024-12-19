@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Setting\Http\Controllers\ColorController;
+use Modules\Setting\Http\Controllers\SettingController;
 use Modules\Setting\Http\Controllers\SizeController;
 use Modules\Setting\Http\Controllers\MoneySafeController;
 use Modules\Setting\Http\Controllers\StoreController;
 use Modules\Setting\Http\Controllers\StorePosController;
+use Modules\Setting\Http\Controllers\TaxController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,12 +32,15 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('store-pos', StorePosController::class);
 
 
+    Route::resource('tax', TaxController::class);
 
 
     Route::get('colors/get-dropdown', [ColorController::class,'getDropdown'])->name('colors.dropdown');
     Route::resource('colors', ColorController::class);
     Route::get('sizes/get-dropdown', [SizeController::class,'getDropdown'])->name('sizes.dropdown');
     Route::resource('sizes', SizeController::class);
+
+
 
 
 
@@ -47,5 +52,12 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('money_safe/get-take-money-to-safe/{id}', [MoneySafeController::class,'getTakeMoneyFromSafe'])->name('money_safe.get-take-money-to-safe');
     Route::get('money_safe/watch-money-to-safe-transaction/{id}', [MoneySafeController::class,'getMoneySafeTransactions'])->name('money_safe.watch-money-to-safe-transaction');
     Route::resource('money_safe', MoneySafeController::class);
+
+
+
+
+    Route::post('settings/update-general-setting', [SettingController::class , 'updateGeneralSetting'])->name('settings.updateGeneralSetting');
+    Route::get('settings/get-general-setting', [SettingController::class , 'getGeneralSetting'])->name('settings.getGeneralSetting');
+    Route::post('settings/remove-image/{type}', [SettingController::class , 'removeImage'])->name('settings.removeImage');
 
 });

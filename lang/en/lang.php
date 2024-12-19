@@ -1338,4 +1338,6 @@
   'updated_by' => 'Updated by',
   'add_store_pos' => 'Add store pos',
   'exists_validation' => 'Exists validation',
+  'Sorry , You Should Upload Valid Image' => 'Sorry   You Should Upload Valid Image',
+  'Oops...' => 'Oops...',
 );

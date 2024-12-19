@@ -422,15 +422,8 @@
 
                                         <ul class="sub-menu p-0" style="list-style: none">
                                             <li class="navbar_item">
-                                                <a style="cursor: pointer;font-weight: 600;text-decoration: none;"
-                                                   href="#" target="_blank"
-                                                   class="branch-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif text-decoration-none">
-                                                    <i class="mdi mdi-circle"></i>@lang('lang.branches')
-                                                </a>
-                                            </li>
-                                            <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif general-tax-button"
-                                                   href="#" target="_blank"
+                                                   href="{{route('admin.tax.index')}}?type=general_tax" target="_blank"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.general_tax')
                                                 </a>
@@ -438,7 +431,7 @@
                                             {{-- ////////// ضرائب المنتجات ////////// --}}
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif product_tax-button"
-                                                   href="#" target="_blank"
+                                                   href="{{route('admin.tax.index')}}?type=product_tax" target="_blank"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.product_tax')
                                                 </a>
@@ -463,13 +456,15 @@
                                                     <i class="mdi mdi-circle"></i>@lang('lang.sizes')
                                                 </a>
                                             </li>
-                                            <li class="navbar_item">
-                                                <a class="general_settings-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
-                                                   href="##" target="_blank"
-                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
-                                                    <i class="mdi mdi-circle"></i>@lang('lang.general_settings')
-                                                </a>
-                                            </li>
+                                            @can('settings.general_settings.view')
+                                                <li class="navbar_item">
+                                                    <a class="general_settings-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
+                                                       href="{{route('admin.settings.getGeneralSetting')}}" target="_blank"
+                                                       style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                        <i class="mdi mdi-circle"></i>@lang('lang.general_settings')
+                                                    </a>
+                                                </li>
+                                            @endcan
                                         </ul>
                                     </li>
                                 </ul>
