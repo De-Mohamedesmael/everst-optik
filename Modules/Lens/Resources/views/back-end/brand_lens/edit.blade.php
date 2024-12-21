@@ -1,16 +1,16 @@
 <div class="modal-dialog  modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header d-flex justify-content-between py-2 flex-row ">
-            <h5 class="modal-title" id="edit">@lang('lang.edit_category')</h5>
+            <h5 class="modal-title" id="edit">@lang('lang.edit_brand_lens')</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
 
         {!! Form::open([
-            'url' => route('admin.categories.update', $category->id),
+            'url' => route('admin.brand_lenses.update', $brand_lens->id),
             'method' => 'put',
-            'id' => 'category_add_form',
+            'id' => 'brand_lens_add_form',
             'files' => true,
         ]) !!}
         <div
@@ -20,21 +20,21 @@
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
                 <div class="input-group my-group select-button-group">
-                    {!! Form::text('name', $category->name, [
+                    {!! Form::text('name', $brand_lens->name, [
                         'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
                         'placeholder' => __('lang.name'),
                         'required',
                     ]) !!}
                     <span class="input-group-btn">
-                        <button class="select-button btn-flat translation_btn" type="button" data-type="category"><i
+                        <button class="select-button btn-flat translation_btn" type="button" data-type="brand_lens"><i
                                 class="dripicons-web"></i></button>
                     </span>
                 </div>
             </div>
             @include('back-end.layouts.partials.translation_inputs', [
                 'attribute' => 'name',
-                'translations' => $category->translations,
-                'type' => 'category',
+                'translations' => $brand_lens->translations,
+                'type' => 'brand_lens',
             ])
 
             <div class="col-md-6 d-flex flex-column mb-2">
@@ -59,14 +59,14 @@
 
                     <div class="col-md-6 d-flex justify-content-center">
                         <div class="preview-edit-container">
-                            @if ($category)
-                                <div id="preview{{ $category->id }}" class="preview">
-                                    @if (!empty($category->getFirstMediaUrl('category')))
-                                        <img src="{{ $category->getFirstMediaUrl('category') }}"
-                                            id="img{{ $category->id }}" alt="">
+                            @if ($brand_lens)
+                                <div id="preview{{ $brand_lens->id }}" class="preview">
+                                    @if (!empty($brand_lens->getFirstMediaUrl('brand_lens')))
+                                        <img src="{{ $brand_lens->getFirstMediaUrl('brand_lens') }}"
+                                            id="img{{ $brand_lens->id }}" alt="">
                                     @else
                                         <img src="{{ asset('/uploads/' . session('logo')) }}" alt=""
-                                            id="img{{ $category->id }}">
+                                            id="img{{ $brand_lens->id }}">
                                     @endif
                                 </div>
                             @endif
@@ -116,7 +116,7 @@
         e.preventDefault();
         getImages()
         setTimeout(() => {
-            $("#category_add_form").submit();
+            $("#brand_lens_add_form").submit();
         }, 500)
     });
     const fileInputImages = document.querySelector('#file-input-edit');

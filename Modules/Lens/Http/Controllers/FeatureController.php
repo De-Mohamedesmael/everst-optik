@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Modules\Lens\Entities\Feature;
 
-class BrandLensController extends Controller
+class FeatureController extends Controller
 {
     /**
      * All Utils instance.

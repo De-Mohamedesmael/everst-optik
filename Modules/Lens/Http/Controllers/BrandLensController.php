@@ -1,15 +1,21 @@
 <?php
 
-namespace Modules\Product\Http\Controllers;
+namespace Modules\Lens\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Product\Entities\Category;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Modules\Lens\Entities\BrandLens;
 use App\Utils\Util;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Modules\Lens\Entities\Feature;
 
-class CategoryController extends Controller
+class BrandLensController extends Controller
 {
     /**
      * All Utils instance.
@@ -30,67 +36,55 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): Factory|View|Application
     {
-        $categories = Category::withCount('products')->get();
+        $brand_lenses = BrandLens::withCount('features')->get();
 
-        return view('product::back-end.categories.index')->with(compact(
-            'categories'
+        return view('lens::back-end.brand_lens.index')->with(compact(
+            'brand_lenses'
         ));
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function getSubCategories()
-    {
-        $categories = Category::whereNotNull('parent_id')->get();
 
-        return view('product::back-end.categories.sub_categories')->with(compact(
-            'categories'
-        ));
-    }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function create(Request $request)
+    public function create(Request $request): Factory|View|Application
     {
         $quick_add = $request->quick_add ?? null;
-        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
-        return view('product::back-end.categories.create')->with(compact(
+        $features = Feature::orderBy('name', 'asc')->pluck('name', 'id');
+        return view('lens::back-end.brand_lens.create')->with(compact(
             'quick_add',
-            'categories'
+            'features'
         ));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return array|JsonResponse|RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse|array|RedirectResponse
     {
         $this->validate(
             $request,
             ['name' => ['required', 'max:255']]
         );
 
-        $category_exist = Category::where('name', $request->name)->exists();
+        $brand_lens_exist = BrandLens::where('name', $request->name)->exists();
 
 
-        if ($category_exist) {
+        if ($brand_lens_exist) {
             if ($request->ajax()) {
                 return response()->json(array(
                     'success' => false,
                     'message' => translate('There are incorect values in the form!'),
-                    'msg' => translate('Category name already taken')
+                    'msg' => translate('BrandLens name already taken')
                 ));
             }
         }
@@ -99,7 +93,7 @@ class CategoryController extends Controller
             $data['translations'] = !empty($data['translations']) ? $data['translations'] : [];
 
             DB::beginTransaction();
-            $category = Category::create($data);
+            $brand_lens = BrandLens::create($data);
 
             if ($request->has("cropImages") && count($request->cropImages) > 0) {
                 foreach ($request->cropImages as $imageData) {
@@ -107,15 +101,29 @@ class CategoryController extends Controller
                     $image = rand(1,1500)."_image.".$extention;
                     $filePath = public_path('uploads/' . $image);
                     $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $category->addMedia($filePath)->toMediaCollection('category');
+                    $brand_lens->addMedia($filePath)->toMediaCollection('icon');
 
                 }
             }
-            $category_id = $category->id;
+            if ($request->has("second_icon") && count($request->second_icon) > 0) {
+                foreach ($request->second_icon as $imageData) {
+                    $extention = explode(";",explode("/",$imageData)[1])[0];
+                    $image = rand(1,1500)."_image.".$extention;
+                    $filePath = public_path('uploads/' . $image);
+                    $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
+                    $brand_lens->addMedia($filePath)->toMediaCollection('second_icon');
+
+                }
+            }
+           if( $request->has("feature_id")) {
+                $brand_lens->features()->attach($request->feature_id);
+            }
+
+            $brand_lens_id = $brand_lens->id;
             DB::commit();
             $output = [
                 'success' => true,
-                'category_id' => $category_id,
+                'brand_lens_id' => $brand_lens_id,
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
@@ -149,22 +157,22 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
-        $category = Category::find($id);
-        return view('product::back-end.categories.edit')->with(compact(
-            'category'
+        $brand_lens = BrandLens::find($id);
+        return view('lens::back-end.brand_lens.edit')->with(compact(
+            'brand_lens'
         ));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -177,20 +185,33 @@ class CategoryController extends Controller
             $data = $request->except('_token', '_method');
             $data['translations'] = !empty($data['translations']) ? $data['translations'] : [];
             DB::beginTransaction();
-            $category = Category::find($id);
+            $brand_lens = BrandLens::find($id);
 
-            $category->update($data);
+            $brand_lens->update($data);
             if ($request->has("cropImages") && count($request->cropImages) > 0) {
                 foreach (getCroppedImages($request->cropImages) as $imageData) {
-                    $category->clearMediaCollection('category');
+                    $brand_lens->clearMediaCollection('icon');
                     $extention = explode(";",explode("/",$imageData)[1])[0];
                     $image = rand(1,1500)."_image.".$extention;
                     $filePath = public_path('uploads/' . $image);
                     $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $category->addMedia($filePath)->toMediaCollection('category');
+                    $brand_lens->addMedia($filePath)->toMediaCollection('icon');
                 }
             }
+            if ($request->has("second_icon") && count($request->second_icon) > 0) {
+                foreach ($request->second_icon as $imageData) {
+                    $brand_lens->clearMediaCollection('second_icon');
+                    $extention = explode(";",explode("/",$imageData)[1])[0];
+                    $image = rand(1,1500)."_image.".$extention;
+                    $filePath = public_path('uploads/' . $image);
+                    $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
+                    $brand_lens->addMedia($filePath)->toMediaCollection('second_icon');
 
+                }
+            }
+            if( $request->has("feature_id")) {
+                $brand_lens->features()->attach($request->feature_id);
+            }
             DB::commit();
             $output = [
                 'success' => true,
@@ -216,7 +237,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         try {
-            Category::find($id)->delete();
+            BrandLens::find($id)->delete();
             $output = [
                 'success' => true,
                 'msg' => __('lang.success')
@@ -235,8 +256,8 @@ class CategoryController extends Controller
     public function getDropdown()
     {
 
-        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
-        return $this->commonUtil->createDropdownHtml($categories);
+        $brand_lenses = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
+        return $this->commonUtil->createDropdownHtml($brand_lenses);
     }
 
 

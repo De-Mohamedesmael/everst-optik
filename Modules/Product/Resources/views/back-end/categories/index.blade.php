@@ -13,7 +13,7 @@
 
 @section('button')
 
-        @can('product_module.product_class.create_and_edit')
+        @can('product_module.category.create_and_edit')
             <div class="widgetbar d-flex @if (app()->isLocale('ar')) justify-content-start @else justify-content-end @endif">
                 <a style="color: white"
                    data-href="{{ route('admin.categories.create') }}"
