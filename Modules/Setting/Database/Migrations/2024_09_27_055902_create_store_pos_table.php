@@ -19,6 +19,8 @@ class CreateStorePosTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('admin_id');
             $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('deleted_by');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

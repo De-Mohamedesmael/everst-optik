@@ -7,5 +7,6 @@
     "Customer": true,
     "CashRegister": true,
     "Supplier": false,
-    "AddStock": true
+    "AddStock": true,
+    "Lens": true
 }
