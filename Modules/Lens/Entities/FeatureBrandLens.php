@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class FeatureLens extends Model implements HasMedia
+class FeatureBrandLens extends Model
 {
     use HasFactory;
 
@@ -18,6 +18,7 @@ class FeatureLens extends Model implements HasMedia
      * @var array
      */
     public $timestamps = false;
+    protected $table = "feature_brand_lenses";
     protected $guarded = [];
 
 

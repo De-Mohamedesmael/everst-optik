@@ -1,0 +1,13 @@
+{
+    "name": "Lens",
+    "alias": "lens",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Lens\\Providers\\LensServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
