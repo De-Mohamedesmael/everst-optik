@@ -15,7 +15,7 @@ class CreateFeaturesTable extends Migration
     {
         Schema::create('features', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 25);
+            $table->string('name', 100);
             $table->softDeletes();
             $table->timestamps();
         });

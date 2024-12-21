@@ -73,7 +73,7 @@ class FeatureController extends Controller
     {
         $this->validate(
             $request,
-            ['name' => ['required', 'max:255']]
+            ['name' => ['required', 'max:100']]
         );
 
         $brand_lens_exist = BrandLens::where('name', $request->name)->exists();
@@ -178,7 +178,7 @@ class FeatureController extends Controller
     {
         $this->validate(
             $request,
-            ['name' => ['required', 'max:255']]
+            ['name' => ['required', 'max:100']]
         );
 
         try {
