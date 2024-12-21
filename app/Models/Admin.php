@@ -69,9 +69,8 @@ class Admin extends Authenticatable
         return [
             'dashboard' => __('lang.dashboard'),
             'product_module' => __('lang.product_module'),
-            'raw_material_module' => __('lang.raw_material_module'),
+            'lens_module' => __('lang.lens_module'),
             'customer_module' => __('lang.customer_module'),
-            'supplier_module' => __('lang.supplier_module'),
             'service_provider' => __('lang.service_provider'),
             'hr_management' => __('lang.hr_management'),
             'purchase_order' => __('lang.purchase_order'),
@@ -100,38 +99,27 @@ class Admin extends Authenticatable
             ],
             'product_module' => [
                 'products' => __('lang.products'),
-                'product_class' => session('system_mode') == 'restaurant' ? __('lang.category') : __('lang.product_class'),
                 'category' => __('lang.category'),
-                'sub_category' => __('lang.sub_category'),
                 'brand' => __('lang.brand'),
-                'unit' => __('lang.unit'),
                 'color' => __('lang.unit'),
                 'size' => __('lang.size'),
-                'grade' => __('lang.grade'),
                 'tax' => __('lang.tax'),
-                'product_classification_tree' => __('lang.product_classification_tree'),
                 'barcode' => __('lang.barcode'),
                 'purchase_price' => __('lang.purchase_price'),
                 'sell_price' => __('lang.sell_price'),
             ],
-            'raw_material_module' => [
-                'raw_material' => __('lang.raw_material'),
-                'consumption' => __('lang.consumption'),
-                'add_consumption_for_others' => __('lang.add_consumption_for_others'),
-                'add_stock_for_raw_material' => __('lang.add_stock_for_raw_material'),
-                'remove_stock' => __('lang.remove_stock'),
-                'transfer' => __('lang.transfer'),
-                'internal_stock_request' => __('lang.internal_stock_request'),
-                'internal_stock_return' => __('lang.internal_stock_return'),
+            'lens_module' => [
+                'lens' => __('lang.lens'),
+                'brand_lenses' => __('lang.brand_lenses'),
+                'features' => __('lang.features'),
+                'add_stock_for_lens' => __('lang.add_stock_for_lens'),
+
             ],
             'customer_module' => [
                 'customer' => __('lang.customer'),
                 'customer_type' => __('lang.customer_type'),
+                'customer_prescription' => __('lang.customer_prescription'),
                 'add_payment' => __('lang.add_payment'),
-            ],
-            'supplier_module' => [
-                'supplier' => __('lang.supplier'),
-                'category' => __('lang.category'),
             ],
             'service_provider' => [
                 'supplier_services' => __('lang.supplier_services'),
@@ -187,10 +175,6 @@ class Admin extends Authenticatable
             'quotation_for_customers' => [
                 'quotation' => __('lang.quotation'),
             ],
-            'coupons_and_gift_cards' => [
-                'coupon' => __('lang.coupon'),
-                'gift_card' => __('lang.gift_card'),
-            ],
             'reports' => [
                 'profit_loss' => __('lang.profit_loss'),
                 'daily_sales_summary' => __('lang.daily_sales_summary'),
@@ -199,7 +183,6 @@ class Admin extends Authenticatable
                 'expected_receivable_report' => __('lang.expected_receivable_report'),
                 'expected_payable_report' => __('lang.expected_payable_report'),
                 'summary_report' => __('lang.summary_report'),
-                'dining_in_sales' => __('lang.dining_in_sales'),
                 'sales_per_employee' => __('lang.sales_per_employee'),
                 'best_seller_report' => __('lang.best_seller_report'),
                 'product_report' => __('lang.product_report'),
@@ -214,7 +197,6 @@ class Admin extends Authenticatable
                 'product_quantity_alert_report' => __('lang.product_quantity_alert_report'),
                 'user_report' => __('lang.user_report'),
                 'customer_report' => __('lang.customer_report'),
-                'supplier_report' => __('lang.supplier_report'),
                 'due_report' => __('lang.due_report'),
             ],
             'cash' => [
@@ -249,8 +231,6 @@ class Admin extends Authenticatable
             'settings' => [
                 'store' => __('lang.store'),
                 'store_pos' => __('lang.store_pos'),
-                'dining_room' => __('lang.dining_room'),
-                'dining_table' => __('lang.dining_table'),
                 'service_fee' => __('lang.service_fee'),
                 'delivery_zone' => __('lang.delivery_zone'),
                 'delivery_zone_cost' => __('lang.delivery_zone_cost'),

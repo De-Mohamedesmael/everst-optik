@@ -1,14 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Setting\Http\Controllers\ColorController;
-use Modules\Setting\Http\Controllers\SettingController;
-use Modules\Setting\Http\Controllers\SizeController;
-use Modules\Setting\Http\Controllers\MoneySafeController;
-use Modules\Setting\Http\Controllers\StoreController;
-use Modules\Setting\Http\Controllers\StorePosController;
-use Modules\Setting\Http\Controllers\TaxController;
-
+use Modules\Lens\Http\Controllers\BrandLensController;
+use Modules\Lens\Http\Controllers\FeatureController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,11 +19,15 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     ##################################################################
     ##                          brands routs                        ##
     ##################################################################
-    Route::get('brands/get-dropdown', [BrandController::class, 'getDropdown'])->name('brands.getDropdown');
-    Route::resource('brands', BrandController::class);
+    Route::get('brand_lenses/get-dropdown', [BrandLensController::class, 'getDropdown'])->name('brands.getDropdown');
+    Route::resource('brand_lenses', BrandLensController::class);
+
+    ##################################################################
+    ##                          feature routs                        ##
+    ##################################################################
+    Route::get('features/get-dropdown', [FeatureController::class, 'getDropdown'])->name('brands.getDropdown');
+    Route::resource('features', FeatureController::class);
 
 
-
-    Route::resource('products', ProductController::class);
 
 });

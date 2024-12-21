@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Hr\Database\Seeders\JobSeeder;
 use Modules\Hr\Database\Seeders\PermissionTableSeeder;
+use Modules\Lens\Database\Seeders\BrandLensDatabaseSeeder;
 use Modules\Setting\Database\Seeders\CurrenciesTableSeeder;
 use Modules\Setting\Database\Seeders\SettingDatabaseSeeder;
 
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
             SettingDatabaseSeeder::class,
             CurrenciesTableSeeder::class,
             JobSeeder::class,
+            BrandLensDatabaseSeeder::class,
         ]);
     }
 }
