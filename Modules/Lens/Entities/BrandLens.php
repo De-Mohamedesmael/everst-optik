@@ -20,17 +20,13 @@ class BrandLens extends Model implements HasMedia
     protected $guarded = [];
 
 
-    protected $appends=['icon','second_icon'];
+    protected $appends=['icon'];
     public function features()
     {
         return $this->belongsToMany(Feature::class, 'feature_brand_lenses', 'brand_id', 'feature_id');
     }
-
     public function getIconAttribute(){
-        return $this->getMedia('icon')->first()?:asset('assets/website/'.$this->name.'.png');
-    }
-    public function getSecondIconAttribute(){
-        return $this->getMedia('second_icon')->first()?:asset('assets/website/'.$this->name.'V.png');
+        return $this->getMedia('icon')->first()?:asset('assets/default/'.$this->name.'.png');
     }
 
 

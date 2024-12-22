@@ -48,7 +48,6 @@ class BrandLensDatabaseSeeder extends Seeder
         ];
 
         BrandLens::insert($brands);
-
         $features = [
             [
                 'name' => 'Prevents reflections, presents pure vision',
@@ -58,6 +57,21 @@ class BrandLensDatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Anti-scratch',
+            ]
+            ,
+            [
+                'name' => 'Anti-dust, easy clean',
+            ]
+            ,
+            [
+                'name' => 'Anti-fog',
+            ]
+            ,
+            [
+                'name' => 'Max UV Protection',
+            ],
+            [
+                'name' => 'Blue Light protection',
             ]
         ];
 

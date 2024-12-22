@@ -20,6 +20,7 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     ##                          brands routs                        ##
     ##################################################################
     Route::get('brand_lenses/get-dropdown', [BrandLensController::class, 'getDropdown'])->name('brands.getDropdown');
+    Route::get('brand_lenses/show-with-features', [BrandLensController::class, 'showWithFeatures'])->name('brands.getDropdown');
     Route::resource('brand_lenses', BrandLensController::class);
 
     ##################################################################

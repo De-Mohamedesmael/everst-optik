@@ -105,16 +105,7 @@ class BrandLensController extends Controller
 
                 }
             }
-            if ($request->has("second_icon") && count($request->second_icon) > 0) {
-                foreach ($request->second_icon as $imageData) {
-                    $extention = explode(";",explode("/",$imageData)[1])[0];
-                    $image = rand(1,1500)."_image.".$extention;
-                    $filePath = public_path('uploads/' . $image);
-                    $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $brand_lens->addMedia($filePath)->toMediaCollection('second_icon');
 
-                }
-            }
            if( $request->has("feature_id")) {
                 $brand_lens->features()->attach($request->feature_id);
             }
@@ -198,17 +189,7 @@ class BrandLensController extends Controller
                     $brand_lens->addMedia($filePath)->toMediaCollection('icon');
                 }
             }
-            if ($request->has("second_icon") && count($request->second_icon) > 0) {
-                foreach ($request->second_icon as $imageData) {
-                    $brand_lens->clearMediaCollection('second_icon');
-                    $extention = explode(";",explode("/",$imageData)[1])[0];
-                    $image = rand(1,1500)."_image.".$extention;
-                    $filePath = public_path('uploads/' . $image);
-                    $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $brand_lens->addMedia($filePath)->toMediaCollection('second_icon');
 
-                }
-            }
             if( $request->has("feature_id")) {
                 $brand_lens->features()->attach($request->feature_id);
             }
@@ -260,7 +241,18 @@ class BrandLensController extends Controller
         return $this->commonUtil->createDropdownHtml($brand_lenses);
     }
 
-
+    /**
+     * show brands with features list .
+     *
+     * @return Application|Factory|View
+     */
+    public function showWithFeatures()
+    {
+        $brand_lens = BrandLens::with('features')->get();
+        return view('lens::back-end.brand_lens.partial.brands_with_features')->with(compact(
+            'brand_lens'
+        ));
+    }
 
 
 }

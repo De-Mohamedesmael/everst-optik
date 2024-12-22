@@ -20,17 +20,20 @@ class Feature extends Model implements HasMedia
      */
     protected $guarded = [];
 
-    protected $appends=['icon','before_effect','after_effect'];
+    protected $appends=['icon','icon_active','before_effect','after_effect'];
 
 
     public function getIconAttribute(){
-        return $this->getMedia('icon')->first()?:asset('assets/website/'.$this->id.'.png');
+        return $this->getMedia('icon')->first()?:asset('assets/default/f_'.$this->id.'.png');
+    }
+    public function getIconActiveAttribute(){
+        return $this->getMedia('icon_active')->first()?:asset('assets/default/f_ac_'.$this->id.'.png');
     }
     public function getBeforeEffectAttribute(){
-        return $this->getMedia('before_effect')->first()?:asset('assets/website/'.$this->id.'before.jpg');
+        return $this->getMedia('before_effect')->first()?:asset('assets/default/'.$this->id.'before.jpg');
     }
     public function getAfterEffectAttribute(){
-        return $this->getMedia('after_effect')->first()?:asset('assets/website/'.$this->id.'after.jpg');
+        return $this->getMedia('after_effect')->first()?:asset('assets/default/'.$this->id.'after.jpg');
     }
 
 
