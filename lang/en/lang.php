@@ -1340,4 +1340,6 @@
   'exists_validation' => 'Exists validation',
   'Sorry , You Should Upload Valid Image' => 'Sorry   You Should Upload Valid Image',
   'Oops...' => 'Oops...',
+  'features' => 'Features',
+  'brand_lenses' => 'Brand lenses',
 );

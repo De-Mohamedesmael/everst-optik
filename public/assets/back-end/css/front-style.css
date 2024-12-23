@@ -336,7 +336,7 @@ select.form-control {
 }
 
 .btn-primary {
-    background-color: #476762;
+    background: #476762 !important;
     border-color: #476762;
 }
 
@@ -930,7 +930,7 @@ thead tr {
 }
 
 .btn-primary:hover {
-    background-color: #476762;
+    background: #476762;
     outline: #476762;
     border-color: #476762;
     box-shadow: 2px 2px 3px 1px #7489e8 !important;

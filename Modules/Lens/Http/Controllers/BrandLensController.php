@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 use Modules\Lens\Entities\BrandLens;
 use App\Utils\Util;
 use Illuminate\Http\Request;
@@ -51,6 +52,7 @@ class BrandLensController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return Application|Factory|View
      */
     public function create(Request $request): Factory|View|Application
@@ -68,6 +70,7 @@ class BrandLensController extends Controller
      *
      * @param Request $request
      * @return array|JsonResponse|RedirectResponse
+     * @throws ValidationException
      */
     public function store(Request $request): JsonResponse|array|RedirectResponse
     {
@@ -89,12 +92,10 @@ class BrandLensController extends Controller
             }
         }
         try {
-            $data = $request->except('_token', 'quick_add');
-            $data['translations'] = !empty($data['translations']) ? $data['translations'] : [];
+            $data = $request->except('_token', 'quick_add','cropImages', 'feature_id');
 
             DB::beginTransaction();
             $brand_lens = BrandLens::create($data);
-
             if ($request->has("cropImages") && count($request->cropImages) > 0) {
                 foreach ($request->cropImages as $imageData) {
                     $extention = explode(";",explode("/",$imageData)[1])[0];
@@ -118,6 +119,8 @@ class BrandLensController extends Controller
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -153,8 +156,11 @@ class BrandLensController extends Controller
     public function edit($id)
     {
         $brand_lens = BrandLens::find($id);
+        $features = Feature::orderBy('name', 'asc')->pluck('name', 'id');
+
         return view('lens::back-end.brand_lens.edit')->with(compact(
-            'brand_lens'
+            'brand_lens',
+            'features'
         ));
     }
 
@@ -173,8 +179,7 @@ class BrandLensController extends Controller
         );
 
         try {
-            $data = $request->except('_token', '_method');
-            $data['translations'] = !empty($data['translations']) ? $data['translations'] : [];
+            $data = $request->except('_token','cropImages','feature_id', '_method');
             DB::beginTransaction();
             $brand_lens = BrandLens::find($id);
 
@@ -199,6 +204,7 @@ class BrandLensController extends Controller
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
+            DB::rollback();
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,

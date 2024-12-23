@@ -20,28 +20,28 @@ class BrandLensDatabaseSeeder extends Seeder
         $brands = [
             [
                 'name' => "PIXAR",
-                'color'=>'4eaf30',
+                'color'=>'#4eaf30',
             ],
             [
                 'name' => "PIXARU",
-                'color'=>'4eaf30',
+                'color'=>'#4eaf30',
 
             ],
             [
                 'name' => "PIXARBLU",
-                'color'=>'1a89ca',
+                'color'=>'#1a89ca',
 
             ], [
                 'name' => "pixarAqua",
-                'color'=>'00abc6',
+                'color'=>'#00abc6',
 
             ],[
                 'name' => "pixarDrive",
-                'color'=>'eb639f',
+                'color'=>'#eb639f',
 
             ],[
                 'name' => "slcV",
-                'color'=>'215395',
+                'color'=>'#215395',
 
             ],
 

@@ -26,7 +26,7 @@ class BrandLens extends Model implements HasMedia
         return $this->belongsToMany(Feature::class, 'feature_brand_lenses', 'brand_id', 'feature_id');
     }
     public function getIconAttribute(){
-        return $this->getMedia('icon')->first()?:asset('assets/default/'.$this->name.'.png');
+        return $this->getFirstMediaUrl('icon')?:asset('assets/default/'.$this->name.'.png');
     }
 
 

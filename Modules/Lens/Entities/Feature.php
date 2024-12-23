@@ -24,16 +24,16 @@ class Feature extends Model implements HasMedia
 
 
     public function getIconAttribute(){
-        return $this->getMedia('icon')->first()?:asset('assets/default/f_'.$this->id.'.png');
+        return $this->getFirstMediaUrl('icon')?:asset('assets/default/f_'.$this->id.'.png');
     }
     public function getIconActiveAttribute(){
-        return $this->getMedia('icon_active')->first()?:asset('assets/default/f_ac_'.$this->id.'.png');
+        return $this->getFirstMediaUrl('icon_active')?:asset('assets/default/f_ac_'.$this->id.'.png');
     }
     public function getBeforeEffectAttribute(){
-        return $this->getMedia('before_effect')->first()?:asset('assets/default/'.$this->id.'before.jpg');
+        return $this->getFirstMediaUrl('before_effect')?:asset('assets/default/'.$this->id.'before.jpg');
     }
     public function getAfterEffectAttribute(){
-        return $this->getMedia('after_effect')->first()?:asset('assets/default/'.$this->id.'after.jpg');
+        return $this->getFirstMediaUrl('after_effect')?:asset('assets/default/'.$this->id.'after.jpg');
     }
 
 

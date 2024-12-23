@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 use Modules\Lens\Entities\BrandLens;
 use App\Utils\Util;
 use Illuminate\Http\Request;
@@ -68,6 +69,7 @@ class FeatureController extends Controller
      *
      * @param Request $request
      * @return array|JsonResponse|RedirectResponse
+     * @throws ValidationException
      */
     public function store(Request $request): JsonResponse|array|RedirectResponse
     {
@@ -77,7 +79,6 @@ class FeatureController extends Controller
         );
 
         $brand_lens_exist = BrandLens::where('name', $request->name)->exists();
-
 
         if ($brand_lens_exist) {
             if ($request->ajax()) {
@@ -89,9 +90,8 @@ class FeatureController extends Controller
             }
         }
         try {
-            $data = $request->except('_token', 'quick_add');
-            $data['translations'] = !empty($data['translations']) ? $data['translations'] : [];
 
+            $data = $request->except('_token', 'quick_add');
             DB::beginTransaction();
             $brand_lens = BrandLens::create($data);
 
@@ -105,16 +105,7 @@ class FeatureController extends Controller
 
                 }
             }
-            if ($request->has("second_icon") && count($request->second_icon) > 0) {
-                foreach ($request->second_icon as $imageData) {
-                    $extention = explode(";",explode("/",$imageData)[1])[0];
-                    $image = rand(1,1500)."_image.".$extention;
-                    $filePath = public_path('uploads/' . $image);
-                    $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $brand_lens->addMedia($filePath)->toMediaCollection('second_icon');
 
-                }
-            }
            if( $request->has("feature_id")) {
                 $brand_lens->features()->attach($request->feature_id);
             }
@@ -127,6 +118,8 @@ class FeatureController extends Controller
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,

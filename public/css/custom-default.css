@@ -101,6 +101,7 @@ input.form-control-custom:checked+label::before {
 .btn-primary {
     color: var(--white);
     background-color: var(--secondary-color);
+    background: var(--secondary-color);
     border-color: var(--secondary-color);
 }
 
