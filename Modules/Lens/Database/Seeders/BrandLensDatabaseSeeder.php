@@ -23,20 +23,20 @@ class BrandLensDatabaseSeeder extends Seeder
                 'color'=>'4eaf30',
             ],
             [
-                'name' => "PIXARUV",
+                'name' => "PIXARU",
                 'color'=>'4eaf30',
 
             ],
             [
-                'name' => "PIXARBLUV",
+                'name' => "PIXARBLU",
                 'color'=>'1a89ca',
 
             ], [
-                'name' => "pixarAquaV",
+                'name' => "pixarAqua",
                 'color'=>'00abc6',
 
             ],[
-                'name' => "pixarDriveV",
+                'name' => "pixarDrive",
                 'color'=>'eb639f',
 
             ],[

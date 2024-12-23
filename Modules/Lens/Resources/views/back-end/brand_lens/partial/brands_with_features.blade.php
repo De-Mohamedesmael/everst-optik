@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        div.beforeAfterMenu.hide {
+        div.hide {
             display: none;
         }
         :root {
@@ -36,7 +36,7 @@
 
         main {
             display: grid;
-            margin: 200px 0;
+            margin: 20px 0;
         }
 
         .container {
@@ -171,17 +171,21 @@
             right: 0;
         }
 
-        #next-btn img {
+        #next-btn img , #previous-btn img{
             display: block;
             width: 65%;
             position: absolute;
             top: 50%;
             left: 39%;
+            height: 35px;
             transform: translate(-50%, -50%);
             -webkit-transform: translate(-50%, -50%);
             -moz-transform: translate(-50%, -50%);
         }
-
+        #previous-btn img {
+            left: 62% !important;
+            /* right: 15% !important; */
+        }
         .technicalLeftMenu {
             width: 80px;
             height: 100%;
@@ -189,14 +193,14 @@
             top: 0;
             left: 0;
             background: #f4f4f4;
-            padding-top: 55px;
+            padding-top: 20px;
             z-index: 5;
             border-right: 1px solid #ebebeb;
         }
 
         .technicalLeftMenu.pixarMenu a {
             height: auto;
-            padding: 35px 0;
+            padding: 40px 0;
             display: block;
             width: 100%;
             border-bottom: 1px solid #dcdcdc;
@@ -266,89 +270,98 @@
     @php
         $first_after='';
         $first_before='';
-        $next_icon='';
-        $previous_icon='';
-        $is_first=true;
+        $previous_icons=[];
+        $next_icons=[];
+        $html_links='';
+        foreach ($brand_lens as $key=>$brand_len){
+            $previous_icons[$key]=$brand_len->icon;
+            $next_icons[$key]=$brand_len->icon;
+        }
     @endphp
     @foreach($brand_lens as $key=> $brand)
-        <div class="controls beforeAfterMenu {{$loop->first?:"hide"}}" id="beforeAfterMenu{{$brand->id}}">
-            @foreach($brand->features as $key=> $feature)
-                <a href="#" data-pair="{{$feature->id}}" data-after="{{$feature->after_effect}}" data-before="{{$feature->before_effect}}" >
-                    <span class="effect {{$is_first?'active':''}}" data-default="{{$feature->icon}}" data-active="{{$feature->icon_active}}"
-                          style=" background: {{$is_first?'#1a89ca':'#ffffff'}} url('{{$is_first?$feature->icon_active :$feature->icon }}') no-repeat center;">
-                    </span>
-                    {{$feature->name}}
-                </a>
-            @if($is_first)
-                    @php
-                        $first_after=$feature->after_effect;
-                        $first_before=$feature->before_effect;
-                        $is_first=false;
-                    @endphp
-            @endif
+        <div class="div-tab-brand  {{$loop->first?:"hide"}}" id="dev-tap-brand{{$brand->id}}">
+            <div class="controls beforeAfterMenu" id="beforeAfterMenu{{$brand->id}}">
+                @foreach($brand->features as  $feature)
+                    <a href="#" data-pair="{{$feature->id}}" data-after="{{$feature->after_effect}}" data-before="{{$feature->before_effect}}" >
+                        <span class="effect {{$loop->first ?'active':''}}" data-default="{{$feature->icon}}" data-active="{{$feature->icon_active}}"
+                              style=" background: {{$loop->first?'#1a89ca':'#ffffff'}} url('{{$loop->first?$feature->icon_active :$feature->icon }}') no-repeat center;">
+                        </span>
+                        {{$feature->name}}
+                    </a>
+                        @if($loop->first)
+                            @php
+                                $first_after=$feature->after_effect;
+                                $first_before=$feature->before_effect;
+                            @endphp
+                        @endif
 
-            @endforeach
-            @if($key == 1)
-                    @php($next_icon = $brand->icon)
-            @endif
-            @if($loop->last)
-                @php($previous_icon = $brand->icon)
-            @endif
+                @endforeach
+
+
+            </div>
+            <div class="controls">
+                <a href="#" id="previous-btn">
+                    <img class="icon-previous" src="{{$key == 0 ? $previous_icons[$brand_lens->count() -1] : $previous_icons[$key-1]}}" alt="">
+                </a>
+
+                <div class="container">
+                    <div class="image-container">
+                        <img class="image-before slider-image" src="{{$first_before}}" alt="before" />
+                        <img class="image-after slider-image" src="{{$first_after}}" alt="after" />
+                    </div>
+                    <input type="range" min="0" max="100" value="50" aria-label="Percentage of before photo shown"
+                           class="slider" />
+                    <div class="slider-line" aria-hidden="true"></div>
+                    <div class="slider-button" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                             viewBox="0 0 256 256">
+                            <rect width="256" height="256" fill="none"></rect>
+                            <line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor"
+                                  stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                            <line x1="96" y1="128" x2="16" y2="128" fill="none" stroke="currentColor" stroke-linecap="round"
+                                  stroke-linejoin="round" stroke-width="16"></line>
+                            <polyline points="48 160 16 128 48 96" fill="none" stroke="currentColor" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="16"></polyline>
+                            <line x1="160" y1="128" x2="240" y2="128" fill="none" stroke="currentColor"
+                                  stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                            <polyline points="208 96 240 128 208 160" fill="none" stroke="currentColor"
+                                      stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <a href="#" id="next-btn">
+                    <img class="icon-next" src="{{$key == $brand_lens->count()-1 ? $previous_icons[$brand_lens->count() -1] :  $next_icons[$key+1]}}" alt="">
+                </a>
+
+
+
+
+            </div>
         </div>
+
+
+
+        @php
+          $html_links .=  '<a data-id="'.$brand->id.'" data-color="#'.$brand->color.'" href="#" class="';
+
+          if($key==0){
+              $html_links .= 'active';
+          }
+          $html_links .= '">';
+
+
+         $html_links .=' <img style="    transform: rotate(-90deg);height: 30px;" src="'.$brand->icon.'">';
+         $html_links .='</a>';
+        @endphp
+
+
     @endforeach
 
-
-    <div class="controls">
-
-
-
-        <a href="#" id="previous-btn">
-            <img src="{{$previous_icon}}" alt="">
-        </a>
-
-        <div class="container">
-            <div class="image-container">
-                <img class="image-before slider-image" src="{{$first_before}}" alt="before" />
-                <img class="image-after slider-image" src="{{$first_after}}" alt="after" />
-            </div>
-            <input type="range" min="0" max="100" value="50" aria-label="Percentage of before photo shown"
-                   class="slider" />
-            <div class="slider-line" aria-hidden="true"></div>
-            <div class="slider-button" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                     viewBox="0 0 256 256">
-                    <rect width="256" height="256" fill="none"></rect>
-                    <line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor"
-                          stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
-                    <line x1="96" y1="128" x2="16" y2="128" fill="none" stroke="currentColor" stroke-linecap="round"
-                          stroke-linejoin="round" stroke-width="16"></line>
-                    <polyline points="48 160 16 128 48 96" fill="none" stroke="currentColor" stroke-linecap="round"
-                              stroke-linejoin="round" stroke-width="16"></polyline>
-                    <line x1="160" y1="128" x2="240" y2="128" fill="none" stroke="currentColor"
-                          stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
-                    <polyline points="208 96 240 128 208 160" fill="none" stroke="currentColor"
-                              stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
-                </svg>
-            </div>
-        </div>
-
-        <a href="#" id="next-btn">
-            <img src="{{$next_icon}}" alt="">
-        </a>
-
-
-
-
-    </div>
-
-
-
     <div class="technicalLeftMenu pixarMenu">
-        @foreach($brand_lens as $key => $brand)
-            <a data-img="{{$brand->icon}}"   data-color="#4eaf30" href="#" class="{{$key==0?'active':''}}"><img style="    transform: rotate(-90deg);
-    height: 30px;" src="{{$brand->icon}}"></a>
-        @endforeach
+        {!! $html_links !!}
     </div>
+
 
 </main>
 
@@ -424,21 +437,24 @@
 
         menuItems.forEach(item => {
             item.addEventListener("click", function (event) {
-                menuItems.forEach(el => el.classList.remove("active")); // Remove 'active' from all
-                this.classList.add("active"); // Add 'active' to the clicked element
+                menuItems.forEach(el => el.classList.remove("active"));
 
-                // Store the color value in local storage
-                const color = this.dataset.color; // Assuming color is stored in data-color attribute
+                this.classList.add("active");
+
+                const color = this.dataset.color;
+                const id = this.dataset.id;
                 localStorage.setItem('pixarColor', color);
+
                 document.documentElement.style.setProperty('--primary', color);
 
-
-
-                // Update the img src inside #next-btn
-                const newImgSrc = this.dataset.img;
-                if (nextBtnImg) {
-                    nextBtnImg.src = newImgSrc;
-                }
+                const brandTabs = document.querySelectorAll("[id^='dev-tap-brand']");
+                brandTabs.forEach(tab => {
+                    if (tab.id === "dev-tap-brand" + id) {
+                        tab.classList.remove('hide');
+                    } else {
+                        tab.classList.add('hide');
+                    }
+                });
             });
         });
     });
