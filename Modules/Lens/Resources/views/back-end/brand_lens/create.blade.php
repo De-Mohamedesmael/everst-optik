@@ -29,6 +29,34 @@
 
                 </div>
             </div>
+            <div class="col-md-6 px-5">
+                <div class="form-group">
+                    {!! Form::label('feature_id', __('lang.features'), [
+                        'class' => 'form-label d-block mb-1 ',
+                    ]) !!}
+                    {!! Form::select('feature_id[]', $features,null, [
+                        'class' => ' selectpicker form-control',
+                        'data-live-search' => 'true',
+                        'style' => 'width: 80%',
+                        'multiple',
+                       'data-actions-box' => 'true',
+                        'id' => 'feature_id',
+                    ]) !!}
+                </div>
+            </div>
+
+            <div class="col-md-3 px-5">
+                <div class="form-group">
+                    {!! Form::label('color', __('lang.color'), [
+                        'class' => 'form-label d-block mb-1 ',
+                    ]) !!}
+                    {!! Form::color('color',null, [
+                        'class' => '  form-control',
+                        'id' => 'color',
+                    ]) !!}
+                </div>
+            </div>
+
             <input type="hidden" name="quick_add" value="{{ $quick_add }}">
             <div class="col-md-6 d-flex flex-column mb-2">
 
@@ -56,32 +84,7 @@
 
 
             </div>
-            <div class="col-md-3 px-5">
-                <div class="form-group">
-                    {!! Form::label('color', __('lang.color'), [
-                        'class' => 'form-label d-block mb-1 ',
-                    ]) !!}
-                    {!! Form::color('color', $features,null, [
-                        'class' => '  form-control',
-                        'id' => 'color',
-                    ]) !!}
-                </div>
-            </div>
-            <div class="col-md-6 px-5">
-                <div class="form-group">
-                    {!! Form::label('feature_id', __('lang.features'), [
-                        'class' => 'form-label d-block mb-1 ',
-                    ]) !!}
-                    {!! Form::select('feature_id[]', $features,null, [
-                        'class' => ' selectpicker form-control',
-                        'data-live-search' => 'true',
-                        'style' => 'width: 80%',
-                        'multiple',
-                       'data-actions-box' => 'true',
-                        'id' => 'feature_id',
-                    ]) !!}
-                </div>
-            </div>
+
 
         </div>
 

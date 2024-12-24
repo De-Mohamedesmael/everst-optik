@@ -196,7 +196,8 @@ class BrandLensController extends Controller
             }
 
             if( $request->has("feature_id")) {
-                $brand_lens->features()->attach($request->feature_id);
+                $brand_lens->features()->detach();
+                $brand_lens->features()->sync($request->feature_id);
             }
             DB::commit();
             $output = [

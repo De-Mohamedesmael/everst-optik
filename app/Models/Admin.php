@@ -220,20 +220,22 @@ class Admin extends Authenticatable
                 'take_money_from_safe' => __('lang.take_money_from_safe'),
                 'statement' => __('lang.statement'),
             ],
-            'sms_module' => [
-                'sms' => __('lang.sms'),
-                'setting' => __('lang.setting'),
-            ],
-            'email_module' => [
-                'email' => __('lang.email'),
-                'setting' => __('lang.setting'),
-            ],
+//            'sms_module' => [
+//                'sms' => __('lang.sms'),
+//                'setting' => __('lang.setting'),
+//            ],
+//            'email_module' => [
+//                'email' => __('lang.email'),
+//                'setting' => __('lang.setting'),
+//            ],
             'settings' => [
                 'store' => __('lang.store'),
                 'store_pos' => __('lang.store_pos'),
-                'service_fee' => __('lang.service_fee'),
-                'delivery_zone' => __('lang.delivery_zone'),
-                'delivery_zone_cost' => __('lang.delivery_zone_cost'),
+
+                'index_lens' => __('lang.index_lens'),
+                'focus' => __('lang.focus'),
+                'design' => __('lang.design'),
+
                 'exchange_rate' => __('lang.exchange_rate'),
                 'terms_and_conditions' => __('lang.terms_and_conditions'),
                 'modules' => __('lang.modules'),

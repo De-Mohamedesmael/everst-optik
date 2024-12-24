@@ -3,26 +3,22 @@
 namespace Modules\Setting\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Setting\Entities\Brand;
-use Modules\Setting\Entities\Store;
+use Modules\Lens\Entities\Focus;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Utils\Util;
-class StoreController extends Controller
+class FocusController extends Controller
 {
-    protected $Util;
+    protected Util $Util;
 
     /**
      * Constructor
      *
-     * @param Utils $product
-     * @return void
+     * @param Util $Util
      */
     public function __construct(Util $Util)
     {
@@ -35,10 +31,10 @@ class StoreController extends Controller
    */
   public function index(): Factory|View|Application
   {
-      $stores = Store::orderBy('created_by','desc')->get();
+      $foci = Focus::orderBy('created_at','desc')->get();
 
-      return view('setting::back-end.store.index')->with(compact(
-          'stores'));
+      return view('setting::back-end.focus.index')->with(compact(
+          'foci'));
   }
 
   /**
@@ -46,19 +42,19 @@ class StoreController extends Controller
    *
    * @return Application|Factory|View
    */
-  public function create()
+  public function create(): Factory|View|Application
   {
 
-      return view('setting::back-end.store.create');
+      return view('setting::back-end.focus.create');
   }
 
     /**
-     * Store a newly created resource in storage.
+     * Focus a newly created resource in storage.
      *
      * @param Request $request
      * @return RedirectResponse | array
      */
-// ++++++++++++++++++++++ Task : store() +++++++++++++++
+// ++++++++++++++++++++++ Task : focus() +++++++++++++++
   public function store(Request $request): RedirectResponse|array
   {
       $request->validate([
@@ -66,12 +62,12 @@ class StoreController extends Controller
       ]);
 
       try {
-          $data = $request->except('_token', 'quick_add');
-          $data['created_by'] = auth('admin')->user()->id;
-          $store=Store::create($data);
+          $focus=Focus::create([
+              'name'=>$request->name
+          ]);
           $output = [
               'success' => true,
-              'id'=>$store->id,
+              'id'=>$focus->id,
               'msg' => __('lang.success')
           ];
 
@@ -95,32 +91,33 @@ class StoreController extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  int  $id
+   * @param int $id
    * @return Application|Factory|View
    */
-  public function edit($id)
+  public function edit(int $id): Factory|View|Application
   {
-      $store = Store::find($id);
-      return view('setting::back-end.store.edit')->with(compact('store'));
+      $focus = Focus::find($id);
+      return view('setting::back-end.focus.edit')->with(compact('focus'));
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  int  $id
-   * @return RedirectResponse
-   */
-  public function update(Request $request, $id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+  public function update(Request $request, int $id): RedirectResponse
   {
       try {
-          $data = $request->except('_token', '_method');
-          $data['updated_by'] = auth('admin')->user()->id;
-          $store = Store::find($id);
-          $store->update($data);
+          $focus = Focus::find($id);
+          $focus->update([
+              'name'=>$request->name
+          ]);
 
           $output = [
               'success' => true,
-              'id'=>$store->id,
+              'id'=>$focus->id,
               'msg' => __('lang.success')
           ];
 
@@ -141,11 +138,11 @@ class StoreController extends Controller
      * @param int $id
      * @return array|RedirectResponse
      */
-  public function destroy($id): array|RedirectResponse
+  public function destroy( int $id): array|RedirectResponse
   {
       try {
-          $store = Store::find($id);
-          $store->delete();
+          $focus = Focus::find($id);
+          $focus->delete();
           $output = [
               'success' => true,
               'msg' => __('lang.success')
@@ -162,11 +159,10 @@ class StoreController extends Controller
       return $output;
 
   }
-    public function getDropdown()
+    public function getDropdown(): string
     {
-        $stores =Store::orderBy('name', 'asc')->pluck('name', 'id');
-        $stores_dp = $this->Util->createDropdownHtml($stores, __('lang.please_select'));
-        return $stores_dp;
+        $foci =Focus::orderBy('name', 'asc')->pluck('name', 'id');
+        return $this->Util->createDropdownHtml($foci, __('lang.please_select'));
     }
 }
 

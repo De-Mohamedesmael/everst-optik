@@ -1342,4 +1342,9 @@
   'Oops...' => 'Oops...',
   'features' => 'Features',
   'brand_lenses' => 'Brand lenses',
+  'index_lenses' => 'Index lenses',
+  'foci' => 'Foci',
+  'designs' => 'Designs',
+  'add_design' => 'Add design',
+  'add_focus' => 'Add focus',
 );

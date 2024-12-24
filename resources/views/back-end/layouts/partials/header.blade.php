@@ -493,6 +493,44 @@
                                                     </a>
                                                 </li>
                                             @endcan
+
+
+
+                                        </ul>
+                                    </li>
+                                    <li class="mega-menu-col col-md-3 p-0">
+
+                                        <ul class="sub-menu p-0" style="list-style: none">
+                                            @can('settings.design.view')
+                                                <li class="navbar_item">
+                                                    <a class="index_lens-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
+                                                       href="{{route('admin.designs.index')}}" target="_blank"
+                                                       style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                        <i class="mdi mdi-circle"></i>{{translate('designs')}}
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('settings.focus.view')
+                                                <li class="navbar_item">
+                                                    <a class="focus-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
+                                                       href="{{route('admin.foci.index')}}" target="_blank"
+                                                       style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                        <i class="mdi mdi-circle"></i>{{translate('foci')}}
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('settings.index_lens.view')
+                                                <li class="navbar_item">
+                                                    <a class="index_lens-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
+                                                       href="{{route('admin.index_lenses.index')}}" target="_blank"
+                                                       style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                        <i class="mdi mdi-circle"></i>{{translate('index_lenses')}}
+                                                    </a>
+                                                </li>
+                                            @endcan
+
+
+
                                         </ul>
                                     </li>
                                 </ul>

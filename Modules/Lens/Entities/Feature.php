@@ -36,5 +36,10 @@ class Feature extends Model implements HasMedia
         return $this->getFirstMediaUrl('after_effect')?:asset('assets/default/'.$this->id.'after.jpg');
     }
 
+    public function brand_lenses()
+    {
+        return $this->belongsToMany(BrandLens::class, 'feature_brand_lenses', 'feature_id', 'brand_id');
+    }
+
 
 }

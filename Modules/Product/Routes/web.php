@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Product\Http\Controllers\ProductController;
 use Modules\Product\Http\Controllers\CategoryController;
 use Modules\Product\Http\Controllers\BrandController;
+use Modules\Product\Http\Controllers\LensesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,14 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     ##################################################################
     Route::get('brands/get-dropdown', [BrandController::class, 'getDropdown'])->name('brands.getDropdown');
     Route::resource('brands', BrandController::class);
+
+    ##################################################################
+    ##                          lenses routs                      ##
+    ##################################################################
+    Route::get('lenses/get-dropdown', [LensesController::class, 'getDropdown'])->name('lenses.getDropdown');
+    Route::resource('lenses', LensesController::class);
+
+
     ##################################################################
     ##                          Product routs                       ##
     ##################################################################
