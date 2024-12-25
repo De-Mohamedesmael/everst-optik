@@ -1347,4 +1347,6 @@
   'designs' => 'Designs',
   'add_design' => 'Add design',
   'add_focus' => 'Add focus',
+  'Unauthorized action.' => 'Unauthorized action.',
+  'add_index_lens' => 'Add index lens',
 );

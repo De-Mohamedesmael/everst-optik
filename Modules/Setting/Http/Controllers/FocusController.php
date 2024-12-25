@@ -3,6 +3,7 @@
 namespace Modules\Setting\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Modules\Lens\Entities\Design;
 use Modules\Lens\Entities\Focus;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -44,8 +45,9 @@ class FocusController extends Controller
    */
   public function create(): Factory|View|Application
   {
+      $designs=Design::orderBy('name', 'asc')->pluck('name', 'id');
 
-      return view('setting::back-end.focus.create');
+      return view('setting::back-end.focus.create')->with(compact('designs'));
   }
 
     /**
@@ -65,6 +67,11 @@ class FocusController extends Controller
           $focus=Focus::create([
               'name'=>$request->name
           ]);
+          $focus->designs()->detach();
+          if( $request->has("design_id")) {
+
+              $focus->designs()->sync($request->design_id);
+          }
           $output = [
               'success' => true,
               'id'=>$focus->id,
@@ -97,7 +104,9 @@ class FocusController extends Controller
   public function edit(int $id): Factory|View|Application
   {
       $focus = Focus::find($id);
-      return view('setting::back-end.focus.edit')->with(compact('focus'));
+      $designs=Design::orderBy('name', 'asc')->pluck('name', 'id');
+
+      return view('setting::back-end.focus.edit')->with(compact('focus','designs'));
   }
 
     /**
@@ -114,7 +123,10 @@ class FocusController extends Controller
           $focus->update([
               'name'=>$request->name
           ]);
-
+          if( $request->has("design_id")) {
+              $focus->designs()->detach();
+              $focus->designs()->sync($request->design_id);
+          }
           $output = [
               'success' => true,
               'id'=>$focus->id,

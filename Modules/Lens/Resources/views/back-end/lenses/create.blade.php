@@ -1,13 +1,20 @@
 @extends('back-end.layouts.app')
-@section('title', __('lang.products'))
+@section('title', __('lang.lenses'))
+@section('styles')
+    <style>
+        .text-start {
+            text-align: left !important;
+        }
+    </style>
+@endsection
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-                style="text-decoration: none;color: #476762" href="{{ route('admin.products.index') }}">/
-            @lang('lang.products')</a>
+                style="text-decoration: none;color: #476762" href="{{ route('admin.lenses.index') }}">/
+            @lang('lang.lenses')</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
-        @lang('lang.add_new_product')</li>
+        @lang('lang.add_new_lens')</li>
 @endsection
 
 @section('content')
@@ -16,13 +23,13 @@
             <div class="row">
                 <div class="col-md-12 px-1">
                     {!! Form::open([
-                        'url' => route('admin.products.store'),
+                        'url' => route('admin.lenses.store'),
                         'id' => 'products-form',
                         'method' => 'POST',
                         'class' => '',
                         'enctype' => 'multipart/form-data',
                     ]) !!}
-                    @include('product::back-end.products.partial.create_product_form')
+                    @include('lens::back-end.lenses.partial.create_lens_form')
                     <div class="row my-2 justify-content-center align-items-center">
                         <div class="col-md-4">
                             <input type="button" value="{{ trans('lang.save') }}" id="submit-btn"
@@ -37,7 +44,7 @@
         </div>
     </section>
 
-    <div class="modal fade" id="product_cropper_modal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" id="lens_cropper_modal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -50,16 +57,16 @@
                     <div class="img-container">
                         <div class="row">
                             <div class="col-md-8">
-                                <img src="" id="product_sample_image"/>
+                                <img src="" id="lens_sample_image"/>
                             </div>
                             <div class="col-md-4">
-                                <div class="product_preview_div"></div>
+                                <div class="lens_preview_div"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="product_crop" class="btn btn-primary">@lang('lang.crop')</button>
+                    <button type="button" id="lens_crop" class="btn btn-primary">@lang('lang.crop')</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

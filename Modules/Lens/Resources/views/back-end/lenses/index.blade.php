@@ -1,5 +1,5 @@
 @extends('back-end.layouts.app')
-@section('title', __('lang.products'))
+@section('title', __('lang.lenses'))
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
     <style>
@@ -18,21 +18,21 @@
     @parent
 
     <li class="breadcrumb-item  @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
-       @if(isset($page))  {{translate($page)}}@else @lang('lang.products') @endif </li>
+       @if(isset($page))  {{translate($page)}}@else @lang('lang.lenses') @endif </li>
 @endsection
 
 @section('button')
     <div class="row">
-        @can('product_module.products.create_and_edit')
+        @can('lens_module.lens.create_and_edit')
             <div class="col-md-6">
-                <a style="color: white" href="{{ route('admin.products.create') }}"
+                <a style="color: white" href="{{ route('admin.lenses.create') }}"
                    class="btn btn-primary w-100 py-1"><i class="dripicons-plus"></i>
-                    @lang('lang.add_product')</a>
+                    @lang('lang.add_lens')</a>
             </div>
-        @endcan
+
         @if (empty($page))
             <div class="col-md-6">
-                <a style="color: white" href="{{  route('admin.products.getImport') }}"
+                <a style="color: white" href="{{  route('admin.lenses.getImport') }}"
                    class="btn btn-success w-100 py-1"><i class="fa fa-arrow-down"></i>
                     @lang('lang.import')</a>
             </div>
@@ -43,61 +43,56 @@
                     @lang('lang.import')</a>
             </div>
         @endif
+        @endcan
 
     </div>
 @endsection
 @section('content')
     <section class="forms py-0">
         <div class="container-fluid">
-            @if (request()->segment(1) == 'products')
+            @if (request()->segment(1) == 'lenses')
                 <div
                     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                     <h5 class="mb-0 position-relative" style="margin-right: 30px">
-                        @lang('lang.product_lists')
+                        @lang('lang.lens_lists')
                         <span class="header-pill"></span>
                     </h5>
                 </div>
             @endif
-            @if (request()->segment(1) == 'product-stocks')
+            @if (request()->segment(1) == 'lens-stocks')
                 <div
                     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                     <h5 class="mb-0 position-relative" style="margin-right: 30px">
-                        @lang('lang.product_stocks')
+                        @lang('lang.lens_stocks')
                         <span class="header-pill"></span>
                     </h5>
                 </div>
             @endif
 
-            @include('product::back-end.products.partial.filter')
+            @include('lens::back-end.lenses.partial.filter')
 
             <div class="card my-3">
 
                 <div class="table-responsive" style="height: 60vh">
-                    <table id="product_table" class="table table-hover">
+                    <table id="lens_table" class="table table-hover">
                         <div style="overflow: auto; width: 100%;height: 10px; transform:rotateX(180deg);">
                         </div>
                         <thead>
                         <tr>
-                            <th>@lang('lang.show_at_the_main_pos_page')</th>
                             <th>@lang('lang.image')</th>
                             <th style="">@lang('lang.name')</th>
-                            <th>@lang('lang.product_code')</th>
-                            <th>@lang('lang.categories')  </th>
+                            <th>@lang('lang.lens_code')</th>
                             <th>@lang('lang.select_to_delete')
-                                <input type="checkbox" name="product_delete_all" class="product_delete_all mx-1"/>
+                                <input type="checkbox" name="lens_delete_all" class="lens_delete_all mx-1"/>
                             </th>
                             <th>@lang('lang.purchase_history')</th>
                             <th>@lang('lang.batch_number')</th>
                             <th>@lang('lang.selling_price')</th>
-                            <th>@lang('lang.tax')</th>
-                            <th>@lang('lang.brand')</th>
                             <th>@lang('lang.color')</th>
-                            <th>@lang('lang.size')</th>
                             <th class="sum">@lang('lang.current_stock')</th>
                             <th class="sum">@lang('lang.current_stock_value')</th>
                             <th>@lang('lang.manufacturing_date')</th>
-                            <th>@lang('lang.discount')</th>
-                            @can('product_module.purchase_price.view')
+                            @can('lens_module.purchase_price.view')
                                 <th>@lang('lang.purchase_price')</th>
                             @endcan
                             <th>@lang('lang.active')</th>
@@ -113,10 +108,6 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -145,7 +136,7 @@
 @push('javascripts')
     <script>
         $(document).on('click', '#delete_all', function () {
-            var checkboxes = document.querySelectorAll('input[name="product_selected_delete"]');
+            var checkboxes = document.querySelectorAll('input[name="lens_selected_delete"]');
             var selected_delete_ids = [];
             for (var i = 0; i < checkboxes.length; i++) {
                 if (checkboxes[i].checked) {
@@ -155,13 +146,13 @@
             if (selected_delete_ids.length == 0) {
                 swal({
                     title: 'Warning',
-                    text: LANG.sorry_you_should_select_products_to_continue_delete,
+                    text: LANG.sorry_you_should_select_lenses_to_continue_delete,
                     icon: 'warning',
                 })
             } else {
                 swal({
                     title: 'Are you sure?',
-                    text: LANG.all_transactions_related_to_this_products_will_be_deleted,
+                    text: LANG.all_transactions_related_to_this_lenses_will_be_deleted,
                     icon: 'warning',
                 }).then(willDelete => {
                     if (willDelete) {
@@ -204,7 +195,7 @@
                                             );
                                             $.ajax({
                                                 method: 'POST',
-                                                url: "{{  route('admin.products.multiDeleteRow') }}",
+                                                url: "{{  route('admin.lenses.multiDeleteRow') }}",
                                                 dataType: 'json',
                                                 data: {
                                                     "ids": selected_delete_ids
@@ -250,12 +241,12 @@
 
 
         });
-        $(document).on('click', '.delete_product', function (e) {
+        $(document).on('click', '.delete_lens', function (e) {
             e.preventDefault();
 
             Swal.fire({
                 title: 'Are you sure?',
-                text: "@lang('lang.all_transactions_related_to_this_product_will_be_deleted')",
+                text: "@lang('lang.all_transactions_related_to_this_lens_will_be_deleted')",
                 icon: 'warning',
             }).then(willDelete => {
                 if (willDelete) {
@@ -337,12 +328,12 @@
 
 @section('javascript')
     <script>
-        $('#product_table').on('change', '.product_delete_all', function () {
+        $('#lens_table').on('change', '.lens_delete_all', function () {
             var isChecked = $(this).prop('checked');
-            product_table.rows().nodes().to$().find('.product_selected_delete').prop('checked', isChecked);
+            lens_table.rows().nodes().to$().find('.lens_selected_delete').prop('checked', isChecked);
         });
         $(document).ready(function () {
-            product_table = $('#product_table').DataTable({
+            lens_table = $('#lens_table').DataTable({
                 lengthChange: true,
                 paging: true,
                 info: false,
@@ -364,9 +355,9 @@
                     [2, 'asc']
                 ],
                 "ajax": {
-                    "url": "{{  route('admin.products.index') }}",
+                    "url": "{{  route('admin.lenses.index') }}",
                     "data": function (d) {
-                        d.product_id = $('#product_id').val();
+                        d.lens_id = $('#lens_id').val();
                         d.category_id = $('#category_id').val();
                         d.brand_id = $('#brand_id').val();
                         d.color_id = $('#color_id').val();
@@ -386,25 +377,18 @@
                     "orderable": false,
                     "searchable": true
                 }],
-                columns: [{
-                    data: 'show_at_the_main_pos_page',
-                    name: 'show_at_the_main_pos_page'
-                },
+                columns: [
                     {
                         data: 'image',
                         name: 'image'
                     },
                     {
                         data: 'name',
-                        name: 'products.name'
+                        name: 'lenss.name'
                     },
                     {
                         data: 'sku',
-                        name: 'products.sku'
-                    },
-                    {
-                        data: 'categories_names',
-                        name: 'categories_names'
+                        name: 'lenss.sku'
                     },
                     {
                         data: "selection_checkbox_delete",
@@ -425,22 +409,10 @@
                         data: 'sell_price',
                         name: 'sell_price'
                     },
-                    {
-                        data: 'tax',
-                        name: 'taxes.name'
-                    },
-                    {
-                        data: 'brand',
-                        name: 'brands.name'
-                    },
 
                     {
                         data: 'color',
                         name: 'colors.name'
-                    },
-                    {
-                        data: 'size',
-                        name: 'sizes.name'
                     },
 
                     {
@@ -461,12 +433,8 @@
                         data: 'manufacturing_date',
                         name: 'add_stock_lines.manufacturing_date'
                     },
-                    {
-                        data: 'discount',
-                        name: 'discount',
-                        searchable: false,
-                    },
-                    @can('product_module.purchase_price.view')
+
+                    @can('lens_module.purchase_price.view')
                         {
                             data: 'default_purchase_price',
                             name: 'default_purchase_price',
@@ -581,7 +549,7 @@
             });
 
             function toggleColumnVisibility(column_index, this_btn) {
-                var column = product_table.column(column_index);
+                var column = lens_table.column(column_index);
                 column.visible(!column.visible());
 
                 if (column.visible()) {
@@ -592,16 +560,16 @@
             }
         });
 
-        $(document).on('change', '.filter_product', function () {
+        $(document).on('change', '.filter_lens', function () {
             console.log($('#category_id').val());
-            product_table.ajax.reload();
+            lens_table.ajax.reload();
         })
         $(document).on('click', '.clear_filters', function () {
-            $('.filter_product').val('');
-            $('.filter_product').selectpicker('refresh');
-            $('#product_id').val('');
+            $('.filter_lens').val('');
+            $('.filter_lens').selectpicker('refresh');
+            $('#lens_id').val('');
             $('.show_zero_stocks').val(1);
-            product_table.ajax.reload();
+            lens_table.ajax.reload();
         });
         $(document).on('change', '.show_zero_stocks', function () {
             if (this.checked) {
@@ -609,18 +577,18 @@
             } else {
                 $('.show_zero_stocks').val(1);
             }
-            product_table.ajax.reload();
+            lens_table.ajax.reload();
         });
 
-        @if (!empty(request()->product_id))
+        @if (!empty(request()->lens_id))
         $(document).ready(function () {
-            $('#product_id').val({{ request()->product_id }});
-            product_table.ajax.reload();
+            $('#lens_id').val({{ request()->lens_id }});
+            lens_table.ajax.reload();
 
             var container = '.view_modal';
             $.ajax({
                 method: 'get',
-                url: "{{  route('admin.products.show',request()->product_id) }}",
+                url: "{{  route('admin.lenses.show',request()->lens_id) }}",
                 dataType: 'html',
                 success: function (result) {
                     $(container).html(result).modal('show');
@@ -629,11 +597,11 @@
         });
         @endif
 
-        $(document).on('click', '.delete_product', function (e) {
+        $(document).on('click', '.delete_lens', function (e) {
             e.preventDefault();
             swal({
                 title: 'Are you sure?',
-                text: "@lang('lang.all_transactions_related_to_this_product_will_be_deleted')",
+                text: "@lang('lang.all_transactions_related_to_this_lens_will_be_deleted')",
                 icon: 'warning',
             }).then(willDelete => {
                 if (willDelete) {
@@ -718,50 +686,34 @@
                 }
             });
         });
-        $(document).on('change', '.show_at_the_main_pos_page', function (e) {
-            $.ajax({
-                type: "GET",
-                url: "/dashboard/products/toggle-appearance-pos/" + $(this).data('id'),
-                data: {
-                    check: $(this).is(":checked") ? 'yes' : 'no'
-                },
-                // dataType: "dataType",
-                success: function (response) {
-                    if (response) {
-                        $(this).removeAttr('checked');
-                        $(this).attr('checked', false);
-                        swal(response.success, response.msg, response.status);
-                    }
-                }
-            });
-        });
+
     </script>
 
     <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
 
     <script>
         // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-        $('#productsFilterCollapse').on('show.bs.collapse', function () {
+        $('#lensesFilterCollapse').on('show.bs.collapse', function () {
             // Change the arrow icon to 'chevron-up' when the content is expanded
-            $('button[data-bs-target="#productsFilterCollapse"] i').removeClass('fa-arrow-down').addClass(
+            $('button[data-bs-target="#lensesFilterCollapse"] i').removeClass('fa-arrow-down').addClass(
                 'fa-arrow-up');
         });
 
-        $('#productsFilterCollapse').on('hide.bs.collapse', function () {
+        $('#lensesFilterCollapse').on('hide.bs.collapse', function () {
             // Change the arrow icon to 'chevron-down' when the content is collapsed
-            $('button[data-bs-target="#productsFilterCollapse"] i').removeClass('fa-arrow-up').addClass(
+            $('button[data-bs-target="#lensesFilterCollapse"] i').removeClass('fa-arrow-up').addClass(
                 'fa-arrow-down');
         });
         // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-        $('#productsOtherFilterCollapse').on('show.bs.collapse', function () {
+        $('#lensesOtherFilterCollapse').on('show.bs.collapse', function () {
             // Change the arrow icon to 'chevron-up' when the content is expanded
-            $('button[data-bs-target="#productsOtherFilterCollapse"] i').removeClass('fa-arrow-down').addClass(
+            $('button[data-bs-target="#lensesOtherFilterCollapse"] i').removeClass('fa-arrow-down').addClass(
                 'fa-arrow-up');
         });
 
-        $('#productsOtherFilterCollapse').on('hide.bs.collapse', function () {
+        $('#lensesOtherFilterCollapse').on('hide.bs.collapse', function () {
             // Change the arrow icon to 'chevron-down' when the content is collapsed
-            $('button[data-bs-target="#productsOtherFilterCollapse"] i').removeClass('fa-arrow-up').addClass(
+            $('button[data-bs-target="#lensesOtherFilterCollapse"] i').removeClass('fa-arrow-up').addClass(
                 'fa-arrow-down');
         });
     </script>

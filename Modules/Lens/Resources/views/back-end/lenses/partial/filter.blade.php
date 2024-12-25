@@ -7,32 +7,20 @@
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                     ]) !!}
                     {!! Form::select('store_id', $stores, request()->store_id, [
-                    'class' => 'form-control filter_product',
+                    'class' => 'form-control filter_lens',
                     'placeholder' => __('lang.all'),
                     'data-live-search' => 'true',
                     ]) !!}
                 </div>
             </div>
-            <div class="col-md-3 px-5">
-                <div class="form-group">
-                    {!! Form::label('customer_type_id', __('lang.customer_type'), [
-                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                    ]) !!}
-                    {!! Form::select('customer_type_id', $customer_types, request()->customer_type_id, [
-                    'class' => 'form-control filter_product
-                    selectpicker',
-                    'data-live-search' => 'true',
-                    'placeholder' => __('lang.all'),
-                    ]) !!}
-                </div>
-            </div>
+
             <div class="col-md-3 px-5">
                 <div class="form-group">
                     {!! Form::label('created_by', __('lang.created_by'), [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                     ]) !!}
                     {!! Form::select('created_by', $admins, request()->created_by, [
-                    'class' => 'form-control filter_product
+                    'class' => 'form-control filter_lens
                     selectpicker',
                     'data-live-search' => 'true',
                     'placeholder' => __('lang.all'),
@@ -45,7 +33,7 @@
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                     ]) !!}
                     {!! Form::select('active', [0 => __('lang.no'), 1 => __('lang.yes')], request()->active, [
-                    'class' => 'form-control filter_product
+                    'class' => 'form-control filter_lens
                     selectpicker',
                     'data-live-search' => 'true',
                     'placeholder' => __('lang.all'),
@@ -58,41 +46,27 @@
             <div
                 class="d-flex my-2  col-md-3 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                 <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#productsFilterCollapse" aria-expanded="false"
-                        aria-controls="productsFilterCollapse">
+                        data-bs-target="#lensesFilterCollapse" aria-expanded="false"
+                        aria-controls="lensesFilterCollapse">
                     <i class="fas fa-arrow-down"></i>
-                    @lang('lang.products_filter')
+                    @lang('lang.lenses_filter')
                     <span class="section-header-pill"></span>
                 </button>
             </div>
-            <div class="collapse col-md-9" id="productsFilterCollapse">
+            <div class="collapse col-md-9" id="lensesFilterCollapse">
 
                 <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
 
 
 
-                        <div class="col-md-2 px-2">
-                            <div class="form-group">
-                                {!! Form::label('category_id', __('lang.categories'), [
-                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                ]) !!}
-                                {!! Form::select('category_id[]', $categories, request()->category_id, [
-                                'class' => 'form-control filter_product
-                                selectpicker',
-                                'multiple',
-                                'id' => 'category_id',
-                                'data-live-search' => 'true',
-                                'placeholder' => __('lang.all'),
-                                ]) !!}
-                            </div>
-                        </div>
+
                         <div class="col-md-2 px-2">
                             <div class="form-group">
                                 {!! Form::label('brand_id', __('lang.brand'), [
                                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
                                 {!! Form::select('brand_id', $brands, request()->brand_id, [
-                                'class' => 'form-control filter_product selectpicker',
+                                'class' => 'form-control filter_lens selectpicker',
                                 'data-live-search' => 'true',
                                 'placeholder' => __('lang.all'),
                                 ]) !!}
@@ -106,7 +80,7 @@
                             ]) !!}
                             {!! Form::select('color_id', $colors, request()->color_id, [
                             'class' => 'form-control
-                            filter_product
+                            filter_lens
                             selectpicker',
                             'data-live-search' => 'true',
                             'placeholder' => __('lang.all'),
@@ -116,26 +90,12 @@
 
                     <div class="col-md-2 px-2">
                         <div class="form-group">
-                            {!! Form::label('size_id', __('lang.size'), [
-                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                            ]) !!}
-                            {!! Form::select('size_id', $sizes, request()->size_id, [
-                            'class' => 'form-control
-                            filter_product
-                            selectpicker',
-                            'data-live-search' => 'true',
-                            'placeholder' => __('lang.all'),
-                            ]) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-2 px-2">
-                        <div class="form-group">
                             {!! Form::label('tax_id', __('lang.tax'), [
                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                             ]) !!}
                             {!! Form::select('tax_id', $taxes, request()->tax_id, [
                             'class' => 'form-control
-                            filter_product
+                            filter_lens
                             selectpicker',
                             'data-live-search' => 'true',
                             'placeholder' => __('lang.all'),
@@ -150,11 +110,11 @@
         <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
 
 
-            <input type="hidden" name="product_id" id="product_id" value="">
+            <input type="hidden" name="lens_id" id="lens_id" value="">
             <div class="col-md-3 px-2 d-flex justify-content-around align-items-center">
                 <button class="btn py-1 btn-outline-danger clear_filters">@lang('lang.clear_filters')</button>
 
-                <a data-href="{{  route('admin.products.multiDeleteRow') }}" id="delete_all"
+                <a data-href="{{  route('admin.lenses.multiDeleteRow') }}" id="delete_all"
                    data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
                    class="btn btn-danger text-white delete_all"><i class="fa fa-trash"></i>
                     @lang('lang.delete_all')</a>

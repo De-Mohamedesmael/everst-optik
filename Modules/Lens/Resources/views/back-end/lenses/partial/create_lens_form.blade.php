@@ -1,5 +1,5 @@
 @php
-    $recent_product = \Modules\Product\Entities\Product::orderBy('created_at', 'desc')->first();
+    $recent_lens = \Modules\Product\Entities\Product::Lens()->orderBy('created_at', 'desc')->first();
     $clear_all_input_form = \Modules\Setting\Entities\System::getProperty('clear_all_input_form');
 @endphp
 <div class="card mb-2 d-flex flex-column justify-content-center align-items-center">
@@ -22,21 +22,6 @@
                     </strong></label>
             </div>
         </div>
-        <div class="col-md-2 px-0 d-flex justify-content-center">
-            <div class="i-checks">
-                <input id="have_weight" name="have_weight" type="checkbox" value="1" class="form-control-custom">
-                <label for="have_weight"><strong>@lang('lang.have_weight')</strong></label>
-            </div>
-        </div>
-        <div class="col-md-2  px-0 d-flex justify-content-center">
-            <div class="i-checks">
-                <input id="weighing_scale_barcode" name="weighing_scale_barcode" type="checkbox"
-                    @if (!empty($product->weighing_scale_barcode)) checked @endif value="1" class="form-control-custom">
-                <label for="weighing_scale_barcode"><strong>
-                        @lang('lang.weighing_scale_barcode')
-                    </strong></label>
-            </div>
-        </div>
         <div class="col-md-3 px-0 d-flex justify-content-center">
             <div class="i-checks">
                 <input id="clear_all_input_form" name="clear_all_input_form" type="checkbox"
@@ -48,30 +33,19 @@
                 </label>
             </div>
         </div>
-
-        @php
-            $products_count = Modules\Product\Entities\Product::where('show_at_the_main_pos_page', 'yes')->count();
-        @endphp
-        <div class="col-md-2 px-0 d-flex justify-content-center">
-            <div class="i-checks">
-                <input id="show_at_the_main_pos_page" name="show_at_the_main_pos_page" type="checkbox"
-                    @if (isset($products_count) && $products_count > 40) disabled @endif class="form-control-custom">
-                <label for="show_at_the_main_pos_page"><strong>@lang('lang.show_at_the_main_pos_page')</strong></label>
-            </div>
-        </div>
     </div>
 </div>
 <div
     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
     <h6 class="mb-0">
-        @lang('lang.add_product_information')
+        @lang('lang.add_lens_information')
         <span class=" section-header-pill"></span>
     </h6>
 </div>
 <div class="card mb-3">
     <div class="card-body p-2">
         <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-            <div class="col-md-4 px-5">
+            <div class="col-md-3 px-5">
                 <div class="form-group">
                     {!! Form::label('store_ids', __('lang.store'), [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -86,36 +60,7 @@
                     ]) !!}
                 </div>
             </div>
-
-
-            <div class="col-md-4 px-5">
-                    {!! Form::label('category_id', __('lang.category') . ' *', [
-                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                    ]) !!}
-                    <div class="input-group my-group select-button-group">
-                        <input type="hidden"
-                            id="category_value_id" />
-
-                        {!! Form::select('category_id[]', $categories, false, [
-                            'class' => 'clear_input_form selectpicker form-control',
-                            'data-live-search' => 'true',
-                            'id' => 'category_id',
-                             'multiple',
-                           'data-actions-box' => 'true',
-                            'style' => 'width: 80%',
-                        ]) !!}
-                        <span class="input-group-btn">
-                            @can('product_module.category.create_and_edit')
-                                <button class="btn-modal btn-flat select-button "
-                                    data-href="{{ route('admin.categories.create')  }}?quick_add=1"
-                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                            @endcan
-                        </span>
-                    </div>
-                    <div class="error-msg text-red"></div>
-                </div>
-
-            <div class="col-md-4 px-5">
+            <div class="col-md-3 px-5">
                 <div class="form-group">
                     {!! Form::label('name', __('lang.name') . ' *', [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -128,14 +73,14 @@
                         ]) !!}
                         <span class="input-group-btn">
                             <button class="select-button btn-flat translation_btn" type="button"
-                                data-type="product"><i class="dripicons-web"></i></button>
+                                data-type="lens"><i class="dripicons-web"></i></button>
                         </span>
                     </div>
                 </div>
                 @include('back-end.layouts.partials.translation_inputs', [
                     'attribute' => 'name',
                     'translations' => [],
-                    'type' => 'products',
+                    'type' => 'lenses',
                 ])
             </div>
             <div class="col-md-3 px-2">
@@ -155,7 +100,7 @@
                     {!! Form::label('alert_quantity', __('lang.alert_quantity'), [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                     ]) !!}
-                    {!! Form::text('alert_quantity', !empty($recent_product) ? @num_format($recent_product->alert_quantity) : 3, [
+                    {!! Form::text('alert_quantity', !empty($recent_lens) ? @num_format($recent_lens->alert_quantity) : 3, [
                         'class' => 'clear_input_form form-control modal-input app()->isLocale("ar") ? text-end : text-start',
                         'placeholder' => __('lang.alert_quantity'),
                     ]) !!}
@@ -169,7 +114,7 @@
                     {!! Form::select(
                         'color_id',
                         $colors,
-                        !empty($recent_product) ? $recent_product->color_id : false,
+                        !empty($recent_lens) ? $recent_lens->color_id : false,
                         [
                             'class' => 'clear_input_form selectpicker form-control',
                             'data-live-search' => 'true',
@@ -186,48 +131,65 @@
                             </span>
                 </div>
             </div>
-            <div class="col-md-2 px-2">
-                {!! Form::label('size_id', __('lang.size'), [
+            <div class="col-md-4 px-5">
+                {!! Form::label('brand_id', __('lang.brands') . ' *', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
                 <div class="input-group my-group select-button-group">
-                    {!! Form::select('size_id', $sizes, !empty($recent_product) ? $recent_product->size_id : false, [
+                    <input type="hidden"
+                           id="focus_value_id" />
+
+                    {!! Form::select('brand_id[]', $brands, !empty($recent_lens) ? $recent_lens->brand_lenses()->pluck('brand_lenses.id') : false, [
                         'class' => 'clear_input_form selectpicker form-control',
                         'data-live-search' => 'true',
+                        'id' => 'brand_id',
+                         'multiple',
+                       'data-actions-box' => 'true',
                         'style' => 'width: 80%',
-                        'placeholder' => __('lang.please_select'),
                     ]) !!}
-                    <span class="input-group-btn">
-                            @can('product_module.size.create_and_edit')
-                            <button class="btn-modal select-button btn-flat"
-                                    data-href="{{ route('admin.sizes.create') }}?quick_add=1"
-                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                        @endcan
-                        </span>
-                </div>
-            </div>
-            <div class="col-md-2 px-2">
-                {!! Form::label('brand_id', __('lang.brand'), [
-                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                ]) !!}
-                <div class="input-group my-group select-button-group">
-                    {!! Form::select('brand_id', $brands, !empty($recent_product) ? $recent_product->brand_id : false, [
-                        'class' => 'clear_input_form selectpicker form-control',
-                        'data-live-search' => 'true',
-                        'style' => 'width: 80%',
-                        'placeholder' => __('lang.please_select'),
-                        'required',
-                    ]) !!}
-                    <span class="input-group-btn">
-                            @can('product_module.brand.create_and_edit')
-                            <button class="btn-modal select-button btn-flat"
-                                    data-href="{{ route('admin.brands.create') }}?quick_add=1"
-                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                        @endcan
-                        </span>
                 </div>
                 <div class="error-msg text-red"></div>
             </div>
+
+            <div class="col-md-3 px-5">
+                {!! Form::label('focus_id', __('lang.foci') . ' *', [
+                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                <div class="input-group my-group select-button-group">
+                    <input type="hidden"
+                           id="focus_value_id" />
+
+                    {!! Form::select('focus_id[]', $foci, !empty($recent_lens) ? $recent_lens->foci()->pluck('foci.id') : false, [
+                        'class' => 'clear_input_form selectpicker form-control',
+                        'data-live-search' => 'true',
+                        'id' => 'focus_id',
+                         'multiple',
+                       'data-actions-box' => 'true',
+                        'style' => 'width: 80%',
+                    ]) !!}
+                </div>
+                <div class="error-msg text-red"></div>
+            </div>
+            <div class="col-md-3 px-5">
+                {!! Form::label('index_lens_id', __('lang.index_lenses') . ' *', [
+                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                <div class="input-group my-group select-button-group">
+                    <input type="hidden"
+                           id="focus_value_id" />
+
+                    {!! Form::select('index_lens_id[]', $index_lenses, !empty($recent_lens) ? $recent_lens->index_lenses()->pluck('index_lenses.id') : false, [
+                        'class' => 'clear_input_form selectpicker form-control',
+                        'data-live-search' => 'true',
+                        'id' => 'index_lens_id',
+                         'multiple',
+                       'data-actions-box' => 'true',
+                        'style' => 'width: 80%',
+                    ]) !!}
+                </div>
+                <div class="error-msg text-red"></div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -235,7 +197,7 @@
 <div
     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
     <h6 class="mb-0">
-        @lang('lang.add_product_image')
+        @lang('lang.add_lens_image')
         <span class=" section-header-pill"></span>
     </h6>
 </div>
@@ -259,45 +221,6 @@
 </div>
 
 
-<div class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-    <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-        data-bs-target="#discountInfoCollapse" aria-expanded="false" aria-controls="discountInfoCollapse">
-        <i class="fas fa-arrow-down"></i>
-        @lang('lang.discount_information')
-        <span class="section-header-pill"></span>
-    </button>
-</div>
-
-<div class="collapse" id="discountInfoCollapse">
-    <div class="card mb-3">
-        <div class="card-body p-2">
-            <div class="col-md-12">
-                <table class="table mb-1" id="consumption_table_discount">
-                    <thead>
-                        <tr>
-                            <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount_type')</th>
-                            <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount')</th>
-                            <th class="py-2 text-center" style="width: 25%;">@lang('lang.discount_category')</th>
-                            <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount_start_date')</th>
-                            <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount_end_date')</th>
-                            <th class="py-2 text-center" style="width: 20%;">@lang('lang.customer_type') <i
-                                    class="dripicons-question" data-toggle="tooltip" title="@lang('lang.discount_customer_info')"></i>
-                            </th>
-                            <th style="width: 5%;"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{-- @include('products.partial.raw_discount', ['row_id' => 0]) --}}
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-center">
-                    <button class="btn btn-main px-5 py-1 add_discount_row" type="button">@lang('lang.add_new')</button>
-                </div>
-                <input type="hidden" name="raw_discount_index" id="raw_discount_index" value="1">
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <div class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
@@ -327,7 +250,7 @@
                                 'EAN8' => 'EAN-8',
                                 'EAN13' => 'EAN-13',
                             ],
-                            !empty($recent_product) ? $recent_product->barcode_type : false,
+                            !empty($recent_lens) ? $recent_lens->barcode_type : false,
                             ['class' => 'form-control', 'required'],
                         ) !!}
                     </div>
@@ -338,7 +261,7 @@
                         {!! Form::label('other_cost', __('lang.other_cost'), [
                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                         ]) !!}
-                        {!! Form::text('other_cost', !empty($recent_product) ? @num_format($recent_product->other_cost) : null, [
+                        {!! Form::text('other_cost', !empty($recent_lens) ? @num_format($recent_lens->other_cost) : null, [
                             'class' => 'form-control clear_input_form modal-input app()->isLocale("ar") ? text-end : text-start',
                             'placeholder' => __('lang.other_cost'),
                         ]) !!}
@@ -350,16 +273,16 @@
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                     ]) !!}
                     <div class="input-group my-group select-button-group">
-                        {!! Form::select('tax_id', $taxes, !empty($recent_product) ? $recent_product->tax_id : false, [
+                        {!! Form::select('tax_id', $taxes, !empty($recent_lens) ? $recent_lens->tax_id : false, [
                             'class' => 'clear_input_form selectpicker form-control',
                             'data-live-search' => 'true',
                             'style' => 'width: 80%',
                             'placeholder' => __('lang.please_select'),
                         ]) !!}
                         <span class="input-group-btn">
-                            @can('product_module.tax.create')
+                            @can('lens_module.tax.create')
                                 <button class="btn-modal select-button btn-flat"
-                                    data-href="{{ action('TaxController@create') }}?quick_add=1&type=product_tax"
+                                    data-href="{{ action('TaxController@create') }}?quick_add=1&type=lens_tax"
                                     data-container=".view_modal"><i class="fa fa-plus"></i></button>
                             @endcan
                         </span>
@@ -375,7 +298,7 @@
                         {!! Form::select(
                             'tax_method',
                             ['inclusive' => __('lang.inclusive'), 'exclusive' => __('lang.exclusive')],
-                            !empty($recent_product) ? $recent_product->tax_method : false,
+                            !empty($recent_lens) ? $recent_lens->tax_method : false,
                             [
                                 'class' => 'clear_input_form selectpicker form-control',
                                 'data-live-search' => 'true',
@@ -385,32 +308,7 @@
                         ) !!}
                     </div>
                 </div>
-                <div
-                    class="d-flex col-12 flex-column @if (app()->isLocale('ar')) align-items-end @else  align-items-start @endif
-                    ">
-                    <div
-                        class="col-md-4 d-flex @if (app()->isLocale('ar')) justify-content-end @else  justify-content-start @endif">
-                        <div class="i-checks">
-                            <input id="show_to_customer" name="show_to_customer" type="checkbox" checked
-                                value="1" class="form-control-custom">
-                            <label for="show_to_customer"><strong>@lang('lang.show_to_customer')</strong></label>
-                        </div>
-                    </div>
-                    <div class="col-md-3 show_to_customer_type_div">
-                        <div class="form-group">
-                            {!! Form::label('show_to_customer_types', __('lang.show_to_customer_types'), [
-                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                            ]) !!}
-                            <i class="dripicons-question" data-toggle="tooltip" title="@lang('lang.show_to_customer_types_info')"></i>
-                            {!! Form::select(
-                                'show_to_customer_types[]',
-                                $customer_types,
-                                !empty($recent_product) ? $recent_product->show_to_customer_types : false,
-                                ['class' => ' selectpicker form-control', 'data-live-search' => 'true', 'style' => 'width: 80%', 'multiple'],
-                            ) !!}
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

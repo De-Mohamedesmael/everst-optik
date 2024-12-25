@@ -305,9 +305,7 @@ class ProductController extends Controller
                 ->addColumn(
                     'action',
                     function ($row) {
-                        if($row->parent_branch_id != null ){
-                            return '';
-                        }
+
                         $html =
                             '<div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"

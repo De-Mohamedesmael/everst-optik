@@ -131,7 +131,7 @@
                             class="dropdown-menu list-style-none @if (app()->isLocale('ar')) text-end @else text-start @endif">
                             <li class="navbar_item">
                                 <a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                       href="#" target="_blank"
+                                                       href="{{ route('admin.lenses.index') }}" target="_blank"
                                                        class="jobs-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>@lang('lang.lenses')</a>
                             </li>
@@ -456,7 +456,6 @@
                                                     <i class="mdi mdi-circle"></i>@lang('lang.general_tax')
                                                 </a>
                                             </li>
-                                            {{-- ////////// ضرائب المنتجات ////////// --}}
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif product_tax-button"
                                                    href="{{route('admin.tax.index')}}?type=product_tax" target="_blank"

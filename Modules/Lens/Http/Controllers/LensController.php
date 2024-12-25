@@ -19,10 +19,14 @@ use Modules\AddStock\Entities\AddStockLine;
 use Modules\AddStock\Entities\Transaction;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\CustomerType;
+use Modules\Lens\Entities\BrandLens;
+use Modules\Lens\Entities\Focus;
+use Modules\Lens\Entities\IndexLens;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductDiscount;
 use Modules\Product\Entities\ProductStore;
+use Modules\Setting\Entities\Color;
 use Modules\Setting\Entities\Store;
 use Modules\Setting\Entities\Tax;
 use Yajra\DataTables\Facades\DataTables;
@@ -60,10 +64,8 @@ class LensController extends Controller
      */
     public function getProductStocks(Request $request)
     {
-        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
-        $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
+        $brands = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
-        $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
@@ -72,12 +74,10 @@ class LensController extends Controller
         $admins  = Admin::orderBy('name', 'asc')->pluck('name', 'id');
         $page = 'product_stock';
 
-        return view('product::back-end.products.index')->with(compact(
+        return view('lens::back-end.lenses.index')->with(compact(
             'admins',
-            'categories',
             'brands',
             'colors',
-            'sizes',
             'taxes',
             'customers',
             'customer_types',
@@ -96,12 +96,10 @@ class LensController extends Controller
     {
         $process_type = $request->process_type??null;
         if (request()->ajax()) {
-            $products = product::leftjoin('add_stock_lines', function ($join) {
+            $products = Product::Lens()->leftjoin('add_stock_lines', function ($join) {
                     $join->on('products.id', 'add_stock_lines.product_id');
                 })
                 ->leftjoin('colors', 'products.color_id', 'colors.id')
-                ->leftjoin('sizes', 'products.size_id', 'sizes.id')
-                ->leftjoin('brands', 'products.brand_id', 'brands.id')
                 ->leftjoin('admins', 'products.created_by', 'admins.id')
                 ->leftjoin('admins as edited', 'products.edited_by', 'admins.id')
                 ->leftjoin('taxes', 'products.tax_id', 'taxes.id')
@@ -128,17 +126,13 @@ class LensController extends Controller
                 $products->where('tax_id', request()->tax_id);
             }
 
-            if (!empty(request()->brand_id)) {
-                $products->where('products.brand_id', request()->brand_id);
-            }
+
 
             if (!empty(request()->color_id)) {
                 $products->where('products.color_id', request()->color_id);
             }
 
-            if (!empty(request()->size_id)) {
-                $products->where('products.size_id', request()->size_id);
-            }
+
 
 
             if (!empty(request()->customer_type_id)) {
@@ -160,9 +154,7 @@ class LensController extends Controller
             $products = $products->select(
                 'products.*',
                 'add_stock_lines.batch_number',
-                'brands.name as brand',
                 'colors.name as color',
-                'sizes.name as size',
                 'taxes.name as tax',
                 'add_stock_lines.manufacturing_date as manufacturing_date',
                 'admins.name as created_by_name',
@@ -172,15 +164,6 @@ class LensController extends Controller
 
             //  return $products_;
             return DataTables::of($products)
-                ->addColumn('show_at_the_main_pos_page', function ($row) {
-                    if (!empty($row->show_at_the_main_pos_page)&& $row->show_at_the_main_pos_page=="yes"){
-                        $checked='checked';
-                    }else{
-                        $checked='';
-                    }
-                    return ' <input id="show_at_the_main_pos_page'.$row->id.'" data-id='.$row->id.' name="show_at_the_main_pos_page" type="checkbox"
-                    '. $checked .' value="1" class="show_at_the_main_pos_page">';
-                })
                 ->addColumn('image', function ($row) {
                     $image = $row->getFirstMediaUrl('products');
                     if (!empty($image)) {
@@ -192,15 +175,8 @@ class LensController extends Controller
                 ->editColumn('is_service',function ($row) {
                     return $row->is_service=='1'?'<span class="badge badge-danger">'.Lang::get('lang.is_have_service').'</span>':'';
                 })
-                ->addColumn('categories_names', function ($row){
-                    $html='';
-                    foreach ($row->categories as $key => $category) {
-                        $html.= '<span class="category_name">'.( $key > 0 ?' - ':'').$category->name.'</span>';
-                    }
-                   return $html;
-                })
                 ->addColumn('purchase_history', function ($row) {
-                    $html = '<a data-href="' .  route('admin.products.getPurchaseHistory', $row->id) . '"
+                    $html = '<a data-href="' .  route('admin.lenses.getPurchaseHistory', $row->id) . '"
                     data-container=".view_modal" class="btn btn-modal">' . __('lang.view') . '</a>';
                     return $html;
                 })
@@ -225,14 +201,11 @@ class LensController extends Controller
                     return number_format($price,2);
                 })
                 ->addColumn('tax', '{{$tax}}')
-                ->editColumn('brand', '{{$brand}}')
                 ->editColumn('color', function ($row){
                     return  $row->color;
 
                 })
-                ->editColumn('size', function ($row){
-                    return $row->size;
-                })
+
                 ->editColumn('current_stock', function ($row) {
                     if(!$row->is_service)
                         return $this->productUtil->num_f($row->current_stock ,false,null,true);
@@ -300,9 +273,7 @@ class LensController extends Controller
                 ->addColumn(
                     'action',
                     function ($row) {
-                        if($row->parent_branch_id != null ){
-                            return '';
-                        }
+
                         $html =
                             '<div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
@@ -312,16 +283,16 @@ class LensController extends Controller
                             </button>
                             <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">';
 
-                        if (auth()->user()->can('product_module.products.view')) {
+                        if (auth()->user()->can('lens_module.lens.view')) {
                             $html .=
-                                '<li><a data-href="' .  route('admin.products.show', $row->id) . '"
+                                '<li><a data-href="' .  route('admin.lenses.show', $row->id) . '"
                                 data-container=".view_modal" class="btn btn-modal"><i class="fa fa-eye"></i>
                                 ' . __('lang.view') . '</a></li>';
                         }
 
-                        if (auth()->user()->can('product_module.products.create_and_edit')) {
+                        if (auth()->user()->can('lens_module.lens.create_and_edit')) {
                             $html .=
-                                '<li><a href="' .  route('admin.products.edit', $row->id) . '" class="btn"
+                                '<li><a href="' .  route('admin.lenses.edit', $row->id) . '" class="btn"
                             target="_blank"><i class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a></li>';
                         }
                         if (auth()->user()->can('stock.add_stock.create_and_edit')) {
@@ -329,11 +300,11 @@ class LensController extends Controller
                                 '<li><a target="_blank" href="' . /* route('admin.add-stock.create', ['product_id' => $row->product_id, 'product_id' => $row->id])*/'#' . '" class="btn"
                             target="_blank"><i class="fa fa-plus"></i> ' . __('lang.add_new_stock') . '</a></li>';
                         }
-                        if (auth()->user()->can('product_module.products.delete')) {
+                        if (auth()->user()->can('lens_module.lens.delete')) {
 
                             $html .=
                                 '<li>
-                            <a data-href="' . route('admin.products.destroy', $row->id) . '"
+                            <a data-href="' . route('admin.lenses.destroy', $row->id) . '"
                                 data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
                                 class="btn text-red delete_product"><i class="fa fa-trash"></i>
                                 ' . __('lang.delete') . '</a>
@@ -349,7 +320,7 @@ class LensController extends Controller
                 ->setRowAttr([
                     'data-href' => function ($row) {
                         if (auth()->user()->can("products.view")) {
-                            return   route('admin.products.show', [$row->id]);
+                            return   route('admin.lenses.show', [$row->id]);
                         } else {
                             return '';
                         }
@@ -382,9 +353,8 @@ class LensController extends Controller
                 ->make(true);
         }
         $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
-        $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
+        $brands = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
-        $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::where('type', 'product_tax')
             ->orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
@@ -393,11 +363,10 @@ class LensController extends Controller
         $stores  = Store::getDropdown();
         $admins = Admin::pluck('name', 'id');
 
-        return view('product::back-end.products.index')->with(compact(
+        return view('lens::back-end.lenses.index')->with(compact(
             'categories',
             'brands',
             'colors',
-            'sizes',
             'taxes',
             'customers',
             'customer_types',
@@ -416,14 +385,14 @@ class LensController extends Controller
      */
     public function create()
     {
-        if (!auth()->user()->can('product_module.products.create_and_edit')) {
+        if (!auth()->user()->can('lens_module.lens.create_and_edit')) {
             abort(403, translate('Unauthorized action.'));
         }
 
-        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
-        $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
+        $foci = Focus::orderBy('name', 'asc')->pluck('name', 'id');
+        $index_lenses = IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $brands = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
-        $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::where('type', 'product_tax')->orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
@@ -433,12 +402,12 @@ class LensController extends Controller
         $quick_add = request()->quick_add;
 
         if ($quick_add) {
-            return view('product::back-end.products.create_quick_add')->with(compact(
+            return view('lens::back-end.lenses.create_quick_add')->with(compact(
                 'quick_add',
-                'categories',
                 'brands',
+                'foci',
+                'index_lenses',
                 'colors',
-                'sizes',
                 'stores_select',
                 'taxes',
                 'customers',
@@ -448,11 +417,11 @@ class LensController extends Controller
             ));
         }
 
-        return view('product::back-end.products.create')->with(compact(
-            'categories',
+        return view('lens::back-end.lenses.create')->with(compact(
             'brands',
             'colors',
-            'sizes',
+            'foci',
+            'index_lenses',
             'taxes',
             'stores_select',
             'customers',
@@ -471,7 +440,7 @@ class LensController extends Controller
     public function store(Request $request)
     {
 
-        if (!auth()->user()->can('product_module.products.create_and_edit')) {
+        if (!auth()->user()->can('lens_module.lens.create_and_edit')) {
             abort(403, translate('Unauthorized action.'));
         }
         $this->validate(
@@ -479,23 +448,20 @@ class LensController extends Controller
             ['name' => ['required', 'max:255']],
             ['store_ids' => ['required']],
         );
+
         DB::beginTransaction();
 
         try {
-            $product_data = [
+            $lens_data = [
                 'name' => $request->name,
+                'is_lens' => 1,
                 'translations' => !empty($request->translations) ? $request->translations : [],
-                'brand_id' => $request->brand_id,
-                'sku' => !empty($request->sku) ? $request->sku : $this->productUtil->generateSku($request->name),
+                'sku' => !empty($request->sku) ? $request->sku : $this->lensUtil->generateSku($request->name),
                 'color_id' => $request->color_id,
-                'size_id' => $request->size_id,
-                'is_service' => !empty($request->is_service) ? 1 : 0,
                 'barcode_type' => $request->barcode_type ?? 'C128',
                 'alert_quantity' => $request->alert_quantity,
                 'tax_id' => $request->tax_id,
                 'tax_method' => $request->tax_method,
-                'show_to_customer' => !empty($request->show_to_customer) ? 1 : 0,
-                'show_to_customer_types' => $request->show_to_customer_types,
                 'different_prices_for_stores' => !empty($request->different_prices_for_stores) ? 1 : 0,
                 'automatic_consumption' => !empty($request->automatic_consumption) ? 1 : 0,
                 'buy_from_supplier' =>  0,
@@ -506,39 +472,14 @@ class LensController extends Controller
             ];
 
 
-            $product = product::create($product_data);
-            $index_discounts=[];
-            if($request->has('discount_type')){
-                if(count($request->discount_type)>0){
-                    $index_discounts=array_keys($request->discount_type);
-                }
-            }
-
-
-                foreach ($index_discounts as $index_discount){
-                    $discount_customers = $this->getDiscountCustomerFromType($request->get('discount_customer_types_'.$index_discount));
-                    $data_des=[
-                        'product_id' => $product->id,
-                        'discount_type' => $request->discount_type[$index_discount],
-                        'discount_category' => $request->discount_category[$index_discount],
-                        'is_discount_permenant'=>!empty($request->is_discount_permenant[$index_discount])? 1 : 0,
-                        'discount_customer_types' => $request->get('discount_customer_types_'.$index_discount),
-                        'discount_customers' => $discount_customers,
-                        'discount' => $this->commonUtil->num_uf($request->discount[$index_discount]),
-                        'discount_start_date' => !empty($request->discount_start_date[$index_discount]) ? $this->commonUtil->uf_date($request->discount_start_date[$index_discount]) : null,
-                        'discount_end_date' => !empty($request->discount_end_date[$index_discount]) ? $this->commonUtil->uf_date($request->discount_end_date[$index_discount]) : null
-                    ];
-
-                    ProductDiscount::create($data_des);
-                }
-
+            $lens = Product::create($lens_data);
             if ($request->has("cropImages") && count($request->cropImages) > 0) {
                 foreach ($request->cropImages as $imageData) {
                     $extention = explode(";",explode("/",$imageData)[1])[0];
                     $image = rand(1,1500)."_image.".$extention;
                     $filePath = public_path('uploads/' . $image);
                     $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $product->addMedia($filePath)->toMediaCollection('products');
+                    $lens->addMedia($filePath)->toMediaCollection('products');
                 }
             }
 
@@ -546,10 +487,15 @@ class LensController extends Controller
 
 
 
-            if ($request->has('category_id')){
-                $product->categories()->attach($request->category_id);
+            if ($request->has('brand_id')){
+                $lens->brand_lenses()->attach($request->brand_id);
             }
-
+            if ($request->has('focus_id')){
+                $lens->foci()->attach($request->focus_id);
+            }
+            if ($request->has('index_lens_id')){
+                $lens->index_lenses()->attach($request->index_lens_id);
+            }
 
             DB::commit();
             $output = [
@@ -558,7 +504,6 @@ class LensController extends Controller
             ];
         } catch (\Exception $e) {
             DB::rollBack();
-//            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -590,11 +535,11 @@ class LensController extends Controller
      */
     public function show($id)
     {
-        if (!auth()->user()->can('product_module.products.view')) {
+        if (!auth()->user()->can('lens_module.lenses.view')) {
             abort(403, translate('Unauthorized action.'));
         }
 
-        $product = product::find($id);
+        $product = lens::find($id);
 
         $stock_detials = ProductStore::where('product_id', $id)->get();
 
@@ -607,7 +552,7 @@ class LensController extends Controller
             )->groupBy('add_stock_lines.id')
             ->get();
 
-        return view('product::back-end.products.show')->with(compact(
+        return view('lens::back-end.lenses.show')->with(compact(
             'product',
             'stock_detials',
             'add_stocks',
@@ -622,10 +567,10 @@ class LensController extends Controller
      */
     public function edit($id)
     {
-        if (!auth()->user()->can('product_module.products.create_and_edit')) {
+        if (!auth()->user()->can('lens_module.lenses.create_and_edit')) {
             abort(403, translate('Unauthorized action.'));
         }
-        $product = product::findOrFail($id);
+        $product = lens::findOrFail($id);
         $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
@@ -638,7 +583,7 @@ class LensController extends Controller
 
         $stores_selected=$product->stores()->pluck( 'store_id')->toarray();
         $category_id_selected =$product->categories()->pluck( 'categories.id')->toarray();
-        return view('product::back-end.products.edit')->with(compact(
+        return view('lens::back-end.lenses.edit')->with(compact(
             'product',
             'categories',
             'stores_select',
@@ -663,7 +608,7 @@ class LensController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!auth()->user()->can('product_module.products.create_and_edit')) {
+        if (!auth()->user()->can('lens_module.lenses.create_and_edit')) {
             abort(403, translate('Unauthorized action.'));
         }
 
@@ -699,7 +644,7 @@ class LensController extends Controller
 
 
             DB::beginTransaction();
-            $product = product::find($id);
+            $product = lens::find($id);
             $product->update($product_data);
 
 
@@ -780,13 +725,13 @@ class LensController extends Controller
      */
     public function destroy($id)
     {
-        if (!auth()->user()->can('product_module.products.delete')) {
+        if (!auth()->user()->can('lens_module.lenses.delete')) {
             abort(403, translate('Unauthorized action.'));
         }
         try {
             DB::beginTransaction();
 
-            $product = product::where('id', $id)->first();
+            $product = lens::where('id', $id)->first();
             ProductStore::where('product_id', $id)->delete();
             $product->deleted_by= request()->user()->id;
             $product->save();
@@ -818,7 +763,7 @@ class LensController extends Controller
                 return json_encode([]);
             }
 
-            $q = product::where(function ($query) use ($term) {
+            $q = lens::where(function ($query) use ($term) {
                     $query->where('products.name', 'like', '%' . $term . '%');
                     $query->orWhere('sku', 'like', '%' . $term . '%');
                     $query->orWhere('sub_sku', 'like', '%' . $term . '%');
@@ -870,14 +815,14 @@ class LensController extends Controller
      */
     public function getPurchaseHistory($id)
     {
-        $product = product::find($id);
+        $product = lens::find($id);
         $add_stocks = Transaction::leftjoin('add_stock_lines', 'transactions.id', 'add_stock_lines.transaction_id')
             ->where('add_stock_lines.product_id', $id)
             ->groupBy('transactions.id')
             ->select('transactions.*')
             ->get();
 
-        return view('product::back-end.products.partial.purchase_history')->with(compact(
+        return view('lens::back-end.lenses.partial.purchase_history')->with(compact(
             'product',
             'add_stocks',
         ));
@@ -890,7 +835,7 @@ class LensController extends Controller
     public function getImport()
     {
 
-        return view('product::back-end.products.import');
+        return view('lens::back-end.lenses.import');
     }
 
     /**
@@ -939,7 +884,7 @@ class LensController extends Controller
      */
     public function checkSku($sku)
     {
-        $product_sku = product::where('sku', $sku)->first();
+        $product_sku = lens::where('sku', $sku)->first();
 
         if (!empty($product_sku)) {
             $output = [
@@ -964,7 +909,7 @@ class LensController extends Controller
      */
     public function checkName(Request $request)
     {
-        $query = product::where('name', $request->name);
+        $query = lens::where('name', $request->name);
         $product_name = $query->first();
 
         if (!empty($product_name)) {
@@ -985,7 +930,7 @@ class LensController extends Controller
     public function deleteProductImage($id)
     {
         try {
-            $product = product::find($id);
+            $product = lens::find($id);
             $product->clearMediaCollection('products');
 
             $output = [
@@ -1014,7 +959,7 @@ class LensController extends Controller
         $row_id = request()->row_id ?? 0;
         $discount_customer_types = CustomerType::pluck('name', 'id');
 
-        return view('product::back-end.products.partial.raw_discount')->with(compact(
+        return view('lens::back-end.lenses.partial.raw_discount')->with(compact(
             'row_id',
             'discount_customer_types',
         ));
@@ -1029,9 +974,9 @@ class LensController extends Controller
         return response()->json(['success' => true]);
     }
     public function toggleAppearancePos($id,Request $request){
-        $products_count=product::where('show_at_the_main_pos_page','yes')->count();
+        $products_count=lens::where('show_at_the_main_pos_page','yes')->count();
         if(isset($products_count) && $products_count <40){
-            $product=product::find($id);
+            $product=lens::find($id);
             if($product->show_at_the_main_pos_page=='no'){
                 $product->show_at_the_main_pos_page='yes';
                 $product->save();
@@ -1040,7 +985,7 @@ class LensController extends Controller
                 $product->save();
             }
         }else{
-            $product=product::find($id);
+            $product=lens::find($id);
                 if($product->show_at_the_main_pos_page=='yes'){
                     $product->show_at_the_main_pos_page='no';
                     $product->save();
@@ -1056,7 +1001,7 @@ class LensController extends Controller
         }
     }
     public function multiDeleteRow(Request $request){
-        if (!auth()->user()->can('product_module.products.delete')) {
+        if (!auth()->user()->can('lens_module.lenses.delete')) {
             abort(403, translate('Unauthorized action.'));
         }
 
@@ -1064,7 +1009,7 @@ class LensController extends Controller
             DB::beginTransaction();
             foreach ($request->ids as $id){
                 ProductStor::where('product_id', $id)->delete();
-                $product = product::where('id', $$id)->first();
+                $product = lens::where('id', $$id)->first();
                 $product->clearMediaCollection('products');
                 $product->delete();
 
