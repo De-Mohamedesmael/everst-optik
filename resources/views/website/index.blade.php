@@ -5,467 +5,379 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        :root {
-            --primary: #1a89ca;
-
-        }
-
-        *,
-        *::after,
-        *::before {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: 0.1s;
-        }
-
-        a {
-            text-decoration: none;
-            outline: none;
-            border: none;
-        }
-
-        img {
-            display: block;
-            max-width: 100%;
-        }
-
-        main {
-            display: grid;
-            margin: 200px 0;
-        }
-
-        .container {
-            display: grid;
-            place-content: center;
-            position: relative;
-            overflow: hidden;
-            border-radius: 1rem;
-            --position: 50%;
-        }
-
-
-        .slider-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: left;
-
-        }
-
-        .image-after {
-            position: absolute;
-            inset: 0;
-            width: var(--position);
-        }
-
-        .slider {
-            position: absolute;
-            inset: 0;
-            cursor: pointer;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .slider-line {
-            position: absolute;
-            inset: 0;
-            width: .2rem;
-            height: 100%;
-            background-color: #fff;
-            left: var(--position);
-            transform: translateX(-50%);
-            pointer-events: none;
-        }
-
-        .slider-button {
-            position: absolute;
-            background-color: var(--primary);
-            color: white;
-            border: 2px solid white;
-            padding: .5rem;
-            border-radius: 100vw;
-            display: grid;
-            place-items: center;
-            top: 50%;
-            left: var(--position);
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            box-shadow: 1px 1px 1px hsl(0, 50%, 2%, .5);
-        }
-
-        .controls {
-            margin-top: 1rem;
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #start-btn,
-        #end-btn {
-            display: block;
-            width: 170px;
-            height: 65px;
-            color: #000;
-            text-align: center;
-            font-size: 10px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-            border-bottom: 4px solid #d2d7dc;
-            background: #ebebeb;
-            position: relative;
-        }
-
-        #start-btn::before {
-
-            display: block;
-            width: 45px;
-            height: 65px;
-            background: #d2d7dc url(/assets/website/baLeftArrow.png) no-repeat center;
-            content: "";
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-bottom-left-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-bottomleft: 5px;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            float: left;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        #start-btn strong {
-            display: block;
-            font-size: 18px;
-            padding-left: 35px;
-            padding-top: 10px;
-        }
-
-        #start-btn span {
-            padding-left: 35px;
-        }
-
-        #end-btn::after {
-            display: block;
-            width: 45px;
-            height: 65px;
-            background: #d2d7dc url(/assets/website/baRightArrow.png) no-repeat center;
-            content: "";
-            -webkit-border-top-right-radius: 5px;
-            -webkit-border-bottom-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-bottomright: 5px;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            float: right;
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
-
-        #end-btn img {
-            display: block;
-            width: 65%;
-            position: absolute;
-            top: 50%;
-            left: 39%;
-            transform: translate(-50%, -50%);
-            -webkit-transform: translate(-50%, -50%);
-            -moz-transform: translate(-50%, -50%);
-        }
-
-        .technicalLeftMenu {
-            width: 80px;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: #f4f4f4;
-            padding-top: 55px;
-            z-index: 5;
-            border-right: 1px solid #ebebeb;
-        }
-
-        .technicalLeftMenu.pixarMenu a {
-            height: auto;
-            padding: 20px 0;
-            display: block;
-            width: 100%;
-            border-bottom: 1px solid #dcdcdc;
-        }
-
-        .technicalLeftMenu a:hover,
-        .technicalLeftMenu a.active {
-            background: #ebebeb;
-        }
-
-        .technicalLeftMenu a img {
-            display: block;
-            margin: auto;
-            width: auto;
-            height: auto;
-            -webkit-filter: grayscale(100%);
-            max-width: 90%;
-        }
-
-        .technicalLeftMenu a:hover img,
-        .technicalLeftMenu a.active img {
-            -webkit-filter: grayscale(0%);
-        }
-
-        .beforeAfterMenu {
-            width: 100%;
-            max-width: 730px;
-            margin: auto;
-            text-align: center;
-        }
-
-        .beforeAfterMenu a {
-            display: inline-block;
-            width: 104px;
-            text-align: center;
-            color: #64696f;
-            font-size: 12px;
-            position: relative;
-            min-height: 125px;
-        }
-
-
-
-
-        .beforeAfterMenu a span {
-            display: block;
-            width: 50px;
-            height: 50px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-            margin: 0 auto 10px;
-            -webkit-transition: all 0.2s;
-            -moz-transition: all 0.2s;
-            -o-transition: all 0.2s;
-            transition: all 0.2s;
-        }
-
-        span.effect {
-            border: 1px solid #1a89ca;
-        }
-    </style>
 </head>
 
 <body>
-    <main>
-        <div class="controls beforeAfterMenu">
-            <a href="#" data-pair="1">
-                <span class="effect active" data-default="reflectionBlue.png" data-active="reflectionWhite.png"
-                    style=" background: #1a89ca url(/assets/website/reflectionWhite.png) no-repeat center;">
-                </span>
-                Prevents reflections, presents pure vision
-            </a>
-            <a href="#" data-pair="2">
-                <span class="effect" data-default="hydroBlue.png" data-active="hydroWhite.png"
-                    style=" background: #fff url(/assets/website/hydroBlue.png) no-repeat center;">
-                </span>
-                Superhydrophobic, water repellent
-            </a>
-            <a href="#" data-pair="3">
-                <span class="effect" data-default="stratchBlue.png" data-active="stratchWhite.png"
-                    style=" background: #fff url(/assets/website/stratchBlue.png)  no-repeat center;">
-                </span>
-                Anti-scratch
-            </a>
-            <a href="#" data-pair="4">
-                <span class="effect" data-default="cleanBlue.png" data-active="cleanWhite.png"
-                    style=" background: #fff url(/assets/website/cleanBlue.png)  no-repeat center;">
-                </span>
-                Anti-dust, easy clean
-            </a>
-            <a href="#" data-pair="5">
-                <span class="effect" data-default="fogBlue.png" data-active="fogWhite.png"
-                    style=" background: #fff url(/assets/website/fogBlue.png)   no-repeat center;">
-                </span>
-                Anti-fog
-            </a>
-            <a href="#" data-pair="6">
-                <span class="effect" data-default="uvBlue.png" data-active="uvWhite.png"
-                    style=" background: #fff url(/assets/website/uvBlue.png)   no-repeat center;">
-                </span>
-                Max UV Protection
-            </a>
-            <a href="#" data-pair="7">
-                <span class="effect" data-default="lightBlue.png" data-active="lightWhite.png"
-                    style=" background: #fff url(/assets/website/lightBlue.png) no-repeat center;">
-                </span>
-                Blue Light protection
-            </a>
-        </div>
 
-        <div class="controls">
-            <a href="#" id="start-btn">
-                <strong>
-                    Standard
-                </strong>
+<div id="navigation">
+    <div class="container-fluid" id="content">
+        <div id="main" style="margin-left: 0px;">
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="col-xs-12" id="formHorizontalDiv">
+                        <div class="box box-color ">
+                            <div class="box-content">
 
-                <span>
-                    AR
-                </span>
-            </a>
+                                <form action="#" method="post" id="orderForm" class="form-horizontal form-validate" novalidate="novalidate">
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                            <div class="form-group ">
+                                                <div class="row">
+                                                    <label for="fieldBrand" class="control-label col-xs-2">
+                                                        Marka                                        :
+                                                    </label>
+                                                    <div class="col-xs-9" id="">
+                                                        <select name="brand_code" id="fieldBrand" class="select2-me prdFilterElements select2-hidden-accessible" style="width: 100%" tabindex="-1" aria-hidden="true" data-select2-id="fieldBrand">
+                                                            <option value="" data-select2-id="22">Seçiniz...</option>
+                                                            <option value="2">Opk Elegance</option>
+                                                            <option value="1">Essilor</option>
+                                                            <option value="3">Multifree</option>
+                                                            <option value="25">Essilor Yurt Dışı</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <label for="fieldFocus" class="control-label col-xs-2">Odak</label>
+                                                    <div class="col-xs-9" id="">
+                                                        <select name="design_code" id="fieldFocus" class="select2-me prdFilterElements select2-hidden-accessible" style="width: 100%" tabindex="-1" aria-hidden="true" data-select2-id="fieldFocus">
+                                                            <option value="" data-select2-id="28">Seçiniz...</option>
+                                                            <option value="03.01">Tek Odak</option>
+                                                            <option value="03.02">Bifocal</option>
+                                                            <option value="03.03">Progresif (PAL)</option>
+                                                            <option value="03.07">Solüsyon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <div class="row">
+                                                    <label for="fieldCatCode" class="control-label col-xs-2">Dizayn:</label>
+                                                    <select name="cat_code" id="fieldCatCode" class="select2-me prdFilterElements select2-hidden-accessible" style="width: 100%" tabindex="-1" aria-hidden="true" data-select2-id="fieldCatCode">
+                                                        <option value="" data-select2-id="92">Seçiniz...</option>
+                                                        <option value="05.35">SV Rx Traditional</option><option value="05.80">Dilarya Copper</option><option value="05.81">Dilarya Diamond</option><option value="05.82">Dilarya Gold</option><option value="05.83">Dilarya Platinum</option><option value="05.84">Dilarya Silver</option><option value="05.100">Ess BCT SV</option><option value="05.29">Advans FIT</option><option value="05.25">Advans</option><option value="05.30">SV Rx Traditional</option><option value="05.114">Diamond Vision Soft</option><option value="05.74">Premium Gold</option><option value="05.91">N/A</option><option value="05.107">Vx Comfort MAX</option><option value="05.108">Vx Comfort Max FIT</option><option value="05.115">Vx Xr Design</option><option value="05.116">Vx Xr Design Fit</option><option value="05.117">Vx Xr Pro</option><option value="05.118">Stellest</option><option value="05.77">Vx X Serisi</option><option value="05.87">Vx X Serisi (Yurtdışı)</option><option value="05.78">Vx X 2 Serisi</option><option value="05.86">Vx X 2 Serisi (Yurtdışı)</option><option value="05.76">Vx E 2 Serisi</option><option value="05.75">Vx E Serisi</option><option value="05.47">Physio 3.0  F-360</option><option value="05.46">Physio 3.0</option><option value="05.55">Comfort 3.0 F-360</option><option value="05.54">Comfort 3.0</option><option value="05.64">Vx Liberty 3.0 F-360</option><option value="05.62">Vx Liberty 3.0</option><option value="05.112">Essilor Amatsi Gold Max</option><option value="05.53">Essilor Amatsi Gold</option><option value="05.51">Essilor Amatsi Platin</option><option value="05.52">Essilor Amatsi Silver</option><option value="05.41">Multifree Luxy Gold</option><option value="05.42">Multifree Luxy</option><option value="05.43">Multifree Ultra HD</option><option value="05.12">Multifree HD</option><option value="05.13">Multifree Xtra</option><option value="05.15">Multifree Fresh</option><option value="05.68">MF SA</option><option value="05.17">Mf Cx</option><option value="05.26">Multifree Avantage</option><option value="05.96">Eyezen Start</option><option value="05.48">Eyezen Pro</option><option value="05.93">BCT Eyezen Pro</option><option value="05.49">Eyezen Max</option><option value="05.94">BCT Eyezen Max</option><option value="05.95">Eyezen Expert</option><option value="05.97">BCT Eyezen Expert</option><option value="05.59">Eyezen(Stock)</option><option value="05.73">Vx Digitime Room</option><option value="05.60">Myopilux Plus</option><option value="05.45">Picto Plus</option><option value="05.92">Vivalite</option><option value="05.102">Essilor Prelude</option><option value="05.63">Myopilux Max</option><option value="05.104">Diamond Clarity</option><option value="05.103">Diamond Clarity Elite</option><option value="05.105">Diamond Vision Plus</option><option value="05.106">Diamond Vision</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <div class="row">
+                                                    <label for="fieldPrdIndexCode" class="control-label col-xs-2">Index:</label>
+                                                    <select name="prd_index_code" id="fieldPrdIndexCode" class="select2-me prdFilterElements select2-hidden-accessible" style="width: 100%" tabindex="-1" aria-hidden="true" data-select2-id="fieldPrdIndexCode">
+                                                        <option value="" data-select2-id="106">Seçiniz...</option>
+                                                        <option value="07.03">1.56</option><option value="07.01">1.5</option><option value="07.05">1.59</option><option value="07.06">1.6</option><option value="07.07">1.67</option><option value="07.09">1.74</option><option value="07.10">1.523</option><option value="07.02">1.53</option><option value="07.04">1.58</option><option value="07.08">1.7</option><option value="07.11">1.8</option><option value="07.12">1.9</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <label for="fieldPrdColorCode" class="control-label col-xs-2">Renk:</label>
+                                                <select name="color_code" id="fieldPrdColorCode" class="select2-me prdFilterElements select2-hidden-accessible" style="width: 100%" tabindex="-1" aria-hidden="true" data-select2-id="fieldPrdColorCode">
+                                                    <option value="" data-select2-id="131">Seçiniz...</option>
+                                                    <option value="08.01">Beyaz</option><option value="08.35">TGENS Füme</option><option value="08.36">TGENS Kahve</option><option value="08.37">TGENS Yeşil</option><option value="08.41">TGENS Emerald Green</option><option value="08.38">TGENS Sapphire Blue</option><option value="08.39">TGENS Amethyst Purple</option><option value="08.40">TGENS Amber Brown</option><option value="08.42">TGENS Ruby</option><option value="08.26">TR8 Füme</option><option value="08.27">TR8 Kahve</option><option value="08.28">TR8 Yeşil</option><option value="08.29">Classic Füme</option><option value="08.30">Classic Kahve</option><option value="08.08">Polar Füme</option><option value="08.07">Polar Kahve</option><option value="08.06">Polar Yeşil</option><option value="08.10">Acclimates Füme</option><option value="08.09">Acclimates Kahve</option><option value="08.02">Fotokromik Kahve</option><option value="08.03">Fotokromik Füme</option><option value="08.23">Activations Füme</option><option value="08.24">Activations Kahve</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <div class="row ">
+                                                    <label for="fieldProduct" class="control-label col-xs-2">Ürün </label>
+                                                    <div class="col-xs-9" id="">
+                                                        <select name="field[productCode]" class="select2-me fieldProduct select2-hidden-accessible" id="fieldProduct" style="width: 100%" tabindex="-1" aria-hidden="true" data-select2-id="fieldProduct"><option value="" data-select2-id="936">Seçiniz...</option><option value="LUXS160TCF">MF NG LUXY SH 1.60 Transitions Classic Füme</option><option value="CGISZ3XXX1">Varilux Comfort 3.0 F-360 1.5 TGENS Yeşil</option><option value="S45SZ2XXX1">Essilor SV 1.74 TGENS Kahve</option><option value="G9G4150000">Varilux XR 1.5 Short Polarize Kahve</option><option value="P32SZ2XXX1">Essilor SV Eyezen Max 1.5 TGENS Kahve</option><option value="F6D1000006">MF NG Xtra Short 1.67</option><option value="TCXSZ1XXX1">Varilux Comfort MAX 1.67 Short TGENS Füme</option><option value="G9N6813141">Varilux XR PRO 1.59 Polarize Füme</option><option value="1114159100">Essilor Advans FIT 1.59 Rx</option><option value="FDBSA1H8M4">MF NG LUXY SH 1.60 Transitions 8 Füme</option><option value="G9RSZ2XXX2">Varilux XR PRO 1.74 TGENS Kahve</option><option value="FGASA2EUM7">MF NG HD 16mm 1.5 Transitions 8 Kahve</option><option value="ZDESZ1XXX1">Varilux Physio 3.0 1.74 TGENS Füme</option><option value="L3B4150000">Varilux Liberty 3.0 Orma 1.5 Xperio Polarize Kahve (Brw)</option><option value="ABV9420000">Essilor BCT SV Ormex 1.56 Rx</option><option value="L3LSZ1XXX1">Varilux Liberty 3.0 1.67 TGENS Füme</option><option value="S33SZ8XXX1">Essilor SV 1.6 TGENS Ruby</option><option value="G8QSZ1XXX1">Varilux X 2 1.67 TGENS Füme</option><option value="S35SZ2XXX1">Essilor Advans FIT 1.6 TGENS Kahve</option><option value="G9B4110000">Varilux XR 1.5 Polarize Füme</option><option value="LUXY150TCK">MF NG LUXY 1.5 Transitions Classic Kahve</option><option value="E1A1000003">MF NG Xtra 1.5</option><option value="G9H1003100">Varilux XR 1.59 Short Beyaz</option><option value="P34SZ3XXX1">Essilor SV Eyezen Max 1.6 TGENS Yeşil</option><option value="FAD4150001">MF NG HD 18mm 1.67 Polarize Kahve</option><option value="TCZSZ2XXX1">Varilux Comfort MAX FIT 1.67 TGENS Kahve</option><option value="G9NSZ3XXX1">Varilux XR FIT 1.59 TGENS Yeşil</option><option value="P8V1000000">Varilux Digitime Room Std Ormix 1.6</option><option value="FDC1003147">MF NG LUXY SHORT 1.59</option><option value="TKC10000EB">Stark Rx 1.56</option><option value="HD14150TCF">MF NG HD 14mm 1.5 Transitions Classic Füme</option><option value="585SZ1XXX1">Varilux E 1.5 Short TGENS Füme</option><option value="PBRSZ3XXX1">Varilux Physio 3.0 1.67 TGENS Yeşil</option><option value="FGCSA1H8M5">MF NG HD 16mm 1.59 Transitions 8 Füme</option><option value="ZDGSZ2XXX1">Varilux Physio 3.0 F-360 1.74 TGENS Kahve</option><option value="L3MSZ2XXX1">Varilux Liberty 3.0 1.67 Short TGENS Kahve</option><option value="CBX4110000">Varilux Comfort 3.0 Ormix 1.6 Xperio Polarize Füme (Blk)</option><option value="S37SZ1XXX1">Essilor SV 1.59 TGENS Füme</option><option value="G9BSZ3XXX1">Varilux XR 1.5 TGENS Yeşil</option><option value="NFFAE10001">MF NG HD 18mm 1.53</option><option value="TB3SZ1XXX1">Varilux Comfort MAX FIT 1.5 TGENS Füme</option><option value="G9HSZ3XXX1">Varilux XR 1.59 Short TGENS Yeşil</option><option value="FAH4110001">MF NG HD 18mm 1.5 Polarize Füme</option><option value="TFWSZ1XXX1">Varilux Comfort MAX 1.74 TGENS Füme</option><option value="G9P9420001">Varilux XR PRO 1.6 BCT</option><option value="167ELASTCF">1.67 Elasis Transitions Classic Füme</option><option value="FDCSA3H8M3">MF NG HD 14mm 1.59 Transitions 8 Yeşil</option><option value="HD16156FTK">MF NG HD 14mm 1.56 Fotokromik Kahve</option><option value="PBTSZ2XXX1">Varilux Physio 3.0 F-360 1.67 TGENS Kahve</option><option value="FGDSA3H8M6">MF NG HD 16mm 1.67 Transitions 8 Yeşil</option><option value="L3FSZ1XXX1">Varilux Liberty 3.0 F-360 1.6 TGENS Füme</option><option value="CAYSZ1XXX1">Varilux Comfort 3.0 1.59 TGENS Füme</option><option value="S29SA1EURM">1.5 Elanor Transitions 8 Füme</option><option value="L3PSZ3XXX1">Varilux Liberty 3.0 F-360 1.59 TGENS Yeşil</option><option value="CBXSZ3XXX1">Varilux Comfort 3.0 1.6 TGENS Yeşil</option><option value="L3QSZ1XXX1">Varilux Liberty 3.0 1.59 TGENS Füme</option><option value="S40SA2H80M">1.67 Elasis Transitions 8 Kahve</option><option value="G9CSZ2XXX1">Varilux XR 1.59 TGENS Kahve</option><option value="TBGSZ3XXX1">Varilux Comfort MAX 1.59 TGENS Yeşil</option><option value="G9JSZ3XXX1">Varilux XR 1.6 Short TGENS Yeşil</option><option value="P4N9420000">BCT SV Eyezen Expert 1.6 Beyaz Rx</option><option value="FCASA3EUM4">MF NG HD 18mm 1.5 Transitions 8 Yeşil</option><option value="TFZSZ2XXX1">Varilux Comfort MAX FIT 1.74 TGENS Kahve</option><option value="G9PSZ3XXX1">Varilux XR FIT 1.6 TGENS Yeşil</option><option value="1FDB160101">MF NG LUXY SHORT 1.60</option><option value="PAJSZ2XXX1">Varilux Physio 3.0 1.5 Short TGENS Kahve</option><option value="FDDSA2H8M4">MF NG LUXY SH 1.67 Transitions 8 Kahve</option><option value="HD18150TCF">MF NG HD 18mm 1.5 Transitions Classic Füme</option><option value="668SZ1XXX1">Varilux E 2 1.5 TGENS Füme</option><option value="PCFSZ1XXX1">Varilux Physio 3.0 1.6 TGENS Füme</option><option value="L3G4150000">Varilux Liberty 3.0 Ormix 1.6 Xperio Polarize Kahve (Brw)</option><option value="CAZSZ2XXX1">Varilux Comfort 3.0 1.59 Short TGENS Kahve</option><option value="S29SZ3XXX1">Essilor SV 1.5 TGENS Yeşil</option><option value="G8KSZ2XXX1">Varilux X 1.67 Short TGENS Kahve</option><option value="L3RSZ2XXX1">Varilux Liberty 3.0 1.59 Short TGENS Kahve</option><option value="CFS1000000">Varilux Comfort 3.0 SH Ormex 1.56</option><option value="S40SZ4XXX1">Essilor SV 1.67 TGENS Sapphire Blue</option><option value="G9DSZ2XXX1">Varilux XR 1.6 TGENS Kahve</option><option value="P22SZ3XXX1">Essilor SV Eyezen Pro 1.5 TGENS Yeşil</option><option value="F2C1000004">MF NG HD 18mm 1.59</option><option value="G9KSZ3XXX1">Varilux XR 1.67 Short TGENS Yeşil</option><option value="TCFSZ1XXX1">Varilux Comfort MAX 1.6 Short TGENS Füme</option><option value="G9M4150001">Varilux XR PRO 1.5 Polarize Kahve</option><option value="P4PSZ1XXX1">Essilor SV Eyezen Expert 1.67 TGENS Füme</option><option value="FCCSA2H8M4">MF NG HD 18mm 1.59 Transitions 8 Kahve</option><option value="G9Q9420001">Varilux XR PRO 1.67 BCT</option><option value="FEASA3EUM2">MF NG LUXY 1.5 Transitions 8 Yeşil</option><option value="XTRA160TCF">MF NG Xtra 1.60 Transitions Classic Füme</option><option value="HD18160TCK">MF NG HD 18mm 1.60 Transitions Classic Kahve</option><option value="PCGSZ3XXX1">Varilux Physio 3.0 1.6 Short TGENS Yeşil</option><option value="CBASZ3XXX1">Varilux Comfort 3.0 F-360 1.59 TGENS Yeşil</option><option value="S29SZ8XXX1">Essilor SV 1.5 TGENS Ruby</option><option value="S42SA1H80M">MF Avantage 1.67 Transitions 8 Füme</option><option value="G9ESZ2XXX1">Varilux XR 1.67 TGENS Kahve</option><option value="F3D1000006">MF NG HD 14mm 1.67</option><option value="TCHSZ2XXX1">Varilux Comfort MAX FIT 1.6 TGENS Kahve</option><option value="G9MSZ2XXX1">Varilux XR FIT 1.5 TGENS Kahve</option><option value="098SZ1XXX1">Varilux E 1.5 TGENS Füme</option><option value="P4SSZ2XXX1">Essilor SV Eyezen Start 1.5 TGENS Kahve</option><option value="FDASA1EUM3">MF NG HD 14mm 1.5 Transitions 8 Füme</option><option value="G9QSZ3XXX1">Varilux XR FIT 1.67 TGENS Yeşil</option><option value="PAWSZ3XXX1">Varilux Physio 3.0 1.59 TGENS Yeşil</option><option value="FECSA1H8M2">MF NG LUXY 1.59 Transitions 8 Füme</option><option value="XTRS150TCK">MF NG Xtra SH 1.5 Transitions Classic Kahve</option><option value="G8DSZ1XXX1">Varilux X 1.6 TGENS Füme</option><option value="L3KSZ1XXX1">Varilux Liberty 3.0 F-360 1.67 TGENS Füme</option><option value="CBLSZ1XXX1">Varilux Comfort 3.0 1.67 TGENS Füme</option><option value="S33SZ1XXX1">Essilor SV 1.6 TGENS Füme</option><option value="LUXS150TCF">MF NG LUXY SH 1.5 Transitions Classic Füme</option><option value="CGISZ1XXX1">Varilux Comfort 3.0 F-360 1.5 TGENS Füme</option><option value="S42SZ3XXX1">Essilor Advans FIT 1.67 TGENS Yeşil</option><option value="G9G1000000">Varilux XR 1.5 Short Beyaz</option><option value="F6C1000005">MF NG HD 16mm 1.59</option><option value="TCWSZ3XXX1">Varilux Comfort MAX 1.67 TGENS Yeşil</option><option value="G9N1003141">Varilux XR PRO 1.59 Beyaz</option><option value="P4USZ2XXX1">Essilor SV Eyezen Start 1.6 TGENS Kahve</option><option value="FDASA3EUM4">MF NG LUXY SH 1.5 Transitions 8 Yeşil</option><option value="G9RSZ1XXX2">Varilux XR PRO 1.74 TGENS Füme</option><option value="PAYSZ2XXX1">Varilux Physio 3.0 F-360 1.59 TGENS Kahve</option><option value="FEDSA3H8M2">MF NG LUXY 1.67 Transitions 8 Yeşil</option><option value="ZDA1000000">Varilux Physio 3.0 Lineis 1.74</option><option value="G8FSZ1XXX1">Varilux X 1.74 TGENS Füme</option><option value="L3L4150000">Varilux Liberty 3.0 Stylis 1.67 Xperio Polarize Kahve (Brw)</option><option value="CBMSZ2XXX1">Varilux Comfort 3.0 1.67 Short TGENS Kahve</option><option value="S33SZ6XXX1">Essilor SV 1.6 TGENS Amber Brown</option><option value="G8PSZ2XXX1">Varilux X 2 1.6 TGENS Kahve</option><option value="G8RSZ2XXX1">Varilux X 2 1.74 TGENS Kahve</option><option value="LUXS167TCK">MF NG LUXY SH 1.67 Transitions Classic Kahve</option><option value="TB0SZ2XXX1">Varilux Comfort MAX 1.5 TGENS Kahve</option><option value="G9GSZ2XXX1">Varilux XR 1.5 Short TGENS Kahve</option><option value="P34SZ1XXX1">Essilor SV Eyezen Max 1.6 TGENS Füme</option><option value="FAB4640001">MF NG HD 18mm 1.60 Polarize Yeşil</option><option value="G9NSZ2XXX1">Varilux XR FIT 1.59 TGENS Kahve</option><option value="150ELANTCF">1.5 Elanor Transitions Classic Füme</option><option value="P4VSZ3XXX1">Essilor SV Eyezen Start 1.67 TGENS Yeşil</option><option value="FDBSA3H8M3">MF NG HD 14mm 1.60 Transitions 8 Yeşil</option><option value="HD14147TCF">MF NG HD 14mm 1.67 Transitions Classic Füme</option><option value="PBRSZ1XXX1">Varilux Physio 3.0 1.67 TGENS Füme</option><option value="FGBSA2H8M7">MF NG HD 16mm 1.60 Transitions 8 Kahve</option><option value="ZDFSZ2XXX2">Varilux Physio 3.0 1.74 Short TGENS Kahve</option><option value="L3BSZ2XXX1">Varilux Liberty 3.0 1.5 TGENS Kahve</option><option value="G8GSZ1XXX1">Varilux X 1.5 Short TGENS Füme</option><option value="CBNSZ3XXX1">Varilux Comfort 3.0 F-360 1.67 TGENS Yeşil</option><option value="S35SA3H80M">MF Avantage 1.60 Transitions 8 Yeşil</option><option value="S37SA2H80M">1.59 Polikarbon Transitions 8 Kahve</option><option value="G9BSZ1XXX1">Varilux XR 1.5 TGENS Füme</option><option value="LUXY167TCF">MF NG LUXY 1.67 Transitions Classic Füme</option><option value="TB1SZ3XXX1">Varilux Comfort MAX 1.5 Short TGENS Yeşil</option><option value="G9HSZ1XXX1">Varilux XR 1.59 Short TGENS Füme</option><option value="P35SZ2XXX1">Essilor SV Eyezen Max 1.67 TGENS Kahve</option><option value="FAE634H801">MF NG HD 18mm 1.53 Transitions 8 Kahve</option><option value="G9P1000001">Varilux XR PRO 1.6 Beyaz</option><option value="160ELAMTCF">1.60 Elamix Transitions Classic Füme</option><option value="FDCSA2H8M3">MF NG HD 14mm 1.59 Transitions 8 Kahve</option><option value="HD16150TCK">MF NG HD 16mm 1.5 Transitions Classic Kahve</option><option value="602SZ1XXX1">Varilux E 1.6 Short TGENS Füme</option><option value="PBSSZ3XXX1">Varilux Physio 3.0 1.67 Short TGENS Yeşil</option><option value="FGDSA1H8M6">MF NG HD 16mm 1.67 Transitions 8 Füme</option><option value="L3CSZ3XXX1">Varilux Liberty 3.0 1.5 Short TGENS Yeşil</option><option value="G8HSZ1XXX1">Varilux X 1.59 Short TGENS Füme</option><option value="L3PSZ1XXX1">Varilux Liberty 3.0 F-360 1.59 TGENS Füme</option><option value="CBXSZ1XXX1">Varilux Comfort 3.0 1.6 TGENS Füme</option><option value="CBYSZ2XXX1">Varilux Comfort 3.0 1.6 Short TGENS Kahve</option><option value="S409420000">Essilor BCT SV Stylis 1.67 Rx</option><option value="G9C6810000">Varilux XR 1.59 Polarize Füme</option><option value="OPK174BEYZ">1.74 Elanis Rx</option><option value="TBGSZ1XXX1">Varilux Comfort MAX 1.59 TGENS Füme</option><option value="G9JSZ1XXX1">Varilux XR 1.6 Short TGENS Füme</option><option value="TBKSZ2XXX1">Varilux Comfort MAX FIT 1.59 TGENS Kahve</option><option value="P4LSZ2XXX1">Essilor SV Eyezen Expert 1.5 TGENS Kahve</option><option value="FCASA1EUM4">MF NG HD 18mm 1.5 Transitions 8 Füme</option><option value="TFXSZ2XXX1">Varilux Comfort MAX 1.74 Short TGENS Kahve</option><option value="G9PSZ2XXX1">Varilux XR FIT 1.6 TGENS Kahve</option><option value="1E1Q156103">MF NG Xtra 1.56</option><option value="PAISZ3XXX1">Varilux Physio 3.0 1.5 TGENS Yeşil</option><option value="FDDSA1H8M4">MF NG LUXY SH 1.67 Transitions 8 Füme</option><option value="HD16167TCF">MF NG HD 16mm 1.67 Transitions Classic Füme</option><option value="FUG1000001">MF NG HD 16mm 1.56</option><option value="S29SZ1XXX1">Essilor SV 1.5 TGENS Füme</option><option value="L3Q4150000">Varilux Liberty 3.0 Airwear 1.59 Xperio Polarize Kahve (Brw)</option><option value="CBZSZ3XXX1">Varilux Comfort 3.0 F-360 1.6 TGENS Yeşil</option><option value="S40SZ2XXX1">Essilor SV 1.67 TGENS Kahve</option><option value="G9D9420000">Varilux XR 1.6 BCT</option><option value="P22SZ1XXX1">Essilor SV Eyezen Pro 1.5 TGENS Füme</option><option value="F2A1000004">MF NG HD 18mm 1.5</option><option value="TBHSZ3XXX1">Varilux Comfort MAX 1.59 Short TGENS Yeşil</option><option value="G9KSZ1XXX1">Varilux XR 1.67 Short TGENS Füme</option><option value="TCESZ3XXX1">Varilux Comfort MAX 1.6 TGENS Yeşil</option><option value="G9M1000001">Varilux XR PRO 1.5 Beyaz</option><option value="P4NSZ3XXX1">Essilor SV Eyezen Expert 1.6 TGENS Yeşil</option><option value="FCBSA3H8M4">MF NG HD 18mm 1.60 Transitions 8 Yeşil</option><option value="G9Q1000001">Varilux XR PRO 1.67 Beyaz</option><option value="1FEB160102">MF NG LUXY 1.60</option><option value="PAKSZ2XXX1">Varilux Physio 3.0 F-360 1.5 TGENS Kahve</option><option value="FEASA1EUM2">MF NG LUXY 1.5 Transitions 8 Füme</option><option value="XTRA150TCF">MF NG Xtra 1.5 Transitions Classic Füme</option><option value="HD18156FTK">MF NG HD 18mm 1.56 Fotokromik Kahve</option><option value="682SZ1XXX1">Varilux E 2 1.6 TGENS Füme</option><option value="PCGSZ1XXX1">Varilux Physio 3.0 1.6 Short TGENS Füme</option><option value="G8BSZ2XXX1">Varilux X 1.5 TGENS Kahve Çok Odaklı(Progresif) Organik Colormatik Gözlük Camı</option><option value="L3GSZ2XXX1">Varilux Liberty 3.0 1.6 TGENS Kahve</option><option value="CBASZ1XXX1">Varilux Comfort 3.0 F-360 1.59 TGENS Füme</option><option value="S29SZ6XXX1">Essilor SV 1.5 TGENS Amber Brown</option><option value="CGGSZ2XXX1">Varilux Comfort 3.0 1.5 TGENS Kahve</option><option value="S40SZ7XXX1">Essilor SV 1.67 TGENS Emerald Green</option><option value="G9E9420000">Varilux XR 1.67 BCT</option><option value="P24SZ2XXX1">Essilor SV Eyezen Pro 1.6 TGENS Kahve</option><option value="F3B1000006">MF NG HD 14mm 1.60</option><option value="G9LSZ2XXX1">Varilux XR 1.74 Short TGENS Kahve</option><option value="G9MSZ1XXX1">Varilux XR FIT 1.5 TGENS Füme</option><option value="FCDSA2H8M4">MF NG HD 18mm 1.67 Transitions 8 Kahve</option><option value="G9QSZ2XXX1">Varilux XR FIT 1.67 TGENS Kahve</option><option value="PAWSZ1XXX1">Varilux Physio 3.0 1.59 TGENS Füme</option><option value="FEBSA3H8M2">MF NG LUXY 1.60 Transitions 8 Yeşil</option><option value="XTRA167TCK">MF NG Xtra 1.67 Transitions Classic Kahve</option><option value="PCHSZ3XXX1">Varilux Physio 3.0 F-360 1.6 TGENS Yeşil</option><option value="G8CSZ2XXX1">Varilux X 1.59 TGENS Kahve</option><option value="L3HSZ3XXX1">Varilux Liberty 3.0 1.6 Short TGENS Yeşil</option><option value="CBL4150000">Varilux Comfort 3.0 Stylis 1.67 Xperio Polarize Kahve (Brw)</option><option value="S33SA2H80M">1.6 Elamix Transitions 8 Kahve</option><option value="CGHSZ3XXX1">Varilux Comfort 3.0 1.5 Short TGENS Yeşil</option><option value="S42SZ1XXX1">Essilor Advans FIT 1.67 TGENS Füme</option><option value="G9FSZ1XXX1">Varilux XR 1.74 TGENS Füme</option><option value="P25SZ3XXX1">Essilor SV Eyezen Pro 1.67 TGENS Yeşil</option><option value="F6B1000005">MF NG HD 16mm 1.60</option><option value="TCWSZ1XXX1">Varilux Comfort MAX 1.67 TGENS Füme</option><option value="G9MSZ3XXX2">Varilux XR PRO 1.5 TGENS Yeşil</option><option value="FDASA2EUM4">MF NG LUXY SH 1.5 Transitions 8 Kahve</option><option value="G9R1000001">Varilux XR PRO 1.74</option><option value="434SZ2XXX1">Varilux E 1.67 TGENS Kahve</option><option value="PAXSZ3XXX1">Varilux Physio 3.0 1.59 Short TGENS Yeşil</option><option value="FEDSA1H8M2">MF NG LUXY 1.67 Transitions 8 Füme</option><option value="XTRS167TCF">MF NG Xtra SH 1.67 Transitions Classic Füme</option><option value="L3ASZ2XXX1">Varilux Liberty 3.0 F-360 1.5 TGENS Kahve</option><option value="G8ESZ1XXX1">Varilux X 1.67 TGENS Füme</option><option value="S33SZ4XXX1">Essilor SV 1.6 TGENS Sapphire Blue</option><option value="LUXS160TCK">MF NG LUXY SH 1.60 Transitions Classic Kahve</option><option value="G9G9420000">Varilux XR 1.5 Short BCT</option><option value="P32SZ3XXX1">Essilor SV Eyezen Max 1.5 TGENS Yeşil</option><option value="FAB4110001">MF NG HD 18mm 1.60 Polarize Füme</option><option value="TCXSZ2XXX1">Varilux Comfort MAX 1.67 Short TGENS Kahve</option><option value="G9NSZ1XXX1">Varilux XR FIT 1.59 TGENS Füme</option><option value="P4VSZ1XXX1">Essilor SV Eyezen Start 1.67 TGENS Füme</option><option value="FDBSA2H8M3">MF NG HD 14mm 1.60 Transitions 8 Kahve</option><option value="HD14140TCF">MF NG HD 14mm 1.60 Transitions Classic Füme</option><option value="FGASA3EUM7">MF NG HD 16mm 1.5 Transitions 8 Yeşil</option><option value="ZDESZ2XXX2">Varilux Physio 3.0 1.74 TGENS Kahve</option><option value="L3B4640000">Varilux Liberty 3.0 Orma 1.5 Xperio Polarize Yeşil (Grn)</option><option value="C11307NT10">Varilux Comfort 3.0 Vivalite Orma 1.5 Trans Füme</option><option value="L3LSZ2XXX1">Varilux Liberty 3.0 1.67 TGENS Kahve</option><option value="CBNSZ1XXX1">Varilux Comfort 3.0 F-360 1.67 TGENS Füme</option><option value="S35SA1H80M">MF Avantage 1.60 Transitions 8 Füme</option><option value="G8QSZ2XXX1">Varilux X 2 1.67 TGENS Kahve</option><option value="S35SZ3XXX1">Essilor Advans FIT 1.6 TGENS Yeşil</option><option value="G9B4150000">Varilux XR 1.5 Polarize Kahve</option><option value="LUXY160TCF">MF NG LUXY 1.60 Transitions Classic Füme</option><option value="E1B1000001">MF NG Xtra 1.60</option><option value="TB1SZ1XXX1">Varilux Comfort MAX 1.5 Short TGENS Füme</option><option value="G9H4150000">Varilux XR 1.59 Short Polarize Kahve</option><option value="FAD4640001">MF NG HD 18mm 1.67 Polarize Yeşil</option><option value="TCZSZ3XXX1">Varilux Comfort MAX FIT 1.67 TGENS Yeşil</option><option value="G9NSZ3XXX2">Varilux XR PRO 1.59 TGENS Yeşil</option><option value="P9D1000000">Varilux Digitime Room Std Stylis 1.67</option><option value="FDCSA1H8M3">MF NG HD 14mm 1.59 Transitions 8 Füme</option><option value="TKC10000ED">1.56 Ormex Crizal Drive Stok Rx</option><option value="HD14150TCK">MF NG HD 14mm 1.5 Transitions Classic Kahve</option><option value="585SZ2XXX1">Varilux E 1.5 Short TGENS Kahve</option><option value="PBSSZ1XXX1">Varilux Physio 3.0 1.67 Short TGENS Füme</option><option value="FGCSA2H8M5">MF NG HD 16mm 1.59 Transitions 8 Kahve</option><option value="L3CSZ1XXX1">Varilux Liberty 3.0 1.5 Short TGENS Füme</option><option value="L3MSZ3XXX1">Varilux Liberty 3.0 1.67 Short TGENS Yeşil</option><option value="CBX4150000">Varilux Comfort 3.0 Ormix 1.6 Xperio Polarize Kahve (Brw)</option><option value="S37SZ2XXX1">Essilor SV 1.59 TGENS Kahve</option><option value="G9C1003100">Varilux XR 1.59 Beyaz</option><option value="NFFUE10001">MF NG HD 16mm 1.53</option><option value="TB3SZ2XXX1">Varilux Comfort MAX FIT 1.5 TGENS Kahve</option><option value="G9J1000000">Varilux XR 1.6 Short Beyaz</option><option value="P4L9420000">BCT SV Eyezen Expert 1.5 Beyaz Rx</option><option value="FAH4150001">MF NG HD 18mm 1.5 Polarize Kahve</option><option value="TFWSZ2XXX1">Varilux Comfort MAX 1.74 TGENS Kahve</option><option value="G9PSZ1XXX1">Varilux XR FIT 1.6 TGENS Füme</option><option value="167ELASTCK">1.67 Elasis Transitions Classic Kahve</option><option value="PAISZ1XXX1">Varilux Physio 3.0 1.5 TGENS Füme</option><option value="FDCSA3H8M4">MF NG LUXY SH 1.59 Transitions 8 Yeşil</option><option value="HD16160TCF">MF NG HD 16mm 1.60 Transitions Classic Füme</option><option value="633SZ1XXX1">Varilux E 1.67 Short TGENS Füme</option><option value="PBTSZ3XXX1">Varilux Physio 3.0 F-360 1.67 TGENS Yeşil</option><option value="FUE631H801">MF NG HD 16mm 1.53 Transitions 8 Füme</option><option value="L3FSZ2XXX1">Varilux Liberty 3.0 F-360 1.6 TGENS Kahve</option><option value="CAYSZ2XXX1">Varilux Comfort 3.0 1.59 TGENS Kahve</option><option value="S29SA2EURM">1.5 Elanor Transitions 8 Kahve</option><option value="G8JSZ1XXX1">Varilux X 1.6 Short TGENS Füme</option><option value="L3QSZ2XXX1">Varilux Liberty 3.0 1.59 TGENS Kahve</option><option value="CBZSZ1XXX1">Varilux Comfort 3.0 F-360 1.6 TGENS Füme</option><option value="S40SA3H80M">1.67 Elasis Transitions 8 Yeşil</option><option value="G9CSZ3XXX1">Varilux XR 1.59 TGENS Yeşil</option><option value="ESS174BEYZ">Essilor Lineis 1.74 Rx</option><option value="TBHSZ1XXX1">Varilux Comfort MAX 1.59 Short TGENS Füme</option><option value="G9K1000000">Varilux XR 1.67 Short Beyaz</option><option value="TCESZ1XXX1">Varilux Comfort MAX 1.6 TGENS Füme</option><option value="P4NSZ1XXX1">Essilor SV Eyezen Expert 1.6 TGENS Füme</option><option value="FCBSA1H8M4">MF NG HD 18mm 1.60 Transitions 8 Füme</option><option value="G9PSZ3XXX2">Varilux XR PRO 1.6 TGENS Yeşil</option><option value="1FDD167102">MF NG LUXY SHORT 1.67</option><option value="PAJSZ3XXX1">Varilux Physio 3.0 1.5 Short TGENS Yeşil</option><option value="FDDSA3H8M3">MF NG HD 14mm 1.67 Transitions 8 Yeşil</option><option value="HD18150TCK">MF NG HD 18mm 1.5 Transitions Classic Kahve</option><option value="668SZ2XXX1">Varilux E 2 1.5 TGENS Kahve</option><option value="PCFSZ2XXX1">Varilux Physio 3.0 1.6 TGENS Kahve</option><option value="L3G4640000">Varilux Liberty 3.0 Ormix 1.6 Xperio Polarize Yeşil (Grn)</option><option value="CAZSZ3XXX1">Varilux Comfort 3.0 1.59 Short TGENS Yeşil</option><option value="S29SZ4XXX1">Essilor SV 1.5 TGENS Sapphire Blue</option><option value="G8LSZ1XXX1">Varilux X 1.74 Short TGENS Füme</option><option value="L3RSZ3XXX1">Varilux Liberty 3.0 1.59 Short TGENS Yeşil</option><option value="S40SZ5XXX1">Essilor SV 1.67 TGENS Amethyst Purple</option><option value="G9DSZ3XXX1">Varilux XR 1.6 TGENS Yeşil</option><option value="F2D1000004">MF NG HD 18mm 1.67</option><option value="G9L1000000">Varilux XR 1.74 Short Beyaz</option><option value="TCFSZ2XXX1">Varilux Comfort MAX 1.6 Short TGENS Kahve</option><option value="G9M9420000">Varilux XR FIT 1.5 BCT</option><option value="P4PSZ2XXX1">Essilor SV Eyezen Expert 1.67 TGENS Kahve</option><option value="FCCSA3H8M4">MF NG HD 18mm 1.59 Transitions 8 Yeşil</option><option value="G9QSZ1XXX1">Varilux XR FIT 1.67 TGENS Füme</option><option value="269SZ1XXX1">Varilux E 1.6 TGENS Füme</option><option value="FEBSA1H8M2">MF NG LUXY 1.60 Transitions 8 Füme</option><option value="XTRA160TCK">MF NG Xtra 1.60 Transitions Classic Kahve</option><option value="HD18167TCF">MF NG HD 18mm 1.67 Transitions Classic Füme</option><option value="707SZ1XXX1">Varilux E 2 1.67 TGENS Füme</option><option value="PCHSZ1XXX1">Varilux Physio 3.0 F-360 1.6 TGENS Füme</option><option value="L3HSZ1XXX1">Varilux Liberty 3.0 1.6 Short TGENS Füme</option><option value="S339420000">Essilor BCT SV Ormix 1.60 Rx</option><option value="G8MSZ1XXX1">Varilux X 2 1.5 TGENS Füme</option><option value="CGHSZ1XXX1">Varilux Comfort 3.0 1.5 Short TGENS Füme</option><option value="S42SA2H80M">MF Avantage 1.67 Transitions 8 Kahve</option><option value="G9ESZ3XXX1">Varilux XR 1.67 TGENS Yeşil</option><option value="P25SZ1XXX1">Essilor SV Eyezen Pro 1.67 TGENS Füme</option><option value="F6A1000005">MF NG HD 16mm 1.5</option><option value="TCHSZ3XXX1">Varilux Comfort MAX FIT 1.6 TGENS Yeşil</option><option value="G9MSZ2XXX2">Varilux XR PRO 1.5 TGENS Kahve</option><option value="098SZ2XXX1">Varilux E 1.5 TGENS Kahve</option><option value="P4SSZ3XXX1">Essilor SV Eyezen Start 1.5 TGENS Yeşil</option><option value="FDASA1EUM4">MF NG LUXY SH 1.5 Transitions 8 Füme</option><option value="G9QSZ3XXX2">Varilux XR PRO 1.67 TGENS Yeşil</option><option value="PAXSZ1XXX1">Varilux Physio 3.0 1.59 Short TGENS Füme</option><option value="FECSA2H8M2">MF NG LUXY 1.59 Transitions 8 Kahve</option><option value="XTRS160TCF">MF NG Xtra SH 1.60 Transitions Classic Füme</option><option value="G8DSZ2XXX1">Varilux X 1.6 TGENS Kahve</option><option value="L3KSZ2XXX1">Varilux Liberty 3.0 F-360 1.67 TGENS Kahve</option><option value="CBLSZ2XXX1">Varilux Comfort 3.0 1.67 TGENS Kahve</option><option value="S33SZ2XXX1">Essilor SV 1.6 TGENS Kahve</option><option value="G8NSZ1XXX1">Varilux X 2 1.59 TGENS Füme</option><option value="LUXS150TCK">MF NG LUXY SH 1.5 Transitions Classic Kahve</option><option value="CGISZ2XXX1">Varilux Comfort 3.0 F-360 1.5 TGENS Kahve</option><option value="S45SZ1XXX1">Essilor SV 1.74 TGENS Füme</option><option value="G9G4110000">Varilux XR 1.5 Short Polarize Füme</option><option value="P32SZ1XXX1">Essilor SV Eyezen Max 1.5 TGENS Füme</option><option value="F6D1000005">MF NG HD 16mm 1.67</option><option value="G9N4153141">Varilux XR PRO 1.59 Polarize Kahve</option><option value="P4USZ3XXX1">Essilor SV Eyezen Start 1.6 TGENS Yeşil</option><option value="FDBSA1H8M3">MF NG HD 14mm 1.60 Transitions 8 Füme</option><option value="G9RSZ2XXX1">Varilux XR FIT 1.74 TGENS Kahve</option><option value="PAYSZ3XXX1">Varilux Physio 3.0 F-360 1.59 TGENS Yeşil</option><option value="FGASA1EUM7">MF NG HD 16mm 1.5 Transitions 8 Füme</option><option value="ZDB1000000">Varilux Physio 3.0 SH Lineis 1.74</option><option value="G8FSZ2XXX1">Varilux X 1.74 TGENS Kahve</option><option value="L3L4640000">Varilux Liberty 3.0 Stylis 1.67 Xperio Polarize Yeşil (Grn)</option><option value="CBMSZ3XXX1">Varilux Comfort 3.0 1.67 Short TGENS Yeşil</option><option value="S33SZ7XXX1">Essilor SV 1.6 TGENS Emerald Green</option><option value="S35SZ1XXX1">Essilor Advans FIT 1.6 TGENS Füme</option><option value="G9B1000000">Varilux XR 1.5 Beyaz</option><option value="LUXY150TCF">MF NG LUXY 1.5 Transitions Classic Füme</option><option value="TB0SZ3XXX1">Varilux Comfort MAX 1.5 TGENS Yeşil</option><option value="G9GSZ3XXX1">Varilux XR 1.5 Short TGENS Yeşil</option><option value="P34SZ2XXX1">Essilor SV Eyezen Max 1.6 TGENS Kahve</option><option value="FAD4110001">MF NG HD 18mm 1.67 Polarize Füme</option><option value="TCZSZ1XXX1">Varilux Comfort MAX FIT 1.67 TGENS Füme</option><option value="G9NSZ2XXX2">Varilux XR PRO 1.59 TGENS Kahve</option><option value="150ELANTCK">1.5 Elanor Transitions Classic Kahve</option><option value="P8G1000000">Varilux Digitime Room Std Orma 1.5</option><option value="FDBSA3H8M4">MF NG LUXY SH 1.60 Transitions 8 Yeşil</option><option value="HD14147TCK">MF NG HD 14mm 1.67 Transitions Classic Kahve</option><option value="PBRSZ2XXX1">Varilux Physio 3.0 1.67 TGENS Kahve</option><option value="FGBSA3H8M7">MF NG HD 16mm 1.60 Transitions 8 Yeşil</option><option value="ZDGSZ1XXX1">Varilux Physio 3.0 F-360 1.74 TGENS Füme</option><option value="L3BSZ3XXX1">Varilux Liberty 3.0 1.5 TGENS Yeşil</option><option value="R4520GG2U0">Essilor SV Vivalite Orma 1.5 Trans Füme</option><option value="G8GSZ2XXX1">Varilux X 1.5 Short TGENS Kahve</option><option value="L3MSZ1XXX1">Varilux Liberty 3.0 1.67 Short TGENS Füme</option><option value="S37SA3H80M">1.59 Polikarbon Transitions 8 Yeşil</option><option value="G9BSZ2XXX1">Varilux XR 1.5 TGENS Kahve</option><option value="LUXY167TCK">MF NG LUXY 1.67 Transitions Classic Kahve</option><option value="G9HSZ2XXX1">Varilux XR 1.59 Short TGENS Kahve</option><option value="P35SZ3XXX1">Essilor SV Eyezen Max 1.67 TGENS Yeşil</option><option value="FAG1000001">MF NG HD 18mm 1.56</option><option value="G9P9420000">Varilux XR FIT 1.6 BCT</option><option value="160ELAMTCK">1.60 Elamix Transitions Classic Kahve</option><option value="FDCSA2H8M4">MF NG LUXY SH 1.59 Transitions 8 Kahve</option><option value="HD16156FTF">MF NG HD 14mm 1.56 Fotokromik Füme</option><option value="602SZ2XXX1">Varilux E 1.6 Short TGENS Kahve</option><option value="PBTSZ1XXX1">Varilux Physio 3.0 F-360 1.67 TGENS Füme</option><option value="FGDSA2H8M6">MF NG HD 16mm 1.67 Transitions 8 Kahve</option><option value="S299420000">Essilor BCT SV Orma 1.5 Rx</option><option value="G8HSZ2XXX1">Varilux X 1.59 Short TGENS Kahve</option><option value="L3PSZ2XXX1">Varilux Liberty 3.0 F-360 1.59 TGENS Kahve</option><option value="CBXSZ2XXX1">Varilux Comfort 3.0 1.6 TGENS Kahve</option><option value="L3Q4640000">Varilux Liberty 3.0 Airwear 1.59 Xperio Polarize Yeşil (Grn)</option><option value="CBYSZ3XXX1">Varilux Comfort 3.0 1.6 Short TGENS Yeşil</option><option value="S40SA1H80M">1.67 Elasis Transitions 8 Füme</option><option value="G9CSZ1XXX1">Varilux XR 1.59 TGENS Füme</option><option value="TBGSZ2XXX1">Varilux Comfort MAX 1.59 TGENS Kahve</option><option value="G9JSZ2XXX1">Varilux XR 1.6 Short TGENS Kahve</option><option value="TBKSZ3XXX1">Varilux Comfort MAX FIT 1.59 TGENS Yeşil</option><option value="P4LSZ3XXX1">Essilor SV Eyezen Expert 1.5 TGENS Yeşil</option><option value="FCASA2EUM4">MF NG HD 18mm 1.5 Transitions 8 Kahve</option><option value="TFZSZ1XXX1">Varilux Comfort MAX FIT 1.74 TGENS Füme</option><option value="G9PSZ2XXX2">Varilux XR PRO 1.6 TGENS Kahve</option><option value="1FDA150102">MF NG LUXY SHORT 1.5</option><option value="PAJSZ1XXX1">Varilux Physio 3.0 1.5 Short TGENS Füme</option><option value="FDDSA2H8M3">MF NG HD 14mm 1.67 Transitions 8 Kahve</option><option value="HD16167TCK">MF NG HD 16mm 1.67 Transitions Classic Kahve</option><option value="L3G4110000">Varilux Liberty 3.0 Ormix 1.6 Xperio Polarize Füme (Blk)</option><option value="CAZSZ1XXX1">Varilux Comfort 3.0 1.59 Short TGENS Füme</option><option value="S29SZ2XXX1">Essilor SV 1.5 TGENS Kahve</option><option value="G8KSZ1XXX1">Varilux X 1.67 Short TGENS Füme</option><option value="L3RSZ1XXX1">Varilux Liberty 3.0 1.59 Short TGENS Füme</option><option value="CFR1000001">Varilux Comfort 3.0 Ormex 1.56</option><option value="S40SZ3XXX1">Essilor SV 1.67 TGENS Yeşil</option><option value="G9DSZ1XXX1">Varilux XR 1.6 TGENS Füme</option><option value="P22SZ2XXX1">Essilor SV Eyezen Pro 1.5 TGENS Kahve</option><option value="F2B1000004">MF NG HD 18mm 1.60</option><option value="G9KSZ2XXX1">Varilux XR 1.67 Short TGENS Kahve</option><option value="G9M4110001">Varilux XR PRO 1.5 Polarize Füme</option><option value="P4P9420000">BCT SV Eyezen Expert 1.67 Beyaz Rx</option><option value="FCCSA1H8M4">MF NG HD 18mm 1.59 Transitions 8 Füme</option><option value="G9Q9420000">Varilux XR FIT 1.67 BCT</option><option value="1FED167102">MF NG LUXY 1.67</option><option value="PAKSZ3XXX1">Varilux Physio 3.0 F-360 1.5 TGENS Yeşil</option><option value="FEASA2EUM2">MF NG LUXY 1.5 Transitions 8 Kahve</option><option value="XTRA150TCK">MF NG Xtra 1.5 Transitions Classic Kahve</option><option value="HD18160TCF">MF NG HD 18mm 1.60 Transitions Classic Füme</option><option value="682SZ2XXX1">Varilux E 2 1.6 TGENS Kahve</option><option value="PCGSZ2XXX1">Varilux Physio 3.0 1.6 Short TGENS Kahve</option><option value="L3GSZ3XXX1">Varilux Liberty 3.0 1.6 TGENS Yeşil</option><option value="CBASZ2XXX1">Varilux Comfort 3.0 F-360 1.59 TGENS Kahve</option><option value="S29SZ7XXX1">Essilor SV 1.5 TGENS Emerald Green</option><option value="CGGSZ3XXX1">Varilux Comfort 3.0 1.5 TGENS Yeşil</option><option value="S40SZ8XXX1">Essilor SV 1.67 TGENS Ruby</option><option value="G9ESZ1XXX1">Varilux XR 1.67 TGENS Füme</option><option value="P24SZ3XXX1">Essilor SV Eyezen Pro 1.6 TGENS Yeşil</option><option value="F3C1003146">MF NG HD 14mm 1.59</option><option value="G9M1000000">Varilux XR FIT 1.5 Beyaz</option><option value="TCHSZ1XXX1">Varilux Comfort MAX FIT 1.6 TGENS Füme</option><option value="G9MSZ1XXX2">Varilux XR PRO 1.5 TGENS Füme</option><option value="P4SSZ1XXX1">Essilor SV Eyezen Start 1.5 TGENS Füme</option><option value="FCDSA3H8M4">MF NG HD 18mm 1.67 Transitions 8 Yeşil</option><option value="G9QSZ2XXX2">Varilux XR PRO 1.67 TGENS Kahve</option><option value="PAWSZ2XXX1">Varilux Physio 3.0 1.59 TGENS Kahve</option><option value="FEC1003141">MF NG LUXY 1.59</option><option value="XTRS150TCF">MF NG Xtra SH 1.5 Transitions Classic Füme</option><option value="CBL4640000">Varilux Comfort 3.0 Stylis 1.67 Xperio Polarize Yeşil</option><option value="S33SA3H80M">1.6 Elamix Transitions 8 Yeşil</option><option value="S42SZ2XXX1">Essilor Advans FIT 1.67 TGENS Kahve</option><option value="G9FSZ2XXX1">Varilux XR 1.74 TGENS Kahve</option><option value="F6B1000006">MF NG Xtra Short 1.60</option><option value="TCWSZ2XXX1">Varilux Comfort MAX 1.67 TGENS Kahve</option><option value="G9N1000000">Varilux XR FIT 1.59 Beyaz</option><option value="P4USZ1XXX1">Essilor SV Eyezen Start 1.6 TGENS Füme</option><option value="FDASA3EUM3">MF NG HD 14mm 1.5 Transitions 8 Yeşil</option><option value="G9RSZ1XXX1">Varilux XR FIT 1.74 TGENS Füme</option><option value="PAYSZ1XXX1">Varilux Physio 3.0 F-360 1.59 TGENS Füme</option><option value="FEDSA2H8M2">MF NG LUXY 1.67 Transitions 8 Kahve</option><option value="XTRS167TCK">MF NG Xtra SH 1.67 Transitions Classic Kahve</option><option value="L3ASZ3XXX1">Varilux Liberty 3.0 F-360 1.5 TGENS Yeşil</option><option value="G8ESZ2XXX1">Varilux X 1.67 TGENS Kahve</option><option value="L3L4110000">Varilux Liberty 3.0 Stylis 1.67 Xperio Polarize Füme (Blk)</option><option value="CBMSZ1XXX1">Varilux Comfort 3.0 1.67 Short TGENS Füme</option><option value="S33SZ5XXX1">Essilor SV 1.6 TGENS Amethyst Purple</option><option value="G8PSZ1XXX1">Varilux X 2 1.6 TGENS Füme</option><option value="G8RSZ1XXX1">Varilux X 2 1.74 TGENS Füme</option><option value="LUXS167TCF">MF NG LUXY SH 1.67 Transitions Classic Füme</option><option value="TB0SZ1XXX1">Varilux Comfort MAX 1.5 TGENS Füme</option><option value="G9GSZ1XXX1">Varilux XR 1.5 Short TGENS Füme</option><option value="FAB4150001">MF NG HD 18mm 1.60 Polarize Kahve</option><option value="TCXSZ3XXX1">Varilux Comfort MAX 1.67 Short TGENS Yeşil</option><option value="G9NSZ1XXX2">Varilux XR PRO 1.59 TGENS Füme</option><option value="P4VSZ2XXX1">Essilor SV Eyezen Start 1.67 TGENS Kahve</option><option value="FDBSA2H8M4">MF NG LUXY SH 1.60 Transitions 8 Kahve</option><option value="HD14140TCK">MF NG HD 14mm 1.60 Transitions Classic Kahve</option><option value="FGBSA1H8M7">MF NG HD 16mm 1.60 Transitions 8 Füme</option><option value="ZDFSZ1XXX1">Varilux Physio 3.0 1.74 Short TGENS Füme</option><option value="L3BSZ1XXX1">Varilux Liberty 3.0 1.5 TGENS Füme</option><option value="C17307NT10">Varilux Comfort 3.0 Vivalite SH Orma 1.5 Trans Füme</option><option value="L3LSZ3XXX1">Varilux Liberty 3.0 1.67 TGENS Yeşil</option><option value="CBNSZ2XXX1">Varilux Comfort 3.0 F-360 1.67 TGENS Kahve</option><option value="S35SA2H80M">MF Avantage 1.60 Transitions 8 Kahve</option><option value="S37SA1H80M">1.59 Polikarbon Transitions 8 Füme</option><option value="G9B9420000">Varilux XR 1.5 BCT</option><option value="LUXY160TCK">MF NG LUXY 1.60 Transitions Classic Kahve</option><option value="E1C1000004">MF NG Xtra 1.67</option><option value="TB1SZ2XXX1">Varilux Comfort MAX 1.5 Short TGENS Kahve</option><option value="G9H6810000">Varilux XR 1.59 Short Polarize Füme</option><option value="P35SZ1XXX1">Essilor SV Eyezen Max 1.67 TGENS Füme</option><option value="FAE631H801">MF NG HD 18mm 1.53 Transitions 8 Füme</option><option value="G9P1000000">Varilux XR FIT 1.6 Beyaz</option><option value="P9K1000000">Varilux Digitime Room Std Airwear 1.59</option><option value="FDCSA1H8M4">MF NG LUXY SH 1.59 Transitions 8 Füme</option><option value="HD16150TCF">MF NG HD 16mm 1.5 Transitions Classic Füme</option><option value="PBSSZ2XXX1">Varilux Physio 3.0 1.67 Short TGENS Kahve</option><option value="FGCSA3H8M5">MF NG HD 16mm 1.59 Transitions 8 Yeşil</option><option value="L3CSZ2XXX1">Varilux Liberty 3.0 1.5 Short TGENS Kahve</option><option value="CBX4640000">Varilux Comfort 3.0 Ormix 1.6 Xperio Polarize Yeşil</option><option value="CBYSZ1XXX1">Varilux Comfort 3.0 1.6 Short TGENS Füme</option><option value="S37SZ3XXX1">Essilor SV 1.59 TGENS Yeşil</option><option value="G9C4150000">Varilux XR 1.59 Polarize Kahve</option><option value="TB3SZ3XXX1">Varilux Comfort MAX FIT 1.5 TGENS Yeşil</option><option value="G9J9420000">Varilux XR 1.6 Short BCT</option><option value="TBKSZ1XXX1">Varilux Comfort MAX FIT 1.59 TGENS Füme</option><option value="P4LSZ1XXX1">Essilor SV Eyezen Expert 1.5 TGENS Füme</option><option value="FAH4640001">MF NG HD 18mm 1.5 Polarize Yeşil</option><option value="TFXSZ1XXX1">Varilux Comfort MAX 1.74 Short TGENS Füme</option><option value="G9PSZ1XXX2">Varilux XR PRO 1.6 TGENS Füme</option><option value="1E1Q156101">MF NG Xtra Short 1.56</option><option value="PAISZ2XXX1">Varilux Physio 3.0 1.5 TGENS Kahve</option><option value="FDDSA1H8M3">MF NG HD 14mm 1.67 Transitions 8 Füme</option><option value="HD16160TCK">MF NG HD 16mm 1.60 Transitions Classic Kahve</option><option value="633SZ2XXX1">Varilux E 1.67 Short TGENS Kahve</option><option value="FUE634H801">MF NG HD 16mm 1.53 Transitions 8 Kahve</option><option value="L3FSZ3XXX1">Varilux Liberty 3.0 F-360 1.6 TGENS Yeşil</option><option value="CAYSZ3XXX1">Varilux Comfort 3.0 1.59 TGENS Yeşil</option><option value="S29SA3EURM">1.5 Elanor Transitions 8 Yeşil</option><option value="G8JSZ2XXX1">Varilux X 1.6 Short TGENS Kahve</option><option value="L3Q4110000">Varilux Liberty 3.0 Airwear 1.59 Xperio Polarize Füme (Blk)</option><option value="L3QSZ3XXX1">Varilux Liberty 3.0 1.59 TGENS Yeşil</option><option value="CBZSZ2XXX1">Varilux Comfort 3.0 F-360 1.6 TGENS Kahve</option><option value="S40SZ1XXX1">Essilor SV 1.67 TGENS Füme</option><option value="G9D1000000">Varilux XR 1.6 Beyaz</option><option value="ESSTRVX153">Essilor Trivex 1.53</option><option value="TBHSZ2XXX1">Varilux Comfort MAX 1.59 Short TGENS Kahve</option><option value="G9K9420000">Varilux XR 1.67 Short BCT</option><option value="TCESZ2XXX1">Varilux Comfort MAX 1.6 TGENS Kahve</option><option value="P4NSZ2XXX1">Essilor SV Eyezen Expert 1.6 TGENS Kahve</option><option value="FCBSA2H8M4">MF NG HD 18mm 1.60 Transitions 8 Kahve</option><option value="G9Q1000000">Varilux XR FIT 1.67 Beyaz</option><option value="1FEA150102">MF NG LUXY 1.5</option><option value="PAKSZ1XXX1">Varilux Physio 3.0 F-360 1.5 TGENS Füme</option><option value="FDDSA3H8M4">MF NG LUXY SH 1.67 Transitions 8 Yeşil</option><option value="HD18156FTF">MF NG HD 18mm 1.56 Fotokromik Füme</option><option value="PCFSZ3XXX1">Varilux Physio 3.0 1.6 TGENS Yeşil</option><option value="G8BSZ1XXX1">Varilux X 1.5 TGENS Füme Çok Odaklı(Progresif) Organik Colormatik Gözlük Camı</option><option value="L3GSZ1XXX1">Varilux Liberty 3.0 1.6 TGENS Füme</option><option value="S29SZ5XXX1">Essilor SV 1.5 TGENS Amethyst Purple</option><option value="G8LSZ2XXX1">Varilux X 1.74 Short TGENS Kahve</option><option value="CGGSZ1XXX1">Varilux Comfort 3.0 1.5 TGENS Füme</option><option value="S40SZ6XXX1">Essilor SV 1.67 TGENS Amber Brown</option><option value="G9E1000000">Varilux XR 1.67 Beyaz</option><option value="P24SZ1XXX1">Essilor SV Eyezen Pro 1.6 TGENS Füme</option><option value="F3A1000006">MF NG HD 14mm 1.5</option><option value="G9LSZ1XXX1">Varilux XR 1.74 Short TGENS Füme</option><option value="TCFSZ3XXX1">Varilux Comfort MAX 1.6 Short TGENS Yeşil</option><option value="G9M9420001">Varilux XR PRO 1.5 BCT</option><option value="P4PSZ3XXX1">Essilor SV Eyezen Expert 1.67 TGENS Yeşil</option><option value="FCDSA1H8M4">MF NG HD 18mm 1.67 Transitions 8 Füme</option><option value="G9QSZ1XXX2">Varilux XR PRO 1.67 TGENS Füme</option><option value="269SZ2XXX1">Varilux E 1.6 TGENS Kahve</option><option value="FEBSA2H8M2">MF NG LUXY 1.60 Transitions 8 Kahve</option><option value="XTRA167TCF">MF NG Xtra 1.67 Transitions Classic Füme</option><option value="HD18167TCK">MF NG HD 18mm 1.67 Transitions Classic Kahve</option><option value="707SZ2XXX1">Varilux E 2 1.67 TGENS Kahve</option><option value="PCHSZ2XXX1">Varilux Physio 3.0 F-360 1.6 TGENS Kahve</option><option value="G8CSZ1XXX1">Varilux X 1.59 TGENS Füme</option><option value="L3HSZ2XXX1">Varilux Liberty 3.0 1.6 Short TGENS Kahve</option><option value="CBL4110000">Varilux Comfort 3.0 Stylis 1.67 Xperio Polarize Füme (Blk)</option><option value="S33SA1H80M">1.6 Elamix Transitions 8 Füme</option><option value="G8MSZ2XXX1">Varilux X 2 1.5 TGENS Kahve</option><option value="CGHSZ2XXX1">Varilux Comfort 3.0 1.5 Short TGENS Kahve</option><option value="S42SA3H80M">MF Avantage 1.67 Transitions 8 Yeşil</option><option value="G9F1000000">Varilux XR 1.74 Beyaz</option><option value="P25SZ2XXX1">Essilor SV Eyezen Pro 1.67 TGENS Kahve</option><option value="F6A1000006">MF NG Xtra Short 1.5</option><option value="G9MSZ3XXX1">Varilux XR FIT 1.5 TGENS Yeşil</option><option value="FDASA2EUM3">MF NG HD 14mm 1.5 Transitions 8 Kahve</option><option value="G9R1000000">Varilux XR FIT 1.74</option><option value="434SZ1XXX1">Varilux E 1.67 TGENS Füme</option><option value="PAXSZ2XXX1">Varilux Physio 3.0 1.59 Short TGENS Kahve</option><option value="FECSA3H8M2">MF NG LUXY 1.59 Transitions 8 Yeşil</option><option value="XTRS160TCK">MF NG Xtra SH 1.60 Transitions Classic Kahve</option><option value="L3ASZ1XXX1">Varilux Liberty 3.0 F-360 1.5 TGENS Füme</option><option value="L3KSZ3XXX1">Varilux Liberty 3.0 F-360 1.67 TGENS Yeşil</option><option value="CBLSZ3XXX1">Varilux Comfort 3.0 1.67 TGENS Yeşil</option><option value="S33SZ3XXX1">Essilor SV 1.6 TGENS Yeşil</option><option value="G8NSZ2XXX1">Varilux X 2 1.59 TGENS Kahve</option><option value="REV6310000">1.6 Elamix SNS Organik Kolor Füme Rx</option><option value="L3B4110000">Varilux Liberty 3.0 Orma 1.5 Xperio Polarize Füme (Blk)</option><option value="REV6340000">1.6 Elamix SNS Organik Kolor Kahve Rx</option><option value="REX6310000">1.67 Elasis SNS Organik Kolor Füme Rx</option><option value="REX6340000">1.67 Elasis SNS Organik Kolor Kahve Rx</option><option value="CGI1000000">Varilux Comfort 3.0 F-360 Orma 1.5</option><option value="CBN1000000">Varilux Comfort 3.0 F-360 Stylis 1.67</option><option value="CBL1000000">Varilux Comfort 3.0 Stylis 1.67</option><option value="CGG1000000">Varilux Comfort 3.0 Orma 1.5</option><option value="CGH1000000">Varilux Comfort 3.0 SH Orma 1.5</option><option value="CAY1003140">Varilux Comfort 3.0 Airwear 1.59</option><option value="CAZ1003140">Varilux Comfort 3.0 SH Airwear 1.59</option><option value="CBX1000000">Varilux Comfort 3.0 Ormix 1.6</option><option value="CBY1000000">Varilux Comfort 3.0 SH Ormix 1.6</option><option value="CBM1000000">Varilux Comfort 3.0 SH Stylis 1.67</option><option value="CBA1003140">Varilux Comfort 3.0 F-360 Airwear 1.59</option><option value="CBZ1000000">Varilux Comfort 3.0 F-360 Ormix 1.6</option><option value="CAK4110000">Varilux Comfort 3.0 Orma 1.5 Xperio Polarize Füme</option><option value="CAK4150000">Varilux Comfort 3.0 Orma 1.5 Xperio Polarize Kahve</option><option value="CAK4640000">Varilux Comfort 3.0 Orma 1.5 Xperio Polarize Yeşil</option><option value="CAY4113140">Varilux Comfort 3.0 Airwear 1.59 Xperio Polarize Füme</option><option value="CAY4153140">Varilux Comfort 3.0 Airwear 1.59 Xperio Polarize Kahve</option><option value="CAY4643140">Varilux Comfort 3.0 Airwear 1.59 Xperio Polarize Yeşil</option><option value="G8Q1000000">Varilux X 2 1.67 Stylis</option><option value="G8P1000000">Varilux X 2 1.60 Ormix</option><option value="G8N1003140">Varilux X 2 1.59 Airwear</option><option value="G8N4113140">Varilux X 2 1.59 Airwear Polarize Füme</option><option value="G8N4153140">Varilux X 2 1.59 Airwear Polarize Kahve</option><option value="G8M1000000">Varilux X 2 1.5 Orma</option><option value="G8M4110000">Varilux X 2 1.5 Orma Polarize Füme</option><option value="G8M4150000">Varilux X 2 1.5 Orma Polarize Kahve</option><option value="G8E1000000">Varilux X 1.67 Stylis</option><option value="G8D1000000">Varilux X 1.60 Ormix</option><option value="G8C1003140">Varilux X 1.59 Airwear</option><option value="G8C4113140">Varilux X 1.59 Airwear Polarize Füme</option><option value="G8C4153140">Varilux X 1.59 Airwear Polarize Kahve</option><option value="G8B1000000">Varilux X 1.5 Orma</option><option value="G8B4110000">Varilux X 1.5 Orma Polarize Füme</option><option value="G8B4150000">Varilux X 1.5 Orma Polarize Kahve</option><option value="G8K1000000">Varilux X Short 1.67 Stylis</option><option value="G8J1000000">Varilux X Short 1.60 Ormix</option><option value="G8H1003140">Varilux X Short 1.59 Airwear</option><option value="G8H4113140">Varilux X Short 1.59 Airwear Polarize Füme</option><option value="G8H4153140">Varilux X Short 1.59 Airwear Polarize Kahve</option><option value="G8G1000000">Varilux X Short 1.5 Orma</option><option value="7349660001">Varilux Liberty 3.0 Activations Orma 1.5 Füme </option><option value="G8G4110000">Varilux X Short 1.5 Orma Polarize Füme</option><option value="G8G4150000">Varilux X Short 1.5 Orma Polarize Kahve</option><option value="7349670001">Varilux Liberty 3.0 Activations Orma 1.5 Kahve </option><option value="3789660001">Varilux Liberty 3.0 SH Activations Orma 1.5  Füme </option><option value="3789670001">Varilux Liberty 3.0 SH Activations Orma 1.5  Kahve </option><option value="7071000000">Varilux E 2 1.67 Stylis</option><option value="6821000000">Varilux E 2 1.60 Ormix</option><option value="8611003140">Varilux E 2 1.59 Airwear</option><option value="6681000000">Varilux E 2 1.5 Orma</option><option value="4341000000">Varilux E 1.67 Stylis</option><option value="2691000000">Varilux E 1.60 Ormix</option><option value="5071003140">Varilux E 1.59 Airwear</option><option value="0981000000">Varilux E 1.5 Orma</option><option value="6331000000">Varilux E Short 1.67 Stylis</option><option value="6021000000">Varilux E Short 1.60 Ormix</option><option value="6621003140">Varilux E Short 1.59 Airwear</option><option value="5851000000">Varilux E Short 1.5 Orma</option><option value="PBK1000001">Varilux Physio 3.0 F360° Stylis 1.67</option><option value="PBX1000001">Varilux Physio 3.0 F360° Ormix 1.6</option><option value="PAQ1000001">Varilux Physio 3.0 F360° Airwear 1.59</option><option value="PAC1000001">Varilux Physio 3.0 F360° Orma 1.5</option><option value="PBI1000000">Varilux Physio 3.0 Stylis 1.67</option><option value="PBV1000000">Varilux Physio 3.0 Ormix 1.6</option><option value="PAN1000000">Varilux Physio 3.0 Airwear 1.59</option><option value="PAA1000000">Varilux Physio 3.0 Orma 1.5</option><option value="PBJ1000000">Varilux Physio 3.0 SH Stylis 1.67</option><option value="PBW1000000">Varilux Physio 3.0 SH Ormix 1.6</option><option value="PAP1000000">Varilux Physio 3.0 SH Airwear 1.59</option><option value="PAB1000000">Varilux Physio 3.0 SH Orma 1.5</option><option value="L3B1000000">Varilux Liberty 3.0 Orma 1.5</option><option value="L3V1000000">Varilux Liberty 3.0 Ormex 1.56</option><option value="L3Q1000000">Varilux Liberty 3.0 Airwear 1.59</option><option value="L3G1000000">Varilux Liberty 3.0 Ormix 1.6</option><option value="L3L1000000">Varilux Liberty 3.0 Stylis 1.67</option><option value="L3C1000000">Varilux Liberty 3.0 SH Orma 1.5</option><option value="L3W1000000">Varilux Liberty 3.0 SH Ormex 1.56</option><option value="L3R1000000">Varilux Liberty 3.0 SH Airwear 1.59</option><option value="L3H1000000">Varilux Liberty 3.0 SH Ormix 1.6</option><option value="L3M1000000">Varilux Liberty 3.0 SH Stylis 1.67</option><option value="L5N1000001">Varilux Liberty 3.0 Ultra-SH Orma 1.5</option><option value="L2X1000000">Varilux Liberty 3.0 Ultra-SH Ormex 1.56</option><option value="L5Q1000001">Varilux Liberty 3.0 Ultra-SH Ormix 1.6</option><option value="L5R1000001">Varilux Liberty 3.0 Ultra-SH Stylis 1.67</option><option value="L3A1000000">Varilux Liberty 3.0 F-360 Orma 1.5</option><option value="L3P1003140">Varilux Liberty 3.0 F-360 Airwear 1.59</option><option value="L3F1000000">Varilux Liberty 3.0 F-360 Ormix 1.6</option><option value="L3K1000000">Varilux Liberty 3.0 F-360 Stylis 1.67</option><option value="TB09420000">BCT Varilux Comfort MAX 1.50</option><option value="TFP9420000">BCT Varilux Comfort MAX 1.56</option><option value="TCE9420000">BCT Varilux Comfort MAX 1.6</option><option value="TCW9420000">BCT Varilux Comfort MAX 1.67</option><option value="TB39420000">BCT Varilux Comfort MAX FIT 1.50</option><option value="TFS9420000">BCT Varilux Comfort MAX FIT 1.56</option><option value="TCH9420000">BCT Varilux Comfort MAX FIT 1.60</option><option value="TCZ9420000">BCT Varilux Comfort MAX FIT 1.67</option><option value="TB19420000">BCT Varilux Comfort MAX SH 1.50</option><option value="TFQ9420000">BCT Varilux Comfort MAX SH 1.56</option><option value="TCF9420000">BCT Varilux Comfort MAX SH 1.60</option><option value="TCX9420000">BCT Varilux Comfort MAX SH 1.67</option><option value="TK155411DF">1.5 Elanor Degrade Polarize Füme</option><option value="TK155411DK">1.5 Elanor Degrade Polarize Kahve</option><option value="TK155415DY">1.5 Elanor Degrade Polarize Yeşil</option><option value="CV51000000">Myopilux Plus 1.67 Beyaz</option><option value="CV41000000">Myopilux Plus 1.6 Beyaz</option><option value="CV31000000">Myopilux Plus 1.59 Beyaz</option><option value="CV11000000">Myopilux Plus 1.5</option><option value="PRLUDE160B">Essilor Prelude 1.6</option><option value="PRLUDE150B">Essilor Prelude 1.5</option><option value="PRLUDES16B">Essilor Prelude Short 1.6</option><option value="PRLUDES15B">Essilor Prelude Short 1.5</option><option value="PRLUDEACCF">Essilor Prelude 1.5 Transitions Acclimates Füme</option><option value="PRLUDEACCK">Essilor Prelude 1.5 Transitions Acclimates Kahve</option><option value="PRLUDESACF">Essilor Prelude Short 1.5 Transitions Acclimates Füme</option><option value="PRLUDESACK">Essilor Prelude Short 1.5 Transitions Acclimates Kahve</option><option value="P4V9420000">BCT SV Eyezen Start 1.67 Beyaz Rx</option><option value="P4U9420000">BCT SV Eyezen Start 1.6 Beyaz Rx</option><option value="P4T9420000">BCT SV Eyezen Start 1.56 Beyaz Rx</option><option value="P4S9420000">BCT SV Eyezen Start 1.5 Beyaz Rx</option><option value="P359420000">BCT SV Eyezen Max 1.67 Beyaz Rx</option><option value="P349420000">BCT SV Eyezen Max 1.6 Beyaz Rx</option><option value="P389420000">BCT SV Eyezen Max 1.56 Beyaz Rx</option><option value="P329420000">BCT SV Eyezen Max 1.5 Beyaz Rx</option><option value="3831000000">MF Avantage 1.5 Rx</option><option value="1101000001">MF Avantage 1.6 Rx</option><option value="1151000001">MF Avantage 1.67 Rx</option><option value="E1QP0300KF">MF Xtra 1.56 Fotokromik Füme</option><option value="E1QB0300PR">MF Xtra 1.56 Fotokromik Kahve</option><option value="E1RP0300KF">MF Xtra Short 1.56 Fotokromik Füme</option><option value="E1RB0300PR">MF Xtra Short 1.56 Fotokromik Kahve</option><option value="P259420000">BCT SV Eyezen Pro 1.67 Beyaz Rx</option><option value="P249420000">BCT SV Eyezen Pro 1.6 Beyaz Rx</option><option value="P289420000">BCT SV Eyezen Pro 1.56 Beyaz Rx</option><option value="P229420000">BCT SV Eyezen Pro 1.5 Beyaz Rx</option><option value="TKE1B10001">MF SA 1.6 Rx</option><option value="TKE1A10001">MF SA 1.5 Rx</option><option value="TKF6B10000">MF SA Sh 1.6 Rx</option><option value="TKF6A10000">MF SA Sh 1.5 Rx</option><option value="E1QP030001">MF SA 1.56 Fotokromik Füme</option><option value="E1QB030000">MF SA 1.56 Fotokromik Kahve</option><option value="E1RP030001">MF SA Short 1.56 Fotokromik Füme</option><option value="E1RB030000">MF SA Short 1.56 Fotokromik Kahve</option><option value="OS21000000">1.5 Elanor 47/70 Rx</option><option value="OS31000000">1.5 Elanor 71/80 Rx</option><option value="TKA1000002">1.5 Omega Lenti Rx</option><option value="TKA1000004">1.5 Aspheric Lenti Rx</option><option value="TKC1000000">1.56 Elamil Rx</option><option value="L471000001">1.59 Polikarbon Rx</option><option value="TKE1000001">1.6 Elamix Aspheric Rx</option><option value="TKF1000000">1.67 Elasis Aspheric  Organik Gözlük Camı</option><option value="TKC1000001">1.56 Sns Organik Kolor Füme Rx (Blk)</option><option value="TKC1000002">1.56 Sns Organik Kolor Kahve Rx (Brw)</option><option value="TK15541100">1.5 Elanor Polarize Füme Rx (Blk)</option><option value="TK54741100">1.59 Polikarbon Polarize Füme Rx (Blk)</option><option value="TKPG741100">1.6 Elamix Polarize Füme Rx (Blk)</option><option value="TK56141100">1.67 Elasis Polarize Füme Rx (Blk)</option><option value="TK15541500">1.5 Elanor Polarize Kahve Rx (Brw)</option><option value="TK54741500">1.59 Polikarbon Polarize Kahve Rx (Brw)</option><option value="TKPG741500">1.6 Elamix Polarize Kahve Rx (Brw)</option><option value="TK56141500">1.67 Elasis Polarize Kahve Rx (Brw)</option><option value="TK15546400">1.5 Elanor Polarize Yeşil Rx (Grn)</option><option value="TK54746400">1.59 Polikarbon Polarize Yeşil Rx (Grn)</option><option value="TKPG746400">1.6 Elamix Polarize Yeşil Rx (Grn)</option><option value="OB11000000">1.5 Organik Bifokal Rx</option><option value="9OP3160000">1.5 Organik Bifokal Transitions 8 Kahve Rx (Brw)</option><option value="OS11000000">1.53 Elavex Trivex Rx</option><option value="TKB1000001">1.53 Elavex Trivex Transitions 8 Füme</option><option value="TKB1000002">1.53 Elavex Trivex Transitions 8 Kahve</option><option value="9OP1000000">1.5 Mineral Bifokal Rx</option><option value="9OP1000001">1.52 Mineral Beyaz Rx</option><option value="TKE1000000">1.6 Mineral Kolor Rx</option><option value="TKG1000000">1.7 Mineral Tital Rx</option><option value="TKB1000000">1.52 Mineral Kolor Rx</option><option value="9OP1000003">1.52 Mineral Beyaz Prograssive Rx</option><option value="TK56146400">1.67 Elasis Polarize Yeşil Rx (Grn)</option><option value="9OPP030000">1.52 Mineral Kolor Bifokal Rx</option><option value="9OPP030002">1.52 Mineral Kolor Prograssive Rx</option><option value="1014159100">Essilor Advans Airwear 1.59 Rx</option><option value="1016160100">Essilor Advans Ormix 1.6 Rx</option><option value="1017167100">Essilor Advans Stylis 1.67 Rx</option><option value="1110160100">Essilor Advans FIT Ormix 1.6 Rx</option><option value="1115167100">Essilor Advans FIT Stylis 1.67 Rx</option><option value="L221000000">Essilor Orma 1.5 Rx</option><option value="R051000001">Essilor Ormex 1.56 Rx</option><option value="L471000000">Essilor Airwear 1.59 Rx</option><option value="L261000000">Essilor Ormix 1.6 Rx</option><option value="L611000000">Essilor Stylis 1.67 Rx</option><option value="1554110000">Essilor Orma 1.5 Xperio Polarize Füme Rx (Blk)</option><option value="5474110000">Essilor Airwear 1.59 Xperio Polarize Füme Rx (Blk)</option><option value="PG74110000">Essilor Ormix 1.6 Xperio Polarize Füme Rx (Blk)</option><option value="5614110001">Essilor Stylis 1.67 Xperio Polarize Füme Rx (Blk)</option><option value="1554150000">Essilor Orma 1.5 Xperio Polarize Kahve Rx (Brw)</option><option value="5474150000">Essilor Airwear 1.59 Xperio Polarize Kahve Rx (Brw)</option><option value="PG74150000">Essilor Ormix 1.6 Xperio Polarize Kahve Rx (Brw)</option><option value="5614150001">Essilor Stylis 1.67 Xperio Polarize Kahve Rx (Brw)</option><option value="1554640000">Essilor Orma 1.5 Xperio Polarize Yeşil Rx (Grn)</option><option value="5474640000">Essilor Airwear 1.59 Xperio Polarize Yeşil Rx (Grn)</option><option value="PG74640000">Essilor Ormix 1.6 Xperio Polarize Yeşil Rx (Grn)</option><option value="5614640001">Essilor Stylis 1.67 Xperio Polarize Yeşil Rx (Grn)</option><option value="TKA1000001">Essilor Orma 1.5 Xtractive Transitions 8 Füme Rx (Blk)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--product filter END-->
+                                    <!--middle row-->
+                                    <div class="row orderInputs">
+                                        <div class="col-xs-4">
+                                            <div class="form-group ">
+                                                <table class="table table-bordered text-center" id="Right_Lens_Table" style="border: 5px solid red;">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td><span class="bigLatter">R</span></td>
+                                                        <td colspan="5">
 
 
-            <div class="container">
-                <div class="image-container">
-                    <img class="image-before slider-image" src="assets/website/1before.jpg" alt="before" />
-                    <img class="image-after slider-image" src="assets/website/1after.jpg" alt="after" />
-                </div>
-                <input type="range" min="0" max="100" value="50" aria-label="Percentage of before photo shown"
-                    class="slider" />
-                <div class="slider-line" aria-hidden="true"></div>
-                <div class="slider-button" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        viewBox="0 0 256 256">
-                        <rect width="256" height="256" fill="none"></rect>
-                        <line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
-                        <line x1="96" y1="128" x2="16" y2="128" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="16"></line>
-                        <polyline points="48 160 16 128 48 96" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="16"></polyline>
-                        <line x1="160" y1="128" x2="240" y2="128" fill="none" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
-                        <polyline points="208 96 240 128 208 160" fill="none" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
-                    </svg>
+                                                            <div class="check-line" style="width: 100%;text-align: left;">
+                                                                <div class="icheckbox_square-orange icheck-item icheck[ho025] checked"><input type="checkbox" id="RightLens" class="icheck-me checkForLens icheck-input icheck[ho025]" checked="" name="product[Lens][Right][isCheck]" value="1" data-skin="square" data-color="orange" data-rl="Right">
+</div>
+                                                                <label class="inline icheck-label icheck[ho025]" for="RightLens">Sağ Cam İstiyorum
+</label>
+
+</div>
+
+</td>
+
+</tr>
+
+                                                    <tr>
+                                                        <td rowspan="2" class="verticalMiddle">UZAK
+</td>
+                                                        <td>+/-
+</td>
+                                                        <td>SPH
+</td>
+                                                        <td>+/-
+</td>
+                                                        <td>CYL
+</td>
+                                                        <td>AXIS
+</td>
+
+</tr>
+                                                    <tr>
+                                                        <td>
+                                                            <select name="product[Lens][Right][Far][SPHDeg]" class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect" data-rl="Right" data-signfor="Right_Far_SPH" id="Right_Far_SPHDeg">
+                                                                <option value="+">+</option>
+                                                                <option value="-">-</option>
+
+</select>
+
+</td>
+                                                        <td>
+                                                            <input type="text" name="product[Lens][Right][Far][SPH]" value="" id="Right_Far_SPH" data-reqval="farSPH" placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH" data-rl="Right" required="" aria-required="true">
+</td>
+                                                        <td>
+                                                            <select name="product[Lens][Right][Far][CYLDeg]" class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect" data-signfor="Right_Far_CYL" data-rl="Right" id="Right_Far_CYLDeg">
+                                                                <option value="+">+</option>
+                                                                <option value="-" selected="selected">-</option>
+
+</select>
+
+</td>
+                                                        <td><input type="text" name="product[Lens][Right][Far][CYL]" data-reqval="farCYL" value="" id="Right_Far_CYL" placeholder=" " class="form-control input-block-level input-sm lensVal lensCYL farCYL" data-rl="Right">
+</td>
+                                                        <td><input type="text" name="product[Lens][Right][Far][Axis]" data-reqval="farAX" value="0" id="Right_Far_Axis" placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid" data-rl="Right">
+</td>
+
+</tr>
+                                                    <tr>
+                                                        <td rowspan="2" class="verticalMiddle">YAKIN
+</td>
+                                                        <td>+/-
+</td>
+                                                        <td>SPH
+</td>
+                                                        <td>+/-
+</td>
+                                                        <td>CYL
+</td>
+                                                        <td>AXIS
+</td>
+
+</tr>
+                                                    <tr class="nearTableRow">
+                                                        <td>
+                                                            <select name="product[Lens][Right][Near][SPHDeg]" class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect" data-signfor="Right_Near_SPH" data-rl="Right" id="Right_Near_SPHDeg">
+                                                                <option value="+">+</option>
+                                                                <option value="-">-</option>
+
+</select>
+
+</td>
+                                                        <td><input type="text" name="product[Lens][Right][Near][SPH]" data-reqval="nearSPH" value="" id="Right_Near_SPH" placeholder=" " class="form-control input-block-level lensVal lensSPH" data-rl="Right">
+</td>
+                                                        <td>
+                                                            <select name="product[Lens][Right][Near][CYLDeg]" class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect" data-rl="Right" data-signfor="Right_Near_CYL" id="Right_Near_CYLDeg">
+                                                                <option value="+">+</option>
+                                                                <option value="-" selected="selected">-</option>
+
+</select>
+
+</td>
+                                                        <td><input type="text" name="product[Lens][Right][Near][CYL]" data-reqval="nearCYL" value="" id="Right_Near_CYL" placeholder=" " class="form-control input-block-level lensVal lensCYL" data-rl="Right">
+</td>
+                                                        <td><input type="text" name="product[Lens][Right][Near][Axis]" data-reqval="nearAX" value="" id="Right_Near_Axis" placeholder=" " class="form-control input-block-level lensAxis nearAX" data-rl="Right">
+</td>
+
+</tr>
+                                                    <tr>
+                                                        <td>Adisyon
+</td>
+                                                        <td colspan="5">
+                                                            <div class="col-xs-4 noPadding">
+                                                                <input type="text" name="product[Lens][Right][Addition]" data-reqval="addVal" value="" id="Right_Addition" placeholder="" class="form-control input-block-level lensAddition lensVal" data-rl="Right" required="" aria-required="true">
+                                                            </div>
+                                                            <div class="col-xs-8" style="padding-right: 0;">
+                                                                <select name="product[Lens][Right][Diameter]" required="" class="select2-me text-left lensDiam select2-hidden-accessible" style="width: 100%" data-rl="Right" id="Right_Lens_Diam" aria-required="true" tabindex="-1" aria-hidden="true" data-select2-id="Right_Lens_Diam">
+                                                                    <option value="" data-select2-id="135">Çap Seçiniz</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="form-group ">
+                                                <table class="table table-bordered text-center" id="Left_Lens_Table" style="border: 5px solid red;">
+                                                    <tbody><tr>
+                                                        <td class="lensLatterCell"><span class="bigLatter">L</span>
+
+
+</td>
+                                                        <td colspan="5">
+                                                            <div class="row" style="padding-left: 0;">
+                                                                <div class="col-xs-12">
+                                                                    <div class="check-line" style="width: 100%;text-align: left;">
+                                                                        <div class="icheckbox_square-orange icheck-item icheck[e2yun]"><input type="checkbox" id="LeftLens" class="icheck-me checkForLens icheck-input icheck[e2yun]" name="product[Lens][Left][isCheck]" value="1" data-skin="square" data-color="orange" data-rl="Left">
+</div>
+                                                                        <label class="inline icheck-label icheck[e2yun]" for="LeftLens">Sol Cam İstiyorum
+</label>
+
+</div>
+                                                                    <div class="check-line" style="width: 100%;text-align: left;">
+                                                                        <div class="icheckbox_square-orange icheck-item icheck[veqwi]"><input type="checkbox" id="sameToRight" class="icheck-me popover2 icheck-input icheck[veqwi]" data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left" name="product[Lens][Left][sameToRight]" value="1" data-skin="square" data-color="orange" data-original-title="" title="" disabled="">
+</div>
+                                                                        <label class="inline icheck-label icheck[veqwi]" for="sameToRight">Sol cam sağ cam ile aynı
+</label>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+</td>
+
+</tr>
+
+                                                    <tr>
+                                                        <td rowspan="2" class="verticalMiddle">UZAK
+</td>
+                                                        <td>+/-
+</td>
+                                                        <td>SPH
+</td>
+                                                        <td>+/-
+</td>
+                                                        <td>CYL
+</td>
+                                                        <td>AXIS
+</td>
+
+</tr>
+                                                    <tr>
+                                                        <td>
+                                                            <select name="product[Lens][Left][Far][SPHDeg]" class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect" id="Left_Far_SPHDeg" data-rl="Left" data-signfor="Left_Far_SPH" disabled="">
+                                                                <option value="+">+</option>
+                                                                <option value="-">-</option>
+
+</select>
+
+</td>
+                                                        <td>
+                                                            <input type="text" name="product[Lens][Left][Far][SPH]" data-reqval="farSPH" value="" id="Left_Far_SPH" placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH" data-rl="Left" required="" aria-required="true" disabled="">
+</td>
+                                                        <td>
+                                                            <select name="product[Lens][Left][Far][CYLDeg]" class="form-control lensPlusMinusSelect CYLPlusMinusSelect input-block-level" style="width: 100%" data-rl="Left" id="Left_Far_CYLDeg" disabled="">
+                                                                <option value="+">+</option>
+                                                                <option value="-" selected="selected">-</option>
+
+</select>
+
+</td>
+                                                        <td><input type="text" name="product[Lens][Left][Far][CYL]" data-reqval="farCYL" value="" id="Left_Far_CYL" placeholder=" " class="form-control input-block-level input-sm lensVal lensCYL farCYL" data-rl="Left" disabled="">
+</td>
+                                                        <td><input type="text" name="product[Lens][Left][Far][Axis]" data-reqval="farAX" value="0" id="Left_Far_Axis" placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid" data-rl="Left" disabled="">
+</td>
+
+</tr>
+                                                    <tr>
+                                                        <td rowspan="2" class="verticalMiddle">YAKIN
+</td>
+                                                        <td>+/-
+</td>
+                                                        <td>SPH
+</td>
+                                                        <td>+/-
+</td>
+                                                        <td>CYL
+</td>
+                                                        <td>AXIS
+</td>
+
+</tr>
+                                                    <tr class="nearTableRow">
+                                                        <td>
+                                                            <select name="product[Lens][Left][Near][SPHDeg]" class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect" id="Left_Near_SPHDeg" data-rl="Left" data-signfor="Left_Near_SPH" disabled="">
+                                                                <option value="+">+</option>
+                                                                <option value="-">-</option>
+
+</select>
+
+</td>
+                                                        <td><input type="text" name="product[Lens][Left][Near][SPH]" data-reqval="nearSPH" value="" id="Left_Near_SPH" placeholder=" " class="form-control input-block-level lensVal lensSPH" data-rl="Left" disabled="">
+</td>
+                                                        <td>
+                                                            <select name="product[Lens][Left][Near][CYLDeg]" class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect" data-rl="Left" data-signfor="Left_Near_CYL" id="Left_Near_CYLDeg" disabled="">
+                                                                <option value="+">+</option>
+                                                                <option value="-" selected="selected">-</option>
+
+</select>
+
+</td>
+                                                        <td><input type="text" name="product[Lens][Left][Near][CYL]" data-reqval="nearCYL" value="" id="Left_Near_CYL" placeholder=" " class="form-control input-block-level lensVal lensCYL" data-rl="Left" disabled="">
+</td>
+                                                        <td><input type="text" name="product[Lens][Left][Near][Axis]" data-reqval="nearAX" value="" id="Left_Near_Axis" placeholder=" " class="form-control input-block-level lensAxis nearAX" data-rl="Left" disabled="">
+</td>
+
+</tr>
+                                                    <tr>
+                                                        <td>Adisyon
+</td>
+                                                        <td colspan="5">
+                                                            <div class="col-xs-4 noPadding">
+                                                                <input type="text" name="product[Lens][Left][Addition]" data-reqval="addVal" value="" id="Left_Addition" placeholder="" class="form-control input-block-level lensAddition lensVal" data-rl="Left" required="" aria-required="true" disabled="">
+
+</div>
+                                                            <div>
+                                                                <div class="col-xs-8" style="padding-right: 0;">
+                                                                    <select name="product[Lens][Left][Diameter]" required="" class="select2-me text-left lensDiam select2-hidden-accessible" style="width: 100%" data-rl="Right" id="Left_Lens_Diam" aria-required="true" tabindex="-1" aria-hidden="true" disabled="" data-select2-id="Left_Lens_Diam">
+                                                                        <option value="" data-select2-id="137">Çap Seçiniz</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+
+</td>
+
+</tr>
+
+</tbody>
+</table>
+
+</div>
+
+</div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <a href="#" id="end-btn">
-                <img src="/assets/website/pixarBluv.png" alt="">
-            </a>
-
         </div>
-
-
-
-        <div class="technicalLeftMenu pixarMenu">
-            <a data-img="/assets/website/pixar.png" data-color="#4eaf30" href="#"><img src="/assets/website/pixarV.png"></a>
-            <a data-img="/assets/website/pixarUv.png" data-color="#4eaf30" href="#"><img src="/assets/website/pixarUvV.png"></a>
-            <a data-img="/assets/website/pixarBluv.png" data-color="#1a89ca" class="active" href="#"><img src="/assets/website/pixarBluvV.png"></a>
-            <a data-img="/assets/website/pixarAqua.png" data-color="#00abc6" href="#"><img src="/assets/website/pixarAquaV.png"></a>
-            <a data-img="/assets/website/pixarDrive.png" data-color="#eb639f" href="#"><img src="/assets/website/pixarDriveV.png"></a>
-            <a data-img="/assets/website/slc.png" data-color="#215395" href="#"><img src="/assets/website/slcV.png"></a>
-        </div>
-
-    </main>
-
-    <script>
-        const container = document.querySelector('.container');
-        const slider = document.querySelector('.slider');
-        const startBtn = document.getElementById('start-btn');
-        const endBtn = document.getElementById('end-btn');
-
-        slider.addEventListener('input', (e) => {
-            container.style.setProperty('--position', `${e.target.value}%`);
-        });
-
-        startBtn.addEventListener('click', () => {
-            slider.value = 0;
-            slider.dispatchEvent(new Event('input'));
-        });
-
-        endBtn.addEventListener('click', () => {
-            slider.value = 100;
-            slider.dispatchEvent(new Event('input'));
-        });
-
-
-
-        const beforeImg = document.querySelector('.image-before');
-        const afterImg = document.querySelector('.image-after');
-        const buttons = document.querySelectorAll(".beforeAfterMenu a");
-        // Mapping for image pairs
-        const imagePairs = {
-            1: { before: '/assets/website/1before.jpg', after: '/assets/website/1after.jpg' },
-            2: { before: '/assets/website/2before.jpg', after: '/assets/website/2after.jpg' },
-            3: { before: '/assets/website/3before.jpg', after: '/assets/website/3after.jpg' },
-            4: { before: '/assets/website/4before.jpg', after: '/assets/website/4after.jpg' },
-            5: { before: '/assets/website/5before.jpg', after: '/assets/website/5after.jpg' },
-            6: { before: '/assets/website/6before.jpg', after: '/assets/website/6after.jpg' },
-            7: { before: '/assets/website/7before.jpg', after: '/assets/website/7after.jpg' },
-        };
-
-        // Event listener for all buttons
-        buttons.forEach(button => {
-            button.addEventListener('click', (event) => {
-                const pair = button.getAttribute('data-pair');
-                const images = imagePairs[pair];
-                beforeImg.src = images.before;
-                afterImg.src = images.after;
-            });
-        });
-
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const items = document.querySelectorAll(".beforeAfterMenu a span");
-
-
-            items.forEach(item => {
-                item.addEventListener("click", function (event) {
-                    items.forEach(el => {
-                        el.classList.remove("active")
-                        el.style.background = `#fff url(${el.getAttribute('data-default')}) no-repeat center`;
-                    }
-                    ); // Remove 'active' from all
-                    // Set the active background for the clicked span
-                    this.classList.add("active");
-                    this.style.background = `#1a89ca url(${this.getAttribute('data-active')}) no-repeat center`;
-                });
-            });
-        });
-    </script>
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const menuItems = document.querySelectorAll(".technicalLeftMenu a");
-            const endBtnImg = document.querySelector("#end-btn img");
-
-            // Set the CSS variable on page load if a color is stored
-            const storedColor = localStorage.getItem('selectedColor');
-            if (storedColor) {
-                document.documentElement.style.setProperty('--primary', storedColor);
-            }
-
-            menuItems.forEach(item => {
-                item.addEventListener("click", function (event) {
-                    menuItems.forEach(el => el.classList.remove("active")); // Remove 'active' from all
-                    this.classList.add("active"); // Add 'active' to the clicked element
-
-                    // Store the color value in local storage
-                    const color = this.dataset.color; // Assuming color is stored in data-color attribute
-                    localStorage.setItem('pixarColor', color);
-                    document.documentElement.style.setProperty('--primary', color);
-
-
-
-                    // Update the img src inside #end-btn
-                    const newImgSrc = this.dataset.img;
-                    if (endBtnImg) {
-                        endBtnImg.src = newImgSrc;
-                    }
-                });
-            });
-        });
-    </script>
-
-
-
+    </div>
+</div>
 </body>
+
 
 </html>
