@@ -57,7 +57,7 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('money_safe', MoneySafeController::class);
 
     Route::get('index_lenses/get-dropdown', [IndexLensController::class,'getDropdown'])->name('index_lens.getDropdown');
-    Route::resource('index_lenses',DesignController::class);
+    Route::resource('index_lenses',IndexLensController::class);
 
 
     Route::get('designs/get-dropdown', [DesignController::class,'getDropdown'])->name('design.getDropdown');

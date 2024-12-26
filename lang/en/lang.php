@@ -1347,4 +1347,10 @@
   'designs' => 'Designs',
   'add_design' => 'Add design',
   'add_focus' => 'Add focus',
+  'Unauthorized action.' => 'Unauthorized action.',
+  'add_index_lens' => 'Add index lens',
+  'lenses' => 'Lenses',
+  'lens_code' => 'Lens code',
+  'lenses_filter' => 'Lenses filter',
+  'add_lens' => 'Add lens',
 );

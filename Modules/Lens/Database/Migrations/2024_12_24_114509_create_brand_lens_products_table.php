@@ -15,8 +15,8 @@ class CreateBrandLensProductsTable extends Migration
     {
         Schema::create('brand_lens_products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('design_id');
-            $table->foreign('design_id')->references('id')->on('designs')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->unsignedBigInteger('brand_id');
             $table->foreign('brand_id')->references('id')->on('brand_lenses')->onDelete('cascade');
         });

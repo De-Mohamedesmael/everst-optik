@@ -16,17 +16,34 @@
 
         <div
             class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse justify-content-end @else justify-content-start flex-row @endif align-items-center">
-            <div
-                class=" d-flex mb-2 align-items-center form-group @if (app()->isLocale('ar')) flex-row-reverse mr-3 @else ml-3 @endif">
-                <label class="modal-label-width" for="name">@lang('lang.name') *</label>
+            <div class="col-md-6 px-5">
                 <div
-                    class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                    <input type="text" required style="width: 100%"
-                           class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
-                           placeholder="@lang('lang.name')" name="name" value="{{ old('name') }}" >
-                    @error('name')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    class="mb-2 align-items-center form-group @if (app()->isLocale('ar')) flex-row-reverse mr-3 @else ml-3 @endif">
+                    <label class="modal-label-width" for="name">@lang('lang.name') *</label>
+                    <div
+                        class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                        <input type="text" required style="width: 100%"
+                               class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
+                               placeholder="@lang('lang.name')" name="name" value="{{ old('name') }}" >
+                        @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 px-5">
+                <div class="form-group">
+                    {!! Form::label('design_id', __('lang.designs'), [
+                        'class' => 'form-label d-block mb-1 ',
+                    ]) !!}
+                    {!! Form::select('design_id[]', $designs,null, [
+                        'class' => ' selectpicker form-control',
+                        'data-live-search' => 'true',
+                        'style' => 'width: 80%',
+                        'multiple',
+                       'data-actions-box' => 'true',
+                        'id' => 'design_id',
+                    ]) !!}
                 </div>
             </div>
 
@@ -41,3 +58,6 @@
 
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
+<script>
+    $('#design_id').selectpicker('refresh');
+</script>

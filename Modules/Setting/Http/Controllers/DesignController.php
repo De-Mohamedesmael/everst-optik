@@ -11,6 +11,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Utils\Util;
+use Modules\Lens\Entities\Focus;
+
 class DesignController extends Controller
 {
     protected Util $Util;
@@ -44,8 +46,9 @@ class DesignController extends Controller
    */
   public function create(): Factory|View|Application
   {
+      $foci=Focus::orderBy('name', 'asc')->pluck('name', 'id');
 
-      return view('setting::back-end.design.create');
+      return view('setting::back-end.design.create')->with(compact('foci'));
   }
 
     /**
@@ -65,6 +68,10 @@ class DesignController extends Controller
           $design=Design::create([
               'name'=>$request->name
           ]);
+
+          if($request->has('focus_id')){
+              $design->foci()->attach($request->focus_id);
+          }
           $output = [
               'success' => true,
               'id'=>$design->id,
@@ -97,7 +104,8 @@ class DesignController extends Controller
   public function edit(int $id): Factory|View|Application
   {
       $design = Design::find($id);
-      return view('setting::back-end.design.edit')->with(compact('design'));
+      $foci=Focus::orderBy('name', 'asc')->pluck('name', 'id');
+      return view('setting::back-end.design.edit')->with(compact('design','foci'));
   }
 
     /**
@@ -115,6 +123,10 @@ class DesignController extends Controller
               'name'=>$request->name
           ]);
 
+          $design->foci()->detach();
+          if( $request->has("focus_id")) {
+              $design->foci()->sync($request->focus_id);
+          }
           $output = [
               'success' => true,
               'id'=>$design->id,

@@ -101,7 +101,14 @@ class ProductController extends Controller
     {
         $process_type = $request->process_type??null;
         if (request()->ajax()) {
-            $products = product::Product()->leftjoin('add_stock_lines', function ($join) {
+            $products = product::query();
+            if(request()->type == 'lenses'){
+                $products=  $products->Lens();
+            }elseif(request()->type != 'all'){
+                $products=   $products->Product();
+            }
+
+            $products= $products->leftjoin('add_stock_lines', function ($join) {
                     $join->on('products.id', 'add_stock_lines.product_id');
                 })
                 ->leftjoin('colors', 'products.color_id', 'colors.id')
@@ -305,9 +312,7 @@ class ProductController extends Controller
                 ->addColumn(
                     'action',
                     function ($row) {
-                        if($row->parent_branch_id != null ){
-                            return '';
-                        }
+
                         $html =
                             '<div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
