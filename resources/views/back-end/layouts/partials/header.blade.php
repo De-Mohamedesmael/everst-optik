@@ -136,6 +136,11 @@
                                         class="mdi mdi-circle"></i>@lang('lang.lenses')</a>
                             </li>
                             <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
+                                                       href="{{ route('admin.add-stock.create',['type'=>'lenses']) }}" target="_blank"
+                                                       class="employees-button d-flex item-list-a"><i
+                                        class="mdi mdi-circle"></i>{{translate('add_new_stock')}}</a></li>
+
+                            <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
                                                        href="{{ route('admin.brand_lenses.index') }}" target="_blank"
                                                        class="employees-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>{{translate('brand_lenses')}}</a></li>

@@ -17,7 +17,7 @@
             {{translate('view_all_added_stocks')}}</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
-        @lang('lang.add_stock')</li>
+        @lang('lang.add_stock') @if(request()->type == 'lenses') {{translate('lenses')}} @endif</li>
 @endsection
 @section('content')
     @php
@@ -459,7 +459,7 @@
 
             </div>
         </div>
-
+        <input type="hidden" id="typeRequest" name="type" value="{{request()->type}}">
 
     </section>
 @endsection

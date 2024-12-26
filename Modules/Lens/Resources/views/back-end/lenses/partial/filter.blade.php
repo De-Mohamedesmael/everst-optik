@@ -49,7 +49,7 @@
                         data-bs-target="#lensesFilterCollapse" aria-expanded="false"
                         aria-controls="lensesFilterCollapse">
                     <i class="fas fa-arrow-down"></i>
-                    @lang('lang.lenses_filter')
+                    {{translate('lenses_filter')}}
                     <span class="section-header-pill"></span>
                 </button>
             </div>

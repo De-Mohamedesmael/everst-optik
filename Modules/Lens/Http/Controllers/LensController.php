@@ -306,7 +306,7 @@ class LensController extends Controller
                                 '<li>
                             <a data-href="' . route('admin.lenses.destroy', $row->id) . '"
                                 data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
-                                class="btn text-red delete_product"><i class="fa fa-trash"></i>
+                                class="btn text-red delete_lens"><i class="fa fa-trash"></i>
                                 ' . __('lang.delete') . '</a>
                         </li>';
                         }
@@ -725,13 +725,13 @@ class LensController extends Controller
      */
     public function destroy($id)
     {
-        if (!auth()->user()->can('lens_module.lenses.delete')) {
+        if (!auth()->user()->can('lens_module.lens.delete')) {
             abort(403, translate('Unauthorized action.'));
         }
         try {
             DB::beginTransaction();
 
-            $product = lens::where('id', $id)->first();
+            $product = Product::where('id', $id)->first();
             ProductStore::where('product_id', $id)->delete();
             $product->deleted_by= request()->user()->id;
             $product->save();

@@ -27,7 +27,7 @@
             <div class="col-md-6">
                 <a style="color: white" href="{{ route('admin.lenses.create') }}"
                    class="btn btn-primary w-100 py-1"><i class="dripicons-plus"></i>
-                    @lang('lang.add_lens')</a>
+                    {{translate('add_lens')}}</a>
             </div>
 
         @if (empty($page))
@@ -81,7 +81,7 @@
                         <tr>
                             <th>@lang('lang.image')</th>
                             <th style="">@lang('lang.name')</th>
-                            <th>@lang('lang.lens_code')</th>
+                            <th>{{translate('lens_code')}}</th>
                             <th>@lang('lang.select_to_delete')
                                 <input type="checkbox" name="lens_delete_all" class="lens_delete_all mx-1"/>
                             </th>
@@ -384,11 +384,11 @@
                     },
                     {
                         data: 'name',
-                        name: 'lenss.name'
+                        name: 'products.name'
                     },
                     {
                         data: 'sku',
-                        name: 'lenss.sku'
+                        name: 'products.sku'
                     },
                     {
                         data: "selection_checkbox_delete",
