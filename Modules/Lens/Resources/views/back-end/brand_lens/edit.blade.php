@@ -25,25 +25,41 @@
                         'placeholder' => __('lang.name'),
                         'required',
                     ]) !!}
-                    <span class="input-group-btn">
-                        <button class="select-button btn-flat translation_btn" type="button" data-type="brand_lens"><i
-                                class="dripicons-web"></i></button>
-                    </span>
                 </div>
             </div>
-            @include('back-end.layouts.partials.translation_inputs', [
-                'attribute' => 'name',
-                'translations' => $brand_lens->translations,
-                'type' => 'brand_lens',
-            ])
 
+            <div class="col-md-3 px-5">
+                <div class="form-group">
+                    {!! Form::label('feature_id', __('lang.features'), [
+                        'class' => 'form-label d-block mb-1 ',
+                    ]) !!}
+                    {!! Form::select('feature_id[]', $features,$brand_lens->features()->pluck('features.id'), [
+                        'class' => ' selectpicker form-control',
+                        'data-live-search' => 'true',
+                        'style' => 'width: 80%',
+                        'multiple',
+                       'data-actions-box' => 'true',
+                        'id' => 'feature_id',
+                    ]) !!}
+                </div>
+            </div>
+            <div class="col-md-3 px-5">
+                <div class="form-group">
+                    {!! Form::label('color', __('lang.color'), [
+                        'class' => 'form-label d-block mb-1 ',
+                    ]) !!}
+                    {!! Form::color('color',$brand_lens->color, [
+                        'class' => '  form-control',
+                        'id' => 'color',
+                    ]) !!}
+                </div>
+            </div>
             <div class="col-md-6 d-flex flex-column mb-2">
 
 
                 <label
                     class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"
                     for="projectinput2">{{ __('lang.image') }}</label>
-                {{--                                                        <input type="file" id="projectinput2"  class="form-control img" name="image" accept="image/*" /> --}}
                 <div
                     class="d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                     <div class="variants col-md-6">
@@ -61,11 +77,11 @@
                         <div class="preview-edit-container">
                             @if ($brand_lens)
                                 <div id="preview{{ $brand_lens->id }}" class="preview">
-                                    @if (!empty($brand_lens->getFirstMediaUrl('brand_lens')))
-                                        <img src="{{ $brand_lens->getFirstMediaUrl('brand_lens') }}"
+                                    @if (!empty($brand_lens->getFirstMediaUrl('icon')))
+                                        <img src="{{ $brand_lens->getFirstMediaUrl('icon') }}"
                                             id="img{{ $brand_lens->id }}" alt="">
                                     @else
-                                        <img src="{{ asset('/uploads/' . session('logo')) }}" alt=""
+                                        <img src="{{ $brand_lens->icon }}" alt=""
                                             id="img{{ $brand_lens->id }}">
                                     @endif
                                 </div>
@@ -74,6 +90,8 @@
                     </div>
                 </div>
             </div>
+
+
          </div>
 
         <div id="cropped_images"></div>
@@ -198,13 +216,13 @@
         // Set up Croppie options
         const croppieOptions = {
             viewport: {
-                width: 200,
-                height: 200,
+                width: 120,
+                height: 60,
                 type: 'square' // or 'square'
             },
             boundary: {
-                width: 300,
-                height: 300,
+                width: 120,
+                height: 60,
             },
             enableOrientation: true
         };

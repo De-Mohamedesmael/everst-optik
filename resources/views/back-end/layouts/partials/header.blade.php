@@ -118,7 +118,40 @@
                     </li>
 
 
+                    <li class="dropdown scroll mx-2 mb-0 p-0 " style="height: 40px;">
+                        <a href="javaScript:void();"
+                           class="d-flex employees-menu align-items-center text-decoration-none item-list-a dropdown-toggle"
+                           style="height: 100%;" data-toggle="dropdown">
+                            <div style="width: 25px" class="d-flex align-items-center">
+                                <img src="{{ asset('assets/back-end/images/navbar/products.svg') }}" alt="{{ __('lang.lenses') }}">
+                            </div>
+                            <span class="mx-2" style="font-weight: 600">{{ __('lang.lenses') }}</span>
+                        </a>
+                        <ul
+                            class="dropdown-menu list-style-none @if (app()->isLocale('ar')) text-end @else text-start @endif">
+                            <li class="navbar_item">
+                                <a style="cursor: pointer;font-weight: 600;text-decoration: none"
+                                                       href="{{ route('admin.lenses.index') }}" target="_blank"
+                                                       class="jobs-button d-flex item-list-a"><i
+                                        class="mdi mdi-circle"></i>@lang('lang.lenses')</a>
+                            </li>
+                            <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
+                                                       href="{{ route('admin.add-stock.create',['type'=>'lenses']) }}" target="_blank"
+                                                       class="employees-button d-flex item-list-a"><i
+                                        class="mdi mdi-circle"></i>{{translate('add_new_stock')}}</a></li>
 
+                            <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
+                                                       href="{{ route('admin.brand_lenses.index') }}" target="_blank"
+                                                       class="employees-button d-flex item-list-a"><i
+                                        class="mdi mdi-circle"></i>{{translate('brand_lenses')}}</a></li>
+                            <li class="navbar_item">
+                                <a style="cursor: pointer;font-weight: 600;text-decoration: none"  href="{{ route('admin.features.index') }}" target="_blank" class="wages-button d-flex item-list-a">
+                                    <i class="mdi mdi-circle"></i>{{translate('features')}}
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
 
 
 {{--                    @if (!empty($module_settings['stock_module']))--}}
@@ -428,7 +461,6 @@
                                                     <i class="mdi mdi-circle"></i>@lang('lang.general_tax')
                                                 </a>
                                             </li>
-                                            {{-- ////////// ضرائب المنتجات ////////// --}}
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif product_tax-button"
                                                    href="{{route('admin.tax.index')}}?type=product_tax" target="_blank"
@@ -465,6 +497,44 @@
                                                     </a>
                                                 </li>
                                             @endcan
+
+
+
+                                        </ul>
+                                    </li>
+                                    <li class="mega-menu-col col-md-3 p-0">
+
+                                        <ul class="sub-menu p-0" style="list-style: none">
+                                            @can('settings.design.view')
+                                                <li class="navbar_item">
+                                                    <a class="index_lens-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
+                                                       href="{{route('admin.designs.index')}}" target="_blank"
+                                                       style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                        <i class="mdi mdi-circle"></i>{{translate('designs')}}
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('settings.focus.view')
+                                                <li class="navbar_item">
+                                                    <a class="focus-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
+                                                       href="{{route('admin.foci.index')}}" target="_blank"
+                                                       style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                        <i class="mdi mdi-circle"></i>{{translate('foci')}}
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('settings.index_lens.view')
+                                                <li class="navbar_item">
+                                                    <a class="index_lens-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
+                                                       href="{{route('admin.index_lenses.index')}}" target="_blank"
+                                                       style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                        <i class="mdi mdi-circle"></i>{{translate('index_lenses')}}
+                                                    </a>
+                                                </li>
+                                            @endcan
+
+
+
                                         </ul>
                                     </li>
                                 </ul>

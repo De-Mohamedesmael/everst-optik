@@ -5,6 +5,7 @@ namespace Modules\Lens\Entities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Product\Entities\Product;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -20,18 +21,20 @@ class BrandLens extends Model implements HasMedia
     protected $guarded = [];
 
 
-    protected $appends=['icon','second_icon'];
-    public function features()
+    protected $appends=['icon'];
+    private mixed $name;
+
+    public function features(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Feature::class, 'feature_brand_lenses', 'brand_id', 'feature_id');
     }
-
-    public function getIconAttribute(){
-        return $this->getMedia('icon')->first()?:asset('assets/website/'.$this->name.'.png');
+    public function getIconAttribute(): string
+    {
+        return $this->getFirstMediaUrl('icon')?:asset('assets/default/'.$this->name.'.png');
     }
-    public function getSecondIconAttribute(){
-        return $this->getMedia('second_icon')->first()?:asset('assets/website/'.$this->name.'V.png');
+    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, BrandLensProduct::class, 'brand_id', 'product_id');
     }
-
 
 }

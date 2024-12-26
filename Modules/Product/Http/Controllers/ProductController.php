@@ -101,7 +101,14 @@ class ProductController extends Controller
     {
         $process_type = $request->process_type??null;
         if (request()->ajax()) {
-            $products = product::leftjoin('add_stock_lines', function ($join) {
+            $products = product::query();
+            if(request()->type == 'lenses'){
+                $products=  $products->Lens();
+            }elseif(request()->type != 'all'){
+                $products=   $products->Product();
+            }
+
+            $products= $products->leftjoin('add_stock_lines', function ($join) {
                     $join->on('products.id', 'add_stock_lines.product_id');
                 })
                 ->leftjoin('colors', 'products.color_id', 'colors.id')
@@ -305,9 +312,7 @@ class ProductController extends Controller
                 ->addColumn(
                     'action',
                     function ($row) {
-                        if($row->parent_branch_id != null ){
-                            return '';
-                        }
+
                         $html =
                             '<div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
@@ -599,7 +604,7 @@ class ProductController extends Controller
             abort(403, translate('Unauthorized action.'));
         }
 
-        $product = product::find($id);
+        $product = product::Product()->find($id);
 
         $stock_detials = ProductStore::where('product_id', $id)->get();
 
@@ -630,7 +635,7 @@ class ProductController extends Controller
         if (!auth()->user()->can('product_module.products.create_and_edit')) {
             abort(403, translate('Unauthorized action.'));
         }
-        $product = product::findOrFail($id);
+        $product = product::Product()->findOrFail($id);
         $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
@@ -823,7 +828,7 @@ class ProductController extends Controller
                 return json_encode([]);
             }
 
-            $q = product::where(function ($query) use ($term) {
+            $q = product::Product()->where(function ($query) use ($term) {
                     $query->where('products.name', 'like', '%' . $term . '%');
                     $query->orWhere('sku', 'like', '%' . $term . '%');
                     $query->orWhere('sub_sku', 'like', '%' . $term . '%');
@@ -944,7 +949,7 @@ class ProductController extends Controller
      */
     public function checkSku($sku)
     {
-        $product_sku = product::where('sku', $sku)->first();
+        $product_sku = product::Product()->where('sku', $sku)->first();
 
         if (!empty($product_sku)) {
             $output = [
@@ -969,7 +974,7 @@ class ProductController extends Controller
      */
     public function checkName(Request $request)
     {
-        $query = product::where('name', $request->name);
+        $query = product::Product()->where('name', $request->name);
         $product_name = $query->first();
 
         if (!empty($product_name)) {
@@ -1068,7 +1073,7 @@ class ProductController extends Controller
         try {
             DB::beginTransaction();
             foreach ($request->ids as $id){
-                ProductStor::where('product_id', $id)->delete();
+                ProductStore::where('product_id', $id)->delete();
                 $product = product::where('id', $$id)->first();
                 $product->clearMediaCollection('products');
                 $product->delete();

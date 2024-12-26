@@ -711,8 +711,11 @@ class AddStockController extends Controller
                 return json_encode([]);
             }
 
-            $q = Product::leftjoin('product_stores', 'products.id', 'product_stores.product_id')
-                ->where(function ($query) use ($term) {
+            $q = Product::leftjoin('product_stores', 'products.id', 'product_stores.product_id');
+            if (request()->type == 'lenses' ) {
+                $q->Lens();
+            }
+            $q ->where(function ($query) use ($term) {
                     $query->where('products.name', 'like', '%' . $term . '%');
                     $query->orWhere('sku', 'like', '%' . $term . '%');
                 })

@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\AddStock\Entities\AddStockLine;
+use Modules\Lens\Entities\BrandLens;
+use Modules\Lens\Entities\BrandLensProduct;
+use Modules\Lens\Entities\DesignFocus;
+use Modules\Lens\Entities\Focus;
+use Modules\Lens\Entities\FocusProduct;
+use Modules\Lens\Entities\IndexLens;
+use Modules\Lens\Entities\IndexLensProduct;
 use Modules\Setting\Entities\Brand;
 use Modules\Setting\Entities\Color;
 use Modules\Setting\Entities\Size;
@@ -42,6 +49,14 @@ class Product extends Model implements HasMedia
     public function scopeNotActive($query)
     {
         $query->where('active', 0);
+    }
+    public function scopeLens($query)
+    {
+        $query->where('is_lens', true);
+    }
+    public function scopeProduct($query)
+    {
+        $query->where('is_lens', false);
     }
     public function categories()
     {
@@ -117,7 +132,19 @@ class Product extends Model implements HasMedia
         }
         return $name;
     }
+    public function foci(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Focus::class, FocusProduct::class, 'product_id', 'focus_id');
+    }
+    public function brand_lenses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(BrandLens::class, BrandLensProduct::class, 'product_id', 'brand_id');
+    }
 
+    public function index_lenses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(IndexLens::class, IndexLensProduct::class, 'product_id', 'index_id');
+    }
     public function supplier()
     {
         return $this->hasOneThrough(Supplier::class, SupplierProduct::class, 'product_id', 'id', 'id', 'supplier_id');

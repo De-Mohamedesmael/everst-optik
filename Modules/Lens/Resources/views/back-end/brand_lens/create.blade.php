@@ -26,20 +26,38 @@
                         'placeholder' => __('lang.name'),
                         'required',
                     ]) !!}
-                    <span class="input-group-btn">
-                        <button class="select-button btn-flat  translation_btn" type="button" data-type="brand_lens"><i
-                                class="dripicons-web"></i></button>
-                    </span>
+
                 </div>
             </div>
-            @include('back-end.layouts.partials.translation_inputs', [
-                'attribute' => 'name',
-                'translations' => [],
-                'type' => 'brand_lens',
-            ])
+            <div class="col-md-6 px-5">
+                <div class="form-group">
+                    {!! Form::label('feature_id', __('lang.features'), [
+                        'class' => 'form-label d-block mb-1 ',
+                    ]) !!}
+                    {!! Form::select('feature_id[]', $features,null, [
+                        'class' => ' selectpicker form-control',
+                        'data-live-search' => 'true',
+                        'style' => 'width: 80%',
+                        'multiple',
+                       'data-actions-box' => 'true',
+                        'id' => 'feature_id',
+                    ]) !!}
+                </div>
+            </div>
+
+            <div class="col-md-3 px-5">
+                <div class="form-group">
+                    {!! Form::label('color', __('lang.color'), [
+                        'class' => 'form-label d-block mb-1 ',
+                    ]) !!}
+                    {!! Form::color('color',null, [
+                        'class' => '  form-control',
+                        'id' => 'color',
+                    ]) !!}
+                </div>
+            </div>
 
             <input type="hidden" name="quick_add" value="{{ $quick_add }}">
-            {{--            @include('back-end.layouts.partials.image_crop') --}}
             <div class="col-md-6 d-flex flex-column mb-2">
 
                 <label
@@ -66,6 +84,7 @@
 
 
             </div>
+
 
         </div>
 
@@ -103,7 +122,8 @@
 </div><!-- /.modal-dialog -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
-<script>
+<script type="text/javascript">
+    $('#feature_id').selectpicker('refresh');
     $("#add-brand_lens-btn").on("click", function(e) {
         e.preventDefault();
         setTimeout(() => {
@@ -198,13 +218,13 @@
         // Set up Croppie options
         const croppieOptions = {
             viewport: {
-                width: 200,
-                height: 200,
+                width: 120,
+                height: 60,
                 type: 'square' // or 'square'
             },
             boundary: {
-                width: 300,
-                height: 300,
+                width: 120,
+                height: 60,
             },
             enableOrientation: true
         };

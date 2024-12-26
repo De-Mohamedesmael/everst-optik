@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Setting\Http\Controllers\ColorController;
+use Modules\Setting\Http\Controllers\DesignController;
+use Modules\Setting\Http\Controllers\FocusController;
+use Modules\Setting\Http\Controllers\IndexLensController;
 use Modules\Setting\Http\Controllers\SettingController;
 use Modules\Setting\Http\Controllers\SizeController;
 use Modules\Setting\Http\Controllers\MoneySafeController;
@@ -53,7 +56,15 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('money_safe/watch-money-to-safe-transaction/{id}', [MoneySafeController::class,'getMoneySafeTransactions'])->name('money_safe.watch-money-to-safe-transaction');
     Route::resource('money_safe', MoneySafeController::class);
 
+    Route::get('index_lenses/get-dropdown', [IndexLensController::class,'getDropdown'])->name('index_lens.getDropdown');
+    Route::resource('index_lenses',IndexLensController::class);
 
+
+    Route::get('designs/get-dropdown', [DesignController::class,'getDropdown'])->name('design.getDropdown');
+    Route::resource('designs',DesignController::class);
+
+    Route::get('foci/get-dropdown', [FocusController::class,'getDropdown'])->name('foci.getDropdown');
+    Route::resource('foci',FocusController::class);
 
 
     Route::post('settings/update-general-setting', [SettingController::class , 'updateGeneralSetting'])->name('settings.updateGeneralSetting');

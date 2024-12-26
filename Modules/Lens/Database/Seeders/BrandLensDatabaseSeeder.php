@@ -20,35 +20,34 @@ class BrandLensDatabaseSeeder extends Seeder
         $brands = [
             [
                 'name' => "PIXAR",
-                'color'=>'4eaf30',
+                'color'=>'#4eaf30',
             ],
             [
-                'name' => "PIXARUV",
-                'color'=>'4eaf30',
+                'name' => "PIXARU",
+                'color'=>'#4eaf30',
 
             ],
             [
-                'name' => "PIXARBLUV",
-                'color'=>'1a89ca',
+                'name' => "PIXARBLU",
+                'color'=>'#1a89ca',
 
             ], [
-                'name' => "pixarAquaV",
-                'color'=>'00abc6',
+                'name' => "pixarAqua",
+                'color'=>'#00abc6',
 
             ],[
-                'name' => "pixarDriveV",
-                'color'=>'eb639f',
+                'name' => "pixarDrive",
+                'color'=>'#eb639f',
 
             ],[
                 'name' => "slcV",
-                'color'=>'215395',
+                'color'=>'#215395',
 
             ],
 
         ];
 
         BrandLens::insert($brands);
-
         $features = [
             [
                 'name' => 'Prevents reflections, presents pure vision',
@@ -58,6 +57,21 @@ class BrandLensDatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Anti-scratch',
+            ]
+            ,
+            [
+                'name' => 'Anti-dust, easy clean',
+            ]
+            ,
+            [
+                'name' => 'Anti-fog',
+            ]
+            ,
+            [
+                'name' => 'Max UV Protection',
+            ],
+            [
+                'name' => 'Blue Light protection',
             ]
         ];
 

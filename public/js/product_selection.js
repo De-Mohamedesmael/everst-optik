@@ -1,5 +1,15 @@
 var product_selected = [];
 $(document).ready(function () {
+    const typeRequest = $("#typeRequest").val();
+    let url_;
+    if(typeRequest === 'lenses'){
+          url_ ="/dashboard/products?type=lenses";
+    }else if(typeRequest === 'all'){
+        url_ ="/dashboard/products?type=all";
+    }else{
+          url_ ="/dashboard/products";
+    }
+
     product_table = $("#product_selection_table").DataTable({
         lengthChange: true,
         paging: true,
@@ -20,7 +30,7 @@ $(document).ready(function () {
         serverSide: true,
         aaSorting: [[2, "asc"]],
         ajax: {
-            url: "/dashboard/products",
+            url:url_ ,
             data: function (d) {
                 d.category_id = $("#filter_category_id").val();
                 d.brand_id = $("#filter_brand_id").val();

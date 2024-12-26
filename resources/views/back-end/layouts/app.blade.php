@@ -37,7 +37,12 @@
             z-index: 10000;
             background: #ffffff;
         }
-
+        nav.navbar .dropdown-menu {
+            min-width: 200px !important;
+        }
+        .navbar_item {
+            justify-content: start !important;
+        }
     </style>
     <style>
         :root {

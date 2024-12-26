@@ -8,12 +8,13 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Modules\Lens\Entities\BrandLens;
+use Illuminate\Validation\ValidationException;
+use Modules\Lens\Entities\Feature;
 use App\Utils\Util;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Modules\Lens\Entities\Feature;
+use Modules\Lens\Entities\BrandLens;
 
 class FeatureController extends Controller
 {
@@ -40,10 +41,10 @@ class FeatureController extends Controller
      */
     public function index(): Factory|View|Application
     {
-        $brand_lenses = BrandLens::withCount('features')->get();
+        $features = Feature::get();
 
-        return view('lens::back-end.brand_lenses.index')->with(compact(
-            'brand_lenses'
+        return view('lens::back-end.feature.index')->with(compact(
+            'features'
         ));
     }
 
@@ -51,15 +52,16 @@ class FeatureController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return Application|Factory|View
      */
     public function create(Request $request): Factory|View|Application
     {
         $quick_add = $request->quick_add ?? null;
-        $features = Feature::orderBy('name', 'asc')->pluck('name', 'id');
-        return view('lens::back-end.brand_lenses.create')->with(compact(
+        $brand_lenses = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
+        return view('lens::back-end.feature.create')->with(compact(
             'quick_add',
-            'features'
+            'brand_lenses'
         ));
     }
 
@@ -68,6 +70,7 @@ class FeatureController extends Controller
      *
      * @param Request $request
      * @return array|JsonResponse|RedirectResponse
+     * @throws ValidationException
      */
     public function store(Request $request): JsonResponse|array|RedirectResponse
     {
@@ -75,58 +78,80 @@ class FeatureController extends Controller
             $request,
             ['name' => ['required', 'max:100']]
         );
+        $feature_exist = Feature::where('name', $request->name)->exists();
 
-        $brand_lens_exist = BrandLens::where('name', $request->name)->exists();
 
-
-        if ($brand_lens_exist) {
+        if ($feature_exist) {
             if ($request->ajax()) {
                 return response()->json(array(
                     'success' => false,
                     'message' => translate('There are incorect values in the form!'),
-                    'msg' => translate('BrandLens name already taken')
+                    'msg' => translate('Feature name already taken')
                 ));
             }
         }
         try {
-            $data = $request->except('_token', 'quick_add');
-            $data['translations'] = !empty($data['translations']) ? $data['translations'] : [];
-
             DB::beginTransaction();
-            $brand_lens = BrandLens::create($data);
-
-            if ($request->has("cropImages") && count($request->cropImages) > 0) {
-                foreach ($request->cropImages as $imageData) {
+            $feature = Feature::create([
+                'name'=>$request->name
+            ]);
+            if ($request->has("feature_images") && count($request->feature_images) > 0) {
+                foreach ($request->feature_images as $imageData) {
                     $extention = explode(";",explode("/",$imageData)[1])[0];
                     $image = rand(1,1500)."_image.".$extention;
                     $filePath = public_path('uploads/' . $image);
                     $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $brand_lens->addMedia($filePath)->toMediaCollection('icon');
+                    $feature->addMedia($filePath)->toMediaCollection('icon');
 
                 }
             }
-            if ($request->has("second_icon") && count($request->second_icon) > 0) {
-                foreach ($request->second_icon as $imageData) {
+            //icon_active
+            if ($request->has("icon-active_images") && count($request->get('icon-active_images')) > 0) {
+                foreach ($request->get('icon-active_images') as $imageData) {
                     $extention = explode(";",explode("/",$imageData)[1])[0];
                     $image = rand(1,1500)."_image.".$extention;
                     $filePath = public_path('uploads/' . $image);
                     $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $brand_lens->addMedia($filePath)->toMediaCollection('second_icon');
+                    $feature->addMedia($filePath)->toMediaCollection('icon_active');
 
                 }
             }
-           if( $request->has("feature_id")) {
-                $brand_lens->features()->attach($request->feature_id);
+            //before_effect
+            if ($request->has("before-effect_images") && count($request->get('after-effect_images')) > 0) {
+                foreach ($request->get('before-effect_images') as $imageData) {
+                    $extention = explode(";",explode("/",$imageData)[1])[0];
+                    $image = rand(1,1500)."_image.".$extention;
+                    $filePath = public_path('uploads/' . $image);
+                    $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
+                    $feature->addMedia($filePath)->toMediaCollection('before_effect');
+
+                }
+            }
+            //after_effect
+            if ($request->has("after-effect_images") && count($request->get('after-effect_images')) > 0) {
+                foreach ($request->get('after-effect_images') as $imageData) {
+                    $extention = explode(";",explode("/",$imageData)[1])[0];
+                    $image = rand(1,1500)."_image.".$extention;
+                    $filePath = public_path('uploads/' . $image);
+                    $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
+                    $feature->addMedia($filePath)->toMediaCollection('after_effect');
+
+                }
+            }
+            if( $request->has("brand_lens_id")) {
+                $feature->brand_lenses()->attach($request->brand_lens_id);
             }
 
-            $brand_lens_id = $brand_lens->id;
+            $feature_id = $feature->id;
             DB::commit();
             $output = [
                 'success' => true,
-                'brand_lens_id' => $brand_lens_id,
+                'feature_id' => $feature_id,
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -161,9 +186,12 @@ class FeatureController extends Controller
      */
     public function edit($id)
     {
-        $brand_lens = BrandLens::find($id);
-        return view('lens::back-end.brand_lenses.edit')->with(compact(
-            'brand_lens'
+        $feature = Feature::find($id);
+        $brand_lenses = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
+
+        return view('lens::back-end.feature.edit')->with(compact(
+            'feature',
+            'brand_lenses'
         ));
     }
 
@@ -182,35 +210,65 @@ class FeatureController extends Controller
         );
 
         try {
-            $data = $request->except('_token', '_method');
-            $data['translations'] = !empty($data['translations']) ? $data['translations'] : [];
             DB::beginTransaction();
-            $brand_lens = BrandLens::find($id);
+            $feature = Feature::find($id);
 
-            $brand_lens->update($data);
-            if ($request->has("cropImages") && count($request->cropImages) > 0) {
-                foreach (getCroppedImages($request->cropImages) as $imageData) {
-                    $brand_lens->clearMediaCollection('icon');
+            $feature->update([
+                'name'=>$request->name
+            ]);
+
+            if ($request->has("feature_images") && count($request->feature_images) > 0) {
+                foreach ($request->feature_images as $imageData) {
+                    $feature->clearMediaCollection('icon');
                     $extention = explode(";",explode("/",$imageData)[1])[0];
                     $image = rand(1,1500)."_image.".$extention;
                     $filePath = public_path('uploads/' . $image);
                     $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $brand_lens->addMedia($filePath)->toMediaCollection('icon');
+                    $feature->addMedia($filePath)->toMediaCollection('icon');
+
                 }
             }
-            if ($request->has("second_icon") && count($request->second_icon) > 0) {
-                foreach ($request->second_icon as $imageData) {
-                    $brand_lens->clearMediaCollection('second_icon');
+            //icon_active
+            if ($request->has("icon-active_images") && count($request->get('icon-active_images')) > 0) {
+                foreach ($request->get('icon-active_images') as $imageData) {
+                    $feature->clearMediaCollection('icon_active');
                     $extention = explode(";",explode("/",$imageData)[1])[0];
                     $image = rand(1,1500)."_image.".$extention;
                     $filePath = public_path('uploads/' . $image);
                     $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $brand_lens->addMedia($filePath)->toMediaCollection('second_icon');
+                    $feature->addMedia($filePath)->toMediaCollection('icon_active');
 
                 }
             }
-            if( $request->has("feature_id")) {
-                $brand_lens->features()->attach($request->feature_id);
+            //before_effect
+            if ($request->has("before-effect_images") && count($request->get('after-effect_images')) > 0) {
+                foreach ($request->get('before-effect_images') as $imageData) {
+                    $feature->clearMediaCollection('before_effect');
+
+                    $extention = explode(";",explode("/",$imageData)[1])[0];
+                    $image = rand(1,1500)."_image.".$extention;
+                    $filePath = public_path('uploads/' . $image);
+                    $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
+                    $feature->addMedia($filePath)->toMediaCollection('before_effect');
+
+                }
+            }
+            //after_effect
+            if ($request->has("after-effect_images") && count($request->get('after-effect_images')) > 0) {
+                foreach ($request->get('after-effect_images') as $imageData) {
+                    $feature->clearMediaCollection('after_effect');
+
+                    $extention = explode(";",explode("/",$imageData)[1])[0];
+                    $image = rand(1,1500)."_image.".$extention;
+                    $filePath = public_path('uploads/' . $image);
+                    $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
+                    $feature->addMedia($filePath)->toMediaCollection('after_effect');
+
+                }
+            }
+            if( $request->has("brand_lens_id")) {
+                $feature->brand_lenses()->detach();
+                $feature->brand_lenses()->sync($request->brand_lens_id);
             }
             DB::commit();
             $output = [
@@ -218,6 +276,7 @@ class FeatureController extends Controller
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
+            DB::rollback();
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -237,7 +296,7 @@ class FeatureController extends Controller
     public function destroy($id)
     {
         try {
-            BrandLens::find($id)->delete();
+            Feature::find($id)->delete();
             $output = [
                 'success' => true,
                 'msg' => __('lang.success')
@@ -253,11 +312,11 @@ class FeatureController extends Controller
         return $output;
     }
 
-    public function getDropdown()
+    public function getDropdown(): string
     {
 
-        $brand_lenses = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
-        return $this->commonUtil->createDropdownHtml($brand_lenses);
+        $features = Feature::orderBy('name', 'asc')->pluck('name', 'id');
+        return $this->commonUtil->createDropdownHtml($features);
     }
 
 

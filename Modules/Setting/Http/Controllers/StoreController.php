@@ -33,11 +33,9 @@ class StoreController extends Controller
    *
    * @return Application|Factory|View
    */
-  public function index()
+  public function index(): Factory|View|Application
   {
-      $stores = Store::when(request()->branch_id != null, function ($query) {
-                        $query->where('branch_id',request()->branch_id);
-                })->orderBy('created_by','desc')->get();
+      $stores = Store::orderBy('created_by','desc')->get();
 
       return view('setting::back-end.store.index')->with(compact(
           'stores'));
