@@ -28,11 +28,16 @@ use Modules\CashRegister\Entities\CashRegisterTransaction;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\CustomerType;
 use Modules\Hr\Entities\Employee;
+use Modules\Lens\Entities\BrandLens;
+use Modules\Lens\Entities\Design;
+use Modules\Lens\Entities\Focus;
+use Modules\Lens\Entities\IndexLens;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductDiscount;
 use Modules\Product\Utils\ProductUtil;
 use Modules\Setting\Entities\Brand;
+use Modules\Setting\Entities\Color;
 use Modules\Setting\Entities\Currency;
 use Modules\Setting\Entities\MoneySafeTransaction;
 use Modules\Setting\Entities\Store;
@@ -143,6 +148,17 @@ class SellPosController extends Controller
         $exchange_rate_currencies = $this->commonUtil->getCurrenciesExchangeRateArray(true);
         $employees = Employee::getCommissionEmployeeDropdown();
 
+        $brand_lens = BrandLens::with('features')->get();
+
+        $brand_lenses=BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $design_lenses=Design::orderBy('name', 'asc')->pluck('name', 'id');
+        $foci=Focus::orderBy('name', 'asc')->pluck('name', 'id');
+        $index_lenses=IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors=Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $lenses=Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
+
+
+
         if (empty($store_pos)) {
             $output = [
                 'success' => false,
@@ -155,6 +171,13 @@ class SellPosController extends Controller
         return view('sale::back-end.pos.pos')->with(compact(
             'categories',
             'walk_in_customer',
+            'brand_lens',
+            'brand_lenses',
+            'design_lenses',
+            'foci',
+            'index_lenses',
+            'colors',
+            'lenses',
             'deliverymen',
             'tac',
             'brands',

@@ -21,14 +21,14 @@ class BrandLens extends Model implements HasMedia
     protected $guarded = [];
 
 
+
     protected $appends=['icon'];
-    private mixed $name;
 
     public function features(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Feature::class, 'feature_brand_lenses', 'brand_id', 'feature_id');
     }
-    public function getIconAttribute(): string
+    public function getIconAttribute($q): string
     {
         return $this->getFirstMediaUrl('icon')?:asset('assets/default/'.$this->name.'.png');
     }

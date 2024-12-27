@@ -23,7 +23,10 @@ class Customer extends Model implements HasMedia
     {
        return $this->getDropdownGender()[$this->gender];
     }
-
+    public function prescriptions()
+    {
+        return $this->hasMany(Prescription::class);
+    }
     public function customer_important_dates()
     {
         return $this->hasMany(CustomerImportantDate::class);
