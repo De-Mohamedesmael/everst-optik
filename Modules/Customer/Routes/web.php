@@ -15,6 +15,7 @@ use Modules\Customer\Http\Controllers\CustomerTypeController;
 use Illuminate\Support\Facades\Route;
 use Modules\Customer\Http\Controllers\CustomerBalanceAdjustmentController;
 use Modules\Customer\Http\Controllers\CustomerController;
+use Modules\Customer\Http\Controllers\PrescriptionController;
 
 
 Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'timezone'],'prefix' => 'dashboard','as'=>'admin.'], function () {
@@ -31,6 +32,10 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('customers/get-important-date-row', [CustomerController::class , 'getImportantDateRow']);
     Route::post('customers/update-address/{customer_id}', [CustomerController::class , 'updateAddress']);
     Route::resource('customers', CustomerController::class);
+
+
+    Route::get('prescriptions/get-dropdown', [PrescriptionController::class , 'getDropdown']);
+    Route::resource('prescriptions', PrescriptionController::class);
 
     Route::get('customer-type/get-dropdown', [CustomerTypeController::class , 'getDropdown']);
     Route::get('customer-type/get-products-discount-row', [CustomerTypeController::class , 'getProductDiscountRow']);

@@ -4,9 +4,18 @@
 <link rel="stylesheet" type="text/css" href="{{ url('front/css/pos.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url('front/css/pos-modals.css') }}">
     <style>
+        :root {
+            --secondary-color: #578981;
+        }
         .input-group-btn button.btn {
             padding: 0 !important;
             margin: 0 !important;
+        }
+        .nav-tabs .nav-item .nav-link.active {
+            border-color: transparent;
+            border-bottom: 2px solid var(--secondary-color);
+            background: var(--secondary-color);
+            color: #fff;
         }
     </style>
 @endsection
@@ -165,7 +174,22 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         <input type="hidden" name="tax_type" id="tax_type" value="">
 {{--                                    </div>--}}
 {{--                                </div>--}}
-
+                                <div class="col-lg-2 mb-2 mb-lg-0">
+                                    <div style="width: 100%"
+                                         class="col-12  p-0 input-group my-group d-flex flex-row justify-content-center height-responsive">
+                                        <button type="button" style="background-color: #e6e6e6 ;
+                                    border: none;
+                                        border-radius: 16px;
+                                        color: #373737;
+                                        box-shadow: 0 8px 6px -5px #bbb;
+                                        padding: 10px 6px;
+                                        width: 100%;"
+                                                class="height-responsive d-flex justify-content-center align-items-center"
+                                                data-toggle="modal"
+                                                data-target="#order_lens_modal">{{translate('order_lens')}}
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">
 {{--                                    <div class="col-6">--}}
 {{--                                        <button type="button"--}}
@@ -234,7 +258,6 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                             'id' => 'customer_id',
                                             'required',
                                             ]) !!}
-
                                             <span class="input-group-btn">
                                                 @can('customer_module.customer.create_and_edit')
                                                 <a style="background-color: var(--complementary-color-1);
@@ -260,13 +283,12 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                                 </a>
                                                 @endcan
                                             </span>
-
                                         </div>
                                     </div>
 
                                     <div class="col-lg-2 mb-2 mb-lg-0">
                                         <div style="width: 100%"
-                                            class="col-12  p-0 input-group my-group d-flex flex-row justify-content-center height-responsive">
+                                             class="col-12  p-0 input-group my-group d-flex flex-row justify-content-center height-responsive">
                                             <button type="button" style="background-color: #e6e6e6 ;
                                     border: none;
                                         border-radius: 16px;
@@ -274,17 +296,64 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         box-shadow: 0 8px 6px -5px #bbb;
                                         padding: 10px 6px;
                                         width: 100%;"
-                                                class="height-responsive d-flex justify-content-center align-items-center"
-                                                data-toggle="modal"
-                                                data-target="#contact_details_modal">@lang('lang.details')
+                                                    class="height-responsive d-flex justify-content-center align-items-center"
+                                                    data-toggle="modal"
+                                                    data-target="#contact_details_modal">@lang('lang.details')
                                             </button>
                                         </div>
+                                    </div>
 
+                                    <div class="col-lg-3 mb-2 mb-lg-0 customer-div">
+
+                                        <div class="col-12 form-group input-group my-group d-flex flex-row justify-content-center height-responsive"
+                                             style="background-color: #e6e6e6 ; border: none;
+                                        border-radius: 16px;
+                                        color: #373737;
+                                        box-shadow: 0 8px 6px -5px #bbb;
+                                        width: 100%;
+                                        margin: auto;
+                                        flex-wrap: nowrap;
+                                        padding-right:25px">
+                                            {!! Form::select('prescription_id', [], null , [
+                                            'class' => 'selectpicker ',
+                                            'data-live-search' => 'true',
+                                            'style' => 'width: 80%',
+                                            'id' => 'prescription_id',
+                                            'required',
+                                            ]) !!}
+                                            <span class="input-group-btn">
+                                                @can('customer_module.customer.create_and_edit')
+                                                    <a style="background-color: var(--complementary-color-1);
+                                        width: 100%;
+                                        height: 100%;
+                                        border-radius: 16px;
+                                        padding: 6px 6px;
+                                    cursor: pointer;
+                                        " class="d-flex btn-modal justify-content-center align-items-center top-0 right-0"
+                                                       data-href="{{ route('admin.prescriptions.create') }}?quick_add=1&customer_id={{$walk_in_customer->id??''}}"
+                                                       data-container=".view_modal"
+                                                    id="prescription-btn-id">
+                                                    <svg class="plus" xmlns="http://www.w3.org/2000/svg" height="2em"
+                                                         viewBox="0 0 448 512">
+                                                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                        <style>
+                                                            .plus {
+                                                                fill: #ffffff
+                                                            }
+                                                        </style>
+                                                        <path
+                                                            d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+                                                    </svg>
+                                                </a>
+                                                @endcan
+                                            </span>
+                                        </div>
                                     </div>
 
 
 
-                                    <div class="col-lg-2 mb-2 mb-lg-0">
+
+                                    <div class="col-lg-2 mb-2 mb-lg-0 " style="display: none">
 
                                         <div class="col-lg-12 mb-0 ml-1 input-group my-group d-flex justify-content-between                     height-responsive text-center"
                                             style="background-color: white; border: none;
@@ -343,6 +412,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
                                         </div>
                                     </div>
+
                                 </div>
 
                             </div>
@@ -744,6 +814,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                 {{-- @include('sale::back-end.pos.partials.tax_modal') --}}
                 @include('sale::back-end.pos.partials.coupon_modal')
                 @include('sale::back-end.pos.partials.contact_details_modal')
+                @include('sale::back-end.pos.partials.order_lens')
                 @include('sale::back-end.pos.partials.weighing_scale_modal')
                 @include('sale::back-end.pos.partials.non_identifiable_item_modal')
                 @include('sale::back-end.pos.partials.sale_note')

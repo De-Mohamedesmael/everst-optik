@@ -2167,9 +2167,25 @@ function get_recent_transactions() {
 }
 
 $(document).on("change", "#customer_id", function () {
+    getPrescriptionData();
     getCustomerData();
     getCustomerBalance();
+
 });
+function getPrescriptionData() {
+    let customer_id = $("#customer_id").val();
+    $.ajax({
+        method: "get",
+        url: "/dashboard/prescriptions/get-dropdown?customer_id="+customer_id,
+        data: {},
+        contactType: "html",
+        success: function (data_html) {
+            $("#prescription_id").empty().append(data_html);
+            $("#prescription_id").selectpicker("refresh");
+        },
+    });
+
+}
 function getCustomerData() {
     let customer_id = $("#customer_id").val();
 
@@ -2197,6 +2213,7 @@ function getCustomerData() {
             );
         },
     });
+
 }
 
 
