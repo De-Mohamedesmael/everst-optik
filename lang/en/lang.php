@@ -1364,4 +1364,8 @@
   'note' => 'note',
   'design' => 'Design',
   'add_brand_lens' => 'Create brand lens',
+  'focus' => 'Focus',
+  'Your Image has been deleted.' => 'Your Image has been deleted.',
+  'You won\'t be able to delete!' => 'You won t be able to delete!',
+  'Marka' => 'Marka',
 );
