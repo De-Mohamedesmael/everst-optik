@@ -298,13 +298,13 @@
                     <img class="icon-previous" src="{{$previous->icon}}" alt="">
                 </a>
 
-                <div class="container">
+                <div class="container container{{$brand->id}}">
                     <div class="image-container">
                         <img class="image-before slider-image image-before-{{$brand->id}}" src="{{$first_before}}" alt="before" />
                         <img class="image-after slider-image image-after-{{$brand->id}}" src="{{$first_after}}" alt="after" />
                     </div>
                     <input type="range" min="0" max="100" value="50" aria-label="Percentage of before photo shown"
-                           class="slider" />
+                           class="slider" data-in />
                     <div class="slider-line" aria-hidden="true"></div>
                     <div class="slider-button" aria-hidden="true">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -379,6 +379,7 @@
 
                 items.forEach(el => {
                     const span = el.querySelector('.beforeAfterMenu a span');
+
                     if (span.classList.contains('span-f-brand-'+brand)) {
                         span.classList.remove("active");
                         span.style.background = `#fff url(${span.getAttribute('data-default')}) no-repeat center`;

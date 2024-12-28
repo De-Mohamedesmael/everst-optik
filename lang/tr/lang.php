@@ -1244,6 +1244,6 @@
   'doctor_name' => 'doktor adı',
   'note' => 'not',
   'focus' => 'Focus',
-    'add_brand_lens' => 'add brand lens',
-
+  'add_brand_lens' => 'add brand lens',
+  'Your Image has been deleted.' => 'Your Image has been deleted.',
 );

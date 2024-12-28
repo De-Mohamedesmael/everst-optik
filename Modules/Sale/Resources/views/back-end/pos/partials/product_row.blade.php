@@ -318,7 +318,7 @@
             @if (session('system_mode') != 'restaurant')
                 <button type="button" class="btn p-0 quick_add_purchase_order"
                     style="background-color: transparent;outline: none;border: none" title="@lang('lang.add_draft_purchase_order')"
-                    data-href="{{ action('PurchaseOrderController@quickAddDraft') }}?product_id={{ $product->product_id }}">
+                    data-href="{{-- action('PurchaseOrderController@quickAddDraft') --}}?product_id={{ $product->product_id }}">
                     <div class="image-responsive">
                         <img style="width: 100%; border-radius: 5px;height: 100%;" src="{{ url('images/add.png') }}"
                             alt="">
