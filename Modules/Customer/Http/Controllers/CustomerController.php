@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Modules\CashRegister\Entities\CashRegisterTransaction;
 use Modules\Setting\Entities\Currency;
@@ -60,10 +61,10 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|View|Response
-     * @throws \Exception
+     * @return Factory|View|Response|Application|JsonResponse
+     * @throws Exception
      */
-    public function index(): Factory|View|Response|Application
+    public function index(): Factory|View|Response|Application|JsonResponse
     {
 
         if (request()->ajax()) {
@@ -82,6 +83,7 @@ class CustomerController extends Controller
         if (!empty(request()->customer_type_id)) {
             $query->where('customer_types.id',request()->customer_type_id);
         }
+
         if (!empty(request()->gender)) {
             $query->where('customers.gender',request()->gender);
         }
@@ -181,14 +183,14 @@ class CustomerController extends Controller
                 </button>
                 <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">';
 
-                if (auth()->user()->can('customer_module.customer.view')) {
-                    $html .=
-                        '<li>
-                        <a href="' . route('admin.customers.show', $row->id) . '">
-                        <i class="dripicons-document"></i>
-                            ' .__('lang.view') . '</a>
-                            </li>';
-                }
+//                if (auth()->user()->can('customer_module.customer.view')) {
+//                    $html .=
+//                        '<li>
+//                        <a href="' . route('admin.customers.show', $row->id) . '">
+//                        <i class="dripicons-document"></i>
+//                            ' .__('lang.view') . '</a>
+//                            </li>';
+//                }
 
                 if (auth()->user()->can('customer_module.customer.create_and_edit')) {
                     $html .=
@@ -204,7 +206,7 @@ class CustomerController extends Controller
                     if (isset($balance) && $balance < 0){
                     $html .=
                     '<li>
-                    <a data-href="' . action('TransactionPaymentController@getCustomerDue', $row->id) . '"
+                    <a data-href="#"
                     class="btn-modal" data-container=".view_modal"><i class="fa fa-money "></i>
                         ' .__('lang.pay_customer_due') . '</a>
                         </li>';
@@ -214,7 +216,7 @@ class CustomerController extends Controller
                     if (isset($balance) && $balance > 0){
                     $html .=
                     '<li>
-                    <a data-href="' . action('TransactionPaymentController@getCustomerDue', ['customer_id'=>$row->id,'extract_due'=>'true']) . '"
+                    <a data-href="#"
                     class="btn-modal" data-container=".view_modal"><i class="fa fa-money"></i>
                         ' .__('lang.extract_customer_due') . '</a>
                         </li>';
@@ -223,7 +225,7 @@ class CustomerController extends Controller
                 if (auth()->user()->can('adjustment.customer_balance_adjustment.create_and_edit')) {
                     $html .=
                     '<li>
-                    <a href="' . action('CustomerBalanceAdjustmentController@create', ['customer_id' => $row->id]) . '"
+                    <a href="#"
                         ><i class="fa fa-adjust"></i>
                         ' .__('lang.adjust_customer_balance') . '</a>
                         </li>';
@@ -233,7 +235,7 @@ class CustomerController extends Controller
                         $html .=
                         '<li>
                         <a data-href="' .route('admin.customers.destroy', $row->id). '"
-                        data-check_password="' .action('AdminController@checkPassword', Auth::user()->id). '"
+                        data-check_password="' .route('admin.check-password', auth('admin')->user()->id). '"
                         class="btn text-red delete_customer"><i class="fa fa-trash"></i>
                             ' .__('lang.delete') . '</a>
                             </li>';
@@ -696,9 +698,11 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
         $customer_types = CustomerType::pluck('name', 'id');
+        $genders = Customer::getDropdownGender();
 
         return view('customer::back-end.customers.edit')->with(compact(
             'customer',
+            'genders',
             'customer_types',
         ));
     }
