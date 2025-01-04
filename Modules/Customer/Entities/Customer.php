@@ -2,6 +2,7 @@
 
 namespace Modules\Customer\Entities;
 
+use App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -97,9 +98,8 @@ class Customer extends Model implements HasMedia
     public static function getDropdownGender()
     {
         return[
-            '' => translate('Male'),
             '1' => translate('Male'),
-            '2' => translate('Male'),
+            '2' => translate('Female'),
         ];
     }
 }

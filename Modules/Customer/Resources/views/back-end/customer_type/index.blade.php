@@ -84,7 +84,7 @@
 
                                                         @can('customer_module.customer_type.delete')
                                                             <a data-href="{{ route('admin.customer-type.destroy', $customer_type->id) }}"
-                                                               data-check_password="{{ action('AdminController@checkPassword', auth('admin')->user()->id) }}"
+                                                               data-check_password="{{   route('admin.check-password', auth('admin')->user()->id) }}"
                                                                class="btn btn-danger text-white delete_item"><i
                                                                     class="fa fa-trash"></i>
                                                                 @lang('lang.delete')</a>

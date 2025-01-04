@@ -80,7 +80,26 @@
                                         ]) !!}
                                     </div>
                                 </div>
-
+                                <div class="col-md-2 mb-2">
+                                    {!! Form::label('age', __('lang.age') , [
+                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::number('age',  $customer->age , [
+                                        'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                        'placeholder' => __('lang.age'),
+                                        'required',
+                                    ]) !!}
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    {!! Form::label('gender', translate('gender') . '*', [
+                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::select('gender', $genders, $customer->gender , [
+                                        'class' => 'selectpicker form-control',
+                                        'data-live-search' => 'true',
+                                        'required',
+                                    ]) !!}
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('email', __('lang.email'), [

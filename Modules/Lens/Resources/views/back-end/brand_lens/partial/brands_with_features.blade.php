@@ -33,7 +33,7 @@
         margin: 20px 0;
     }
 
-    .container {
+    .container_sp {
         display: grid;
         place-content: center;
         position: relative;
@@ -59,11 +59,11 @@
 
     .slider {
         position: absolute;
-        inset: 0;
-        cursor: pointer;
-        opacity: 0;
-        width: 100%;
-        height: 100%;
+        inset: 0 !important;
+        cursor: pointer !important;
+        opacity: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
     }
 
     .slider-line {
@@ -256,6 +256,7 @@
     span.effect {
         border: 1px solid #1a89ca;
     }
+
 </style>
 <main>
     @php
@@ -298,13 +299,13 @@
                     <img class="icon-previous" src="{{$previous->icon}}" alt="">
                 </a>
 
-                <div class="container container{{$brand->id}}">
-                    <div class="image-container">
+                <div class="container_sp container_sp_{{$brand->id}}">
+                    <div class="image-container_sp">
                         <img class="image-before slider-image image-before-{{$brand->id}}" src="{{$first_before}}" alt="before" />
                         <img class="image-after slider-image image-after-{{$brand->id}}" src="{{$first_after}}" alt="after" />
                     </div>
                     <input type="range" min="0" max="100" value="50" aria-label="Percentage of before photo shown"
-                           class="slider" data-in />
+                           class="slider" data-in data-id="{{$brand->id}}" />
                     <div class="slider-line" aria-hidden="true"></div>
                     <div class="slider-button" aria-hidden="true">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -360,13 +361,21 @@
 </main>
 
 <script>
-    const container = document.querySelector('.container');
-    const slider = document.querySelector('.slider');
+
+
+    const sliders = document.querySelectorAll('.slider');
     const startBtn = document.getElementById('start-btn');
     const endBtn = document.getElementById('end-btn');
-    slider.addEventListener('input', (e) => {
-        container.style.setProperty('--position', `${e.target.value}%`);
+    sliders.forEach(slider => {
+        slider.addEventListener('input', (e) => {
+            const id = e.target.dataset.id;
+            const container_sp = document.querySelector('.container_sp_' + id);
+            if (container_sp) {
+                container_sp.style.setProperty('--position', `${e.target.value}%`);
+            }
+        });
     });
+
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {

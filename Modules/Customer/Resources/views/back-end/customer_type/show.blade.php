@@ -130,7 +130,6 @@
                                                                                 <i class="dripicons-document"></i>
                                                                                 @lang('lang.view')</a>
                                                                         </li>
-                                                                        <li class="divider"></li>
                                                                     @endcan
                                                                     @can('customer_module.customer.edit')
                                                                         <li>
@@ -138,29 +137,26 @@
                                                                                 href="{{ route('admin.customers.edit', $customer->id) }}"><i
                                                                                     class="dripicons-document-edit btn"></i>@lang('lang.edit')</a>
                                                                         </li>
-                                                                        <li class="divider"></li>
                                                                     @endcan
                                                                     @can('adjustment.customer_balance_adjustment.create_and_edit')
                                                                         <li>
-                                                                            <a href="{{ action('CustomerBalanceAdjustmentController@create', ['customer_id' => $customer->id]) }}"
+                                                                            <a href="{{-- action('CustomerBalanceAdjustmentController@create', ['customer_id' => $customer->id]) --}}"
                                                                                 class="btn"><i class="fa fa-adjust"></i>
                                                                                 @lang('lang.adjust_customer_balance')</a>
                                                                         </li>
-                                                                        <li class="divider"></li>
                                                                     @endcan
                                                                     @can('adjustment.customer_point_adjustment.create_and_edit')
                                                                         <li>
 
-                                                                            <a href="{{ action('CustomerPointAdjustmentController@create', ['customer_id' => $customer->id]) }}"
+                                                                            <a href="{{-- action('CustomerPointAdjustmentController@create', ['customer_id' => $customer->id]) --}}"
                                                                                 class="btn"><i class="fa fa-adjust"></i>
                                                                                 @lang('lang.adjust_customer_points')</a>
                                                                         </li>
-                                                                        <li class="divider"></li>
                                                                     @endcan
                                                                     @can('customer_module.customer.delete')
                                                                         <li>
                                                                             <a data-href="{{ route('admin.customers.destroy', $customer->id) }}"
-                                                                                data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
+                                                                                data-check_password="{{ route('admin.check-password', auth('admin')->user()->id) }}"
                                                                                 class="btn text-red delete_item"><i
                                                                                     class="fa fa-trash"></i>
                                                                                 @lang('lang.delete')</a>
@@ -198,83 +194,83 @@
                                                     $total_discount_payments = 0;
                                                     $total_discount_due = 0;
                                                 @endphp
-                                                @foreach ($discounts as $discount)
-                                                    <tr>
-                                                        <td>{{ @format_date($discount->transaction_date) }}</td>
-                                                        <td>{{ $discount->invoice_no }}</td>
-                                                        <td>
-                                                            @if (!empty($discount->customer))
-                                                                {{ $discount->customer->name }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @foreach ($discount->transaction_sell_lines as $line)
-                                                                ({{ @num_format($line->quantity) }})
-                                                                @if (!empty($line->product))
-                                                                    {{ $line->product->name }}
-                                                                @endif <br>
-                                                            @endforeach
-                                                        </td>
-                                                        <td>{{ @num_format($discount->final_total) }}</td>
-                                                        </td>
-                                                        <td>
-                                                            @if ($discount->status == 'final')
-                                                                <span class="badge badge-success">@lang('lang.completed')</span>
-                                                            @else
-                                                                {{ ucfirst($discount->status) }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                                <button type="button"
-                                                                    class="btn btn-default btn-sm dropdown-toggle"
-                                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">@lang('lang.action')
-                                                                    <span class="caret"></span>
-                                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                                </button>
-                                                                <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
-                                                                    user="menu">
-                                                                    @can('sale.pos.view')
-                                                                        <li>
-                                                                            <a data-href="{{ action('SellController@show', $discount->id) }}"
-                                                                                data-container=".view_modal"
-                                                                                class="btn btn-modal"><i class="fa fa-eye"></i>
-                                                                                @lang('lang.view')</a>
-                                                                        </li>
-                                                                        <li class="divider"></li>
-                                                                    @endcan
-                                                                    @can('sale.pos.create_and_edit')
-                                                                        <li>
-                                                                            <a href="{{ action('SellController@edit', $discount->id) }}"
-                                                                                class="btn"><i
-                                                                                    class="dripicons-document-edit"></i>
-                                                                                @lang('lang.edit')</a>
-                                                                        </li>
-                                                                        <li class="divider"></li>
-                                                                    @endcan
+{{--                                                @foreach ($discounts as $discount)--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{{ @format_date($discount->transaction_date) }}</td>--}}
+{{--                                                        <td>{{ $discount->invoice_no }}</td>--}}
+{{--                                                        <td>--}}
+{{--                                                            @if (!empty($discount->customer))--}}
+{{--                                                                {{ $discount->customer->name }}--}}
+{{--                                                            @endif--}}
+{{--                                                        </td>--}}
+{{--                                                        <td>--}}
+{{--                                                            @foreach ($discount->transaction_sell_lines as $line)--}}
+{{--                                                                ({{ @num_format($line->quantity) }})--}}
+{{--                                                                @if (!empty($line->product))--}}
+{{--                                                                    {{ $line->product->name }}--}}
+{{--                                                                @endif <br>--}}
+{{--                                                            @endforeach--}}
+{{--                                                        </td>--}}
+{{--                                                        <td>{{ @num_format($discount->final_total) }}</td>--}}
+{{--                                                        </td>--}}
+{{--                                                        <td>--}}
+{{--                                                            @if ($discount->status == 'final')--}}
+{{--                                                                <span class="badge badge-success">@lang('lang.completed')</span>--}}
+{{--                                                            @else--}}
+{{--                                                                {{ ucfirst($discount->status) }}--}}
+{{--                                                            @endif--}}
+{{--                                                        </td>--}}
+{{--                                                        <td>--}}
+{{--                                                            <div class="btn-group">--}}
+{{--                                                                <button type="button"--}}
+{{--                                                                    class="btn btn-default btn-sm dropdown-toggle"--}}
+{{--                                                                    data-toggle="dropdown" aria-haspopup="true"--}}
+{{--                                                                    aria-expanded="false">@lang('lang.action')--}}
+{{--                                                                    <span class="caret"></span>--}}
+{{--                                                                    <span class="sr-only">Toggle Dropdown</span>--}}
+{{--                                                                </button>--}}
+{{--                                                                <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"--}}
+{{--                                                                    user="menu">--}}
+{{--                                                                    @can('sale.pos.view')--}}
+{{--                                                                        <li>--}}
+{{--                                                                            <a data-href="{{ action('SellController@show', $discount->id) }}"--}}
+{{--                                                                                data-container=".view_modal"--}}
+{{--                                                                                class="btn btn-modal"><i class="fa fa-eye"></i>--}}
+{{--                                                                                @lang('lang.view')</a>--}}
+{{--                                                                        </li>--}}
+{{--                                                                        <li class="divider"></li>--}}
+{{--                                                                    @endcan--}}
+{{--                                                                    @can('sale.pos.create_and_edit')--}}
+{{--                                                                        <li>--}}
+{{--                                                                            <a href="{{ action('SellController@edit', $discount->id) }}"--}}
+{{--                                                                                class="btn"><i--}}
+{{--                                                                                    class="dripicons-document-edit"></i>--}}
+{{--                                                                                @lang('lang.edit')</a>--}}
+{{--                                                                        </li>--}}
+{{--                                                                        <li class="divider"></li>--}}
+{{--                                                                    @endcan--}}
 
-                                                                    @can('sale.pos.delete')
-                                                                        <li>
-                                                                            <a data-href="{{ action('SellController@destroy', $discount->id) }}"
-                                                                                data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
-                                                                                class="btn text-red delete_item"><i
-                                                                                    class="fa fa-trash"></i>
-                                                                                @lang('lang.delete')</a>
-                                                                        </li>
-                                                                    @endcan
-                                                                </ul>
-                                                            </div>
-                                                    </tr>
-                                                    @php
-                                                        $total_discount_payments += $discount->transaction_payments->sum(
-                                                            'amount',
-                                                        );
-                                                        $total_discount_due +=
-                                                            $discount->final_total -
-                                                            $discount->transaction_payments->sum('amount');
-                                                    @endphp
-                                                @endforeach
+{{--                                                                    @can('sale.pos.delete')--}}
+{{--                                                                        <li>--}}
+{{--                                                                            <a data-href="{{ action('SellController@destroy', $discount->id) }}"--}}
+{{--                                                                                data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"--}}
+{{--                                                                                class="btn text-red delete_item"><i--}}
+{{--                                                                                    class="fa fa-trash"></i>--}}
+{{--                                                                                @lang('lang.delete')</a>--}}
+{{--                                                                        </li>--}}
+{{--                                                                    @endcan--}}
+{{--                                                                </ul>--}}
+{{--                                                            </div>--}}
+{{--                                                    </tr>--}}
+{{--                                                    @php--}}
+{{--                                                        $total_discount_payments += $discount->transaction_payments->sum(--}}
+{{--                                                            'amount',--}}
+{{--                                                        );--}}
+{{--                                                        $total_discount_due +=--}}
+{{--                                                            $discount->final_total ---}}
+{{--                                                            $discount->transaction_payments->sum('amount');--}}
+{{--                                                    @endphp--}}
+{{--                                                @endforeach--}}
                                             </tbody>
                                             <tfoot>
                                                 <tr>

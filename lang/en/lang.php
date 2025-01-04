@@ -1368,4 +1368,5 @@
   'Your Image has been deleted.' => 'Your Image has been deleted.',
   'You won\'t be able to delete!' => 'You won t be able to delete!',
   'Marka' => 'Marka',
+  'Female' => 'Female',
 );

@@ -119,7 +119,7 @@
                                     {!! Form::label('gender', translate('gender') . '*', [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
-                                    {!! Form::select('gender', \App\Models\Customer::getDropdownGender(), null , [
+                                    {!! Form::select('gender', \Modules\Customer\Entities\Customer::getDropdownGender(), null , [
                                         'class' => 'selectpicker form-control',
                                         'data-live-search' => 'true',
                                         'required',
@@ -225,6 +225,7 @@
                         d.startdate = $('#startdate').val();
                         d.enddate = $('#enddate').val();
                         d.customer_type_id = $('#customer_type_id').val()
+                        d.gender = $('#gender').val()
                     }
                 },
                 columnDefs: [{
