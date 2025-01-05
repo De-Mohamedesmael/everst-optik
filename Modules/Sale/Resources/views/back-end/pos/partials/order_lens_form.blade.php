@@ -5,6 +5,15 @@
     table#Right_Lens_Table ,  table#Left_Lens_Table{
         height: 100%;
     }
+    span.bigLatter {
+        font-size: 30px;
+        font-weight: 700;
+        color: #696969;
+        text-shadow: -1px 2px 4px #979797;
+    }
+    .icheckbox_square-orange {
+        padding: 0 10px;
+    }
 </style>
 <div id="navigation">
     <div class="container-fluid" id="content">
@@ -147,7 +156,6 @@
                                                             <select name="product[Lens][Right][Far][SPHDeg]" class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect" data-rl="Right" data-signfor="Right_Far_SPH" id="Right_Far_SPHDeg">
                                                                 <option value="+">+</option>
                                                                 <option value="-">-</option>
-
                                                             </select>
 
                                                         </td>
@@ -158,13 +166,14 @@
                                                             <select name="product[Lens][Right][Far][CYLDeg]" class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect" data-signfor="Right_Far_CYL" data-rl="Right" id="Right_Far_CYLDeg">
                                                                 <option value="+">+</option>
                                                                 <option value="-" selected="selected">-</option>
-
                                                             </select>
 
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Right][Far][CYL]" data-reqval="farCYL" value="" id="Right_Far_CYL" placeholder=" " class="form-control input-block-level input-sm lensVal lensCYL farCYL" data-rl="Right">
+                                                        <td>
+                                                            <input type="text" name="product[Lens][Right][Far][CYL]" data-reqval="farCYL" value="" id="Right_Far_CYL" placeholder=" " class="form-control input-block-level input-sm lensVal lensCYL farCYL" data-rl="Right">
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Right][Far][Axis]" data-reqval="farAX" value="0" id="Right_Far_Axis" placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid" data-rl="Right">
+                                                        <td>
+                                                            <input type="text" name="product[Lens][Right][Far][Axis]" data-reqval="farAX" value="0" id="Right_Far_Axis" placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid" data-rl="Right">
                                                         </td>
 
                                                     </tr>
