@@ -1369,4 +1369,8 @@
   'You won\'t be able to delete!' => 'You won t be able to delete!',
   'Marka' => 'Marka',
   'Female' => 'Female',
+  'I Want Right Glass' => 'I Want Right Glass',
+  'I Want Left Glass' => 'I Want Left Glass',
+  'Left glass is the same as right glass' => 'Left glass is the same as right glass',
+  'I Want  Right Glass' => 'I Want  Right Glass',
 );

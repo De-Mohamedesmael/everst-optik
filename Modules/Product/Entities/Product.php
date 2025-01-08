@@ -145,10 +145,7 @@ class Product extends Model implements HasMedia
     {
         return $this->belongsToMany(IndexLens::class, IndexLensProduct::class, 'product_id', 'index_id');
     }
-    public function supplier()
-    {
-        return $this->hasOneThrough(Supplier::class, SupplierProduct::class, 'product_id', 'id', 'id', 'supplier_id');
-    }
+
     public function product_discounts()
     {
         return $this->hasMany(ProductDiscount::class,'product_id','id');

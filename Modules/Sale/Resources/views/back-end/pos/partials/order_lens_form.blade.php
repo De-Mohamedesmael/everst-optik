@@ -14,6 +14,15 @@
     .icheckbox_square-orange {
         padding: 0 10px;
     }
+    .tab-pane .table-bordered>:not(caption)>* {
+        border-width:  0 !important;
+    }
+    .tab-pane input[type="number"]::-webkit-inner-spin-button,
+    .tab-pane input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
 </style>
 <div id="navigation">
     <div class="container-fluid" id="content">
@@ -37,6 +46,7 @@
                                                     'style' => 'width: 80%',
                                                    'data-actions-box' => 'true',
                                                     'id' => 'brand_id',
+                                                    'placeholder' => __('lang.please_select'),
                                                 ]) !!}
                                             </div>
                                         </div>
@@ -51,6 +61,7 @@
                                                     'style' => 'width: 80%',
                                                    'data-actions-box' => 'true',
                                                     'id' => 'focus_id',
+                                                    'placeholder' => __('lang.please_select'),
                                                 ]) !!}
                                             </div>
                                         </div>
@@ -65,6 +76,7 @@
                                                     'style' => 'width: 80%',
                                                    'data-actions-box' => 'true',
                                                     'id' => 'design_id',
+                                                    'placeholder' => __('lang.please_select'),
                                                 ]) !!}
                                             </div>
                                         </div>
@@ -79,6 +91,7 @@
                                                     'style' => 'width: 80%',
                                                    'data-actions-box' => 'true',
                                                     'id' => 'index_id',
+                                                    'placeholder' => __('lang.please_select'),
                                                 ]) !!}
                                             </div>
                                         </div>
@@ -93,6 +106,7 @@
                                                     'style' => 'width: 80%',
                                                    'data-actions-box' => 'true',
                                                     'id' => 'color_id',
+                                                    'placeholder' => __('lang.please_select'),
                                                 ]) !!}
                                             </div>
                                         </div>
@@ -108,6 +122,7 @@
                                                     'style' => 'width: 80%',
                                                    'data-actions-box' => 'true',
                                                     'id' => 'lens_id',
+                                                    'placeholder' => __('lang.please_select'),
                                                 ]) !!}
                                             </div>
                                         </div>
@@ -120,14 +135,18 @@
                                                 <table class="table table-bordered text-center" id="Right_Lens_Table" style="border: 5px solid red;">
                                                     <tbody>
                                                     <tr>
-                                                        <td><span class="bigLatter">R</span></td>
+                                                        <td>
+                                                            <span class="bigLatter">R</span>
+                                                        </td>
                                                         <td colspan="5">
 
 
                                                             <div class="check-line" style="width: 100%;text-align: left;">
-                                                                <div class="icheckbox_square-orange icheck-item icheck[ho025] checked"><input type="checkbox" id="RightLens" class="icheck-me checkForLens icheck-input icheck[ho025]" checked="" name="product[Lens][Right][isCheck]" value="1" data-skin="square" data-color="orange" data-rl="Right">
+                                                                <div class="icheckbox_square-orange icheck-item  checked">
+                                                                    <input type="checkbox" id="RightLens" class="icheck-me checkForLens icheck-input icheck[ho025]" checked="" name="product[Lens][Right][isCheck]" value="1" data-skin="square" data-color="orange" data-rl="Right" >
                                                                 </div>
-                                                                <label class="inline icheck-label icheck[ho025]" for="RightLens">Sağ Cam İstiyorum
+                                                                <label class="inline icheck-label " for="RightLens">
+                                                                    {{translate('I Want  Right Glass')}}
                                                                 </label>
 
                                                             </div>
@@ -137,19 +156,12 @@
                                                     </tr>
 
                                                     <tr>
-                                                        <td rowspan="2" class="verticalMiddle">UZAK
-                                                        </td>
-                                                        <td>+/-
-                                                        </td>
-                                                        <td>SPH
-                                                        </td>
-                                                        <td>+/-
-                                                        </td>
-                                                        <td>CYL
-                                                        </td>
-                                                        <td>AXIS
-                                                        </td>
-
+                                                        <td rowspan="2" class="verticalMiddle">{{translate('UZAK')}}</td>
+                                                        <td>+/-</td>
+                                                        <td>{{translate('SPH')}}</td>
+                                                        <td>+/-</td>
+                                                        <td>{{translate('CYL')}}</td>
+                                                        <td>{{translate('AXIS')}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -160,7 +172,21 @@
 
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Right][Far][SPH]" value="" id="Right_Far_SPH" data-reqval="farSPH" placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH" data-rl="Right" required="" aria-required="true">
+                                                            <input type="number"
+                                                                   name="product[Lens][Right][Far][SPH]"
+                                                                   value=""
+                                                                   id="Right_Far_SPH"
+                                                                   data-reqval="farSPH"
+                                                                   placeholder=" "
+                                                                   class="form-control input-block-level lensVal lensSPH farSPH number-input"
+                                                                   data-rl="Right"
+                                                                   required
+                                                                   aria-required="true"
+                                                                   step="0.5"
+                                                                   min="-16"
+                                                                   max="16">
+
+{{--                                                            <input type="number" name="product[Lens][Right][Far][SPH]" value="" id="Right_Far_SPH" data-reqval="farSPH" placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH" data-rl="Right" required="" aria-required="true" step="0.5">--}}
                                                         </td>
                                                         <td>
                                                             <select name="product[Lens][Right][Far][CYLDeg]" class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect" data-signfor="Right_Far_CYL" data-rl="Right" id="Right_Far_CYLDeg">
@@ -170,7 +196,19 @@
 
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Right][Far][CYL]" data-reqval="farCYL" value="" id="Right_Far_CYL" placeholder=" " class="form-control input-block-level input-sm lensVal lensCYL farCYL" data-rl="Right">
+                                                            <input type="number"
+                                                                   name="product[Lens][Right][Far][CYL]"
+                                                                   value=""
+                                                                   id="Right_Far_CYL"
+                                                                   data-reqval="farCYL"
+                                                                   placeholder=" "
+                                                                   class="form-control input-block-level lensVal lensCYL farCYL number-input"
+                                                                   data-rl="Right"
+                                                                   required
+                                                                   aria-required="true"
+                                                                   step="0.5"
+                                                                   min="-15"
+                                                                   max="15">
                                                         </td>
                                                         <td>
                                                             <input type="text" name="product[Lens][Right][Far][Axis]" data-reqval="farAX" value="0" id="Right_Far_Axis" placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid" data-rl="Right">
@@ -178,18 +216,12 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td rowspan="2" class="verticalMiddle">YAKIN
-                                                        </td>
-                                                        <td>+/-
-                                                        </td>
-                                                        <td>SPH
-                                                        </td>
-                                                        <td>+/-
-                                                        </td>
-                                                        <td>CYL
-                                                        </td>
-                                                        <td>AXIS
-                                                        </td>
+                                                        <td rowspan="2" class="verticalMiddle">{{translate('YAKIN')}}</td>
+                                                        <td>+/-</td>
+                                                        <td>SPH</td>
+                                                        <td>+/-</td>
+                                                        <td>CYL</td>
+                                                        <td>AXIS</td>
 
                                                     </tr>
                                                     <tr class="nearTableRow">
@@ -197,11 +229,10 @@
                                                             <select name="product[Lens][Right][Near][SPHDeg]" class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect" data-signfor="Right_Near_SPH" data-rl="Right" id="Right_Near_SPHDeg">
                                                                 <option value="+">+</option>
                                                                 <option value="-">-</option>
-
                                                             </select>
-
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Right][Near][SPH]" data-reqval="nearSPH" value="" id="Right_Near_SPH" placeholder=" " class="form-control input-block-level lensVal lensSPH" data-rl="Right">
+                                                        <td>
+                                                            <input type="text" name="product[Lens][Right][Near][SPH]" data-reqval="nearSPH" value="" id="Right_Near_SPH" placeholder=" " class="form-control input-block-level lensVal lensSPH" data-rl="Right">
                                                         </td>
                                                         <td>
                                                             <select name="product[Lens][Right][Near][CYLDeg]" class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect" data-rl="Right" data-signfor="Right_Near_CYL" id="Right_Near_CYLDeg">
@@ -218,15 +249,14 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td>Adisyon
-                                                        </td>
+                                                        <td>{{translate('Adisyon')}}</td>
                                                         <td colspan="5">
                                                             <div class="col-md-5 noPadding">
                                                                 <input type="text" name="product[Lens][Right][Addition]" data-reqval="addVal" value="" id="Right_Addition" placeholder="" class="form-control input-block-level lensAddition lensVal" data-rl="Right" required="" aria-required="true">
                                                             </div>
                                                             <div class="col-xs-8" style="padding-right: 0;">
                                                                 <select name="product[Lens][Right][Diameter]" required="" class="select2-me text-left lensDiam select2-hidden-accessible" style="width: 100%" data-rl="Right" id="Right_Lens_Diam" aria-required="true" tabindex="-1" aria-hidden="true" data-select2-id="Right_Lens_Diam">
-                                                                    <option value="" data-select2-id="135">Çap Seçiniz</option>
+                                                                    <option value="" data-select2-id="135">{{translate('Çap Seçiniz')}}</option>
                                                                 </select>
                                                             </div>
                                                         </td>
@@ -239,7 +269,8 @@
                                             <div class="form-group h-100">
                                                 <table class="table table-bordered text-center" id="Left_Lens_Table" style="border: 5px solid red;">
                                                     <tbody><tr>
-                                                        <td class="lensLatterCell"><span class="bigLatter">L</span>
+                                                        <td class="lensLatterCell">
+                                                            <span class="bigLatter">L</span>
 
 
                                                         </td>
@@ -247,16 +278,20 @@
                                                             <div class="row" style="padding-left: 0;">
                                                                 <div class="col-xs-12">
                                                                     <div class="check-line" style="width: 100%;text-align: left;">
-                                                                        <div class="icheckbox_square-orange icheck-item icheck[e2yun]"><input type="checkbox" id="LeftLens" class="icheck-me checkForLens icheck-input icheck[e2yun]" name="product[Lens][Left][isCheck]" value="1" data-skin="square" data-color="orange" data-rl="Left">
+                                                                        <div class="icheckbox_square-orange icheck-item ">
+                                                                            <input type="checkbox" id="LeftLens" class="icheck-me checkForLens icheck-input " name="product[Lens][Left][isCheck]" value="1" data-skin="square" data-color="orange" data-rl="Left">
                                                                         </div>
-                                                                        <label class="inline icheck-label icheck[e2yun]" for="LeftLens">Sol Cam İstiyorum
+                                                                        <label class="inline icheck-label " for="LeftLens">
+                                                                            {{translate('I Want Left Glass')}}
                                                                         </label>
 
                                                                     </div>
                                                                     <div class="check-line" style="width: 100%;text-align: left;">
-                                                                        <div class="icheckbox_square-orange icheck-item icheck[veqwi]"><input type="checkbox" id="sameToRight" class="icheck-me popover2 icheck-input icheck[veqwi]" data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left" name="product[Lens][Left][sameToRight]" value="1" data-skin="square" data-color="orange" data-original-title="" title="" disabled="">
+                                                                        <div class="icheckbox_square-orange icheck-item ">
+                                                                            <input type="checkbox" id="sameToRight" class="icheck-me popover2 icheck-input icheck[veqwi]" data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left" name="product[Lens][Left][sameToRight]" value="1" data-skin="square" data-color="orange" data-original-title="" title="" disabled="">
                                                                         </div>
-                                                                        <label class="inline icheck-label icheck[veqwi]" for="sameToRight">Sol cam sağ cam ile aynı
+                                                                        <label class="inline icheck-label " for="sameToRight">
+                                                                            {{translate('Left glass is the same as right glass')}}
                                                                         </label>
 
 
@@ -272,18 +307,12 @@
                                                     </tr>
 
                                                     <tr>
-                                                        <td rowspan="2" class="verticalMiddle">UZAK
-                                                        </td>
-                                                        <td>+/-
-                                                        </td>
-                                                        <td>SPH
-                                                        </td>
-                                                        <td>+/-
-                                                        </td>
-                                                        <td>CYL
-                                                        </td>
-                                                        <td>AXIS
-                                                        </td>
+                                                        <td rowspan="2" class="verticalMiddle">{{translate('UZAK')}}</td>
+                                                        <td>+/-</td>
+                                                        <td>{{translate('SPH')}}</td>
+                                                        <td>+/-</td>
+                                                        <td>{{translate('CYL')}}</td>
+                                                        <td>{{translate('AXIS')}}</td>
 
                                                     </tr>
                                                     <tr>
@@ -313,18 +342,12 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td rowspan="2" class="verticalMiddle">YAKIN
-                                                        </td>
-                                                        <td>+/-
-                                                        </td>
-                                                        <td>SPH
-                                                        </td>
-                                                        <td>+/-
-                                                        </td>
-                                                        <td>CYL
-                                                        </td>
-                                                        <td>AXIS
-                                                        </td>
+                                                        <td rowspan="2" class="verticalMiddle">{{translate('YAKIN')}}</td>
+                                                        <td>+/-</td>
+                                                        <td>{{translate('SPH')}}</td>
+                                                        <td>+/-</td>
+                                                        <td>{{translate('CYL')}}</td>
+                                                        <td>{{translate('AXIS')}}</td>
 
                                                     </tr>
                                                     <tr class="nearTableRow">
@@ -353,7 +376,7 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td>Adisyon
+                                                        <td>{{translate('Adisyon')}}
                                                         </td>
                                                         <td colspan="5">
                                                             <div class="col-md-5 noPadding">
@@ -363,7 +386,7 @@
                                                             <div>
                                                                 <div class="col-xs-8" style="padding-right: 0;">
                                                                     <select name="product[Lens][Left][Diameter]" required="" class="select2-me text-left lensDiam select2-hidden-accessible" style="width: 100%" data-rl="Right" id="Left_Lens_Diam" aria-required="true" tabindex="-1" aria-hidden="true" disabled="" data-select2-id="Left_Lens_Diam">
-                                                                        <option value="" data-select2-id="137">Çap Seçiniz</option>
+                                                                        <option value="" data-select2-id="137">{{translate('Çap Seçiniz')}}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -389,3 +412,93 @@
         </div>
     </div>
 </div>
+<script>
+
+    //brand_lens => products
+    //focus_id => design_id & products
+    //design_id =>  products
+    //index_id =>  products
+    //color_id =>  products
+
+    $('#LeftLens').on('change', function () {
+        var cke;
+        if (this.checked) {
+            $('#sameToRight').attr('disabled', false);
+            $('#Left_Far_SPH').attr('disabled', false);
+        } else {
+            cke = $('#sameToRight');
+            cke.attr('disabled', true);
+            cke.prop('checked', false);
+            $('#Left_Far_SPH').attr('disabled', true);
+            $('#Left_Far_SPH').val('');
+
+        }
+
+    });
+    $(document).on("change", "#brand_id , #focus_id,#design_id,#index_id,#color_id", function () {
+
+        var brand_id = $('#brand_id').val();
+        var focus_id = $('#focus_id').val();
+        var design_id = $('#design_id').val();
+        var index_id = $('#index_id').val();
+        var color_id = $('#color_id').val();
+
+
+        $.ajax({
+            method: "get",
+            url: "/dashboard/lenses/get-dropdown-filter-lenses",
+            data: {
+                brand_id:brand_id,
+                focus_id:focus_id,
+                design_id:design_id,
+                index_id:index_id,
+                color_id:color_id,
+            },
+            // contactType: "html",
+            success: function (result) {
+                if(result.success){
+                    $("#lens_id").empty().append(result.data.lenses);
+                    $("#lens_id").selectpicker("refresh");
+                    $("#design_id").empty().append(result.data.designs);
+                    $("#design_id").selectpicker("refresh");
+                }
+                if (design_id) {
+                    $("#design_id").selectpicker("val", design_id);
+                }
+
+                // $("#brand_id").empty().append(data_html);
+                // $("#brand_id").selectpicker("refresh");
+                // if (brand_id) {
+                //     $("#brand_id").selectpicker("val", brand_id);
+                // }
+            },
+        });
+    })
+    // document.getElementById('Right_Far_SPH').addEventListener('input', function() {
+    //     const min = parseFloat(this.min);
+    //     const max = parseFloat(this.max);
+    //     const value = parseFloat(this.value);
+    //
+    //     if (value < min) {
+    //         this.value = min;
+    //     } else if (value > max) {
+    //         this.value = max;
+    //     }
+    // });
+
+    document.querySelectorAll('.number-input').forEach(function(input) {
+        input.addEventListener('input', function() {
+            const min = parseFloat(this.min);
+            const max = parseFloat(this.max);
+            const value = parseFloat(this.value);
+
+            if (value < min) {
+                this.value = min;
+            } else if (value > max) {
+                this.value = max;
+            }
+        });
+    });
+
+
+</script>
