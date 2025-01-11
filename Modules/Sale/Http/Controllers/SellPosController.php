@@ -40,6 +40,7 @@ use Modules\Setting\Entities\Brand;
 use Modules\Setting\Entities\Color;
 use Modules\Setting\Entities\Currency;
 use Modules\Setting\Entities\MoneySafeTransaction;
+use Modules\Setting\Entities\SpecialBase;
 use Modules\Setting\Entities\Store;
 use Modules\Setting\Entities\StorePos;
 use Modules\Setting\Entities\System;
@@ -149,6 +150,7 @@ class SellPosController extends Controller
         $employees = Employee::getCommissionEmployeeDropdown();
 
         $brand_lens = BrandLens::with('features')->get();
+        $special_bases=SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
 
         $brand_lenses=BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
         $design_lenses=Design::orderBy('name', 'asc')->pluck('name', 'id');
@@ -156,7 +158,6 @@ class SellPosController extends Controller
         $index_lenses=IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
         $colors=Color::orderBy('name', 'asc')->pluck('name', 'id');
         $lenses=Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
-
 
 
         if (empty($store_pos)) {
@@ -176,6 +177,7 @@ class SellPosController extends Controller
             'design_lenses',
             'foci',
             'index_lenses',
+            'special_bases',
             'colors',
             'lenses',
             'deliverymen',

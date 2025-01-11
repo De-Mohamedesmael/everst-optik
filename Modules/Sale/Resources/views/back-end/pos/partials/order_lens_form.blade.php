@@ -469,13 +469,29 @@
                                                                 </div>
                                                             </div>
                                                             <div class="d-none VABaseCheck_class">
-                                                                {!! Form::select('product[VA][TinTing][value]', $colors ,null, [
+                                                                {!! Form::select('product[special_base]', $special_bases ,null, [
                                                                        'class' => ' selectpicker form-control',
                                                                        'data-live-search' => 'true',
                                                                        'style' => 'width: 80%',
                                                                       'data-actions-box' => 'true',
-                                                                       'id' => 'color_product',
+                                                                       'id' => 'special_base',
                                                                        'placeholder' => __('lang.please_select'),
+                                                                   ]) !!}
+                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-3 px-5">
+                                                            <div class="noBorderRight">
+                                                                <div class="check-line" style="width: 100%;text-align: left;">
+                                                                    <div class="icheckbox_square-orange icheck-item icheck[wzqw0]"><input type="checkbox" id="specific_diameter" data-subs="vaBaseList" class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]" name="product[VA][Base][isCheck]" value="1" data-skin="square" data-color="orange"></div>
+                                                                    <label class="inline icheck-label icheck[wzqw0]" for="specific_diameter">{{translate("Özel Çap")}}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-none specific_diameter_class">
+                                                                {!! Form::number('product[specific_diameter]' ,null, [
+                                                                       'class' => ' selectpicker form-control',
+                                                                       'style' => 'width: 80%',
+                                                                      'data-actions-box' => 'true',
+                                                                       'id' => 'specific_diameter_input',
                                                                    ]) !!}
                                                             </div>
                                                     </div>
@@ -770,7 +786,9 @@
                                                     <tr>
 
                                                         <td>
-                                                            <select name="product[Lens][Right][Far][SPHDeg]" class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect" data-rl="Right" data-signfor="Right_Far_SPH" id="Right_Far_SPHDeg">
+                                                            <select name="product[Lens][Right][Far][SPHDeg]"
+                                                                    class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
+                                                                    data-rl="Right" data-signfor="Right_Far_SPH" id="Right_Far_SPHDeg">
                                                                 <option value="+">+</option>
                                                                 <option value="-">-</option>
                                                             </select>
@@ -787,14 +805,17 @@
                                                                    data-rl="Right"
                                                                    required
                                                                    aria-required="true"
-                                                                   step="0.5"
-                                                                   min="-16"
-                                                                   max="16">
+                                                                   step="0.25"
+                                                                   min="-30"
+                                                                   max="30">
 
 {{--                                                            <input type="number" name="product[Lens][Right][Far][SPH]" value="" id="Right_Far_SPH" data-reqval="farSPH" placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH" data-rl="Right" required="" aria-required="true" step="0.5">--}}
                                                         </td>
                                                         <td>
-                                                            <select name="product[Lens][Right][Far][CYLDeg]" class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect" data-signfor="Right_Far_CYL" data-rl="Right" id="Right_Far_CYLDeg">
+                                                            <select name="product[Lens][Right][Far][CYLDeg]"
+                                                                    class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
+                                                                    data-signfor="Right_Far_CYL" data-rl="Right"
+                                                                    id="Right_Far_CYLDeg">
                                                                 <option value="+">+</option>
                                                                 <option value="-" selected="selected">-</option>
                                                             </select>
@@ -811,12 +832,22 @@
                                                                    data-rl="Right"
                                                                    required
                                                                    aria-required="true"
-                                                                   step="0.5"
+                                                                   step="0.25"
                                                                    min="-15"
                                                                    max="15">
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Right][Far][Axis]" data-reqval="farAX" value="0" id="Right_Far_Axis" placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid" data-rl="Right">
+                                                            <input
+                                                                type="number"
+                                                                   name="product[Lens][Right][Far][Axis]"
+                                                                data-reqval="farAX" value=""
+                                                                id="Right_Far_Axis"
+                                                                placeholder=" "
+                                                                class="form-control input-block-level input-sm lensAxis farAX valid"
+                                                                data-rl="Right"
+                                                                step="1"
+                                                                min="0"
+                                                                max="180">
                                                         </td>
 
                                                     </tr>
@@ -831,25 +862,71 @@
                                                     </tr>
                                                     <tr class="nearTableRow">
                                                         <td>
-                                                            <select name="product[Lens][Right][Near][SPHDeg]" class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect" data-signfor="Right_Near_SPH" data-rl="Right" id="Right_Near_SPHDeg">
+                                                            <select name="product[Lens][Right][Near][SPHDeg]"
+                                                                    class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
+                                                                    data-signfor="Right_Near_SPH"
+                                                                    data-rl="Right"
+                                                                    id="Right_Near_SPHDeg">
                                                                 <option value="+">+</option>
                                                                 <option value="-">-</option>
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Right][Near][SPH]" data-reqval="nearSPH" value="" id="Right_Near_SPH" placeholder=" " class="form-control input-block-level lensVal lensSPH" data-rl="Right">
+
+
+                                                            <input type="number"
+                                                                   name="product[Lens][Right][Near][SPH]"
+                                                                   value=""
+                                                                   id="Right_Near_SPH"
+                                                                   data-reqval="nearSPH"
+                                                                   placeholder=" "
+                                                                   class="form-control input-block-level lensVal lensSPH"
+                                                                   data-rl="Right"
+                                                                   required
+                                                                   aria-required="true"
+                                                                   step="0.25"
+                                                                   min="-30"
+                                                                   max="30">
                                                         </td>
                                                         <td>
-                                                            <select name="product[Lens][Right][Near][CYLDeg]" class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect" data-rl="Right" data-signfor="Right_Near_CYL" id="Right_Near_CYLDeg">
+                                                            <select name="product[Lens][Right][Near][CYLDeg]"
+                                                                    class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
+                                                                    data-rl="Right" data-signfor="Right_Near_CYL"
+                                                                    id="Right_Near_CYLDeg">
                                                                 <option value="+">+</option>
                                                                 <option value="-" selected="selected">-</option>
 
                                                             </select>
 
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Right][Near][CYL]" data-reqval="nearCYL" value="" id="Right_Near_CYL" placeholder=" " class="form-control input-block-level lensVal lensCYL" data-rl="Right">
+                                                        <td>
+                                                            <input
+                                                                type="number"
+                                                                name="product[Lens][Right][Near][CYL]"
+                                                                data-reqval="nearCYL"
+                                                                value=""
+                                                                id="Right_Near_CYL"
+                                                                placeholder=" "
+                                                                class="form-control input-block-level lensVal lensCYL"
+                                                                data-rl="Right"
+                                                                step="0.25"
+                                                                min="-15"
+                                                                max="15">
+
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Right][Near][Axis]" data-reqval="nearAX" value="" id="Right_Near_Axis" placeholder=" " class="form-control input-block-level lensAxis nearAX" data-rl="Right">
+                                                        <td>
+                                                            <input
+                                                                type="number"
+                                                                name="product[Lens][Right][Near][Axis]"
+                                                                   data-reqval="nearAX"
+                                                                value=""
+                                                                id="Right_Near_Axis"
+                                                                placeholder=" "
+                                                                class="form-control input-block-level lensAxis nearAX"
+                                                                data-rl="Right"
+                                                                step="1"
+                                                                min="0"
+                                                                max="180">
                                                         </td>
 
                                                     </tr>
@@ -857,10 +934,21 @@
                                                         <td>{{translate('Adisyon')}}</td>
                                                         <td colspan="5">
                                                             <div class="col-md-5 noPadding">
-                                                                <input type="text" name="product[Lens][Right][Addition]" data-reqval="addVal" value="" id="Right_Addition" placeholder="" class="form-control input-block-level lensAddition lensVal" data-rl="Right" required="" aria-required="true">
+                                                                <input type="number"
+                                                                       name="product[Lens][Right][Addition]"
+                                                                       data-reqval="addVal" value=""
+                                                                       id="Right_Addition"
+                                                                       placeholder=""
+                                                                       class="form-control input-block-level lensAddition lensVal"
+                                                                       data-rl="Right"
+                                                                       required=""
+                                                                       aria-required="true">
                                                             </div>
                                                             <div class="col-xs-8" style="padding-right: 0;">
-                                                                <select name="product[Lens][Right][Diameter]" required="" class="select2-me text-left lensDiam select2-hidden-accessible" style="width: 100%" data-rl="Right" id="Right_Lens_Diam" aria-required="true" tabindex="-1" aria-hidden="true" data-select2-id="Right_Lens_Diam">
+                                                                <select name="product[Lens][Right][Diameter]" required="" class="select2-me text-left lensDiam" style="width: 100%"
+                                                                        data-rl="Right" id="Right_Lens_Diam" aria-required="true" tabindex="-1"
+                                                                        aria-hidden="true" data-select2-id="Right_Lens_Diam">
+
                                                                     <option value="" data-select2-id="135">{{translate('Çap Seçiniz')}}</option>
                                                                 </select>
                                                             </div>
@@ -942,7 +1030,7 @@
                                                         </td>
                                                         <td><input type="text" name="product[Lens][Left][Far][CYL]" data-reqval="farCYL" value="" id="Left_Far_CYL" placeholder=" " class="form-control input-block-level input-sm lensVal lensCYL farCYL" data-rl="Left" disabled="">
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Left][Far][Axis]" data-reqval="farAX" value="0" id="Left_Far_Axis" placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid" data-rl="Left" disabled="">
+                                                        <td><input type="text" name="product[Lens][Left][Far][Axis]" data-reqval="farAX" value="" id="Left_Far_Axis" placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid" data-rl="Left" disabled="">
                                                         </td>
 
                                                     </tr>
@@ -1029,24 +1117,76 @@
     //design_id =>  products
     //index_id =>  products
     //color_id =>  products
-$('.predefinedShape').on('click',function () {
-    $(this).addClass('selected');
-    code =$(this).data('ccode');
-    $('#input_predefined_shape').val(code);
-    $(this).siblings().removeClass('selected');
-})
+    $(document).on("change", "#Right_Far_Axis", function (e) {
+        const Far_Axis = $('#Right_Far_Axis').val();
+        $('#Right_Near_Axis').val(Far_Axis);
+    });
+    $(document).on("change", "#Right_Far_CYL", function (e) {
+        const Far_CYL = $('#Right_Far_CYL').val();
+        $('#Right_Near_CYL').val(Far_CYL);
+    });
+    $(document).on("change", "#Right_Far_SPH,#Right_Near_SPH", function (e) {
+        const Far_SPH = $('#Right_Far_SPH').val();
+        const Near_SPH = $('#Right_Near_SPH').val();
+        $('#Right_Addition').val(Far_SPH-Near_SPH);
+    });
+    $(document).on("change", "#Left_Far_SPH,#Right_Near_SPH", function (e) {
+        const Far_SPH = $('#Left_Far_SPH').val();
+        const Near_SPH = $('#Left_Near_SPH').val();
+        $('#Left_Addition').val(Far_SPH-Near_SPH);
+    });
+
+    $('.predefinedShape').on('click',function () {
+        $(this).addClass('selected');
+        code =$(this).data('ccode');
+        $('#input_predefined_shape').val(code);
+        $(this).siblings().removeClass('selected');
+    })
+
+
     $('#LeftLens').on('change', function () {
         var cke;
         if (this.checked) {
             $('#sameToRight').attr('disabled', false);
+            $('#Left_Far_Axis').attr('disabled', false);
+            $('#Left_Near_Axis').attr('disabled', false);
+            $('#Left_Far_CYL').attr('disabled', false);
+            $('#Left_Near_CYL').attr('disabled', false);
             $('#Left_Far_SPH').attr('disabled', false);
+            $('#Left_Near_SPH').attr('disabled', false);
+            $('#Left_Addition').attr('disabled', false);
+
+
+            $('#Left_Near_CYLDeg').prop('disabled', false);
+            $('#Left_Near_SPHDeg').prop('disabled', false);
+            $('#Left_Far_CYLDeg').prop('disabled', false);
+            $('#Left_Far_SPHDeg').prop('disabled', false);
         } else {
             cke = $('#sameToRight');
             cke.attr('disabled', true);
             cke.prop('checked', false);
-            $('#Left_Far_SPH').attr('disabled', true);
-            $('#Left_Far_SPH').val('');
 
+            $('#Left_Near_CYLDeg').prop('disabled', true);
+            $('#Left_Near_SPHDeg').prop('disabled', true);
+            $('#Left_Far_CYLDeg').prop('disabled', true);
+            $('#Left_Far_SPHDeg').prop('disabled', true);
+
+            $('#Left_Far_Axis').attr('disabled', true);
+            $('#Left_Near_Axis').attr('disabled', true);
+            $('#Left_Far_CYL').attr('disabled', true);
+            $('#Left_Near_CYL').attr('disabled', true);
+            $('#Left_Far_SPH').attr('disabled', true);
+            $('#Left_Near_SPH').attr('disabled', true);
+            $('#Left_Addition').attr('disabled', true);
+
+
+            $('#Left_Far_Axis').val('');
+            $('#Left_Near_Axis').val('');
+            $('#Left_Far_CYL').val('');
+            $('#Left_Near_CYL').val('');
+            $('#Left_Far_SPH').val('');
+            $('#Left_Near_SPH').val('');
+            $('#Left_Addition').val('');
         }
 
     });
@@ -1066,6 +1206,16 @@ $('.predefinedShape').on('click',function () {
         } else {
 
             $('.VABaseCheck_class').addClass('d-none')
+
+        }
+
+    });
+    $('#specific_diameter').on('change', function () {
+        if (this.checked) {
+           $('.specific_diameter_class').removeClass('d-none')
+        } else {
+
+            $('.specific_diameter_class').addClass('d-none')
 
         }
 
@@ -1157,4 +1307,31 @@ $('.predefinedShape').on('click',function () {
         $('button[data-bs-target="#moreInfoCollapse"] i').removeClass('fa-arrow-up').addClass(
             'fa-arrow-down');
     });
+
+    $(document).on("change", "#sameToRight,#Right_Far_Axis,#Right_Near_Axis,#Right_Far_CYL,#Right_Near_CYL,#Right_Far_SPH,#Right_Near_SPH,#Right_Addition,#Right_Near_CYLDeg,#Right_Near_SPHDeg,#Right_Far_CYLDeg,#Right_Far_SPHDeg", function (e) {
+        if ($('#sameToRight').prop('checked')) {
+            sameToRight();
+        }
+    });
+    function sameToRight () {
+        $('#Left_Far_Axis').val( $('#Right_Far_Axis').val());
+        $('#Left_Near_Axis').val( $('#Right_Near_Axis').val());
+        $('#Left_Far_CYL').val( $('#Right_Far_CYL').val());
+        $('#Left_Near_CYL').val( $('#Right_Near_CYL').val());
+        $('#Left_Far_SPH').val( $('#Right_Far_SPH').val());
+        $('#Left_Near_SPH').val( $('#Right_Near_SPH').val());
+        $('#Left_Addition').val( $('#Right_Addition').val());
+
+        $('#Left_Near_CYLDeg').val( $('#Right_Near_CYLDeg').val());
+        $('#Left_Near_SPHDeg').val( $('#Right_Near_SPHDeg').val());
+        $('#Left_Far_CYLDeg').val( $('#Right_Far_CYLDeg').val());
+        $('#Left_Far_SPHDeg').val( $('#Right_Far_SPHDeg').val());
+
+
+
+        $('#Left_Near_CYLDeg').selectpicker('refresh');
+        $('#Left_Near_SPHDeg').selectpicker('refresh');
+        $('#Left_Far_CYLDeg').selectpicker('refresh');
+        $('#Left_Far_SPHDeg').selectpicker('refresh');
+    }
 </script>
