@@ -39,5 +39,7 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('pos/get-transaction-details/{transaction_id}', [SellPosController::class , 'getTransactionDetails'])->name('pos.getTransactionDetails');
     Route::post('pos/update-transaction-status-cancel/{transaction_id}', [SellPosController::class , 'updateTransactionStatusCancel'])->name('pos.updateTransactionStatusCancel');
     Route::post('pos/change-selling-price/{variation_id}', [SellPosController::class , 'changeSellingPrice'])->name('pos.changeSellingPrice');
+    Route::post('pos/save-lens-data', [SellPosController::class , 'SaveLens'])->name('pos.SaveLens');
+
     Route::resource('pos', SellPosController::class);
 });

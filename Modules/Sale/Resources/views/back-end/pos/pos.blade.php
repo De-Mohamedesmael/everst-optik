@@ -17,6 +17,7 @@
             background: var(--secondary-color);
             color: #fff;
         }
+
     </style>
 @endsection
 
@@ -174,22 +175,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         <input type="hidden" name="tax_type" id="tax_type" value="">
 {{--                                    </div>--}}
 {{--                                </div>--}}
-                                <div class="col-lg-2 mb-2 mb-lg-0">
-                                    <div style="width: 100%"
-                                         class="col-12  p-0 input-group my-group d-flex flex-row justify-content-center height-responsive">
-                                        <button type="button" style="background-color: #e6e6e6 ;
-                                    border: none;
-                                        border-radius: 16px;
-                                        color: #373737;
-                                        box-shadow: 0 8px 6px -5px #bbb;
-                                        padding: 10px 6px;
-                                        width: 100%;"
-                                                class="height-responsive d-flex justify-content-center align-items-center"
-                                                data-toggle="modal"
-                                                data-target="#order_lens_modal">{{translate('order_lens')}}
-                                        </button>
-                                    </div>
-                                </div>
+
                                 <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">
 {{--                                    <div class="col-6">--}}
 {{--                                        <button type="button"--}}
@@ -303,52 +289,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-3 mb-2 mb-lg-0 customer-div">
 
-                                        <div class="col-12 form-group input-group my-group d-flex flex-row justify-content-center height-responsive"
-                                             style="background-color: #e6e6e6 ; border: none;
-                                        border-radius: 16px;
-                                        color: #373737;
-                                        box-shadow: 0 8px 6px -5px #bbb;
-                                        width: 100%;
-                                        margin: auto;
-                                        flex-wrap: nowrap;
-                                        padding-right:25px">
-                                            {!! Form::select('prescription_id', [], null , [
-                                            'class' => 'selectpicker ',
-                                            'data-live-search' => 'true',
-                                            'style' => 'width: 80%',
-                                            'id' => 'prescription_id',
-                                            'required',
-                                            ]) !!}
-                                            <span class="input-group-btn">
-                                                @can('customer_module.customer.create_and_edit')
-                                                    <a style="background-color: var(--complementary-color-1);
-                                        width: 100%;
-                                        height: 100%;
-                                        border-radius: 16px;
-                                        padding: 6px 6px;
-                                    cursor: pointer;
-                                        " class="d-flex btn-modal justify-content-center align-items-center top-0 right-0"
-                                                       data-href="{{ route('admin.prescriptions.create') }}?quick_add=1&customer_id={{$walk_in_customer->id??''}}"
-                                                       data-container=".view_modal"
-                                                    id="prescription-btn-id">
-                                                    <svg class="plus" xmlns="http://www.w3.org/2000/svg" height="2em"
-                                                         viewBox="0 0 448 512">
-                                                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                        <style>
-                                                            .plus {
-                                                                fill: #ffffff
-                                                            }
-                                                        </style>
-                                                        <path
-                                                            d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
-                                                    </svg>
-                                                </a>
-                                                @endcan
-                                            </span>
-                                        </div>
-                                    </div>
 
 
 
@@ -412,7 +353,24 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
                                         </div>
                                     </div>
-
+                                    <div class="col-lg-2 mb-2 mb-lg-0">
+                                        <div style="width: 100%"
+                                             class="col-12  p-0 input-group my-group d-flex flex-row justify-content-center height-responsive">
+                                            <button type="button" style="background-color: rgba(31,103,92,0.35) ;
+                                        border: none;
+                                        border-radius: 16px;
+                                        color: #1f675c;
+                                        box-shadow: 0 8px 6px -5px #bbb;
+                                        padding: 10px 6px;
+                                        width: 100%;
+                                        font-size: 18px;
+                                        font-weight: 700;"
+                                                    class="height-responsive d-flex justify-content-center align-items-center"
+                                                    data-toggle="modal"
+                                                    data-target="#order_lens_modal">{{translate('order_lens')}}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -674,6 +632,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                                     style="color: #000; padding-right: 30px;width: 45%"
                                                     class="d-flex justify-content-start align-items-center  height-responsive">0.00</span>
                                                 <input type="hidden" id="sales_promotion-cost" value="0">
+
                                             </div>
 
                                             <div class="col-4 pl-lg-6  height-responsive" style="width: 100%; ">
@@ -814,12 +773,12 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                 {{-- @include('sale::back-end.pos.partials.tax_modal') --}}
                 @include('sale::back-end.pos.partials.coupon_modal')
                 @include('sale::back-end.pos.partials.contact_details_modal')
-                @include('sale::back-end.pos.partials.order_lens')
                 @include('sale::back-end.pos.partials.weighing_scale_modal')
                 @include('sale::back-end.pos.partials.non_identifiable_item_modal')
                 @include('sale::back-end.pos.partials.sale_note')
 
                 {!! Form::close() !!}
+                @include('sale::back-end.pos.partials.order_lens')
 
                 <!-- products list -->
                 <div
@@ -929,8 +888,10 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                 <button type="button" class="col-3 py-1 btn btn-danger"
                                     data-dismiss="modal">@lang('lang.close')</button>
                             </div>
+
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
+
                 </div>
                 <!-- draft transaction modal -->
                 <div id="draftTransaction" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -938,6 +899,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
                     <div class="modal-dialog" role="document" style="min-width: 95%;">
                         <div class="modal-content">
+
                             <div
                                 class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                                 <h5 class="modal-title  px-2 position-relative d-flex align-items-center"
@@ -967,6 +929,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                                 ]) !!}
                                             </div>
                                         </div>
+
                                         <div class="col-md-4 px-5">
                                             <div class="form-group">
                                                 {!! Form::label('draft_end_date', __('lang.end_date'), [
@@ -983,6 +946,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
                                     </div>
                                 </div>
+
                                 <div class="col-md-12">
                                     @include('sale::back-end.pos.partials.view_draft')
                                 </div>
@@ -994,6 +958,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
+
                 </div>
                 <!-- onlineOrder transaction modal -->
                 <div id="onlineOrderTransaction" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -1013,6 +978,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         aria-hidden="true">&times;</span></button>
                                 <span class="position-absolute modal-border"></span>
                             </div>
+
                             <div class="modal-body">
                                 <div class="col-md-12 modal-filter">
                                     <div class="row">
@@ -1069,6 +1035,46 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 @endsection
 
 @section('javascript')
+
 <script src="{{ asset('js/onscan.min.js') }}"></script>
 <script src="{{ asset('js/pos.js') }}"></script>
+    //
+<script>
+    $(document).on("click", "#btn-lens-add", function (e) {
+        e.preventDefault();
+        formData = $('#orderLensFormCreate').serializeArray();
+        console.log(formData)
+
+        $.ajax({
+            type: "POST",
+            url: "{{route('admin.pos.SaveLens')}}",
+            data: formData,
+            success: function (response) {
+                if (response.success) {
+                    var product_id = $('#lens_id').val();
+                    get_label_product_row(product_id);
+                }else{
+                    Swal.fire({
+                        title: 'Error',
+                        text: response.msg,
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function (response) {
+                if (!response.success) {
+
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.msg,
+                            icon: 'error',
+                        });
+
+
+                }
+            },
+        });
+
+    });
+</script>
 @endsection

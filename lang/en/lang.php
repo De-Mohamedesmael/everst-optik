@@ -1386,4 +1386,6 @@
   'Özel Baz' => 'Özel Baz',
   'Boyama' => 'Boyama',
   'Ek işlemler' => 'Ek işlemler',
+  'Önceki reçeteler' => 'Önceki reçeteler',
+  'Giriş kısayolları' => 'Giriş kısayolları',
 );

@@ -325,6 +325,14 @@
         filter: brightness(1.07);
         transform: scale(1.05);
     }
+    .dropdown.bootstrap-select.form-control.input-block-level.lensPlusMinusSelect.CYLPlusMinusSelect,
+    .dropdown.bootstrap-select.form-control.input-block-level.lensPlusMinusSelect.SPHPlusMinusSelect{
+        background: #fff !important;
+    }
+    .dropdown.bootstrap-select.disabled.form-control.input-block-level.lensPlusMinusSelect.SPHPlusMinusSelect,
+    .dropdown.bootstrap-select.disabled.form-control.lensPlusMinusSelect.CYLPlusMinusSelect.input-block-level {
+        background: #eaecef !important;
+    }
 </style>
 <div id="navigation">
     <div class="container-fluid" id="content">
@@ -335,84 +343,118 @@
                         <div class="box box-color ">
                             <div class="box-content">
 
-                                <form action="#" method="post" id="orderForm" class="form-horizontal form-validate" novalidate="novalidate">
+                                <form  id="orderLensFormCreate" class="form-horizontal form-validate" method="POST" enctype="multipart/form-data">
+
+                                    <div class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
+                                        <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#moreInfoCollapseFiltter" aria-expanded="false" aria-controls="moreInfoCollapseFiltter">
+                                            <i class="fas fa-arrow-down"></i>
+                                            {{translate('Giriş kısayolları')}}
+                                            <span class="section-header-pill"></span>
+                                        </button>
+                                    </div>
+                                    <div class="collapse" id="moreInfoCollapseFiltter">
+                                        <div class="card mb-3">
+                                            <div class="card-body p-2">
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group ">
+                                                            {!! Form::label('prescription_id', translate('Önceki reçeteler'), [
+                                                               'class' => 'form-label d-block mb-1 ',
+                                                           ]) !!}
+                                                            {!! Form::select('prescription_id', [] ,null, [
+                                                                'class' => ' selectpicker form-control',
+                                                                'data-live-search' => 'true',
+                                                                'style' => 'width: 80%',
+                                                               'data-actions-box' => 'true',
+                                                                'id' => 'prescription_id',
+                                                                'placeholder' => __('lang.please_select'),
+                                                            ]) !!}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {!! Form::label('brand_id', translate('Marka'), [
+                                                                'class' => 'form-label d-block mb-1 ',
+                                                            ]) !!}
+                                                            {!! Form::select('brand_id', $brand_lenses,null, [
+                                                                'class' => ' selectpicker form-control',
+                                                                'data-live-search' => 'true',
+                                                                'style' => 'width: 80%',
+                                                               'data-actions-box' => 'true',
+                                                                'id' => 'brand_id',
+                                                                'placeholder' => __('lang.please_select'),
+                                                            ]) !!}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {!! Form::label('focus_id', translate('focus'), [
+                                                               'class' => 'form-label d-block mb-1 ',
+                                                           ]) !!}
+                                                            {!! Form::select('focus_id', $foci,null, [
+                                                                'class' => ' selectpicker form-control',
+                                                                'data-live-search' => 'true',
+                                                                'style' => 'width: 80%',
+                                                               'data-actions-box' => 'true',
+                                                                'id' => 'focus_id',
+                                                                'placeholder' => __('lang.please_select'),
+                                                            ]) !!}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group ">
+                                                            {!! Form::label('design_id', translate('design'), [
+                                                               'class' => 'form-label d-block mb-1 ',
+                                                           ]) !!}
+                                                            {!! Form::select('design_id', $design_lenses,null, [
+                                                                'class' => ' selectpicker form-control',
+                                                                'data-live-search' => 'true',
+                                                                'style' => 'width: 80%',
+                                                               'data-actions-box' => 'true',
+                                                                'id' => 'design_id',
+                                                                'placeholder' => __('lang.please_select'),
+                                                            ]) !!}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group ">
+                                                            {!! Form::label('index_id', translate('index'), [
+                                                                'class' => 'form-label d-block mb-1 ',
+                                                            ]) !!}
+                                                            {!! Form::select('index_id', $index_lenses,null, [
+                                                                'class' => ' selectpicker form-control',
+                                                                'data-live-search' => 'true',
+                                                                'style' => 'width: 80%',
+                                                               'data-actions-box' => 'true',
+                                                                'id' => 'index_id',
+                                                                'placeholder' => __('lang.please_select'),
+                                                            ]) !!}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {!! Form::label('color_id', translate('color'), [
+                                                                'class' => 'form-label d-block mb-1 ',
+                                                            ]) !!}
+                                                            {!! Form::select('color_id', $colors,null, [
+                                                                'class' => ' selectpicker form-control',
+                                                                'data-live-search' => 'true',
+                                                                'style' => 'width: 80%',
+                                                               'data-actions-box' => 'true',
+                                                                'id' => 'color_id',
+                                                                'placeholder' => __('lang.please_select'),
+                                                            ]) !!}
+                                                        </div>
+                                                    </div>
+                                                    {{--                                        lenses--}}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                {!! Form::label('brand_id', translate('Marka'), [
-                                                    'class' => 'form-label d-block mb-1 ',
-                                                ]) !!}
-                                                {!! Form::select('brand_id', $brand_lenses,null, [
-                                                    'class' => ' selectpicker form-control',
-                                                    'data-live-search' => 'true',
-                                                    'style' => 'width: 80%',
-                                                   'data-actions-box' => 'true',
-                                                    'id' => 'brand_id',
-                                                    'placeholder' => __('lang.please_select'),
-                                                ]) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                {!! Form::label('focus_id', translate('focus'), [
-                                                   'class' => 'form-label d-block mb-1 ',
-                                               ]) !!}
-                                                {!! Form::select('focus_id', $foci,null, [
-                                                    'class' => ' selectpicker form-control',
-                                                    'data-live-search' => 'true',
-                                                    'style' => 'width: 80%',
-                                                   'data-actions-box' => 'true',
-                                                    'id' => 'focus_id',
-                                                    'placeholder' => __('lang.please_select'),
-                                                ]) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-                                                {!! Form::label('design_id', translate('design'), [
-                                                   'class' => 'form-label d-block mb-1 ',
-                                               ]) !!}
-                                                {!! Form::select('design_id', $design_lenses,null, [
-                                                    'class' => ' selectpicker form-control',
-                                                    'data-live-search' => 'true',
-                                                    'style' => 'width: 80%',
-                                                   'data-actions-box' => 'true',
-                                                    'id' => 'design_id',
-                                                    'placeholder' => __('lang.please_select'),
-                                                ]) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-                                                {!! Form::label('index_id', translate('index'), [
-                                                    'class' => 'form-label d-block mb-1 ',
-                                                ]) !!}
-                                                {!! Form::select('index_id', $index_lenses,null, [
-                                                    'class' => ' selectpicker form-control',
-                                                    'data-live-search' => 'true',
-                                                    'style' => 'width: 80%',
-                                                   'data-actions-box' => 'true',
-                                                    'id' => 'index_id',
-                                                    'placeholder' => __('lang.please_select'),
-                                                ]) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                {!! Form::label('color_id', translate('color'), [
-                                                    'class' => 'form-label d-block mb-1 ',
-                                                ]) !!}
-                                                {!! Form::select('color_id', $colors,null, [
-                                                    'class' => ' selectpicker form-control',
-                                                    'data-live-search' => 'true',
-                                                    'style' => 'width: 80%',
-                                                   'data-actions-box' => 'true',
-                                                    'id' => 'color_id',
-                                                    'placeholder' => __('lang.please_select'),
-                                                ]) !!}
-                                            </div>
-                                        </div>
-{{--                                        lenses--}}
                                         <div class="col-md-6">
                                             <div class="form-group ">
                                                 {!! Form::label('lens_id', translate('lens'), [
@@ -429,6 +471,7 @@
                                             </div>
                                         </div>
                                     </div>
+
 
                                     <div class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                                         <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
@@ -728,13 +771,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3 px-5">
 
-                                                    </div>
-
-                                                    <div class="col-md-3 px-5">
-
-                                                    </div>
 
                                                 </div>
                                             </div>
@@ -854,10 +891,10 @@
                                                     <tr>
                                                         <td rowspan="2" class="verticalMiddle">{{translate('YAKIN')}}</td>
                                                         <td>+/-</td>
-                                                        <td>SPH</td>
+                                                        <td>{{translate('SPH')}}</td>
                                                         <td>+/-</td>
-                                                        <td>CYL</td>
-                                                        <td>AXIS</td>
+                                                        <td>{{translate('CYL')}}</td>
+                                                        <td>{{translate('AXIS')}}</td>
 
                                                     </tr>
                                                     <tr class="nearTableRow">
@@ -942,16 +979,10 @@
                                                                        class="form-control input-block-level lensAddition lensVal"
                                                                        data-rl="Right"
                                                                        required=""
-                                                                       aria-required="true">
+                                                                       aria-required="true"
+                                                                disabled>
                                                             </div>
-                                                            <div class="col-xs-8" style="padding-right: 0;">
-                                                                <select name="product[Lens][Right][Diameter]" required="" class="select2-me text-left lensDiam" style="width: 100%"
-                                                                        data-rl="Right" id="Right_Lens_Diam" aria-required="true" tabindex="-1"
-                                                                        aria-hidden="true" data-select2-id="Right_Lens_Diam">
 
-                                                                    <option value="" data-select2-id="135">{{translate('Çap Seçiniz')}}</option>
-                                                                </select>
-                                                            </div>
                                                         </td>
                                                     </tr>
                                                     </tbody>
@@ -1018,7 +1049,13 @@
 
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Left][Far][SPH]" data-reqval="farSPH" value="" id="Left_Far_SPH" placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH" data-rl="Left" required="" aria-required="true" disabled="">
+                                                            <input type="text" name="product[Lens][Left][Far][SPH]"
+                                                                   data-reqval="farSPH" value="" id="Left_Far_SPH"
+                                                                   placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH"
+                                                                   data-rl="Left" required="" aria-required="true" disabled=""
+                                                                   step="0.25"
+                                                                   min="-30"
+                                                                   max="30">
                                                         </td>
                                                         <td>
                                                             <select name="product[Lens][Left][Far][CYLDeg]" class="form-control lensPlusMinusSelect CYLPlusMinusSelect input-block-level" style="width: 100%" data-rl="Left" id="Left_Far_CYLDeg" disabled="">
@@ -1028,9 +1065,23 @@
                                                             </select>
 
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Left][Far][CYL]" data-reqval="farCYL" value="" id="Left_Far_CYL" placeholder=" " class="form-control input-block-level input-sm lensVal lensCYL farCYL" data-rl="Left" disabled="">
+                                                        <td>
+                                                            <input type="text" name="product[Lens][Left][Far][CYL]"
+                                                                   data-reqval="farCYL" value="" id="Left_Far_CYL"
+                                                                   placeholder=" " class="form-control input-block-level input-sm lensVal lensCYL farCYL"
+                                                                   data-rl="Left" disabled=""
+                                                                   step="0.25"
+                                                                   min="-15"
+                                                                   max="15">
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Left][Far][Axis]" data-reqval="farAX" value="" id="Left_Far_Axis" placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid" data-rl="Left" disabled="">
+                                                        <td>
+                                                            <input type="text" name="product[Lens][Left][Far][Axis]"
+                                                                   data-reqval="farAX" value="" id="Left_Far_Axis"
+                                                                   placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid"
+                                                                   data-rl="Left" disabled=""
+                                                                   step="1"
+                                                                   min="0"
+                                                                   max="180">
                                                         </td>
 
                                                     </tr>
@@ -1052,7 +1103,14 @@
                                                             </select>
 
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Left][Near][SPH]" data-reqval="nearSPH" value="" id="Left_Near_SPH" placeholder=" " class="form-control input-block-level lensVal lensSPH" data-rl="Left" disabled="">
+                                                        <td>
+                                                            <input type="text" name="product[Lens][Left][Near][SPH]"
+                                                                   data-reqval="nearSPH" value="" id="Left_Near_SPH"
+                                                                   placeholder=" " class="form-control input-block-level lensVal lensSPH"
+                                                                   data-rl="Left" disabled=""
+                                                                   step="0.25"
+                                                                   min="-30"
+                                                                   max="30">
                                                         </td>
                                                         <td>
                                                             <select name="product[Lens][Left][Near][CYLDeg]" class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect" data-rl="Left" data-signfor="Left_Near_CYL" id="Left_Near_CYLDeg" disabled="">
@@ -1062,9 +1120,23 @@
                                                             </select>
 
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Left][Near][CYL]" data-reqval="nearCYL" value="" id="Left_Near_CYL" placeholder=" " class="form-control input-block-level lensVal lensCYL" data-rl="Left" disabled="">
+                                                        <td>
+                                                            <input type="text" name="product[Lens][Left][Near][CYL]"
+                                                                   data-reqval="nearCYL" value="" id="Left_Near_CYL" placeholder=" "
+                                                                   class="form-control input-block-level lensVal lensCYL" data-rl="Left"
+                                                                   disabled=""
+                                                                   step="0.25"
+                                                                   min="-15"
+                                                                   max="15">
                                                         </td>
-                                                        <td><input type="text" name="product[Lens][Left][Near][Axis]" data-reqval="nearAX" value="" id="Left_Near_Axis" placeholder=" " class="form-control input-block-level lensAxis nearAX" data-rl="Left" disabled="">
+                                                        <td>
+                                                            <input type="text" name="product[Lens][Left][Near][Axis]"
+                                                                   data-reqval="nearAX" value="" id="Left_Near_Axis"
+                                                                   placeholder=" " class="form-control input-block-level lensAxis nearAX"
+                                                                   data-rl="Left" disabled=""
+                                                                   step="1"
+                                                                   min="0"
+                                                                   max="180">
                                                         </td>
 
                                                     </tr>
@@ -1130,7 +1202,7 @@
         const Near_SPH = $('#Right_Near_SPH').val();
         $('#Right_Addition').val(Far_SPH-Near_SPH);
     });
-    $(document).on("change", "#Left_Far_SPH,#Right_Near_SPH", function (e) {
+    $(document).on("change", "#Left_Far_SPH,#Left_Near_SPH", function (e) {
         const Far_SPH = $('#Left_Far_SPH').val();
         const Near_SPH = $('#Left_Near_SPH').val();
         $('#Left_Addition').val(Far_SPH-Near_SPH);
@@ -1154,7 +1226,6 @@
             $('#Left_Near_CYL').attr('disabled', false);
             $('#Left_Far_SPH').attr('disabled', false);
             $('#Left_Near_SPH').attr('disabled', false);
-            $('#Left_Addition').attr('disabled', false);
 
 
             $('#Left_Near_CYLDeg').prop('disabled', false);
@@ -1177,7 +1248,6 @@
             $('#Left_Near_CYL').attr('disabled', true);
             $('#Left_Far_SPH').attr('disabled', true);
             $('#Left_Near_SPH').attr('disabled', true);
-            $('#Left_Addition').attr('disabled', true);
 
 
             $('#Left_Far_Axis').val('');
@@ -1224,9 +1294,7 @@
         if (this.checked) {
            $('.owf-page-shapeDefinition-manual-shape ').removeClass('d-none')
         } else {
-
             $('.owf-page-shapeDefinition-manual-shape ').addClass('d-none')
-
         }
 
     });

@@ -1824,4 +1824,31 @@ class SellPosController extends Controller
         $customer = Customer::find($transaction->customer_id);
         return $customer;
     }
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function SaveLens( Request $request): mixed
+    {
+        dd($request->all());
+        $validator = validator($request->all(), [
+            'maintenance_report_id' => 'required|integer',
+            'payment_method' => 'required|string|in:Online,Wallet',
+            'checkout_id' => 'nullable',
+            'payment_type' => 'nullable',
+        ]);
+        if ($validator->fails())
+            return [
+                    'success'=>false,
+                    'msg'=> $validator->errors()->first()
+            ];
+
+
+
+        return [];
+
+
+    }
+
+
 }
