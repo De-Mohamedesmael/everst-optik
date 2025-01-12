@@ -1830,12 +1830,96 @@ class SellPosController extends Controller
      */
     public function SaveLens( Request $request): mixed
     {
-        dd($request->all());
+//"lens_id" => "3" النضاره
+//  "product" => array:2 [ تفاصيل الروشته
+//    "VA" => array:4 [ الاضافات
+//      "TinTing" => array:2 [ تلوين العدسة سعر من الاعدادات
+//        "isCheck" => "1"
+//        "value" => "1" معرف اللون
+//      ]
+//      "Base" => array:2 [ قاعده خاصة سعر من اللست حقها
+//        "isCheck" => "1"
+//        "value" => "1"
+//      ]
+//      "Ozel" => array:2 [ قطر خاص سعر من الاعدادات
+//        "isCheck" => "1"
+//        "value" => "12"
+//      ]
+//      "code" => array:2 [ ستايل العدسه ليس عليها زياده
+//        "isCheck" => "1"
+//        "value" => "4444"
+//      ]
+//    ]
+//    "Lens" => array:2 [
+//      "Right" => array:3 [
+//        "isCheck" => "1"
+//        "Far" => array:5 [
+//          "SPHDeg" => "+"
+//          "SPH" => "15"
+//          "CYLDeg" => "-"
+//          "CYL" => "12"
+//          "Axis" => "150"
+//        ]
+//        "Near" => array:5 [
+//          "SPHDeg" => "+"
+//          "SPH" => "10"
+//          "CYLDeg" => "-"
+//          "CYL" => "12"
+//          "Axis" => "150"
+//        ]
+//      ]
+//      "Left" => array:4 [
+//        "isCheck" => "1"
+//        "sameToRight" => "1"
+//        "Far" => array:5 [
+//          "SPHDeg" => "+"
+//          "SPH" => "15"
+//          "CYLDeg" => "-"
+//          "CYL" => "12"
+//          "Axis" => "150"
+//        ]
+//        "Near" => array:5 [
+//          "SPHDeg" => "+"
+//          "SPH" => "10"
+//          "CYLDeg" => "-"
+//          "CYL" => "12"
+//          "Axis" => "150"
+//        ]
+//      ]
+//    ]
+//  ]
+//]
         $validator = validator($request->all(), [
-            'maintenance_report_id' => 'required|integer',
-            'payment_method' => 'required|string|in:Online,Wallet',
-            'checkout_id' => 'nullable',
-            'payment_type' => 'nullable',
+            'lens_id' => 'required|integer|exists:products,id',
+            'product' => 'required|array',
+            'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+
+
+            'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+
+
+            'product.VA.TinTing.value' => 'required_if:product.VA.TinTing.isCheck,==,1|exists:colors,id',
+            'product.VA.Base.value' => 'required_if:product.VA.Base.isCheck,==,1',
+            'product.VA.Ozel.value' => 'required_if:product.VA.Ozel.isCheck,==,1',
+            'product.VA.code.value' => 'required_if:product.VA.code.isCheck,==,1',
         ]);
         if ($validator->fails())
             return [
@@ -1843,7 +1927,41 @@ class SellPosController extends Controller
                     'msg'=> $validator->errors()->first()
             ];
 
+        $VA_amount=[];
+        $total=0;
+        if($request->get('product.VA.TinTing.isCheck') != null){
+            $VA_amount['TinTing_amount'] = System::getProperty('TinTing_amount')?:10;
+            $total=$total+$VA_amount['TinTing_amount'];
+        }
 
+        if($request->get('product.VA.Base.isCheck') != null){
+
+            $VA_amount['Base_amount']=
+            $total=$total+$VA_amount['Base_amount'];
+        }
+
+
+        if($request->get('product.VA.Ozel.isCheck') != null){
+            $VA_amount['Ozel_amount'] = System::getProperty('Ozel_amount')?:10;
+            $total=$total+$VA_amount['Ozel_amount'];
+        }
+
+        $VA_amount['total']=$total;
+        $data=[
+            'VA'=>$request->get('product.VA'),
+            'VA_amount'=>$VA_amount,
+            'Left'=>$request->get('product.Lens.Left'),
+            'Right'=>$request->get('product.Lens.Right'),
+        ];
+        $randomNumber = mt_rand(1000, 9999);
+        $timestamp = time();
+        $id = 123;
+
+        $cacheKey = "{$randomNumber}_{$timestamp}_{$id}";
+        $expirationTime = 60*12;
+        // Store data in cache
+        Cache::put($cacheKey, $data, $expirationTime);
+        dd($request->all());
 
         return [];
 

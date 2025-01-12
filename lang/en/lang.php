@@ -1388,4 +1388,5 @@
   'Ek işlemler' => 'Ek işlemler',
   'Önceki reçeteler' => 'Önceki reçeteler',
   'Giriş kısayolları' => 'Giriş kısayolları',
+  'Önceden Tanımlanmış Şekiller' => 'Önceden Tanımlanmış Şekiller',
 );

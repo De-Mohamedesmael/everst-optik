@@ -512,7 +512,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="d-none VABaseCheck_class">
-                                                                {!! Form::select('product[special_base]', $special_bases ,null, [
+                                                                {!! Form::select('product[VA][Base][value]', $special_bases ,null, [
                                                                        'class' => ' selectpicker form-control',
                                                                        'data-live-search' => 'true',
                                                                        'style' => 'width: 80%',
@@ -525,12 +525,16 @@
                                                     <div class="col-md-3 px-5">
                                                             <div class="noBorderRight">
                                                                 <div class="check-line" style="width: 100%;text-align: left;">
-                                                                    <div class="icheckbox_square-orange icheck-item icheck[wzqw0]"><input type="checkbox" id="specific_diameter" data-subs="vaBaseList" class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]" name="product[VA][Base][isCheck]" value="1" data-skin="square" data-color="orange"></div>
+                                                                    <div class="icheckbox_square-orange icheck-item icheck[wzqw0]">
+                                                                        <input type="checkbox" id="specific_diameter" data-subs="vaBaseList"
+                                                                               class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
+                                                                               name="product[VA][Ozel][isCheck]" value="1" data-skin="square"
+                                                                               data-color="orange"></div>
                                                                     <label class="inline icheck-label icheck[wzqw0]" for="specific_diameter">{{translate("Özel Çap")}}</label>
                                                                 </div>
                                                             </div>
                                                             <div class="d-none specific_diameter_class">
-                                                                {!! Form::number('product[specific_diameter]' ,null, [
+                                                                {!! Form::number('product[VA][Ozel][value]' ,null, [
                                                                        'class' => ' selectpicker form-control',
                                                                        'style' => 'width: 80%',
                                                                       'data-actions-box' => 'true',
@@ -543,8 +547,9 @@
                                                         <div class="noBorderRight">
                                                             <div class="check-line" style="width: 100%;text-align: left;">
                                                                 <div class="icheckbox_square-orange icheck-item icheck[qepho]">
-                                                                    <input type="checkbox" id="codeCheck" data-subs="tintingList" class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
-                                                                           name="product[VA][TinTing][code]" value="1" data-skin="square" data-color="orange" aria-invalid="false"></div>
+                                                                    <input type="checkbox" id="codeCheck" data-subs="tintingList"
+                                                                           class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
+                                                                           name="product[VA][code][isCheck]" value="1" data-skin="square" data-color="orange" aria-invalid="false"></div>
                                                                 <label class="inline icheck-label icheck[qepho]" for="codeCheck">{{translate("Çerçeve Tipi")}}</label>
                                                             </div>
                                                         </div>
@@ -701,10 +706,10 @@
                                                                 </div>
                                                             </div>
                                             --}}
-                                                            <input type="hidden" value="" name="" id="input_predefined_shape">
+                                                            <input type="hidden" value="" name="product[VA][code][value]" id="input_predefined_shape">
                                                             <div id="predefined_shape" class="owf-page-shapeDefinition-manual-predefinedShape">
                                                                 <div class="owf-page-shapeDefinition-title owf-headline">
-                                                                    Önceden Tanımlanmış Şekiller    </div>
+                                                                    {{translate('Önceden Tanımlanmış Şekiller')}}    </div>
 
                                                                 <div class="owf-page-shapeDefinition-manual-predefinedShape-container" tabindex="0">
                                                                     <svg class="predefinedShape abc" data-ccode="2223" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
