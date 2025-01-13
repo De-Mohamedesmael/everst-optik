@@ -1,4 +1,6 @@
+@php use Illuminate\Support\Facades\Cache; @endphp
 @forelse ($products as $product)
+
     <tr class="product_row">
         @if (!empty($is_direct_sale))
             <td class="row_number"></td>
@@ -17,7 +19,12 @@
                             ? $stockLines->purchase_price
                             : $product->purchase_price;
                         $cost_ratio_per_one = $stockLines ? $stockLines->cost_ratio_per_one : 0;
-
+                        $total_vu=0;
+                        if($product->is_lens){
+                            $cach_lens= Cache::get($KeyLens);
+                            if(isset($cach_lens['VA_amount']))
+                            $total_vu=$cach_lens['VA_amount']['total'];
+                        }
 
 
                 @endphp
@@ -161,12 +168,11 @@
             style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 12%; @else 15%; @endif height:40px">
             <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
 
-                <input type="text" class="form-control sell_price text-center"
-                    style="outline: none;border: none;font-size: 11px;padding: 0 !important;width: 100%;height: 100%;font-size: 14px;font-weight: 600"
-                    class="d-flex justify-content-center align-items-center"
+                <input type="text" class="form-control sell_price text-center d-flex justify-content-center align-items-center"
+                    style="outline: none;border: none;padding: 0 !important;width: 100%;height: 100%;font-size: 14px;font-weight: 600"
                     name="transaction_sell_line[{{ $loop->index + $index }}][sell_price]" required
                     @if (!auth()->user()->can('product_module.sell_price.create_and_edit')) readonly @elseif(env('IS_SUB_BRANCH', false)) readonly @endif
-                    value="@if (isset($default_sell_price)) {{ @num_format($default_sell_price / $exchange_rate) }}@else{{ 0 }} @endif ">
+                    value="@if (isset($default_sell_price)) {{ @num_format(($default_sell_price+$total_vu)/ $exchange_rate) }}@else{{ 0 }} @endif ">
             </div>
         </td>
 
@@ -208,19 +214,14 @@
 
                     <div class="d-flex justify-content-center align-items-center">
 
-{{--                        <button type="button"--}}
-{{--                            style="border: none;outline: none;background-color:var(--secondary-color);color: white;border-radius: 6px"--}}
-{{--                            class="btn btn-lg" id="search_button"><span class="plus_sign_text">+</span></button>--}}
-
                         <input type="text"
-                            style="outline: none;border: none;font-size: 13px;padding: 0!important;height: 100%;font-size: 14px;font-weight: 600;text-align: center"
+                            style="outline: none;border: none;padding: 0!important;height: 100%;font-size: 14px;font-weight: 600;text-align: center"
                             class="form-control product_discount_amount  discount_amount{{ $product->product_id }}"
                             name="transaction_sell_line[{{ $loop->index + $index }}][product_discount_amount]"
                             readonly value="{{ $convertedDiscountAmount }}">
 
                     </div>
                 </div>
-            </div>
             </div>
         </td>
 
@@ -299,34 +300,102 @@
 
         <td
             style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 9%; @else 15%; @endif padding: 0px;height:40px;border:none;">
-            @if (!empty($dining_table_id))
-                @if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1)
-                    <button type="button" class="btn btn-danger p-0 remove_row" style="margin-top: 15px;"><i
-                            class="fa fa-times"></i></button>
-                @endif
-            @else
-                <div class="d-flex justify-content-around align-items-center" style="width: 100%;height: 100%;">
 
-                    <button type="button" class="btn p-0 remove_row"
-                        style="background-color: transparent;outline: none;border: none">
-                        <div class="image-responsive">
-                            <img style="width: 100%; border-radius: 5px" src="{{ url('images/delete.png') }}"
-                                alt="">
-                        </div>
-                    </button>
-            @endif
-            @if (session('system_mode') != 'restaurant')
-                <button type="button" class="btn p-0 quick_add_purchase_order"
-                    style="background-color: transparent;outline: none;border: none" title="@lang('lang.add_draft_purchase_order')"
-                    data-href="{{-- action('PurchaseOrderController@quickAddDraft') --}}?product_id={{ $product->product_id }}">
+            <div class="d-flex justify-content-around align-items-center" style="width: 100%;height: 100%;">
+
+                <button type="button" class="btn p-0 remove_row"
+                    style="background-color: transparent;outline: none;border: none" data-index="{{ $loop->index + $index }}">
                     <div class="image-responsive">
-                        <img style="width: 100%; border-radius: 5px;height: 100%;" src="{{ url('images/add.png') }}"
+                        <img style="width: 100%; border-radius: 5px" src="{{ url('images/delete.png') }}"
                             alt="">
                     </div>
                 </button>
-            @endif
+
             </div>
         </td>
     </tr>
+
+    @if($product->is_lens)
+        <tr class="lens-row-{{ $loop->index + $index }}">
+            <td>
+                <div  class="lens-vu" >
+                    <input type="hidden" value="{{$KeyLens}}" name="KeyLens">
+                    @if($cach_lens['VA_amount']['TinTing_amount'] > 0)
+                        <div class="lens-vu-item">
+                            {{translate('TinTing_amount')}}
+                        </div>
+                    @endif
+                    @if($cach_lens['VA_amount']['Base_amount'] > 0)
+                        <div class="lens-vu-item">
+                            {{translate('Base_amount')}}
+                        </div>
+                    @endif
+                    @if($cach_lens['VA_amount']['Ozel_amount'] > 0)
+                        <div class="lens-vu-item">
+                            {{translate('Ozel_amount')}}
+                        </div>
+                    @endif
+                </div>
+            </td>
+            <td>
+                <div  class="lens-vu" >
+                    @if($cach_lens['VA_amount']['TinTing_amount'] > 0)
+                        <div class="lens-vu-item">
+                            {{$cach_lens['VA']['TinTing']['text']}}
+                        </div>
+                    @endif
+                    @if($cach_lens['VA_amount']['Base_amount'] > 0)
+                        <div class="lens-vu-item">
+                            {{$cach_lens['VA']['Base']['text']}}
+                        </div>
+                    @endif
+                    @if($cach_lens['VA_amount']['Ozel_amount'] > 0)
+                        <div class="lens-vu-item">
+                            {{$cach_lens['VA']['Ozel']['text']}}
+                        </div>
+                    @endif
+                </div>
+            </td>
+            <td
+                style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 12%; @else 15%; @endif height:40px">
+                <div class="lens-vu-price" style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
+                    @if($cach_lens['VA_amount']['TinTing_amount'] > 0)
+                        <div class="lens-vu-item">
+                            <span class="lens-vu-price">{{$cach_lens['VA_amount']['TinTing_amount']}}</span>
+                        </div>
+                    @endif
+                    @if($cach_lens['VA_amount']['Base_amount'] > 0)
+                        <div class="lens-vu-item">
+                            <span class="lens-vu-price">{{$cach_lens['VA_amount']['Base_amount']}}</span>
+                        </div>
+                    @endif
+                    @if($cach_lens['VA_amount']['Ozel_amount'] > 0)
+                        <div class="lens-vu-item">
+                            <span class="lens-vu-price">{{$cach_lens['VA_amount']['Ozel_amount']}}</span>
+                        </div>
+                    @endif
+                </div>
+            </td>
+
+            <td>
+                <div  class="lens-vu" >
+                    @if($cach_lens['VA']['code']['isCheck'])
+                        <div class="lens-vu-item">
+                            {{translate('code_title')}}
+                        </div>
+                    @endif
+                </div>
+            </td>
+            <td>
+                <div  class="lens-vu" >
+                    @if($cach_lens['VA']['code']['isCheck'])
+                        <div class="lens-vu-item">
+                            {{$cach_lens['VA']['code']['text']}}
+                        </div>
+                    @endif
+                </div>
+            </td>
+        </tr>
+    @endif
 @empty
 @endforelse

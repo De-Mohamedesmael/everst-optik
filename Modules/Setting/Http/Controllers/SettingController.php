@@ -118,6 +118,16 @@ class SettingController extends Controller
             );
 
 
+
+            System::updateOrCreate(
+                ['key' => 'Ozel_amount'],
+                ['value' => $request->Ozel_amount ?? 0, 'date_and_time' => Carbon::now(), 'created_by' => Auth::user()->id]
+            );
+            System::updateOrCreate(
+                ['key' => 'TinTing_amount'],
+                ['value' => $request->TinTing_amount ?? 0, 'date_and_time' => Carbon::now(), 'created_by' => Auth::user()->id]
+            );
+
             System::updateOrCreate(
                 ['key' => 'watsapp_numbers'],
                 ['value' => $request->watsapp_numbers, 'date_and_time' => Carbon::now(), 'created_by' => Auth::user()->id]

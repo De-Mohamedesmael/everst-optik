@@ -1031,27 +1031,20 @@ class SellPosController extends Controller
     public function addProductRow(Request $request): array|RedirectResponse
     {
         if ($request->ajax()) {
-            $weighing_scale_barcode = $request->input('weighing_scale_barcode');
             $batch_number_id = $request->input('batch_number_id');
-
             $product_id = $request->input('product_id');
             $store_pos_id = $request->input('store_pos_id');
             $store_id = $request->input('store_id');
-            $customer_id = $request->input('customer_id');
             $currency_id = $request->input('currency_id');
             $dining_table_id = $request->input('dining_table_id');
             $is_direct_sale = $request->input('is_direct_sale');
+            $KeyLens = $request->input('KeyLens');
 
-            $added_products = json_decode($request->input('added_products'), true);
-
-            $currency_id = $request->currency_id;
-            $currency = Currency::find($currency_id);
             $exchange_rate = $this->commonUtil->getExchangeRateByCurrency($currency_id, $request->store_id);
             $store_pos = StorePos::where('admin_id', auth()->id())->first();
             if ($store_pos && $store_pos_id == null) {
                 $store_pos_id = $store_pos->id;
             }
-            //Check for weighing scale barcode
             $weighing_barcode = request()->get('weighing_scale_barcode');
             if (!empty($weighing_barcode)) {
                 $product_details = $this->__parseWeighingBarcode($weighing_barcode);
@@ -1085,13 +1078,8 @@ class SellPosController extends Controller
                     $quantity =  $have_weight ? (float)$have_weight : 1;
                     $edit_quantity = !$products->first()->have_weight ? $request->input('edit_quantity') : $quantity;
                 }
-
-                //                dd($edit_quantity);
-
-
                 $product_all_discounts_categories = $this->productUtil->getProductAllDiscountCategories($product_id);
-                // $sale_promotion_details = $this->productUtil->getSalesPromotionDetail($product_id, $store_id, $customer_id, $added_products);
-                $sale_promotion_details = null; //changed, now in pos.js check_for_sale_promotion method
+                $sale_promotion_details = null;
                 $html_content =  view('sale::back-end.pos.partials.product_row')
                     ->with(compact(
                         'products',
@@ -1102,6 +1090,7 @@ class SellPosController extends Controller
                         'is_direct_sale',
                         'dining_table_id',
                         'exchange_rate',
+                        'KeyLens',
                         'edit_quantity'
                     ))->render();
 
@@ -1830,65 +1819,6 @@ class SellPosController extends Controller
      */
     public function SaveLens( Request $request): mixed
     {
-//"lens_id" => "3" النضاره
-//  "product" => array:2 [ تفاصيل الروشته
-//    "VA" => array:4 [ الاضافات
-//      "TinTing" => array:2 [ تلوين العدسة سعر من الاعدادات
-//        "isCheck" => "1"
-//        "value" => "1" معرف اللون
-//      ]
-//      "Base" => array:2 [ قاعده خاصة سعر من اللست حقها
-//        "isCheck" => "1"
-//        "value" => "1"
-//      ]
-//      "Ozel" => array:2 [ قطر خاص سعر من الاعدادات
-//        "isCheck" => "1"
-//        "value" => "12"
-//      ]
-//      "code" => array:2 [ ستايل العدسه ليس عليها زياده
-//        "isCheck" => "1"
-//        "value" => "4444"
-//      ]
-//    ]
-//    "Lens" => array:2 [
-//      "Right" => array:3 [
-//        "isCheck" => "1"
-//        "Far" => array:5 [
-//          "SPHDeg" => "+"
-//          "SPH" => "15"
-//          "CYLDeg" => "-"
-//          "CYL" => "12"
-//          "Axis" => "150"
-//        ]
-//        "Near" => array:5 [
-//          "SPHDeg" => "+"
-//          "SPH" => "10"
-//          "CYLDeg" => "-"
-//          "CYL" => "12"
-//          "Axis" => "150"
-//        ]
-//      ]
-//      "Left" => array:4 [
-//        "isCheck" => "1"
-//        "sameToRight" => "1"
-//        "Far" => array:5 [
-//          "SPHDeg" => "+"
-//          "SPH" => "15"
-//          "CYLDeg" => "-"
-//          "CYL" => "12"
-//          "Axis" => "150"
-//        ]
-//        "Near" => array:5 [
-//          "SPHDeg" => "+"
-//          "SPH" => "10"
-//          "CYLDeg" => "-"
-//          "CYL" => "12"
-//          "Axis" => "150"
-//        ]
-//      ]
-//    ]
-//  ]
-//]
         $validator = validator($request->all(), [
             'lens_id' => 'required|integer|exists:products,id',
             'product' => 'required|array',
@@ -1929,41 +1859,54 @@ class SellPosController extends Controller
 
         $VA_amount=[];
         $total=0;
-        if($request->get('product.VA.TinTing.isCheck') != null){
+        $VA=[];
+        if($request->product['VA']['TinTing']['isCheck']!= null){
             $VA_amount['TinTing_amount'] = System::getProperty('TinTing_amount')?:10;
+            $color = Color::whereId($request->product['VA']['TinTing']['value'])->first();
             $total=$total+$VA_amount['TinTing_amount'];
+            $VA['TinTing']=$request->product['VA']['TinTing'];
+            $VA['TinTing']['text']=$color?->name;
+
         }
 
-        if($request->get('product.VA.Base.isCheck') != null){
+        if($request->product['VA']['Base']['isCheck'] != null){
 
-            $VA_amount['Base_amount']=
+            $Base=SpecialBase::whereId($request->product['VA']['Base']['value'])->first();
+            $VA_amount['Base_amount']=0;
+            if($Base){
+                $VA_amount['Base_amount']= $Base->price;
+            }
             $total=$total+$VA_amount['Base_amount'];
+            $VA['Base']=$request->product['VA']['Base'];
+            $VA['Base']['text']=$Base?->name;
         }
 
 
-        if($request->get('product.VA.Ozel.isCheck') != null){
+        if($request->product['VA']['Ozel']['isCheck'] != null){
             $VA_amount['Ozel_amount'] = System::getProperty('Ozel_amount')?:10;
             $total=$total+$VA_amount['Ozel_amount'];
+            $VA['Ozel']=$request->product['VA']['Ozel'];
+            $VA['Ozel']['text']=$request->product['VA']['Ozel']['value'];
         }
-
+        $VA['code']=$request->product['VA']['code'];
+        $VA['code']['text']=$request->product['VA']['code']['value'];
         $VA_amount['total']=$total;
         $data=[
-            'VA'=>$request->get('product.VA'),
+            'VA'=>$VA,
             'VA_amount'=>$VA_amount,
-            'Left'=>$request->get('product.Lens.Left'),
-            'Right'=>$request->get('product.Lens.Right'),
+            'Lens'=>$request->product['Lens'],
         ];
         $randomNumber = mt_rand(1000, 9999);
         $timestamp = time();
-        $id = 123;
 
-        $cacheKey = "{$randomNumber}_{$timestamp}_{$id}";
-        $expirationTime = 60*12;
-        // Store data in cache
+
+        $cacheKey = "{$randomNumber}_{$timestamp}";
+        $expirationTime = 60*6;
         Cache::put($cacheKey, $data, $expirationTime);
-        dd($request->all());
-
-        return [];
+        return[
+            'success'=>true,
+            'KeyLens'=>$cacheKey,
+        ];
 
 
     }

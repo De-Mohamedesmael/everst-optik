@@ -1389,4 +1389,8 @@
   'Önceki reçeteler' => 'Önceki reçeteler',
   'Giriş kısayolları' => 'Giriş kısayolları',
   'Önceden Tanımlanmış Şekiller' => 'Önceden Tanımlanmış Şekiller',
+  'TinTing_amount' => 'TinTing amount',
+  'Base_amount' => 'Base amount',
+  'Ozel_amount' => 'Ozel amount',
+  'code_title' => 'Code title',
 );
