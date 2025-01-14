@@ -40,6 +40,7 @@ use Modules\Setting\Entities\Brand;
 use Modules\Setting\Entities\Color;
 use Modules\Setting\Entities\Currency;
 use Modules\Setting\Entities\MoneySafeTransaction;
+use Modules\Setting\Entities\SpecialBase;
 use Modules\Setting\Entities\Store;
 use Modules\Setting\Entities\StorePos;
 use Modules\Setting\Entities\System;
@@ -149,6 +150,7 @@ class SellPosController extends Controller
         $employees = Employee::getCommissionEmployeeDropdown();
 
         $brand_lens = BrandLens::with('features')->get();
+        $special_bases=SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
 
         $brand_lenses=BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
         $design_lenses=Design::orderBy('name', 'asc')->pluck('name', 'id');
@@ -156,7 +158,6 @@ class SellPosController extends Controller
         $index_lenses=IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
         $colors=Color::orderBy('name', 'asc')->pluck('name', 'id');
         $lenses=Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
-
 
 
         if (empty($store_pos)) {
@@ -176,6 +177,7 @@ class SellPosController extends Controller
             'design_lenses',
             'foci',
             'index_lenses',
+            'special_bases',
             'colors',
             'lenses',
             'deliverymen',
@@ -1029,27 +1031,20 @@ class SellPosController extends Controller
     public function addProductRow(Request $request): array|RedirectResponse
     {
         if ($request->ajax()) {
-            $weighing_scale_barcode = $request->input('weighing_scale_barcode');
             $batch_number_id = $request->input('batch_number_id');
-
             $product_id = $request->input('product_id');
             $store_pos_id = $request->input('store_pos_id');
             $store_id = $request->input('store_id');
-            $customer_id = $request->input('customer_id');
             $currency_id = $request->input('currency_id');
             $dining_table_id = $request->input('dining_table_id');
             $is_direct_sale = $request->input('is_direct_sale');
+            $KeyLens = $request->input('KeyLens');
 
-            $added_products = json_decode($request->input('added_products'), true);
-
-            $currency_id = $request->currency_id;
-            $currency = Currency::find($currency_id);
             $exchange_rate = $this->commonUtil->getExchangeRateByCurrency($currency_id, $request->store_id);
             $store_pos = StorePos::where('admin_id', auth()->id())->first();
             if ($store_pos && $store_pos_id == null) {
                 $store_pos_id = $store_pos->id;
             }
-            //Check for weighing scale barcode
             $weighing_barcode = request()->get('weighing_scale_barcode');
             if (!empty($weighing_barcode)) {
                 $product_details = $this->__parseWeighingBarcode($weighing_barcode);
@@ -1083,13 +1078,8 @@ class SellPosController extends Controller
                     $quantity =  $have_weight ? (float)$have_weight : 1;
                     $edit_quantity = !$products->first()->have_weight ? $request->input('edit_quantity') : $quantity;
                 }
-
-                //                dd($edit_quantity);
-
-
                 $product_all_discounts_categories = $this->productUtil->getProductAllDiscountCategories($product_id);
-                // $sale_promotion_details = $this->productUtil->getSalesPromotionDetail($product_id, $store_id, $customer_id, $added_products);
-                $sale_promotion_details = null; //changed, now in pos.js check_for_sale_promotion method
+                $sale_promotion_details = null;
                 $html_content =  view('sale::back-end.pos.partials.product_row')
                     ->with(compact(
                         'products',
@@ -1100,6 +1090,7 @@ class SellPosController extends Controller
                         'is_direct_sale',
                         'dining_table_id',
                         'exchange_rate',
+                        'KeyLens',
                         'edit_quantity'
                     ))->render();
 
@@ -1822,4 +1813,103 @@ class SellPosController extends Controller
         $customer = Customer::find($transaction->customer_id);
         return $customer;
     }
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function SaveLens( Request $request): mixed
+    {
+        $validator = validator($request->all(), [
+            'lens_id' => 'required|integer|exists:products,id',
+            'product' => 'required|array',
+            'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+            'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+
+
+            'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+            'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+
+
+            'product.VA.TinTing.value' => 'required_if:product.VA.TinTing.isCheck,==,1|exists:colors,id',
+            'product.VA.Base.value' => 'required_if:product.VA.Base.isCheck,==,1',
+            'product.VA.Ozel.value' => 'required_if:product.VA.Ozel.isCheck,==,1',
+            'product.VA.code.value' => 'required_if:product.VA.code.isCheck,==,1',
+        ]);
+        if ($validator->fails())
+            return [
+                    'success'=>false,
+                    'msg'=> $validator->errors()->first()
+            ];
+
+        $VA_amount=[];
+        $total=0;
+        $VA=[];
+        if($request->product['VA']['TinTing']['isCheck']!= null){
+            $VA_amount['TinTing_amount'] = System::getProperty('TinTing_amount')?:10;
+            $color = Color::whereId($request->product['VA']['TinTing']['value'])->first();
+            $total=$total+$VA_amount['TinTing_amount'];
+            $VA['TinTing']=$request->product['VA']['TinTing'];
+            $VA['TinTing']['text']=$color?->name;
+
+        }
+
+        if($request->product['VA']['Base']['isCheck'] != null){
+
+            $Base=SpecialBase::whereId($request->product['VA']['Base']['value'])->first();
+            $VA_amount['Base_amount']=0;
+            if($Base){
+                $VA_amount['Base_amount']= $Base->price;
+            }
+            $total=$total+$VA_amount['Base_amount'];
+            $VA['Base']=$request->product['VA']['Base'];
+            $VA['Base']['text']=$Base?->name;
+        }
+
+
+        if($request->product['VA']['Ozel']['isCheck'] != null){
+            $VA_amount['Ozel_amount'] = System::getProperty('Ozel_amount')?:10;
+            $total=$total+$VA_amount['Ozel_amount'];
+            $VA['Ozel']=$request->product['VA']['Ozel'];
+            $VA['Ozel']['text']=$request->product['VA']['Ozel']['value'];
+        }
+        $VA['code']=$request->product['VA']['code'];
+        $VA['code']['text']=$request->product['VA']['code']['value'];
+        $VA_amount['total']=$total;
+        $data=[
+            'VA'=>$VA,
+            'VA_amount'=>$VA_amount,
+            'Lens'=>$request->product['Lens'],
+        ];
+        $randomNumber = mt_rand(1000, 9999);
+        $timestamp = time();
+
+
+        $cacheKey = "{$randomNumber}_{$timestamp}";
+        $expirationTime = 60*6;
+        Cache::put($cacheKey, $data, $expirationTime);
+        return[
+            'success'=>true,
+            'KeyLens'=>$cacheKey,
+        ];
+
+
+    }
+
+
 }

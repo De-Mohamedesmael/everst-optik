@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
-
     <style>
         .preview-logo-container {
             /* display: flex;
@@ -254,14 +253,7 @@
                                     'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
                             </div>
-                            <div class="col-md-3 px-5 hide">
-                                {!! Form::label('developed_by', __('lang.developed_by'), [
-                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                ]) !!}
-                                {!! Form::text('developed_by', null, [
-                                    'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',
-                                ]) !!}
-                            </div>
+
                             <div class="col-md-3 px-5">
                                 {!! Form::label('time_format', __('lang.time_format'), [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -335,7 +327,22 @@
                                         ['class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start'],
                                     ) !!}
                                 </div>
-
+                            <div class="col-md-3 px-5">
+                                {!! Form::label('Ozel_amount Numbers', __('lang.Ozel_amount'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                {!! Form::text('Ozel_amount', !empty($settings['Ozel_amount']) ? $settings['Ozel_amount'] : null, [
+                                    'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                            </div>
+                            <div class="col-md-3 px-5">
+                                {!! Form::label('TinTing_amount Numbers', __('lang.TinTing_amount'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                {!! Form::text('TinTing_amount', !empty($settings['TinTing_amount']) ? $settings['TinTing_amount'] : null, [
+                                    'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                            </div>
                             <div class="col-md-3 px-5">
                                 {!! Form::label('Watsapp Numbers', __('lang.watsapp_numbers'), [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',

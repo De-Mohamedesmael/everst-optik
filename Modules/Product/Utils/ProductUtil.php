@@ -352,7 +352,7 @@ class ProductUtil extends Util
         $product->where('products.id', $product_id);
         $selectRaws=['products.id as product_id',
         'products.name as product_name',
-        'products.is_service',
+        'products.is_lens',
         'products.alert_quantity',
         'products.tax_id',
         'products.tax_method',

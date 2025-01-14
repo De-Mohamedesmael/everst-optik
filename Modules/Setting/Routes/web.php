@@ -11,6 +11,7 @@ use Modules\Setting\Http\Controllers\MoneySafeController;
 use Modules\Setting\Http\Controllers\StoreController;
 use Modules\Setting\Http\Controllers\StorePosController;
 use Modules\Setting\Http\Controllers\TaxController;
+use Modules\Setting\Http\Controllers\SpecialBaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +43,9 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('colors', ColorController::class);
     Route::get('sizes/get-dropdown', [SizeController::class,'getDropdown'])->name('sizes.dropdown');
     Route::resource('sizes', SizeController::class);
-
-
+//Özel Baz
+    Route::get('special_base/get-dropdown', [SpecialBaseController::class,'getDropdown'])->name('special_base.dropdown');
+    Route::resource('special_bases', SpecialBaseController::class);
 
 
 

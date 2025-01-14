@@ -310,7 +310,8 @@ function get_label_product_row(
     add_stock_lines_id=null,
     edit_quantity = 1,
     edit_row_count = 0,
-    weighing_scale_barcode = null
+    weighing_scale_barcode = null,
+    KeyLens=null
 ) {
     //Get item addition method
     var add_via_ajax = true;
@@ -407,7 +408,8 @@ function get_label_product_row(
                 weighing_scale_barcode: $("#search_product").val(),
                 dining_table_id: $("#dining_table_id").val(),
                 is_direct_sale: $("#is_direct_sale").val(),
-                batch_number_id:add_stock_lines_id
+                batch_number_id:add_stock_lines_id,
+                KeyLens:KeyLens
             },
             success: function (result) {
 
@@ -1031,7 +1033,10 @@ $(document).on("change", ".quantity, .sell_price", function () {
     calculate_sub_totals();
 });
 $(document).on("click", ".remove_row", function () {
+    var index=$(this).data('index');
     $(this).closest("tr").remove();
+    $("tr.lens-row-"+index).remove();
+
     calculate_sub_totals();
     check_for_sale_promotion();
     reset_row_numbering();

@@ -20,8 +20,12 @@ use Modules\AddStock\Entities\Transaction;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\CustomerType;
 use Modules\Lens\Entities\BrandLens;
+use Modules\Lens\Entities\BrandLensProduct;
+use Modules\Lens\Entities\Design;
 use Modules\Lens\Entities\Focus;
+use Modules\Lens\Entities\FocusProduct;
 use Modules\Lens\Entities\IndexLens;
+use Modules\Lens\Entities\IndexLensProduct;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductDiscount;
@@ -456,7 +460,7 @@ class LensController extends Controller
                 'name' => $request->name,
                 'is_lens' => 1,
                 'translations' => !empty($request->translations) ? $request->translations : [],
-                'sku' => !empty($request->sku) ? $request->sku : $this->lensUtil->generateSku($request->name),
+                'sku' => !empty($request->sku) ? $request->sku : $this->productUtil->generateSku($request->name),
                 'color_id' => $request->color_id,
                 'barcode_type' => $request->barcode_type ?? 'C128',
                 'alert_quantity' => $request->alert_quantity,
@@ -504,6 +508,7 @@ class LensController extends Controller
             ];
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -1029,5 +1034,50 @@ class LensController extends Controller
         }
 
         return $output;
+    }
+
+
+
+    /**
+     * get Dropdown Filter Lenses.
+     *
+
+     */
+    public function getDropdownFilterLenses(Request $request)
+    {
+        $designs =Design::when($request->focus_id , function ($q) use ($request) {
+            return $q-> wherehas('foci', function ($q_f) use ($request) {
+                        return $q_f->where('foci.id',$request->focus_id);
+                    });
+        })->pluck('name', 'id');
+        $data['designs'] = $this->commonUtil->createDropdownHtml($designs,__('lang.please_select'));
+
+
+        $lenses=Product::Lens()
+            ->when($request->brand_id , function ($q) use ($request) {
+                $q-> wherehas('brand_lenses', function ($q_f) use ($request) {
+                     $q_f->where('brand_lenses.id',$request->brand_id);
+                });
+            })
+            ->when($request->index_id , function ($q) use ($request) {
+                $q-> wherehas('index_lenses', function ($q_f) use ($request) {
+                     $q_f->where('index_lenses.id',$request->index_id);
+                });
+            })
+            ->when($request->focus_id , function ($q) use ($request) {
+                $q-> wherehas('foci', function ($q_f) use ($request) {
+                    $q_f->where('foci.id',$request->focus_id);
+                });
+            })
+            ->when($request->color_id , function ($q) use ($request) {
+                 $q-> where('color_id', $request->color_id);
+            })
+            ->orderBy('name', 'asc')->pluck('name', 'id');
+        $data['lenses'] = $this->commonUtil->createDropdownHtml($lenses,__('lang.please_select'));
+
+        return [
+            'success' => true,
+            'data' => $data
+        ];
     }
 }
