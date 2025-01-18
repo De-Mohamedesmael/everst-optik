@@ -47,6 +47,7 @@
                                     <tr>
                                         <th>@lang('lang.image')</th>
                                         <th>@lang('lang.name')</th>
+                                        <th>@lang('lang.price')</th>
                                         <th>@lang('lang.color')</th>
                                         <th class="notexport">@lang('lang.action')</th>
                                     </tr>
@@ -59,6 +60,7 @@
                                                     alt="photo" width="120" height="50">
                                             </td>
                                             <td style="text-align: center;" >{{ $brand_lens->name }}</td>
+                                            <td style="text-align: center;" >{{ $brand_lens->price }}</td>
                                             <td style="text-align: center;" >
                                                 <div class="lens-color" style="width: 40px;height: 30px;margin: auto;border-radius:10px;background-color:  {{ $brand_lens->color }}">
                                                 </div>

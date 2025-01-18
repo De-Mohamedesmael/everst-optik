@@ -15,7 +15,7 @@
         ]) !!}
         <div
             class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse justify-content-end @else justify-content-start flex-row @endif align-items-center">
-            <div class="col-sm-6 mb-2">
+            <div class="col-sm-3 mb-2">
                 {!! Form::label('name', __('lang.name') . '*', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -27,8 +27,20 @@
                     ]) !!}
                 </div>
             </div>
+            <div class="col-sm-3 mb-2">
+                {!! Form::label('price', __('lang.price') . '*', [
+                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                <div class="input-group my-group select-button-group">
+                    {!! Form::number('price', $brand_lens->price, [
+                        'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                        'placeholder' => __('lang.price'),
+                        'required',
+                    ]) !!}
 
-            <div class="col-md-3 px-5">
+                </div>
+            </div>
+            <div class="col-md-6 px-5">
                 <div class="form-group">
                     {!! Form::label('feature_id', __('lang.features'), [
                         'class' => 'form-label d-block mb-1 ',
@@ -62,13 +74,13 @@
                     for="projectinput2">{{ __('lang.image') }}</label>
                 <div
                     class="d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                    <div class="variants col-md-6">
+                     <div class="variants col-md-6">
                         <div class='file file--upload w-100'>
                             <label for='file-input-edit' class="w-100 modal-input m-0">
                                 <i class="fas fa-cloud-upload-alt"></i>Upload
                             </label>
                             <!-- <input  id="file-input" multiple type='file' /> -->
-                            <input type="file" id="file-input-edit">
+                             <input type="file" id="file-input-edit">
                         </div>
                     </div>
 
@@ -130,6 +142,8 @@
 </div><!-- /.modal-dialog -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
 <script>
+    $('#feature_id').selectpicker('refresh');
+
     $("#sub-button-form").click(function(e) {
         e.preventDefault();
         getImages()

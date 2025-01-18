@@ -333,6 +333,20 @@
     .dropdown.bootstrap-select.disabled.form-control.lensPlusMinusSelect.CYLPlusMinusSelect.input-block-level {
         background: #eaecef !important;
     }
+    .lens-vu-per {
+        margin: 25px auto;
+        background: #bbd6d175 !important;
+        border-radius: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .lens-vu-item-per {
+        color: #015b4d;
+        font-weight: 600;
+    }
+    .lens-vu-item-per.total-lens {
+        color: #339a40;
+    }
 </style>
 <div id="navigation">
     <div class="container-fluid" id="content">
@@ -344,452 +358,474 @@
                             <div class="box-content">
 
                                 <form  id="orderLensFormCreate" class="form-horizontal form-validate" method="POST" enctype="multipart/form-data">
-
-                                    <div class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                                        <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#moreInfoCollapseFiltter" aria-expanded="false" aria-controls="moreInfoCollapseFiltter">
-                                            <i class="fas fa-arrow-down"></i>
-                                            {{translate('Giriş kısayolları')}}
-                                            <span class="section-header-pill"></span>
-                                        </button>
-                                    </div>
-                                    <div class="collapse" id="moreInfoCollapseFiltter">
-                                        <div class="card mb-3">
-                                            <div class="card-body p-2">
-                                                <div class="row">
-
-                                                    <div class="col-md-6">
-                                                        <div class="form-group ">
-                                                            {!! Form::label('prescription_id', translate('Önceki reçeteler'), [
-                                                               'class' => 'form-label d-block mb-1 ',
-                                                           ]) !!}
-                                                            {!! Form::select('prescription_id', [] ,null, [
-                                                                'class' => ' selectpicker form-control',
-                                                                'data-live-search' => 'true',
-                                                                'style' => 'width: 80%',
-                                                               'data-actions-box' => 'true',
-                                                                'id' => 'prescription_id',
-                                                                'placeholder' => __('lang.please_select'),
-                                                            ]) !!}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            {!! Form::label('brand_id', translate('Marka'), [
-                                                                'class' => 'form-label d-block mb-1 ',
-                                                            ]) !!}
-                                                            {!! Form::select('brand_id', $brand_lenses,null, [
-                                                                'class' => ' selectpicker form-control',
-                                                                'data-live-search' => 'true',
-                                                                'style' => 'width: 80%',
-                                                               'data-actions-box' => 'true',
-                                                                'id' => 'brand_id',
-                                                                'placeholder' => __('lang.please_select'),
-                                                            ]) !!}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            {!! Form::label('focus_id', translate('focus'), [
-                                                               'class' => 'form-label d-block mb-1 ',
-                                                           ]) !!}
-                                                            {!! Form::select('focus_id', $foci,null, [
-                                                                'class' => ' selectpicker form-control',
-                                                                'data-live-search' => 'true',
-                                                                'style' => 'width: 80%',
-                                                               'data-actions-box' => 'true',
-                                                                'id' => 'focus_id',
-                                                                'placeholder' => __('lang.please_select'),
-                                                            ]) !!}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group ">
-                                                            {!! Form::label('design_id', translate('design'), [
-                                                               'class' => 'form-label d-block mb-1 ',
-                                                           ]) !!}
-                                                            {!! Form::select('design_id', $design_lenses,null, [
-                                                                'class' => ' selectpicker form-control',
-                                                                'data-live-search' => 'true',
-                                                                'style' => 'width: 80%',
-                                                               'data-actions-box' => 'true',
-                                                                'id' => 'design_id',
-                                                                'placeholder' => __('lang.please_select'),
-                                                            ]) !!}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group ">
-                                                            {!! Form::label('index_id', translate('index'), [
-                                                                'class' => 'form-label d-block mb-1 ',
-                                                            ]) !!}
-                                                            {!! Form::select('index_id', $index_lenses,null, [
-                                                                'class' => ' selectpicker form-control',
-                                                                'data-live-search' => 'true',
-                                                                'style' => 'width: 80%',
-                                                               'data-actions-box' => 'true',
-                                                                'id' => 'index_id',
-                                                                'placeholder' => __('lang.please_select'),
-                                                            ]) !!}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            {!! Form::label('color_id', translate('color'), [
-                                                                'class' => 'form-label d-block mb-1 ',
-                                                            ]) !!}
-                                                            {!! Form::select('color_id', $colors,null, [
-                                                                'class' => ' selectpicker form-control',
-                                                                'data-live-search' => 'true',
-                                                                'style' => 'width: 80%',
-                                                               'data-actions-box' => 'true',
-                                                                'id' => 'color_id',
-                                                                'placeholder' => __('lang.please_select'),
-                                                            ]) !!}
-                                                        </div>
-                                                    </div>
-                                                    {{--                                        lenses--}}
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-                                                {!! Form::label('lens_id', translate('lens'), [
-                                                   'class' => 'form-label d-block mb-1 ',
-                                               ]) !!}
-                                                {!! Form::select('lens_id', $lenses,null, [
-                                                    'class' => ' selectpicker form-control',
-                                                    'data-live-search' => 'true',
-                                                    'style' => 'width: 80%',
-                                                   'data-actions-box' => 'true',
-                                                    'id' => 'lens_id',
-                                                    'placeholder' => __('lang.please_select'),
-                                                ]) !!}
+                                        <div class="col-9">
+                                            <div class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
+                                                <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#moreInfoCollapseFiltter" aria-expanded="false" aria-controls="moreInfoCollapseFiltter">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                    {{translate('Giriş kısayolları')}}
+                                                    <span class="section-header-pill"></span>
+                                                </button>
                                             </div>
-                                        </div>
-                                    </div>
+                                            <div class="collapse" id="moreInfoCollapseFiltter">
+                                                <div class="card mb-3">
+                                                    <div class="card-body p-2">
+                                                        <div class="row">
 
-
-                                    <div class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                                        <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#moreInfoCollapse" aria-expanded="false" aria-controls="moreInfoCollapse">
-                                            <i class="fas fa-arrow-down"></i>
-                                            {{translate('Ek işlemler')}}
-                                            <span class="section-header-pill"></span>
-                                        </button>
-                                    </div>
-                                    <div class="collapse" id="moreInfoCollapse">
-                                        <div class="card mb-3">
-                                            <div class="card-body p-2">
-                                                <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                                                    <div class="col-md-3 px-5">
-                                                            <div class="noBorderRight">
-                                                                <div class="check-line" style="width: 100%;text-align: left;">
-                                                                    <div class="icheckbox_square-orange icheck-item icheck[qepho]">
-                                                                        <input type="checkbox" id="VATintingCheck" data-subs="tintingList" class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid" name="product[VA][TinTing][isCheck]" value="1" data-skin="square" data-color="orange" aria-invalid="false"></div>
-                                                                    <label class="inline icheck-label icheck[qepho]" for="VATintingCheck">{{translate("Boyama")}}</label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-none color_class">
-                                                                {!! Form::select('product[VA][TinTing][value]', $colors ,null, [
-                                                                       'class' => ' selectpicker form-control',
-                                                                       'data-live-search' => 'true',
-                                                                       'style' => 'width: 80%',
-                                                                      'data-actions-box' => 'true',
-                                                                       'id' => 'color_product',
-                                                                       'placeholder' => __('lang.please_select'),
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    {!! Form::label('prescription_id', translate('Önceki reçeteler'), [
+                                                                       'class' => 'form-label d-block mb-1 ',
                                                                    ]) !!}
-                                                            </div>
-                                                    </div>
-                                                    <div class="col-md-3 px-5">
-                                                            <div class="noBorderRight">
-                                                                <div class="check-line" style="width: 100%;text-align: left;">
-                                                                    <div class="icheckbox_square-orange icheck-item icheck[wzqw0]"><input type="checkbox" id="VABaseCheck" data-subs="vaBaseList" class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]" name="product[VA][Base][isCheck]" value="1" data-skin="square" data-color="orange"></div>
-                                                                    <label class="inline icheck-label icheck[wzqw0]" for="VABaseCheck">{{translate("Özel Baz")}}</label>
+                                                                    {!! Form::select('prescription_id', [] ,null, [
+                                                                        'class' => ' selectpicker form-control',
+                                                                        'data-live-search' => 'true',
+                                                                        'style' => 'width: 80%',
+                                                                       'data-actions-box' => 'true',
+                                                                        'id' => 'prescription_id',
+                                                                        'placeholder' => __('lang.please_select'),
+                                                                    ]) !!}
                                                                 </div>
                                                             </div>
-                                                            <div class="d-none VABaseCheck_class">
-                                                                {!! Form::select('product[VA][Base][value]', $special_bases ,null, [
-                                                                       'class' => ' selectpicker form-control',
-                                                                       'data-live-search' => 'true',
-                                                                       'style' => 'width: 80%',
-                                                                      'data-actions-box' => 'true',
-                                                                       'id' => 'special_base',
-                                                                       'placeholder' => __('lang.please_select'),
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    {!! Form::label('brand_id', translate('Marka'), [
+                                                                        'class' => 'form-label d-block mb-1 ',
+                                                                    ]) !!}
+                                                                    {!! Form::select('brand_id', $brand_lenses,null, [
+                                                                        'class' => ' selectpicker form-control',
+                                                                        'data-live-search' => 'true',
+                                                                        'style' => 'width: 80%',
+                                                                       'data-actions-box' => 'true',
+                                                                        'id' => 'brand_id',
+                                                                        'placeholder' => __('lang.please_select'),
+                                                                    ]) !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    {!! Form::label('focus_id', translate('focus'), [
+                                                                       'class' => 'form-label d-block mb-1 ',
                                                                    ]) !!}
-                                                            </div>
-                                                    </div>
-                                                    <div class="col-md-3 px-5">
-                                                            <div class="noBorderRight">
-                                                                <div class="check-line" style="width: 100%;text-align: left;">
-                                                                    <div class="icheckbox_square-orange icheck-item icheck[wzqw0]">
-                                                                        <input type="checkbox" id="specific_diameter" data-subs="vaBaseList"
-                                                                               class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
-                                                                               name="product[VA][Ozel][isCheck]" value="1" data-skin="square"
-                                                                               data-color="orange"></div>
-                                                                    <label class="inline icheck-label icheck[wzqw0]" for="specific_diameter">{{translate("Özel Çap")}}</label>
+                                                                    {!! Form::select('focus_id', $foci,null, [
+                                                                        'class' => ' selectpicker form-control',
+                                                                        'data-live-search' => 'true',
+                                                                        'style' => 'width: 80%',
+                                                                       'data-actions-box' => 'true',
+                                                                        'id' => 'focus_id',
+                                                                        'placeholder' => __('lang.please_select'),
+                                                                    ]) !!}
                                                                 </div>
                                                             </div>
-                                                            <div class="d-none specific_diameter_class">
-                                                                {!! Form::number('product[VA][Ozel][value]' ,null, [
-                                                                       'class' => ' selectpicker form-control',
-                                                                       'style' => 'width: 80%',
-                                                                      'data-actions-box' => 'true',
-                                                                       'id' => 'specific_diameter_input',
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    {!! Form::label('design_id', translate('design'), [
+                                                                       'class' => 'form-label d-block mb-1 ',
                                                                    ]) !!}
-                                                            </div>
-                                                    </div>
-
-                                                    <div class="col-md-12 px-5">
-                                                        <div class="noBorderRight">
-                                                            <div class="check-line" style="width: 100%;text-align: left;">
-                                                                <div class="icheckbox_square-orange icheck-item icheck[qepho]">
-                                                                    <input type="checkbox" id="codeCheck" data-subs="tintingList"
-                                                                           class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
-                                                                           name="product[VA][code][isCheck]" value="1" data-skin="square" data-color="orange" aria-invalid="false"></div>
-                                                                <label class="inline icheck-label icheck[qepho]" for="codeCheck">{{translate("Çerçeve Tipi")}}</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="owf-page-shapeDefinition-manual-shape d-none">
-                                                            <!--SVG element which declares definitions that are used in all other SVGs by reference-->
-                                                            <svg width="0" height="0" class="abc">
-                                                                <defs>
-                                                                    <marker id="abc_arrowhead" markerWidth="15" markerHeight="5" refX="0" refY="2.5" orient="auto">
-                                                                        <polygon class="abc-indicator" points="0 0, 15 2.5, 0 5"></polygon>
-                                                                    </marker>
-                                                                    <linearGradient id="abc_lensGradient" gradientTransform="rotate(90)">
-                                                                        <stop offset="10%" stop-color="#c4e4fa"></stop>
-                                                                        <stop offset="50%" stop-color="#90bff1"></stop>
-                                                                        <stop offset="50%" stop-color="#84b7ed"></stop>
-                                                                        <stop offset="90%" stop-color="#bfe3fe"></stop>
-                                                                    </linearGradient>
-                                                                </defs>
-                                                            </svg>
-
-                                                            {{--    <div class="owf-page-shapeDefinition-manual-shape-abc">
-
-
-
-                                                                <!-- CCode controls -->
-                                                                <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlTopLeft">
-                                                                    <button type="button" class="owf-button ui basic button" data-index="1" data-value="1">
-                                                                        <span class="owf-button-label">1</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button" data-index="1" data-value="2">
-                                                                        <span class="owf-button-label">2</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button selected" data-index="1" data-value="3">
-                                                                        <span class="owf-button-label">3</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button" data-index="1" data-value="4">
-                                                                        <span class="owf-button-label">4</span>
-                                                                    </button>      </div>
-                                                                <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlTopRight">
-                                                                    <button type="button" class="owf-button ui basic button" data-index="0" data-value="1">
-                                                                        <span class="owf-button-label">1</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button" data-index="0" data-value="2">
-                                                                        <span class="owf-button-label">2</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button selected" data-index="0" data-value="3">
-                                                                        <span class="owf-button-label">3</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button" data-index="0" data-value="4">
-                                                                        <span class="owf-button-label">4</span>
-                                                                    </button>      </div>
-                                                                <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlBottomLeft">
-                                                                    <button type="button" class="owf-button ui basic button" data-index="2" data-value="1">
-                                                                        <span class="owf-button-label">1</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button" data-index="2" data-value="2">
-                                                                        <span class="owf-button-label">2</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button" data-index="2" data-value="3">
-                                                                        <span class="owf-button-label">3</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button selected" data-index="2" data-value="4">
-                                                                        <span class="owf-button-label">4</span>
-                                                                    </button>      </div>
-                                                                <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlBottomRight">
-                                                                    <button type="button" class="owf-button ui basic button" data-index="3" data-value="1">
-                                                                        <span class="owf-button-label">1</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button" data-index="3" data-value="2">
-                                                                        <span class="owf-button-label">2</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button" data-index="3" data-value="3">
-                                                                        <span class="owf-button-label">3</span>
-                                                                    </button>        <button type="button" class="owf-button ui basic button selected" data-index="3" data-value="4">
-                                                                        <span class="owf-button-label">4</span>
-                                                                    </button>      </div>
-
-                                                                <!-- Actual SVG box -->
-                                                                <div class="owf-page-shapeDefinition-manual-shape-svg">
-                                                                    <svg id="shape_view_svg" class="abc transitioning" viewBox="-575 -270 1000 720" xmlns="http://www.w3.org/2000/svg">
-                                                                        <!-- Indicator text pieces -->
-                                                                        <text id="abc_text_a" class="abc-indicator abc-text" x="0" y="0" transform="translate(-104.14285714285717, 325)"><tspan>A-Boyutu</tspan><title>A-Boyutu</title></text>
-                                                                        <text id="abc_text_b" class="abc-indicator abc-text" x="0" y="0" transform="translate(-450, 0) rotate(90)"><tspan>B-Boyutu</tspan><title>B-Boyutu</title></text>
-                                                                        <text id="abc_text_dbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(300.85714285714283, 325)"><tspan>DBL</tspan><title>DBL</title></text>
-                                                                        <text id="abc_text_adbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 400)"><tspan>A-Boyutu + DBL</tspan><title>A-Boyutu + DBL</title></text>
-
-                                                                        <!-- Size indicator lines -->
-                                                                        <line id="abc_line_shape_top_end" class="abc-indicator abc-line" x1="0" y1="0" x2="-1000" y2="0" transform="translate(-104.14285714285714, -185.14285714285714) scale(0.3958571428571429, 1)"></line>
-                                                                        <line id="abc_line_shape_bottom_end" class="abc-indicator abc-line" x1="0" y1="0" x2="-1000" y2="0" transform="translate(-104.14285714285714, 185.14285714285714) scale(0.3958571428571429, 1)"></line>
-                                                                        <line id="abc_line_shape_left_end" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="450" transform="translate(-405, 0)"></line>
-                                                                        <line id="abc_line_shape_right_end" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="375" transform="translate(196.7142857142857, 0)"></line>
-                                                                        <line id="abc_line_dbl_end" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="450" transform="translate(405, 0)"></line>
-
-                                                                        <!-- A size arrow -->
-                                                                        <line id="abc_line_a" class="abc-indicator abc-line" x1="0" y1="0" x2="1000" y2="0" transform="translate(-360, 350) scale(0.5117142857142857, 1)"></line>
-                                                                        <line id="abc_line_a_arrow_left" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="-1" y2="0" transform="translate(-360, 350)"></line>
-                                                                        <line id="abc_line_a_arrow_right" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="1" y2="0" transform="translate(151.71428571428567, 350)"></line>
-
-                                                                        <!-- B size arrow -->
-                                                                        <line id="abc_line_b" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="1000" transform="translate(-475, -140.14285714285714) scale(1, 0.2802857142857143)"></line>
-                                                                        <line id="abc_line_b_arrow_top" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="0" y2="-1" transform="translate(-475, -140.14285714285714)"></line>
-                                                                        <line id="abc_line_b_arrow_bottom" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="0" y2="1" transform="translate(-475, 140.14285714285714)"></line>
-
-                                                                        <!-- DBL arrow -->
-                                                                        <line id="abc_line_dbl" class="abc-indicator abc-line" x1="0" y1="0" x2="1000" y2="0" transform="translate(241.7142857142857, 350) scale(0.11828571428571427, 1)"></line>
-                                                                        <line id="abc_line_dbl_arrow_left" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="-1" y2="0" transform="translate(241.7142857142857, 350)"></line>
-                                                                        <line id="abc_line_dbl_arrow_right" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="1" y2="0" transform="translate(360, 350)"></line>
-
-                                                                        <!-- A size + DBL arrow -->
-                                                                        <line id="abc_line_adbl" class="abc-indicator abc-line" x1="0" y1="0" x2="1000" y2="0" transform="translate(-360, 425) scale(0.72, 1)"></line>
-                                                                        <line id="abc_line_adbl_arrow_left" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="-1" y2="0" transform="translate(-360, 425)"></line>
-                                                                        <line id="abc_line_adbl_arrow_right" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="1" y2="0" transform="translate(360, 425)"></line>
-
-                                                                        <!-- Indicator text pieces -->
-                                                                        <text id="abc_text_a" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0)"><tspan></tspan><title></title></text>
-                                                                        <text id="abc_text_b" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0) rotate(90)"><tspan></tspan><title></title></text>
-                                                                        <text id="abc_text_dbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0)"><tspan></tspan><title></title></text>
-                                                                        <text id="abc_text_adbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0)"><tspan></tspan><title></title></text>
-
-                                                                        <!-- DBL -->
-                                                                        <path id="dbl_shape" class="abc-dbl abc-curve incomplete" d="M196.7142857142857,0 q104.14285714285714,-104.14285714285714 208.28571428571428,0"></path>
-
-                                                                        <!-- Selected shape -->
-                                                                        <path id="abc_shape_selected_fill" class="abc-lens" d="M196.7142857142857,0 v-18.514285714285712 q0,-166.62857142857143 -270.77142857142854,-166.62857142857143 h-30.085714285714285 h-30.085714285714285 q-270.77142857142854,0 -270.77142857142854,166.62857142857143 v18.514285714285712 v0 a300.85714285714283,185.14285714285714 0 0 0 300.85714285714283,185.14285714285714 h0 h0 a300.85714285714283,-185.14285714285714 0 0 0 300.85714285714283,-185.14285714285714 v-0"></path>
-
-                                                                        <!-- Shape: top right -->
-                                                                        <g id="abc_shape_top_right" class="abc-shape-quadrant" data-index="0">
-                                                                            <path class="abc-outline abc-outline-blue" data-index="0" data-value="1" d="M196.7142857142857,0 v-99.97714285714287 q0,-85.16571428571427 -138.3942857142857,-85.16571428571427 h-162.46285714285713"></path>
-                                                                            <path class="abc-outline abc-outline-red" data-index="0" data-value="2" d="M196.7142857142857,0 v-57.394285714285715 q0,-127.74857142857142 -207.59142857142854,-127.74857142857142 h-93.26571428571428"></path>
-                                                                            <path class="abc-outline abc-outline-green" data-index="0" data-value="3" d="M196.7142857142857,0 v-18.514285714285712 q0,-166.62857142857143 -270.77142857142854,-166.62857142857143 h-30.085714285714285"></path>
-                                                                            <path class="abc-outline abc-outline-orange" data-index="0" data-value="4" d="M196.7142857142857,0 v-0 a-300.85714285714283,-185.14285714285714 0 0 0 -300.85714285714283,-185.14285714285714 h-0"></path>
-                                                                            <path class="abc-invisible" d="M186.8785714285714,0 v-0 a-285.8142857142857,-175.88571428571427 0 0 0 -285.8142857142857,-175.88571428571427 h-0"></path>
-                                                                            <path class="abc-curve" d="M196.7142857142857,0 v-18.514285714285712 q0,-166.62857142857143 -270.77142857142854,-166.62857142857143 h-30.085714285714285"></path>
-                                                                        </g>
-
-                                                                        <!-- Shape: top left -->
-                                                                        <g id="abc_shape_top_left" class="abc-shape-quadrant" data-index="1">
-                                                                            <path class="abc-outline abc-outline-blue" data-index="1" data-value="1" d="M-104.14285714285714,-185.14285714285714 h-162.46285714285713 q-138.3942857142857,0 -138.3942857142857,85.16571428571427 v99.97714285714287"></path>
-                                                                            <path class="abc-outline abc-outline-red" data-index="1" data-value="2" d="M-104.14285714285714,-185.14285714285714 h-93.26571428571428 q-207.59142857142854,0 -207.59142857142854,127.74857142857142 v57.394285714285715"></path>
-                                                                            <path class="abc-outline abc-outline-green" data-index="1" data-value="3" d="M-104.14285714285714,-185.14285714285714 h-30.085714285714285 q-270.77142857142854,0 -270.77142857142854,166.62857142857143 v18.514285714285712"></path>
-                                                                            <path class="abc-outline abc-outline-orange" data-index="1" data-value="4" d="M-104.14285714285714,-185.14285714285714 h-0 a-300.85714285714283,185.14285714285714 0 0 0 -300.85714285714283,185.14285714285714 v0"></path>
-                                                                            <path class="abc-invisible" d="M-98.93571428571428,-175.88571428571427 h-0 a-285.8142857142857,175.88571428571427 0 0 0 -285.8142857142857,175.88571428571427 v0"></path>
-                                                                            <path class="abc-curve" d="M-104.14285714285714,-185.14285714285714 h-30.085714285714285 q-270.77142857142854,0 -270.77142857142854,166.62857142857143 v18.514285714285712"></path>
-                                                                        </g>
-
-                                                                        <!-- Shape: bottom left -->
-                                                                        <g id="abc_shape_bottom_left" class="abc-shape-quadrant" data-index="2">
-                                                                            <path class="abc-outline abc-outline-blue" data-index="2" data-value="1" d="M-405,0 v99.97714285714287 q0,85.16571428571427 138.3942857142857,85.16571428571427 h162.46285714285713"></path>
-                                                                            <path class="abc-outline abc-outline-red" data-index="2" data-value="2" d="M-405,0 v57.394285714285715 q0,127.74857142857142 207.59142857142854,127.74857142857142 h93.26571428571428"></path>
-                                                                            <path class="abc-outline abc-outline-green" data-index="2" data-value="3" d="M-405,0 v18.514285714285712 q0,166.62857142857143 270.77142857142854,166.62857142857143 h30.085714285714285"></path>
-                                                                            <path class="abc-outline abc-outline-orange" data-index="2" data-value="4" d="M-405,0 v0 a300.85714285714283,185.14285714285714 0 0 0 300.85714285714283,185.14285714285714 h0"></path>
-                                                                            <path class="abc-invisible" d="M-384.75,0 v0 a285.8142857142857,175.88571428571427 0 0 0 285.8142857142857,175.88571428571427 h0"></path>
-                                                                            <path class="abc-curve" d="M-405,0 v0 a300.85714285714283,185.14285714285714 0 0 0 300.85714285714283,185.14285714285714 h0"></path>
-                                                                        </g>
-
-                                                                        <!-- Shape: bottom right -->
-                                                                        <g id="abc_shape_bottom_right" class="abc-shape-quadrant" data-index="3">
-                                                                            <path class="abc-outline abc-outline-blue" data-index="3" data-value="1" d="M-104.14285714285714,185.14285714285714 h162.46285714285713 q138.3942857142857,0 138.3942857142857,-85.16571428571427 v-99.97714285714287"></path>
-                                                                            <path class="abc-outline abc-outline-red" data-index="3" data-value="2" d="M-104.14285714285714,185.14285714285714 h93.26571428571428 q207.59142857142854,0 207.59142857142854,-127.74857142857142 v-57.394285714285715"></path>
-                                                                            <path class="abc-outline abc-outline-green" data-index="3" data-value="3" d="M-104.14285714285714,185.14285714285714 h30.085714285714285 q270.77142857142854,0 270.77142857142854,-166.62857142857143 v-18.514285714285712"></path>
-                                                                            <path class="abc-outline abc-outline-orange" data-index="3" data-value="4" d="M-104.14285714285714,185.14285714285714 h0 a300.85714285714283,-185.14285714285714 0 0 0 300.85714285714283,-185.14285714285714 v-0"></path>
-                                                                            <path class="abc-invisible" d="M-98.93571428571428,175.88571428571427 h0 a285.8142857142857,-175.88571428571427 0 0 0 285.8142857142857,-175.88571428571427 v-0"></path>
-                                                                            <path class="abc-curve" d="M-104.14285714285714,185.14285714285714 h0 a300.85714285714283,-185.14285714285714 0 0 0 300.85714285714283,-185.14285714285714 v-0"></path>
-                                                                        </g>
-                                                                    </svg>
+                                                                    {!! Form::select('design_id', $design_lenses,null, [
+                                                                        'class' => ' selectpicker form-control',
+                                                                        'data-live-search' => 'true',
+                                                                        'style' => 'width: 80%',
+                                                                       'data-actions-box' => 'true',
+                                                                        'id' => 'design_id',
+                                                                        'placeholder' => __('lang.please_select'),
+                                                                    ]) !!}
                                                                 </div>
                                                             </div>
-                                            --}}
-                                                            <input type="hidden" value="" name="product[VA][code][value]" id="input_predefined_shape">
-                                                            <div id="predefined_shape" class="owf-page-shapeDefinition-manual-predefinedShape">
-                                                                <div class="owf-page-shapeDefinition-title owf-headline">
-                                                                    {{translate('Önceden Tanımlanmış Şekiller')}}    </div>
-
-                                                                <div class="owf-page-shapeDefinition-manual-predefinedShape-container" tabindex="0">
-                                                                    <svg class="predefinedShape abc" data-ccode="2223" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
-                                                                        <text class="abc-cCode">2223</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc" data-ccode="1112" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h55.8 q124.2,0 124.2,-76.43076923076924 v-34.33846153846154"></path>
-                                                                        <text class="abc-cCode">1112</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc" data-ccode="3333" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
-                                                                        <text class="abc-cCode">3333</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc" data-ccode="2144" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
-                                                                        <text class="abc-cCode">2144</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc" data-ccode="1224" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
-                                                                        <text class="abc-cCode">1224</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc" data-ccode="2233" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
-                                                                        <text class="abc-cCode">2233</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc " data-ccode="3344" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
-                                                                        <text class="abc-cCode">3344</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc" data-ccode="1223" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
-                                                                        <text class="abc-cCode">1223</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc" data-ccode="1244" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
-                                                                        <text class="abc-cCode">1244</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc" data-ccode="1123" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
-                                                                        <text class="abc-cCode">1123</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc" data-ccode="1111" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h97.2 q82.8,0 82.8,-50.95384615384616 v-59.815384615384616"></path>
-                                                                        <text class="abc-cCode">1111</text>
-                                                                    </svg>
-                                                                    <svg class="predefinedShape abc" data-ccode="2244" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
-                                                                        <text class="abc-cCode">2244</text>
-                                                                    </svg>
-
-                                                                    <svg class="predefinedShape abc" data-ccode="4444" viewBox="-200 -180 400 360" width="110px" height="90px" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path class="abc-lens" d="
-                                                                            M-180,0
-                                                                            a180,120 0 1,0 360,0
-                                                                            a180,120 0 1,0 -360,0
-                                                                            " fill="#d6e9f8" stroke="#578981" stroke-width="2"></path>
-                                                                        <text class="abc-cCode">4444</text>
-                                                                    </svg>
-
-
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    {!! Form::label('index_id', translate('index'), [
+                                                                        'class' => 'form-label d-block mb-1 ',
+                                                                    ]) !!}
+                                                                    {!! Form::select('index_id', $index_lenses,null, [
+                                                                        'class' => ' selectpicker form-control',
+                                                                        'data-live-search' => 'true',
+                                                                        'style' => 'width: 80%',
+                                                                       'data-actions-box' => 'true',
+                                                                        'id' => 'index_id',
+                                                                        'placeholder' => __('lang.please_select'),
+                                                                    ]) !!}
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    {!! Form::label('color_id', translate('color'), [
+                                                                        'class' => 'form-label d-block mb-1 ',
+                                                                    ]) !!}
+                                                                    {!! Form::select('color_id', $colors,null, [
+                                                                        'class' => ' selectpicker form-control',
+                                                                        'data-live-search' => 'true',
+                                                                        'style' => 'width: 80%',
+                                                                       'data-actions-box' => 'true',
+                                                                        'id' => 'color_id',
+                                                                        'placeholder' => __('lang.please_select'),
+                                                                    ]) !!}
+                                                                </div>
+                                                            </div>
+                                                            {{--                                        lenses--}}
+
                                                         </div>
                                                     </div>
-
-
-
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group ">
+                                                        {!! Form::label('lens_id', translate('lens'), [
+                                                           'class' => 'form-label d-block mb-1 ',
+                                                       ]) !!}
+                                                        {!! Form::select('lens_id', $lenses,null, [
+                                                            'class' => ' selectpicker form-control',
+                                                            'data-live-search' => 'true',
+                                                            'style' => 'width: 80%',
+                                                           'data-actions-box' => 'true',
+                                                            'id' => 'lens_id',
+                                                            'placeholder' => __('lang.please_select'),
+                                                        ]) !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
+                                                <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#moreInfoCollapse" aria-expanded="false" aria-controls="moreInfoCollapse">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                    {{translate('Ek işlemler')}}
+                                                    <span class="section-header-pill"></span>
+                                                </button>
+                                            </div>
+                                            <div class="collapse" id="moreInfoCollapse">
+                                                <div class="card mb-3">
+                                                    <div class="card-body p-2">
+                                                        <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                                                            <div class="col-md-3 px-5">
+                                                                    <div class="noBorderRight">
+                                                                        <div class="check-line" style="width: 100%;text-align: left;">
+                                                                            <div class="icheckbox_square-orange icheck-item icheck[qepho]">
+                                                                                <input type="checkbox" id="VATintingCheck" data-subs="tintingList" class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid" name="product[VA][TinTing][isCheck]" value="1" data-skin="square" data-color="orange" aria-invalid="false"></div>
+                                                                            <label class="inline icheck-label icheck[qepho]" for="VATintingCheck">{{translate("Boyama")}}</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-none color_class">
+                                                                        {!! Form::select('product[VA][TinTing][value]', $colors ,null, [
+                                                                               'class' => ' selectpicker form-control',
+                                                                               'data-live-search' => 'true',
+                                                                               'style' => 'width: 80%',
+                                                                              'data-actions-box' => 'true',
+                                                                               'id' => 'color_product',
+                                                                               'placeholder' => __('lang.please_select'),
+                                                                           ]) !!}
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md-3 px-5">
+                                                                    <div class="noBorderRight">
+                                                                        <div class="check-line" style="width: 100%;text-align: left;">
+                                                                            <div class="icheckbox_square-orange icheck-item icheck[wzqw0]"><input type="checkbox" id="VABaseCheck" data-subs="vaBaseList" class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]" name="product[VA][Base][isCheck]" value="1" data-skin="square" data-color="orange"></div>
+                                                                            <label class="inline icheck-label icheck[wzqw0]" for="VABaseCheck">{{translate("Özel Baz")}}</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-none VABaseCheck_class">
+                                                                        {!! Form::select('product[VA][Base][value]', $special_bases ,null, [
+                                                                               'class' => ' selectpicker form-control',
+                                                                               'data-live-search' => 'true',
+                                                                               'style' => 'width: 80%',
+                                                                              'data-actions-box' => 'true',
+                                                                               'id' => 'special_base',
+                                                                               'placeholder' => __('lang.please_select'),
+                                                                           ]) !!}
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md-3 px-5">
+                                                                    <div class="noBorderRight">
+                                                                        <div class="check-line" style="width: 100%;text-align: left;">
+                                                                            <div class="icheckbox_square-orange icheck-item icheck[wzqw0]">
+                                                                                <input type="checkbox" id="specific_diameter" data-subs="vaBaseList"
+                                                                                       class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
+                                                                                       name="product[VA][Ozel][isCheck]" value="1" data-skin="square"
+                                                                                       data-color="orange"></div>
+                                                                            <label class="inline icheck-label icheck[wzqw0]" for="specific_diameter">{{translate("Özel Çap")}}</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-none specific_diameter_class">
+                                                                        {!! Form::number('product[VA][Ozel][value]' ,null, [
+                                                                               'class' => ' selectpicker form-control',
+                                                                               'style' => 'width: 80%',
+                                                                              'data-actions-box' => 'true',
+                                                                               'id' => 'specific_diameter_input',
+                                                                           ]) !!}
+                                                                    </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 px-5">
+                                                                <div class="noBorderRight">
+                                                                    <div class="check-line" style="width: 100%;text-align: left;">
+                                                                        <div class="icheckbox_square-orange icheck-item icheck[qepho]">
+                                                                            <input type="checkbox" id="codeCheck" data-subs="tintingList"
+                                                                                   class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
+                                                                                   name="product[VA][code][isCheck]" value="1" data-skin="square" data-color="orange" aria-invalid="false"></div>
+                                                                        <label class="inline icheck-label icheck[qepho]" for="codeCheck">{{translate("Çerçeve Tipi")}}</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="owf-page-shapeDefinition-manual-shape d-none">
+                                                                    <!--SVG element which declares definitions that are used in all other SVGs by reference-->
+                                                                    <svg width="0" height="0" class="abc">
+                                                                        <defs>
+                                                                            <marker id="abc_arrowhead" markerWidth="15" markerHeight="5" refX="0" refY="2.5" orient="auto">
+                                                                                <polygon class="abc-indicator" points="0 0, 15 2.5, 0 5"></polygon>
+                                                                            </marker>
+                                                                            <linearGradient id="abc_lensGradient" gradientTransform="rotate(90)">
+                                                                                <stop offset="10%" stop-color="#c4e4fa"></stop>
+                                                                                <stop offset="50%" stop-color="#90bff1"></stop>
+                                                                                <stop offset="50%" stop-color="#84b7ed"></stop>
+                                                                                <stop offset="90%" stop-color="#bfe3fe"></stop>
+                                                                            </linearGradient>
+                                                                        </defs>
+                                                                    </svg>
+
+                                                                    {{--    <div class="owf-page-shapeDefinition-manual-shape-abc">
+
+
+
+                                                                        <!-- CCode controls -->
+                                                                        <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlTopLeft">
+                                                                            <button type="button" class="owf-button ui basic button" data-index="1" data-value="1">
+                                                                                <span class="owf-button-label">1</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="1" data-value="2">
+                                                                                <span class="owf-button-label">2</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button selected" data-index="1" data-value="3">
+                                                                                <span class="owf-button-label">3</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="1" data-value="4">
+                                                                                <span class="owf-button-label">4</span>
+                                                                            </button>      </div>
+                                                                        <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlTopRight">
+                                                                            <button type="button" class="owf-button ui basic button" data-index="0" data-value="1">
+                                                                                <span class="owf-button-label">1</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="0" data-value="2">
+                                                                                <span class="owf-button-label">2</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button selected" data-index="0" data-value="3">
+                                                                                <span class="owf-button-label">3</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="0" data-value="4">
+                                                                                <span class="owf-button-label">4</span>
+                                                                            </button>      </div>
+                                                                        <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlBottomLeft">
+                                                                            <button type="button" class="owf-button ui basic button" data-index="2" data-value="1">
+                                                                                <span class="owf-button-label">1</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="2" data-value="2">
+                                                                                <span class="owf-button-label">2</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="2" data-value="3">
+                                                                                <span class="owf-button-label">3</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button selected" data-index="2" data-value="4">
+                                                                                <span class="owf-button-label">4</span>
+                                                                            </button>      </div>
+                                                                        <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlBottomRight">
+                                                                            <button type="button" class="owf-button ui basic button" data-index="3" data-value="1">
+                                                                                <span class="owf-button-label">1</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="3" data-value="2">
+                                                                                <span class="owf-button-label">2</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="3" data-value="3">
+                                                                                <span class="owf-button-label">3</span>
+                                                                            </button>        <button type="button" class="owf-button ui basic button selected" data-index="3" data-value="4">
+                                                                                <span class="owf-button-label">4</span>
+                                                                            </button>      </div>
+
+                                                                        <!-- Actual SVG box -->
+                                                                        <div class="owf-page-shapeDefinition-manual-shape-svg">
+                                                                            <svg id="shape_view_svg" class="abc transitioning" viewBox="-575 -270 1000 720" xmlns="http://www.w3.org/2000/svg">
+                                                                                <!-- Indicator text pieces -->
+                                                                                <text id="abc_text_a" class="abc-indicator abc-text" x="0" y="0" transform="translate(-104.14285714285717, 325)"><tspan>A-Boyutu</tspan><title>A-Boyutu</title></text>
+                                                                                <text id="abc_text_b" class="abc-indicator abc-text" x="0" y="0" transform="translate(-450, 0) rotate(90)"><tspan>B-Boyutu</tspan><title>B-Boyutu</title></text>
+                                                                                <text id="abc_text_dbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(300.85714285714283, 325)"><tspan>DBL</tspan><title>DBL</title></text>
+                                                                                <text id="abc_text_adbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 400)"><tspan>A-Boyutu + DBL</tspan><title>A-Boyutu + DBL</title></text>
+
+                                                                                <!-- Size indicator lines -->
+                                                                                <line id="abc_line_shape_top_end" class="abc-indicator abc-line" x1="0" y1="0" x2="-1000" y2="0" transform="translate(-104.14285714285714, -185.14285714285714) scale(0.3958571428571429, 1)"></line>
+                                                                                <line id="abc_line_shape_bottom_end" class="abc-indicator abc-line" x1="0" y1="0" x2="-1000" y2="0" transform="translate(-104.14285714285714, 185.14285714285714) scale(0.3958571428571429, 1)"></line>
+                                                                                <line id="abc_line_shape_left_end" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="450" transform="translate(-405, 0)"></line>
+                                                                                <line id="abc_line_shape_right_end" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="375" transform="translate(196.7142857142857, 0)"></line>
+                                                                                <line id="abc_line_dbl_end" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="450" transform="translate(405, 0)"></line>
+
+                                                                                <!-- A size arrow -->
+                                                                                <line id="abc_line_a" class="abc-indicator abc-line" x1="0" y1="0" x2="1000" y2="0" transform="translate(-360, 350) scale(0.5117142857142857, 1)"></line>
+                                                                                <line id="abc_line_a_arrow_left" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="-1" y2="0" transform="translate(-360, 350)"></line>
+                                                                                <line id="abc_line_a_arrow_right" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="1" y2="0" transform="translate(151.71428571428567, 350)"></line>
+
+                                                                                <!-- B size arrow -->
+                                                                                <line id="abc_line_b" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="1000" transform="translate(-475, -140.14285714285714) scale(1, 0.2802857142857143)"></line>
+                                                                                <line id="abc_line_b_arrow_top" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="0" y2="-1" transform="translate(-475, -140.14285714285714)"></line>
+                                                                                <line id="abc_line_b_arrow_bottom" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="0" y2="1" transform="translate(-475, 140.14285714285714)"></line>
+
+                                                                                <!-- DBL arrow -->
+                                                                                <line id="abc_line_dbl" class="abc-indicator abc-line" x1="0" y1="0" x2="1000" y2="0" transform="translate(241.7142857142857, 350) scale(0.11828571428571427, 1)"></line>
+                                                                                <line id="abc_line_dbl_arrow_left" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="-1" y2="0" transform="translate(241.7142857142857, 350)"></line>
+                                                                                <line id="abc_line_dbl_arrow_right" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="1" y2="0" transform="translate(360, 350)"></line>
+
+                                                                                <!-- A size + DBL arrow -->
+                                                                                <line id="abc_line_adbl" class="abc-indicator abc-line" x1="0" y1="0" x2="1000" y2="0" transform="translate(-360, 425) scale(0.72, 1)"></line>
+                                                                                <line id="abc_line_adbl_arrow_left" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="-1" y2="0" transform="translate(-360, 425)"></line>
+                                                                                <line id="abc_line_adbl_arrow_right" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="1" y2="0" transform="translate(360, 425)"></line>
+
+                                                                                <!-- Indicator text pieces -->
+                                                                                <text id="abc_text_a" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0)"><tspan></tspan><title></title></text>
+                                                                                <text id="abc_text_b" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0) rotate(90)"><tspan></tspan><title></title></text>
+                                                                                <text id="abc_text_dbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0)"><tspan></tspan><title></title></text>
+                                                                                <text id="abc_text_adbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0)"><tspan></tspan><title></title></text>
+
+                                                                                <!-- DBL -->
+                                                                                <path id="dbl_shape" class="abc-dbl abc-curve incomplete" d="M196.7142857142857,0 q104.14285714285714,-104.14285714285714 208.28571428571428,0"></path>
+
+                                                                                <!-- Selected shape -->
+                                                                                <path id="abc_shape_selected_fill" class="abc-lens" d="M196.7142857142857,0 v-18.514285714285712 q0,-166.62857142857143 -270.77142857142854,-166.62857142857143 h-30.085714285714285 h-30.085714285714285 q-270.77142857142854,0 -270.77142857142854,166.62857142857143 v18.514285714285712 v0 a300.85714285714283,185.14285714285714 0 0 0 300.85714285714283,185.14285714285714 h0 h0 a300.85714285714283,-185.14285714285714 0 0 0 300.85714285714283,-185.14285714285714 v-0"></path>
+
+                                                                                <!-- Shape: top right -->
+                                                                                <g id="abc_shape_top_right" class="abc-shape-quadrant" data-index="0">
+                                                                                    <path class="abc-outline abc-outline-blue" data-index="0" data-value="1" d="M196.7142857142857,0 v-99.97714285714287 q0,-85.16571428571427 -138.3942857142857,-85.16571428571427 h-162.46285714285713"></path>
+                                                                                    <path class="abc-outline abc-outline-red" data-index="0" data-value="2" d="M196.7142857142857,0 v-57.394285714285715 q0,-127.74857142857142 -207.59142857142854,-127.74857142857142 h-93.26571428571428"></path>
+                                                                                    <path class="abc-outline abc-outline-green" data-index="0" data-value="3" d="M196.7142857142857,0 v-18.514285714285712 q0,-166.62857142857143 -270.77142857142854,-166.62857142857143 h-30.085714285714285"></path>
+                                                                                    <path class="abc-outline abc-outline-orange" data-index="0" data-value="4" d="M196.7142857142857,0 v-0 a-300.85714285714283,-185.14285714285714 0 0 0 -300.85714285714283,-185.14285714285714 h-0"></path>
+                                                                                    <path class="abc-invisible" d="M186.8785714285714,0 v-0 a-285.8142857142857,-175.88571428571427 0 0 0 -285.8142857142857,-175.88571428571427 h-0"></path>
+                                                                                    <path class="abc-curve" d="M196.7142857142857,0 v-18.514285714285712 q0,-166.62857142857143 -270.77142857142854,-166.62857142857143 h-30.085714285714285"></path>
+                                                                                </g>
+
+                                                                                <!-- Shape: top left -->
+                                                                                <g id="abc_shape_top_left" class="abc-shape-quadrant" data-index="1">
+                                                                                    <path class="abc-outline abc-outline-blue" data-index="1" data-value="1" d="M-104.14285714285714,-185.14285714285714 h-162.46285714285713 q-138.3942857142857,0 -138.3942857142857,85.16571428571427 v99.97714285714287"></path>
+                                                                                    <path class="abc-outline abc-outline-red" data-index="1" data-value="2" d="M-104.14285714285714,-185.14285714285714 h-93.26571428571428 q-207.59142857142854,0 -207.59142857142854,127.74857142857142 v57.394285714285715"></path>
+                                                                                    <path class="abc-outline abc-outline-green" data-index="1" data-value="3" d="M-104.14285714285714,-185.14285714285714 h-30.085714285714285 q-270.77142857142854,0 -270.77142857142854,166.62857142857143 v18.514285714285712"></path>
+                                                                                    <path class="abc-outline abc-outline-orange" data-index="1" data-value="4" d="M-104.14285714285714,-185.14285714285714 h-0 a-300.85714285714283,185.14285714285714 0 0 0 -300.85714285714283,185.14285714285714 v0"></path>
+                                                                                    <path class="abc-invisible" d="M-98.93571428571428,-175.88571428571427 h-0 a-285.8142857142857,175.88571428571427 0 0 0 -285.8142857142857,175.88571428571427 v0"></path>
+                                                                                    <path class="abc-curve" d="M-104.14285714285714,-185.14285714285714 h-30.085714285714285 q-270.77142857142854,0 -270.77142857142854,166.62857142857143 v18.514285714285712"></path>
+                                                                                </g>
+
+                                                                                <!-- Shape: bottom left -->
+                                                                                <g id="abc_shape_bottom_left" class="abc-shape-quadrant" data-index="2">
+                                                                                    <path class="abc-outline abc-outline-blue" data-index="2" data-value="1" d="M-405,0 v99.97714285714287 q0,85.16571428571427 138.3942857142857,85.16571428571427 h162.46285714285713"></path>
+                                                                                    <path class="abc-outline abc-outline-red" data-index="2" data-value="2" d="M-405,0 v57.394285714285715 q0,127.74857142857142 207.59142857142854,127.74857142857142 h93.26571428571428"></path>
+                                                                                    <path class="abc-outline abc-outline-green" data-index="2" data-value="3" d="M-405,0 v18.514285714285712 q0,166.62857142857143 270.77142857142854,166.62857142857143 h30.085714285714285"></path>
+                                                                                    <path class="abc-outline abc-outline-orange" data-index="2" data-value="4" d="M-405,0 v0 a300.85714285714283,185.14285714285714 0 0 0 300.85714285714283,185.14285714285714 h0"></path>
+                                                                                    <path class="abc-invisible" d="M-384.75,0 v0 a285.8142857142857,175.88571428571427 0 0 0 285.8142857142857,175.88571428571427 h0"></path>
+                                                                                    <path class="abc-curve" d="M-405,0 v0 a300.85714285714283,185.14285714285714 0 0 0 300.85714285714283,185.14285714285714 h0"></path>
+                                                                                </g>
+
+                                                                                <!-- Shape: bottom right -->
+                                                                                <g id="abc_shape_bottom_right" class="abc-shape-quadrant" data-index="3">
+                                                                                    <path class="abc-outline abc-outline-blue" data-index="3" data-value="1" d="M-104.14285714285714,185.14285714285714 h162.46285714285713 q138.3942857142857,0 138.3942857142857,-85.16571428571427 v-99.97714285714287"></path>
+                                                                                    <path class="abc-outline abc-outline-red" data-index="3" data-value="2" d="M-104.14285714285714,185.14285714285714 h93.26571428571428 q207.59142857142854,0 207.59142857142854,-127.74857142857142 v-57.394285714285715"></path>
+                                                                                    <path class="abc-outline abc-outline-green" data-index="3" data-value="3" d="M-104.14285714285714,185.14285714285714 h30.085714285714285 q270.77142857142854,0 270.77142857142854,-166.62857142857143 v-18.514285714285712"></path>
+                                                                                    <path class="abc-outline abc-outline-orange" data-index="3" data-value="4" d="M-104.14285714285714,185.14285714285714 h0 a300.85714285714283,-185.14285714285714 0 0 0 300.85714285714283,-185.14285714285714 v-0"></path>
+                                                                                    <path class="abc-invisible" d="M-98.93571428571428,175.88571428571427 h0 a285.8142857142857,-175.88571428571427 0 0 0 285.8142857142857,-175.88571428571427 v-0"></path>
+                                                                                    <path class="abc-curve" d="M-104.14285714285714,185.14285714285714 h0 a300.85714285714283,-185.14285714285714 0 0 0 300.85714285714283,-185.14285714285714 v-0"></path>
+                                                                                </g>
+                                                                            </svg>
+                                                                        </div>
+                                                                    </div>
+                                                    --}}
+                                                                    <input type="hidden" value="" name="product[VA][code][value]" id="input_predefined_shape">
+                                                                    <div id="predefined_shape" class="owf-page-shapeDefinition-manual-predefinedShape">
+                                                                        <div class="owf-page-shapeDefinition-title owf-headline">
+                                                                            {{translate('Önceden Tanımlanmış Şekiller')}}    </div>
+
+                                                                        <div class="owf-page-shapeDefinition-manual-predefinedShape-container" tabindex="0">
+                                                                            <svg class="predefinedShape abc" data-ccode="2223" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                                <text class="abc-cCode">2223</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc" data-ccode="1112" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h55.8 q124.2,0 124.2,-76.43076923076924 v-34.33846153846154"></path>
+                                                                                <text class="abc-cCode">1112</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc" data-ccode="3333" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                                <text class="abc-cCode">3333</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc" data-ccode="2144" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                                <text class="abc-cCode">2144</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc" data-ccode="1224" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                                <text class="abc-cCode">1224</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc" data-ccode="2233" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                                <text class="abc-cCode">2233</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc " data-ccode="3344" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                                <text class="abc-cCode">3344</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc" data-ccode="1223" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                                <text class="abc-cCode">1223</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc" data-ccode="1244" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                                <text class="abc-cCode">1244</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc" data-ccode="1123" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                                <text class="abc-cCode">1123</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc" data-ccode="1111" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h97.2 q82.8,0 82.8,-50.95384615384616 v-59.815384615384616"></path>
+                                                                                <text class="abc-cCode">1111</text>
+                                                                            </svg>
+                                                                            <svg class="predefinedShape abc" data-ccode="2244" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                                <text class="abc-cCode">2244</text>
+                                                                            </svg>
+
+                                                                            <svg class="predefinedShape abc" data-ccode="4444" viewBox="-200 -180 400 360" width="110px" height="90px" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens" d="
+                                                                                    M-180,0
+                                                                                    a180,120 0 1,0 360,0
+                                                                                    a180,120 0 1,0 -360,0
+                                                                                    " fill="#d6e9f8" stroke="#578981" stroke-width="2"></path>
+                                                                                <text class="abc-cCode">4444</text>
+                                                                            </svg>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+                                            <div class="clearfix"></div>
                                         </div>
-                                    </div>
+                                        <div  class="col-3 lens-vu-per" >
+                                                <div class="lens-vu-item-per ">
+                                                    {{translate('lenses_price')}}: <span class="price-lens" id="total-lens"> {!!   num_format(0) !!}</span>
+                                                </div>
+                                                <div class="lens-vu-item-per d-none">
+                                                    {{translate('TinTing_amount')}}: <span class="price-lens" id="total-lens"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                                </div>
+                                                <div class="lens-vu-item-per d-none">
+                                                    {{translate('Base_amount')}}: <span class="price-lens" id="total-lens"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                                </div>
+                                                <div class="lens-vu-item-per d-none">
+                                                    {{translate('Ozel_amount')}}: <span class="price-lens" id="total-lens"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                                </div>
 
-
-
-
-
-
-                                    <div class="clearfix"></div>
+                                                <hr>
+                                                <div class="lens-vu-item-per total-lens ">
+                                                    {{translate('total_price')}}: <span class="price-lens " id="total-lens"> {!!   num_format(0) !!} {{session("currency")["symbol"]}}</span>
+                                                </div>
+                                        </div>
                                     <!--product filter END-->
+                                    </div>
                                     <!--middle row-->
                                     <div class="row orderInputs">
                                         <div class="col-md-6">

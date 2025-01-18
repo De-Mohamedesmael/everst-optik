@@ -1393,4 +1393,8 @@
   'Base_amount' => 'Base amount',
   'Ozel_amount' => 'Ozel amount',
   'code_title' => 'Code title',
+  'add_lens_image' => 'Add lens image',
+  'add_lens_information' => 'Add lens information',
+  'lenses_price' => 'Lenses price',
+  'total_price' => 'Total price',
 );

@@ -180,6 +180,7 @@
         left: 62% !important;
         /* right: 15% !important; */
     }
+
     .technicalLeftMenu {
         width: 80px;
         height: 100%;
@@ -199,7 +200,13 @@
         width: 100%;
         border-bottom: 1px solid #dcdcdc;
     }
-
+    .technicalLeftMenu_.pixarMenu a {
+        height: auto;
+        padding: {{132/$brand_lens->count()?:1}}px 0;
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid #dcdcdc;
+    }
     .technicalLeftMenu a:hover,
     .technicalLeftMenu a.active {
         background: #ebebeb;
@@ -256,13 +263,17 @@
     span.effect {
         border: 1px solid #1a89ca;
     }
-
+    .technicalLeftMenu.technicalLeftMenu_.pixarMenu {
+        left: 70px;
+        width: 40px !important;
+    }
 </style>
 <main>
     @php
         $first_after='';
         $first_before='';
         $previous_icons=[];
+        $html_links_='';
         $html_links='';
         foreach ($brand_lens as $key=>$brand_len){
             $previous_icons[$key]=$brand_len;
@@ -348,6 +359,17 @@
 
          $html_links .=' <img style="    transform: rotate(-90deg);height: 30px;" src="'.$brand->icon.'">';
          $html_links .='</a>';
+
+
+         $html_links_ .=  '<a class="div-price" data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
+
+          if($key==0){
+              $html_links_ .= 'active';
+          }
+          $html_links_ .= '">';
+
+         $html_links_ .=' <span  style="writing-mode: vertical-rl; transform: rotate(180deg); height: 55px;color: #dd8888;" > '.$brand->price.' '.session("currency")["symbol"].' </span>';
+         $html_links_ .='</a>';
         @endphp
 
 
@@ -356,7 +378,9 @@
     <div class="technicalLeftMenu pixarMenu">
         {!! $html_links !!}
     </div>
-
+    <div class="technicalLeftMenu technicalLeftMenu_ pixarMenu">
+        {!! $html_links_ !!}
+    </div>
 
 </main>
 
