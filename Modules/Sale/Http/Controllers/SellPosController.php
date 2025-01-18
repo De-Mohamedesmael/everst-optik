@@ -1824,32 +1824,32 @@ class SellPosController extends Controller
             'product' => 'required|array',
             'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
             'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
-            'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
-            'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
-            'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
-            'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
-            'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+//            'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+//            'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+//            'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+//            'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+//            'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+//            'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+//            'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+//            'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
 
 
             'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
             'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
-            'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
-            'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
-            'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
-            'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
-            'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+//            'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+//            'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+//            'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+//            'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+//            'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+//            'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+//            'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+//            'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
 
 
-            'product.VA.TinTing.value' => 'required_if:product.VA.TinTing.isCheck,==,1|exists:colors,id',
-            'product.VA.Base.value' => 'required_if:product.VA.Base.isCheck,==,1',
-            'product.VA.Ozel.value' => 'required_if:product.VA.Ozel.isCheck,==,1',
-            'product.VA.code.value' => 'required_if:product.VA.code.isCheck,==,1',
+            'product.VA.TinTing.value' => 'required_if:product.VA.TinTing.isCheck,1',
+            'product.VA.Base.value' => 'required_if:product.VA.Base.isCheck,1',
+            'product.VA.Ozel.value' => 'required_if:product.VA.Ozel.isCheck,1',
+            'product.VA.code.value' => 'required_if:product.VA.code.isCheck,1',
         ]);
         if ($validator->fails())
             return [
@@ -1860,8 +1860,9 @@ class SellPosController extends Controller
         $VA_amount=[];
         $total=0;
         $VA=[];
-        if($request->product['VA']['TinTing']['isCheck']!= null){
-            $VA_amount['TinTing_amount'] = System::getProperty('TinTing_amount')?:10;
+        if (isset($request->product['VA']['TinTing']['isCheck']) && $request->product['VA']['TinTing']['isCheck'] != null) {
+
+                $VA_amount['TinTing_amount'] = System::getProperty('TinTing_amount')?:10;
             $color = Color::whereId($request->product['VA']['TinTing']['value'])->first();
             $total=$total+$VA_amount['TinTing_amount'];
             $VA['TinTing']=$request->product['VA']['TinTing'];
@@ -1869,7 +1870,7 @@ class SellPosController extends Controller
 
         }
 
-        if($request->product['VA']['Base']['isCheck'] != null){
+        if (isset($request->product['VA']['Base']['isCheck']) && $request->product['VA']['Base']['isCheck'] != null) {
 
             $Base=SpecialBase::whereId($request->product['VA']['Base']['value'])->first();
             $VA_amount['Base_amount']=0;
@@ -1882,7 +1883,7 @@ class SellPosController extends Controller
         }
 
 
-        if($request->product['VA']['Ozel']['isCheck'] != null){
+        if(isset($request->product['VA']['Ozel']['isCheck']) && $request->product['VA']['Ozel']['isCheck'] != null){
             $VA_amount['Ozel_amount'] = System::getProperty('Ozel_amount')?:10;
             $total=$total+$VA_amount['Ozel_amount'];
             $VA['Ozel']=$request->product['VA']['Ozel'];

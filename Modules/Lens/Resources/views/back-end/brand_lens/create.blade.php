@@ -29,6 +29,19 @@
 
                 </div>
             </div>
+            <div class="col-sm-6 mb-2">
+                {!! Form::label('price', __('lang.price') . '*', [
+                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                <div class="input-group my-group select-button-group">
+                    {!! Form::number('price', null, [
+                        'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                        'placeholder' => __('lang.price'),
+                        'required',
+                    ]) !!}
+
+                </div>
+            </div>
             <div class="col-md-6 px-5">
                 <div class="form-group">
                     {!! Form::label('feature_id', __('lang.features'), [
@@ -108,8 +121,8 @@
                     <div class="modal-body">
                         <div id="croppie-brand_lens-modal" style="display:none">
                             <div id="croppie-brand_lens-container"></div>
-                            <button data-dismiss="modal" id="croppie-brand_lens-cancel-btn" type="button"
-                                class="btn btn-secondary"><i class="fas fa-times"></i></button>
+                            <button  data-dismiss="modal" id="croppie-brand_lens-cancel-btn" type="button"
+                                 class="btn btn-secondary"><i class="fas fa-times"></i></button>
                             <button id="croppie-brand_lens-submit-btn" type="button" class="btn btn-primary"><i
                                     class="fas fa-crop"></i></button>
                         </div>

@@ -7,6 +7,9 @@
         :root {
             --secondary-color: #578981;
         }
+        .payment-options button {
+            color: #fff;
+        }
         .input-group-btn button.btn {
             padding: 0 !important;
             margin: 0 !important;
@@ -30,6 +33,9 @@
             font-size: 11px;
             color: #034137;
             padding: 1px 0;
+        }
+        .card {
+            box-shadow: none !important;
         }
     </style>
 @endsection
@@ -737,9 +743,82 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                     </div>
 
 
-                    <div class="payment-options row table_room_hide"
-                        style=" width:  100%;">
 
+                    <div class="payment-options row table_room_hide"
+                         style=" width: @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket') 100%; @else 50%; @endif">
+                        <div class="col-md-12 flex-wrap d-flex justify-content-start justify-content-lg-center align-items-center mb-3  @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"
+                             style="font-size: 16px;font-weight: 600">
+                            <div
+                                class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
+                                <button data-method="cash"
+                                        style="background: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                        type="button" class="btn btn-custom w-75 pos-button payment-btn" data-toggle="modal"
+                                        data-target="#add-payment" data-backdrop="static" data-keyboard="false"
+                                        id="cash-btn">
+                                    <div style="width: 18px">
+                                        <img class="w-100 h-100"
+                                             src="{{ asset('front/images/icons Png/Icon awesome-money-check-alt.png') }}"
+                                             alt="Pay">
+                                    </div>
+                                    @lang('lang.pay')
+                                </button>
+                            </div>
+                            <div
+                                class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
+                                <button data-method="cash" style="background: var(--secondary-color)" type="button"
+                                        class="btn w-75 pos-button btn-custom" id="quick-pay-btn"><i
+                                        class="fa fa-money"></i>
+                                    @lang('lang.quick_pay')</button>
+                            </div>
+                            <div
+                                class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
+                                <button data-method="pay-later"
+                                        style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                        type="button" class="btn  w-75 pos-button btn-custom" id="pay-later-btn">
+                                    <div style="width: 18px">
+                                        <img class="w-100 h-100"
+                                             src="{{ asset('front/images/icons Png/Icon material-watch-later.png') }}"
+                                             alt="Pay">
+                                    </div>
+                                    @lang('lang.pay_later')
+                                </button>
+                            </div>
+                            <div
+                                class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
+                                <button style="background-color: #ff0000;" type="button"
+                                        class="btn  w-75 pos-button btn-custom" id="cancel-btn"
+                                        onclick="return confirmCancel()"><i class="fa fa-close"></i>
+                                    @lang('lang.cancel')</button>
+                            </div>
+                           <div
+                                class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
+                                <button
+                                    style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                    type="button" class="btn  w-75 pos-button btn-custom" id="recent-transaction-btn">
+                                    <div style="width: 18px">
+                                        <img class="w-100 h-100"
+                                             src="{{ asset('front/images/icons Png/Icon material-timer.png') }}"
+                                             alt="Pay">
+                                    </div>
+                                    @lang('lang.recent_transactions')
+                                </button>
+                            </div>
+
+                            <div
+                                class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
+                                <button data-method="draft"
+                                        style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                        type="button" class="btn  w-75 pos-button  btn-custom" id="view-draft-btn"
+                                        data-href="#{{-- --}}">
+                                    <div style="width: 18px">
+                                        <img class="w-100 h-100"
+                                             src="{{ asset('front/images/icons Png/Icon awesome-flag.png') }}" alt="Pay">
+                                    </div>
+                                    @lang('lang.view_lenses_order')
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>
@@ -1004,7 +1083,9 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                 </div>
             </div>
         </div>
+    </div>
 </section>
+
 
 <!-- This will be printed -->
 <section class="invoice print_section print-only" id="receipt_section"> </section>

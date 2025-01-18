@@ -38,14 +38,14 @@
 <div
     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
     <h6 class="mb-0">
-        @lang('lang.add_lens_information')
+        {{translate('add_lens_information')}}
         <span class=" section-header-pill"></span>
     </h6>
 </div>
 <div class="card mb-3">
     <div class="card-body p-2">
         <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-            <div class="col-md-3 px-5">
+            <div class="col-md-2 px-2">
                 <div class="form-group">
                     {!! Form::label('store_ids', __('lang.store'), [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -60,7 +60,7 @@
                     ]) !!}
                 </div>
             </div>
-            <div class="col-md-3 px-5">
+            <div class="col-md-3 px-2">
                 <div class="form-group">
                     {!! Form::label('name', __('lang.name') . ' *', [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -83,7 +83,7 @@
                     'type' => 'lenses',
                 ])
             </div>
-            <div class="col-md-3 px-2">
+            <div class="col-md-2 px-2">
                 <div class="form-group">
                     {!! Form::label('sku', __('lang.sku'), [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -95,7 +95,7 @@
                     ]) !!}
                 </div>
             </div>
-            <div class="col-md-3 px-2">
+            <div class="col-md-2 px-2">
                 <div class="form-group">
                     {!! Form::label('alert_quantity', __('lang.alert_quantity'), [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -131,7 +131,7 @@
                             </span>
                 </div>
             </div>
-            <div class="col-md-4 px-5">
+            <div class="col-md-3 px-2">
                 {!! Form::label('brand_id', __('lang.brands') . ' *', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -151,7 +151,7 @@
                 <div class="error-msg text-red"></div>
             </div>
 
-            <div class="col-md-3 px-5">
+            <div class="col-md-2 px-5">
                 {!! Form::label('focus_id', __('lang.foci') . ' *', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -170,7 +170,7 @@
                 </div>
                 <div class="error-msg text-red"></div>
             </div>
-            <div class="col-md-3 px-5">
+            <div class="col-md-2 px-5">
                 {!! Form::label('index_lens_id', __('lang.index_lenses') . ' *', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -190,6 +190,40 @@
                 <div class="error-msg text-red"></div>
             </div>
 
+
+            <div class="col-md-2 px-5">
+                {!! Form::label('focus_id', __('lang.purchase_price') . ' *', [
+                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                <div class="input-group my-group select-button-group">
+
+
+                    {!! Form::text('purchase_price', !empty($recent_lens) ? @num_format($recent_lens->purchase_price) : 0, [
+                        'class' => 'clear_input_form form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                        'placeholder' => __('lang.purchase_price'),
+                                                    'required',
+
+                    ]) !!}
+                </div>
+                <div class="error-msg text-red"></div>
+            </div>
+            <div class="col-md-2 px-5">
+                {!! Form::label('index_lens_id', __('lang.sell_price') . ' *', [
+                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                <div class="input-group my-group select-button-group">
+
+                    {!! Form::text('sell_price', !empty($recent_lens) ? @num_format($recent_lens->sell_price) : 0, [
+                               'class' => 'clear_input_form form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                               'placeholder' => __('lang.sell_price'),
+                                                           'required',
+
+                           ]) !!}
+
+                </div>
+                <div class="error-msg text-red"></div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -197,7 +231,7 @@
 <div
     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
     <h6 class="mb-0">
-        @lang('lang.add_lens_image')
+        {{translate('add_lens_image')}}
         <span class=" section-header-pill"></span>
     </h6>
 </div>

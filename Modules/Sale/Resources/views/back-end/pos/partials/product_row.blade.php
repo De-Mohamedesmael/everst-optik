@@ -315,22 +315,22 @@
         </td>
     </tr>
 
-    @if($product->is_lens)
+    @if($product->is_lens && $total_vu > 0)
         <tr class="lens-row-{{ $loop->index + $index }}">
             <td>
                 <div  class="lens-vu" >
                     <input type="hidden" value="{{$KeyLens}}" name="KeyLens">
-                    @if($cach_lens['VA_amount']['TinTing_amount'] > 0)
+                    @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)
                         <div class="lens-vu-item">
                             {{translate('TinTing_amount')}}
                         </div>
                     @endif
-                    @if($cach_lens['VA_amount']['Base_amount'] > 0)
+                    @if(isset($cach_lens['VA_amount']['Base_amount']) && $cach_lens['VA_amount']['Base_amount'] > 0)
                         <div class="lens-vu-item">
                             {{translate('Base_amount')}}
                         </div>
                     @endif
-                    @if($cach_lens['VA_amount']['Ozel_amount'] > 0)
+                    @if(isset($cach_lens['VA_amount']['Ozel_amount']) && $cach_lens['VA_amount']['Ozel_amount'] > 0)
                         <div class="lens-vu-item">
                             {{translate('Ozel_amount')}}
                         </div>
@@ -339,17 +339,17 @@
             </td>
             <td>
                 <div  class="lens-vu" >
-                    @if($cach_lens['VA_amount']['TinTing_amount'] > 0)
+                    @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)
                         <div class="lens-vu-item">
                             {{$cach_lens['VA']['TinTing']['text']}}
                         </div>
                     @endif
-                    @if($cach_lens['VA_amount']['Base_amount'] > 0)
+                    @if(isset($cach_lens['VA_amount']['Base_amount']) && $cach_lens['VA_amount']['Base_amount'] > 0)
                         <div class="lens-vu-item">
                             {{$cach_lens['VA']['Base']['text']}}
                         </div>
                     @endif
-                    @if($cach_lens['VA_amount']['Ozel_amount'] > 0)
+                    @if(isset($cach_lens['VA_amount']['Ozel_amount']) && $cach_lens['VA_amount']['Ozel_amount'] > 0)
                         <div class="lens-vu-item">
                             {{$cach_lens['VA']['Ozel']['text']}}
                         </div>
@@ -359,17 +359,17 @@
             <td
                 style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 12%; @else 15%; @endif height:40px">
                 <div class="lens-vu-price" style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
-                    @if($cach_lens['VA_amount']['TinTing_amount'] > 0)
+                    @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)
                         <div class="lens-vu-item">
                             <span class="lens-vu-price">{{$cach_lens['VA_amount']['TinTing_amount']}}</span>
                         </div>
                     @endif
-                    @if($cach_lens['VA_amount']['Base_amount'] > 0)
+                    @if(isset($cach_lens['VA_amount']['Base_amount']) && $cach_lens['VA_amount']['Base_amount'] > 0)
                         <div class="lens-vu-item">
                             <span class="lens-vu-price">{{$cach_lens['VA_amount']['Base_amount']}}</span>
                         </div>
                     @endif
-                    @if($cach_lens['VA_amount']['Ozel_amount'] > 0)
+                    @if(isset($cach_lens['VA_amount']['Ozel_amount']) && $cach_lens['VA_amount']['Ozel_amount'] > 0)
                         <div class="lens-vu-item">
                             <span class="lens-vu-price">{{$cach_lens['VA_amount']['Ozel_amount']}}</span>
                         </div>
@@ -379,7 +379,7 @@
 
             <td>
                 <div  class="lens-vu" >
-                    @if($cach_lens['VA']['code']['isCheck'])
+                    @if(isset($cach_lens['VA']['code']['isCheck']) && $cach_lens['VA']['code']['isCheck'])
                         <div class="lens-vu-item">
                             {{translate('code_title')}}
                         </div>
@@ -388,7 +388,7 @@
             </td>
             <td>
                 <div  class="lens-vu" >
-                    @if($cach_lens['VA']['code']['isCheck'])
+                    @if(isset($cach_lens['VA']['code']['isCheck']) && $cach_lens['VA']['code']['isCheck'])
                         <div class="lens-vu-item">
                             {{$cach_lens['VA']['code']['text']}}
                         </div>
