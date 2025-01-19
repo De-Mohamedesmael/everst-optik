@@ -1399,4 +1399,5 @@
   'total_price' => 'Total price',
   'sells' => 'Sells',
   'returns' => 'Returns',
+  'view_lenses_order' => 'View lenses order',
 );
