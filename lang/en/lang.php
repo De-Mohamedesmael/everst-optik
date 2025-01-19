@@ -1400,4 +1400,9 @@
   'sells' => 'Sells',
   'returns' => 'Returns',
   'view_lenses_order' => 'View lenses order',
+  'lens_image' => 'Lens image',
+  'lens_information' => 'Lens information',
+  'Are you sure?' => 'Are you sure ',
+  'Yes, delete it!' => 'Yes  delete it!',
+  'edit_lens' => 'Edit lens',
 );
