@@ -33,7 +33,7 @@
                     {{-- ################ المنتجات ################ --}}
                     <div class="card-deck home-card-deck col-6 col-md-4 col-lg-2 animate__animated  animate__bounceIn"
                          style="animation-delay: 0.8s">
-                        <a href={{-- route('products.create') --}}>
+                        <a href={{  route('admin.products.index')  }}>
                             <div class="card p-3">
                                 <img class="card-img-top"
                                      src="{{ asset('assets/back-end/images/dashboard-icon/dairy-products.png') }}"
@@ -48,14 +48,14 @@
                     {{-- ################ المشتريات ################ --}}
                     <div class="card-deck home-card-deck col-6 col-md-4 col-lg-2 animate__animated  animate__bounceIn"
                          style="animation-delay: 0.9s">
-                        <a href="{{-- route('pos.index') --}}">
+                        <a href="{{ route('admin.pos.create') }}">
                             <div class="card p-3">
                                 <img class="card-img-top"
                                      src="{{ asset('assets/back-end/images/dashboard-icon/cash-machine.png') }}"
                                      alt="Card image cap">
                                 <div class="card-body pt-2 p-0 text-center">
                                     <a class="font-weight-bold text-decoration-none card-title font-16"
-                                       href="{{-- route('pos.index') --}}">{{ __('lang.sells') }}</a>
+                                       href="{{-- route('pos.index') --}}">{{ translate('sells') }}</a>
                                 </div>
                             </div>
                         </a>
@@ -63,7 +63,7 @@
                     {{-- ################ المشتريات ################ --}}
                     <div class="card-deck home-card-deck col-6 col-md-4 col-lg-2 animate__animated  animate__bounceIn"
                          style="animation-delay: 1s">
-                        <a href="{{-- route('stocks.create') --}}">
+                        <a href="{{ route('admin.add-stock.create') }}">
                             <div class="card p-3">
                                 <img class="card-img-top"
                                      src="{{ asset('assets/back-end/images/dashboard-icon/warehouse.png') }}"
@@ -85,7 +85,7 @@
                                      alt="Card image cap">
                                 <div class="card-body pt-2 p-0 text-center">
                                     <a class="font-weight-bold text-decoration-none card-title font-16"
-                                       href="{{-- route('returns') --}}">{{ __('lang.returns') }}</a>
+                                       href="{{-- route('returns') --}}">{{ translate('returns') }}</a>
                                 </div>
                             </div>
                         </a>
@@ -93,7 +93,7 @@
                     {{-- ################ الموظفين ################ --}}
                     <div class="card-deck home-card-deck col-6 col-md-4 col-lg-2 animate__animated  animate__bounceIn"
                          style="animation-delay: 1.2s">
-                        <a href="{{-- route('employees.create') --}}">
+                        <a href="{{ route('admin.hr.employees.index') }}">
                             <div class="card p-3">
                                 <img class="card-img-top"
                                      src="{{ asset('assets/back-end/images/dashboard-icon/employment.png') }}"
@@ -108,10 +108,10 @@
                     {{-- ################ العملاء ################ --}}
                     <div class="card-deck home-card-deck col-6 col-md-4 col-lg-2 animate__animated  animate__bounceIn"
                          style="animation-delay: 1.3s">
-                        <a href="{{-- route('customers.create') --}}">
+                        <a href="{{ route('admin.customers.create') }}">
                             <div class="card p-3">
                                 <img class="card-img-top"
-                                     src="{{ asset('assets/back-end/images/dashboard-icon/dashboard/customers/-satisfaction.png') }}"
+                                     src="{{ asset('assets/back-end/images/dashboard-icon/customer-satisfaction.png') }}"
                                      alt="Card image cap">
                                 <div class="card-body pt-2 p-0 text-center ">
                                     <a class="font-weight-bold text-decoration-none card-title font-16"

@@ -814,7 +814,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         <img class="w-100 h-100"
                                              src="{{ asset('front/images/icons Png/Icon awesome-flag.png') }}" alt="Pay">
                                     </div>
-                                    @lang('lang.view_lenses_order')
+                                    {{translate('view_lenses_order')}}
                                 </button>
                             </div>
 

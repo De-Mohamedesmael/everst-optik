@@ -6,7 +6,7 @@
             <td class="row_number"></td>
         @endif
         <td
-            style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 17%; @else 20%; @endif height:40px">
+            style="font-size: 12px;padding:3px;margin:2px;width:  17%; height:40px">
             <div
                 style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;    vertical-align: middle;align-items: center;display: flex;flex-direction: column;font-size: 14px">
                 @php
@@ -106,7 +106,7 @@
 
 
         <td
-            style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 12%; @else 20%; @endif height:40px">
+            style="font-size: 12px;padding:3px;margin:2px;width:  12%; height:40px">
             <div
                 style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%; padding-top: 4px;padding-bottom: 4px;">
                 <div class="input-group justify-content-between align-items-center flex-column flex-lg-row"
@@ -165,7 +165,7 @@
 
 
         <td
-            style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 12%; @else 15%; @endif height:40px">
+            style="font-size: 12px;padding:3px;margin:2px;width: 12%; height:40px">
             <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
 
                 <input type="text" class="form-control sell_price text-center d-flex justify-content-center align-items-center"
@@ -178,7 +178,7 @@
 
 
         <td
-            style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 11%; @else 15%; @endif height:40px">
+            style="font-size: 12px;padding:3px;margin:2px;width:11%; height:40px">
             <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
 
                 @php
@@ -227,7 +227,7 @@
 
 
         <td
-            style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 11% @else 15% @endif; height:40px; ">
+            style="font-size: 12px;padding:3px;margin:2px;width:  11% ; height:40px; ">
             <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
 
                 <input type="hidden" value="{{ $product->product_id }}" class="p-id" />
@@ -266,7 +266,7 @@
 
 
         <td
-            style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 9% @else 15% @endif; height:40px">
+            style="font-size: 12px;padding:3px;margin:2px;width:9%; height:40px">
             <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
 
 
@@ -278,9 +278,8 @@
         </td>
 
 
-        @if (session('system_mode') != 'restaurant')
             <td
-                style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 9% @else 15% @endif;height:40px">
+                style="font-size: 12px;padding:3px;margin:2px;width:9%;height:40px">
                 <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
 
                     <div class="d-flex justify-content-center align-items-center"
@@ -296,10 +295,8 @@
                     </div>
                 </div>
             </td>
-        @endif
-
         <td
-            style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 9%; @else 15%; @endif padding: 0px;height:40px;border:none;">
+            style="font-size: 12px;padding:3px;margin:2px;width:9%; padding: 0px;height:40px;border:none;">
 
             <div class="d-flex justify-content-around align-items-center" style="width: 100%;height: 100%;">
 
@@ -357,7 +354,7 @@
                 </div>
             </td>
             <td
-                style="font-size: 12px;padding:3px;margin:2px;width: @if (session('system_mode') != 'restaurant') 12%; @else 15%; @endif height:40px">
+                style="font-size: 12px;padding:3px;margin:2px;width:12%; height:40px">
                 <div class="lens-vu-price" style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
                     @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)
                         <div class="lens-vu-item">

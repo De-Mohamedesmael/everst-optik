@@ -31,7 +31,9 @@ use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductDiscount;
 use Modules\Product\Entities\ProductStore;
 use Modules\Setting\Entities\Color;
+use Modules\Setting\Entities\SpecialBase;
 use Modules\Setting\Entities\Store;
+use Modules\Setting\Entities\System;
 use Modules\Setting\Entities\Tax;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -66,7 +68,7 @@ class LensController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function getProductStocks(Request $request)
+    public function getLensStocks(Request $request)
     {
         $brands = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
@@ -194,13 +196,13 @@ class LensController extends Controller
                     $price= $price? $price->sell_price:$row->sell_price;
                     return number_format($price,2);
                 })//, '{{@num_format($default_sell_price)}}')
-                ->editColumn('default_purchase_price', function ($row) {
+                ->editColumn('purchase_price', function ($row) {
                     $price= AddStockLine::where('product_id',$row->product_id)
                     ->whereHas('transaction', function ($query) {
                         $query->where('type', '!=', 'supplier_service');
                     })
                     ->latest()->first();
-                    $price= $price? ($price->purchase_price > 0 ? $price->purchase_price : $row->default_purchase_price):$row->default_purchase_price;
+                    $price= $price? ($price->purchase_price > 0 ? $price->purchase_price : $row->purchase_price):$row->purchase_price;
 
                     return number_format($price,2);
                 })
@@ -227,7 +229,6 @@ class LensController extends Controller
                 ->addColumn('customer_type', function ($row) {
                     return $row->customer_type;
                 })
-                ->editColumn('exp_date', '@if(!empty($exp_date)){{@format_date($exp_date)}}@endif')
                 ->addColumn('manufacturing_date', '@if(!empty($manufacturing_date)){{@format_date($manufacturing_date)}}@endif')
                 ->editColumn('discount',function ($row) {
                     $discount_text='';
@@ -331,13 +332,12 @@ class LensController extends Controller
                     }
                 ])
                 ->rawColumns([
-                    'show_at_the_main_pos_page',
                     'selection_checkbox',
                     'selection_checkbox_send',
                     'selection_checkbox_delete',
                     'categories_names',
                     'sell_price',
-                    'default_purchase_price',
+                    'purchase_price',
                     'image',
                     'sku',
                     'purchase_history',
@@ -473,7 +473,7 @@ class LensController extends Controller
                 'buy_from_supplier' =>  0,
                 'active' => !empty($request->active) ? 1 : 0,
                 'created_by' => Auth::user()->id,
-                'show_at_the_main_pos_page' => !empty($request->show_at_the_main_pos_page) ? 'yes' : 'no',
+                'show_at_the_main_pos_page' => 'no',
                 'weighing_scale_barcode' => !empty($request->weighing_scale_barcode) ? 1 : 0
             ];
 
@@ -546,7 +546,7 @@ class LensController extends Controller
             abort(403, translate('Unauthorized action.'));
         }
 
-        $product = lens::find($id);
+        $product = Product::find($id);
 
         $stock_detials = ProductStore::where('product_id', $id)->get();
 
@@ -574,31 +574,41 @@ class LensController extends Controller
      */
     public function edit($id)
     {
-        if (!auth()->user()->can('lens_module.lenses.create_and_edit')) {
+        if (!auth()->user()->can('lens_module.lens.create_and_edit')) {
             abort(403, translate('Unauthorized action.'));
         }
-        $product = lens::findOrFail($id);
-        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
-        $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
+        $lens = Product::Lens()->with(['index_lenses','foci','brand_lenses'])->findOrFail($id);
+        $foci = Focus::orderBy('name', 'asc')->pluck('name', 'id');
+        $index_lenses = IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $brands = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
-        $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::where('type', 'product_tax')->orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
         $discount_customer_types = CustomerType::pluck('name', 'id');
+        $stores  = Store::all();
         $stores_select  = Store::getDropdown();
+        $quick_add = request()->quick_add;
 
-        $stores_selected=$product->stores()->pluck( 'store_id')->toarray();
-        $category_id_selected =$product->categories()->pluck( 'categories.id')->toarray();
+
+
+        $stores_selected=$lens->stores()->pluck( 'store_id')->toarray();
+        $index_lenses_selected =$lens->index_lenses()->pluck( 'index_lenses.id')->toarray();
+        $brand_lenses_selected =$lens->brand_lenses()->pluck( 'brand_lenses.id')->toarray();
+        $foci_selected =$lens->foci()->pluck( 'foci.id')->toarray();
         return view('lens::back-end.lenses.edit')->with(compact(
-            'product',
-            'categories',
+            'lens',
             'stores_select',
+            'quick_add',
+            'foci',
+            'stores',
+            'index_lenses',
             'stores_selected',
-            'category_id_selected',
+            'index_lenses_selected',
+            'brand_lenses_selected',
+            'foci_selected',
             'brands',
             'colors',
-            'sizes',
             'taxes',
             'customers',
             'customer_types',
@@ -615,7 +625,7 @@ class LensController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!auth()->user()->can('lens_module.lenses.create_and_edit')) {
+        if (!auth()->user()->can('lens_module.lens.create_and_edit')) {
             abort(403, translate('Unauthorized action.'));
         }
 
@@ -625,82 +635,61 @@ class LensController extends Controller
         );
 
          try {
-            $product_data = [
+             $lens_data = [
                 'name' => $request->name,
+                'is_lens' => 1,
+                'sell_price' => $request->sell_price,
+                'purchase_price' => $request->purchase_price,
                 'translations' => !empty($request->translations) ? $request->translations : [],
-                'brand_id' => $request->brand_id,
-                'sku' => $request->sku,
+                'sku' => !empty($request->sku) ? $request->sku : $this->productUtil->generateSku($request->name),
                 'color_id' => $request->color_id,
-                'size_id' => $request->size_id,
-                'is_service' => !empty($request->is_service) ? 1 : 0,
-                'product_details' => $request->product_details,
                 'barcode_type' => $request->barcode_type ?? 'C128',
                 'alert_quantity' => $request->alert_quantity,
                 'tax_id' => $request->tax_id,
                 'tax_method' => $request->tax_method,
-                'show_to_customer' => !empty($request->show_to_customer) ? 1 : 0,
-                'show_to_customer_types' => $request->show_to_customer_types,
                 'different_prices_for_stores' => !empty($request->different_prices_for_stores) ? 1 : 0,
                 'automatic_consumption' => !empty($request->automatic_consumption) ? 1 : 0,
                 'buy_from_supplier' =>  0,
                 'active' => !empty($request->active) ? 1 : 0,
                 'edited_by' => Auth::user()->id,
-                'show_at_the_main_pos_page' => !empty($request->show_at_the_main_pos_page) ? 'yes' : 'no',
-                'weighing_scale_barcode' => !empty($request->weighing_scale_barcode) ? 1 : 0,
+                'show_at_the_main_pos_page' => 'no',
+                'weighing_scale_barcode' => !empty($request->weighing_scale_barcode) ? 1 : 0
             ];
 
 
             DB::beginTransaction();
-            $product = lens::find($id);
-            $product->update($product_data);
+             $lens = Product::find($id);
+             $lens->update($lens_data);
 
-
-            ProductDiscount::where('product_id',$product->id)->delete();
-            $index_discounts=[];
-            if($request->has('discount_type')){
-                if(count($request->discount_type)>0){
-                    $index_discounts=array_keys($request->discount_type);
-                }
-            }
              if ($request->has('store_ids')){
-                 $this->productUtil->createOrUpdateProductStore($product, $request);
+                 $this->productUtil->createOrUpdateProductStore($lens, $request);
              }
 
-             foreach ($index_discounts as $index_discount){
-                    $discount_customers = $this->getDiscountCustomerFromType($request->get('discount_customer_types_'.$index_discount));
-                    $data_des=[
-                        'product_id' => $product->id,
-                        'discount_type' => $request->discount_type[$index_discount],
-                        'discount_category' => $request->discount_category[$index_discount],
-                        'is_discount_permenant'=>!empty($request->is_discount_permenant[$index_discount])? 1 : 0,
-                        'discount_customer_types' => $request->get('discount_customer_types_'.$index_discount),
-                        'discount_customers' => $discount_customers,
-                        'discount' => $this->commonUtil->num_uf($request->discount[$index_discount]),
-                        'discount_start_date' => !empty($request->discount_start_date[$index_discount]) ? $this->commonUtil->uf_date($request->discount_start_date[$index_discount]) : null,
-                        'discount_end_date' => !empty($request->discount_end_date[$index_discount]) ? $this->commonUtil->uf_date($request->discount_end_date[$index_discount]) : null
-                    ];
 
-                    ProductDiscount::create($data_des);
-                }
+
             //////////////////////////
             if ($request->has("cropImages") && count($request->cropImages) > 0) {
-                // Clear the media collection only once, before the loop
-
                 foreach (getCroppedImages($request->cropImages) as $key=>$imageData) {
                     if($key == 0){
-                        $product->clearMediaCollection('products');
+                        $lens->clearMediaCollection('products');
                     }
                     $extention = explode(";", explode("/", $imageData)[1])[0];
                     $image = rand(1, 1500) . "_image." . $extention;
                     $filePath = public_path('uploads/' . $image);
                     $fp = file_put_contents($filePath, base64_decode(explode(",", $imageData)[1]));
-                    $product->addMedia($filePath)->toMediaCollection('products');
+                    $lens->addMedia($filePath)->toMediaCollection('products');
                 }
             }
 
 
-             if ($request->has('category_id')) {
-                 $product->categories()->sync($request->category_id);
+             if ($request->has('brand_id')){
+                 $lens->brand_lenses()->attach($request->brand_id);
+             }
+             if ($request->has('focus_id')){
+                 $lens->foci()->attach($request->focus_id);
+             }
+             if ($request->has('index_lens_id')){
+                 $lens->index_lenses()->attach($request->index_lens_id);
              }
 
             DB::commit();
@@ -760,7 +749,7 @@ class LensController extends Controller
         return $output;
     }
 
-    public function getProducts()
+    public function getLenses()
     {
         if (request()->ajax()) {
 
@@ -770,7 +759,7 @@ class LensController extends Controller
                 return json_encode([]);
             }
 
-            $q = lens::where(function ($query) use ($term) {
+            $q = Product::where(function ($query) use ($term) {
                     $query->where('products.name', 'like', '%' . $term . '%');
                     $query->orWhere('sku', 'like', '%' . $term . '%');
                     $query->orWhere('sub_sku', 'like', '%' . $term . '%');
@@ -822,7 +811,7 @@ class LensController extends Controller
      */
     public function getPurchaseHistory($id)
     {
-        $product = lens::find($id);
+        $product = Product::find($id);
         $add_stocks = Transaction::leftjoin('add_stock_lines', 'transactions.id', 'add_stock_lines.transaction_id')
             ->where('add_stock_lines.product_id', $id)
             ->groupBy('transactions.id')
@@ -891,7 +880,7 @@ class LensController extends Controller
      */
     public function checkSku($sku)
     {
-        $product_sku = lens::where('sku', $sku)->first();
+        $product_sku = Product::where('sku', $sku)->first();
 
         if (!empty($product_sku)) {
             $output = [
@@ -916,7 +905,7 @@ class LensController extends Controller
      */
     public function checkName(Request $request)
     {
-        $query = lens::where('name', $request->name);
+        $query = Product::where('name', $request->name);
         $product_name = $query->first();
 
         if (!empty($product_name)) {
@@ -934,12 +923,11 @@ class LensController extends Controller
         return $output;
     }
 
-    public function deleteProductImage($id)
+    public function deleteLensImage($id)
     {
         try {
-            $product = lens::find($id);
+            $product = Product::find($id);
             $product->clearMediaCollection('products');
-
             $output = [
                 'success' => true,
                 'msg' => __('lang.success')
@@ -980,33 +968,7 @@ class LensController extends Controller
         Cache::forever('key_' . auth()->id(), $columnVisibility);
         return response()->json(['success' => true]);
     }
-    public function toggleAppearancePos($id,Request $request){
-        $products_count=lens::where('show_at_the_main_pos_page','yes')->count();
-        if(isset($products_count) && $products_count <40){
-            $product=lens::find($id);
-            if($product->show_at_the_main_pos_page=='no'){
-                $product->show_at_the_main_pos_page='yes';
-                $product->save();
-            }else{
-                $product->show_at_the_main_pos_page='no';
-                $product->save();
-            }
-        }else{
-            $product=lens::find($id);
-                if($product->show_at_the_main_pos_page=='yes'){
-                    $product->show_at_the_main_pos_page='no';
-                    $product->save();
-                }else{
-                    if($request->check=="yes"){
-                        return [
-                            'success' => 'Failed!',
-                            'msg' => __("lang.Cant_Add_More_Than_40_Products"),
-                            'status'=>'error'
-                        ];
-                    }
-                }
-        }
-    }
+
     public function multiDeleteRow(Request $request){
         if (!auth()->user()->can('lens_module.lenses.delete')) {
             abort(403, translate('Unauthorized action.'));
@@ -1015,8 +977,8 @@ class LensController extends Controller
         try {
             DB::beginTransaction();
             foreach ($request->ids as $id){
-                ProductStor::where('product_id', $id)->delete();
-                $product = lens::where('id', $$id)->first();
+                ProductStore::where('product_id', $id)->delete();
+                $product = Product::where('id', $$id)->first();
                 $product->clearMediaCollection('products');
                 $product->delete();
 
@@ -1042,10 +1004,12 @@ class LensController extends Controller
 
     /**
      * get Dropdown Filter Lenses.
+     * @param Request $request
+     * @return array{success: true, data: array}
      *
 
      */
-    public function getDropdownFilterLenses(Request $request)
+    public function getDropdownFilterLenses(Request $request): array
     {
         $designs =Design::when($request->focus_id , function ($q) use ($request) {
             return $q-> wherehas('foci', function ($q_f) use ($request) {
@@ -1080,6 +1044,48 @@ class LensController extends Controller
         return [
             'success' => true,
             'data' => $data
+        ];
+    }
+
+
+    /**
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function getPriceLenses(Request $request): array
+    {
+       $lens= Product::where('id', $request->lens_id)->Lens()->first();
+
+        if(!$lens){
+            return [
+                'success' => false,
+                'msg' => translate('lens_not_found'),
+            ];
+        }
+        $stockLines = \Modules\AddStock\Entities\AddStockLine::where('sell_price', '>', 0)
+            ->where('product_id', $lens->id)
+            ->latest()
+            ->first();
+
+        $default["sell_price"]= num_format($stockLines ? $stockLines->sell_price : $lens->sell_price);
+        $default["purchase_price"] = num_format( $stockLines
+            ? $stockLines->purchase_price
+            : $lens->purchase_price);
+
+        $default['Base_amount']=num_format(0);
+        if ($request->check_base && $request->special_base) {
+            $Base=SpecialBase::whereId($request->special_base)->first();
+            if($Base){
+                $default['Base_amount']= num_format($Base->price);
+            }
+        }
+
+
+
+        return [
+            'success' => true,
+            'data' => $default
         ];
     }
 }

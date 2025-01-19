@@ -24,7 +24,7 @@
         --owf-color-highlight-error: #b50000;
         --owf-color-highlight-error-light: #fff2f2;
         --owf-foreground-color-highlight-warning: #926f2a;
-        --owf-font-family: "Arial",sans-serif;
+        --owf-font-family: "Arial", sans-serif;
         --owf-login-background-color: #f5f5f5;
         --owf-login-background-image: none;
         --owf-login-background-size: cover;
@@ -42,7 +42,7 @@
         --owf-login-footer-background-color: #000c;
         --owf-login-footer-shadow: none;
         --owf-login-foreground-color: var(--owf-foreground-color);
-        --owf-login-button-background-color: linear-gradient(45deg,var(--owf-color-primary-gradient-from),var(--owf-color-primary-gradient-to) 50%);
+        --owf-login-button-background-color: linear-gradient(45deg, var(--owf-color-primary-gradient-from), var(--owf-color-primary-gradient-to) 50%);
         --owf-login-button-foreground-color: var(--owf-color-primary-contrast);
         --owf-rapid-background-color: var(--owf-background-color);
         --owf-rapid-foreground-color: var(--owf-foreground-color);
@@ -186,21 +186,26 @@
     .check-line {
         display: flex;
     }
-    table#Right_Lens_Table ,  table#Left_Lens_Table{
+
+    table#Right_Lens_Table, table#Left_Lens_Table {
         height: 100%;
     }
+
     span.bigLatter {
         font-size: 30px;
         font-weight: 700;
         color: #696969;
         text-shadow: -1px 2px 4px #979797;
     }
+
     .icheckbox_square-orange {
         padding: 0 10px;
     }
-    .tab-pane .table-bordered>:not(caption)>* {
-        border-width:  0 !important;
+
+    .tab-pane .table-bordered > :not(caption) > * {
+        border-width: 0 !important;
     }
+
     .tab-pane input[type="number"]::-webkit-inner-spin-button,
     .tab-pane input[type="number"]::-webkit-outer-spin-button {
         -webkit-appearance: none;
@@ -208,14 +213,13 @@
     }
 
 
-    .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
         border: 1px solid #ddd;
     }
 
     .owf-page-shapeDefinition-manual-shape {
         column-gap: 6rem;
-        /*display: grid*/
-    ;
+        /*display: grid*/;
         grid-template-columns: 1fr 34rem;
         grid-template-rows: 1fr;
     }
@@ -227,7 +231,7 @@
         grid-template-rows: 4rem 1fr 4rem;
     }
 
-     .owf-page-shapeDefinition-manual-shape * {
+    .owf-page-shapeDefinition-manual-shape * {
         border: 0;
         font-size: 100%;
         font-weight: inherit;
@@ -235,53 +239,55 @@
         padding: 0;
         vertical-align: initial;
     }
+
     .owf-page-shapeDefinition-manual-predefinedShape {
         align-content: start;
-        display: grid
-    ;
+        display: grid;
     }
+
     .owf-headline:first-child {
         padding-top: 0;
     }
+
     .owf-headline {
         align-items: center;
         color: var(--owf-color-primary);
-        display: flex
-    ;
+        display: flex;
         font-size: var(--owf-font-size-default);
         font-weight: 700;
         gap: .2rem;
         justify-content: space-between;
         line-height: 1.6;
-        padding-top: calc(1rem* var(--owf-shallow-scale-75));
+        padding-top: calc(1rem * var(--owf-shallow-scale-75));
         -webkit-user-select: none;
         user-select: none;
     }
 
 
-
-
-/*    ----- */
+    /*    ----- */
 
     .owf-page-shapeDefinition-manual-predefinedShape-container {
         column-gap: .5rem;
-        display: grid
-    ;
+        display: grid;
         grid-template-columns: repeat(6, auto);
         grid-template-rows: repeat(6, auto);
         row-gap: .5rem;
     }
+
     svg.abc {
         transition: opacity .15s ease-in-out;
     }
+
     svg.abc .abc-lens {
         fill: url(#abc_lensGradient);
         pointer-events: none;
     }
+
     svg.abc.predefinedShape .abc-lens {
         filter: opacity(1);
         pointer-events: all;
     }
+
     svg.abc.predefinedShape:not(.selected) .abc-lens {
         stroke-width: 1px;
         stroke: #0057bc;
@@ -304,35 +310,43 @@
         -webkit-user-select: none;
         user-select: none;
     }
+
     svg.abc.predefinedShape.selected .abc-lens {
         stroke-width: 5px;
         stroke: var(--owf-foreground-color);
     }
+
     svg.abc.predefinedShape .abc-lens {
         filter: opacity(1);
         pointer-events: all;
     }
+
     svg.abc.predefinedShape:not(.selected) .abc-lens {
         stroke-width: 1px;
         stroke: #0057bc;
     }
+
     svg.abc.predefinedShape .abc-lens {
         filter: opacity(1);
         pointer-events: all;
     }
+
     svg.abc.predefinedShape:not(.selected) .abc-lens:hover {
         cursor: pointer;
         filter: brightness(1.07);
         transform: scale(1.05);
     }
+
     .dropdown.bootstrap-select.form-control.input-block-level.lensPlusMinusSelect.CYLPlusMinusSelect,
-    .dropdown.bootstrap-select.form-control.input-block-level.lensPlusMinusSelect.SPHPlusMinusSelect{
+    .dropdown.bootstrap-select.form-control.input-block-level.lensPlusMinusSelect.SPHPlusMinusSelect {
         background: #fff !important;
     }
+
     .dropdown.bootstrap-select.disabled.form-control.input-block-level.lensPlusMinusSelect.SPHPlusMinusSelect,
     .dropdown.bootstrap-select.disabled.form-control.lensPlusMinusSelect.CYLPlusMinusSelect.input-block-level {
         background: #eaecef !important;
     }
+
     .lens-vu-per {
         margin: 25px auto;
         background: #bbd6d175 !important;
@@ -340,14 +354,25 @@
         padding-top: 10px;
         padding-bottom: 10px;
     }
+
     .lens-vu-item-per {
         color: #015b4d;
         font-weight: 600;
     }
+
     .lens-vu-item-per.total-lens {
         color: #339a40;
     }
+
+    span.price-lens {
+        float: inline-end;
+    }
 </style>
+@php
+    use Modules\Setting\Entities\System;
+    $default_TinTing_amount = num_format(System::getProperty('TinTing_amount')?:10);
+    $default_Ozel_amount = num_format(System::getProperty('Ozel_amount')?:10);
+@endphp
 <div id="navigation">
     <div class="container-fluid" id="content">
         <div id="main" style="margin-left: 0px;">
@@ -357,12 +382,16 @@
                         <div class="box box-color ">
                             <div class="box-content">
 
-                                <form  id="orderLensFormCreate" class="form-horizontal form-validate" method="POST" enctype="multipart/form-data">
+                                <form id="orderLensFormCreate" class="form-horizontal form-validate" method="POST"
+                                      enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-9">
-                                            <div class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                                                <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#moreInfoCollapseFiltter" aria-expanded="false" aria-controls="moreInfoCollapseFiltter">
+                                            <div
+                                                class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
+                                                <button class="text-decoration-none toggle-button mb-0" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#moreInfoCollapseFiltter" aria-expanded="false"
+                                                        aria-controls="moreInfoCollapseFiltter">
                                                     <i class="fas fa-arrow-down"></i>
                                                     {{translate('Giriş kısayolları')}}
                                                     <span class="section-header-pill"></span>
@@ -488,9 +517,12 @@
                                             </div>
 
 
-                                            <div class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                                                <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#moreInfoCollapse" aria-expanded="false" aria-controls="moreInfoCollapse">
+                                            <div
+                                                class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
+                                                <button class="text-decoration-none toggle-button mb-0" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#moreInfoCollapse" aria-expanded="false"
+                                                        aria-controls="moreInfoCollapse">
                                                     <i class="fas fa-arrow-down"></i>
                                                     {{translate('Ek işlemler')}}
                                                     <span class="section-header-pill"></span>
@@ -499,87 +531,128 @@
                                             <div class="collapse" id="moreInfoCollapse">
                                                 <div class="card mb-3">
                                                     <div class="card-body p-2">
-                                                        <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                                                        <div
+                                                            class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                                                             <div class="col-md-3 px-5">
-                                                                    <div class="noBorderRight">
-                                                                        <div class="check-line" style="width: 100%;text-align: left;">
-                                                                            <div class="icheckbox_square-orange icheck-item icheck[qepho]">
-                                                                                <input type="checkbox" id="VATintingCheck" data-subs="tintingList" class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid" name="product[VA][TinTing][isCheck]" value="1" data-skin="square" data-color="orange" aria-invalid="false"></div>
-                                                                            <label class="inline icheck-label icheck[qepho]" for="VATintingCheck">{{translate("Boyama")}}</label>
-                                                                        </div>
+                                                                <div class="noBorderRight">
+                                                                    <div class="check-line"
+                                                                         style="width: 100%;text-align: left;">
+                                                                        <div
+                                                                            class="icheckbox_square-orange icheck-item icheck[qepho]">
+                                                                            <input type="checkbox" id="VATintingCheck"
+                                                                                   data-subs="tintingList"
+                                                                                   class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
+                                                                                   name="product[VA][TinTing][isCheck]"
+                                                                                   value="1" data-skin="square"
+                                                                                   data-color="orange"
+                                                                                   aria-invalid="false"></div>
+                                                                        <label class="inline icheck-label icheck[qepho]"
+                                                                               for="VATintingCheck">{{translate("Boyama")}}</label>
                                                                     </div>
-                                                                    <div class="d-none color_class">
-                                                                        {!! Form::select('product[VA][TinTing][value]', $colors ,null, [
-                                                                               'class' => ' selectpicker form-control',
-                                                                               'data-live-search' => 'true',
-                                                                               'style' => 'width: 80%',
-                                                                              'data-actions-box' => 'true',
-                                                                               'id' => 'color_product',
-                                                                               'placeholder' => __('lang.please_select'),
-                                                                           ]) !!}
-                                                                    </div>
+                                                                </div>
+                                                                <div class="d-none color_class">
+                                                                    {!! Form::select('product[VA][TinTing][value]', $colors ,null, [
+                                                                           'class' => ' selectpicker form-control',
+                                                                           'data-live-search' => 'true',
+                                                                           'style' => 'width: 80%',
+                                                                          'data-actions-box' => 'true',
+                                                                           'id' => 'color_product',
+                                                                           'placeholder' => __('lang.please_select'),
+                                                                       ]) !!}
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-3 px-5">
-                                                                    <div class="noBorderRight">
-                                                                        <div class="check-line" style="width: 100%;text-align: left;">
-                                                                            <div class="icheckbox_square-orange icheck-item icheck[wzqw0]"><input type="checkbox" id="VABaseCheck" data-subs="vaBaseList" class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]" name="product[VA][Base][isCheck]" value="1" data-skin="square" data-color="orange"></div>
-                                                                            <label class="inline icheck-label icheck[wzqw0]" for="VABaseCheck">{{translate("Özel Baz")}}</label>
-                                                                        </div>
+                                                                <div class="noBorderRight">
+                                                                    <div class="check-line"
+                                                                         style="width: 100%;text-align: left;">
+                                                                        <div
+                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0]">
+                                                                            <input type="checkbox" id="VABaseCheck"
+                                                                                   data-subs="vaBaseList"
+                                                                                   class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
+                                                                                   name="product[VA][Base][isCheck]"
+                                                                                   value="1" data-skin="square"
+                                                                                   data-color="orange"></div>
+                                                                        <label class="inline icheck-label icheck[wzqw0]"
+                                                                               for="VABaseCheck">{{translate("Özel Baz")}}</label>
                                                                     </div>
-                                                                    <div class="d-none VABaseCheck_class">
-                                                                        {!! Form::select('product[VA][Base][value]', $special_bases ,null, [
-                                                                               'class' => ' selectpicker form-control',
-                                                                               'data-live-search' => 'true',
-                                                                               'style' => 'width: 80%',
-                                                                              'data-actions-box' => 'true',
-                                                                               'id' => 'special_base',
-                                                                               'placeholder' => __('lang.please_select'),
-                                                                           ]) !!}
-                                                                    </div>
+                                                                </div>
+                                                                <div class="d-none VABaseCheck_class">
+                                                                    {!! Form::select('product[VA][Base][value]', $special_bases ,null, [
+                                                                           'class' => ' selectpicker form-control',
+                                                                           'data-live-search' => 'true',
+                                                                           'style' => 'width: 80%',
+                                                                          'data-actions-box' => 'true',
+                                                                           'id' => 'special_base',
+                                                                           'placeholder' => __('lang.please_select'),
+                                                                       ]) !!}
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-3 px-5">
-                                                                    <div class="noBorderRight">
-                                                                        <div class="check-line" style="width: 100%;text-align: left;">
-                                                                            <div class="icheckbox_square-orange icheck-item icheck[wzqw0]">
-                                                                                <input type="checkbox" id="specific_diameter" data-subs="vaBaseList"
-                                                                                       class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
-                                                                                       name="product[VA][Ozel][isCheck]" value="1" data-skin="square"
-                                                                                       data-color="orange"></div>
-                                                                            <label class="inline icheck-label icheck[wzqw0]" for="specific_diameter">{{translate("Özel Çap")}}</label>
-                                                                        </div>
+                                                                <div class="noBorderRight">
+                                                                    <div class="check-line"
+                                                                         style="width: 100%;text-align: left;">
+                                                                        <div
+                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0]">
+                                                                            <input type="checkbox"
+                                                                                   id="specific_diameter"
+                                                                                   data-subs="vaBaseList"
+                                                                                   class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
+                                                                                   name="product[VA][Ozel][isCheck]"
+                                                                                   value="1" data-skin="square"
+                                                                                   data-color="orange"></div>
+                                                                        <label class="inline icheck-label icheck[wzqw0]"
+                                                                               for="specific_diameter">{{translate("Özel Çap")}}</label>
                                                                     </div>
-                                                                    <div class="d-none specific_diameter_class">
-                                                                        {!! Form::number('product[VA][Ozel][value]' ,null, [
-                                                                               'class' => ' selectpicker form-control',
-                                                                               'style' => 'width: 80%',
-                                                                              'data-actions-box' => 'true',
-                                                                               'id' => 'specific_diameter_input',
-                                                                           ]) !!}
-                                                                    </div>
+                                                                </div>
+                                                                <div class="d-none specific_diameter_class">
+                                                                    {!! Form::number('product[VA][Ozel][value]' ,null, [
+                                                                           'class' => ' selectpicker form-control',
+                                                                           'style' => 'width: 80%',
+                                                                          'data-actions-box' => 'true',
+                                                                           'id' => 'specific_diameter_input',
+                                                                       ]) !!}
+                                                                </div>
                                                             </div>
 
                                                             <div class="col-md-12 px-5">
                                                                 <div class="noBorderRight">
-                                                                    <div class="check-line" style="width: 100%;text-align: left;">
-                                                                        <div class="icheckbox_square-orange icheck-item icheck[qepho]">
-                                                                            <input type="checkbox" id="codeCheck" data-subs="tintingList"
+                                                                    <div class="check-line"
+                                                                         style="width: 100%;text-align: left;">
+                                                                        <div
+                                                                            class="icheckbox_square-orange icheck-item icheck[qepho]">
+                                                                            <input type="checkbox" id="codeCheck"
+                                                                                   data-subs="tintingList"
                                                                                    class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
-                                                                                   name="product[VA][code][isCheck]" value="1" data-skin="square" data-color="orange" aria-invalid="false"></div>
-                                                                        <label class="inline icheck-label icheck[qepho]" for="codeCheck">{{translate("Çerçeve Tipi")}}</label>
+                                                                                   name="product[VA][code][isCheck]"
+                                                                                   value="1" data-skin="square"
+                                                                                   data-color="orange"
+                                                                                   aria-invalid="false"></div>
+                                                                        <label class="inline icheck-label icheck[qepho]"
+                                                                               for="codeCheck">{{translate("Çerçeve Tipi")}}</label>
                                                                     </div>
                                                                 </div>
-                                                                <div class="owf-page-shapeDefinition-manual-shape d-none">
+                                                                <div
+                                                                    class="owf-page-shapeDefinition-manual-shape d-none">
                                                                     <!--SVG element which declares definitions that are used in all other SVGs by reference-->
                                                                     <svg width="0" height="0" class="abc">
                                                                         <defs>
-                                                                            <marker id="abc_arrowhead" markerWidth="15" markerHeight="5" refX="0" refY="2.5" orient="auto">
-                                                                                <polygon class="abc-indicator" points="0 0, 15 2.5, 0 5"></polygon>
+                                                                            <marker id="abc_arrowhead" markerWidth="15"
+                                                                                    markerHeight="5" refX="0" refY="2.5"
+                                                                                    orient="auto">
+                                                                                <polygon class="abc-indicator"
+                                                                                         points="0 0, 15 2.5, 0 5"></polygon>
                                                                             </marker>
-                                                                            <linearGradient id="abc_lensGradient" gradientTransform="rotate(90)">
-                                                                                <stop offset="10%" stop-color="#c4e4fa"></stop>
-                                                                                <stop offset="50%" stop-color="#90bff1"></stop>
-                                                                                <stop offset="50%" stop-color="#84b7ed"></stop>
-                                                                                <stop offset="90%" stop-color="#bfe3fe"></stop>
+                                                                            <linearGradient id="abc_lensGradient"
+                                                                                            gradientTransform="rotate(90)">
+                                                                                <stop offset="10%"
+                                                                                      stop-color="#c4e4fa"></stop>
+                                                                                <stop offset="50%"
+                                                                                      stop-color="#90bff1"></stop>
+                                                                                <stop offset="50%"
+                                                                                      stop-color="#84b7ed"></stop>
+                                                                                <stop offset="90%"
+                                                                                      stop-color="#bfe3fe"></stop>
                                                                             </linearGradient>
                                                                         </defs>
                                                                     </svg>
@@ -721,67 +794,138 @@
                                                                         </div>
                                                                     </div>
                                                     --}}
-                                                                    <input type="hidden" value="" name="product[VA][code][value]" id="input_predefined_shape">
-                                                                    <div id="predefined_shape" class="owf-page-shapeDefinition-manual-predefinedShape">
-                                                                        <div class="owf-page-shapeDefinition-title owf-headline">
+                                                                    <input type="hidden" value=""
+                                                                           name="product[VA][code][value]"
+                                                                           id="input_predefined_shape">
+                                                                    <div id="predefined_shape"
+                                                                         class="owf-page-shapeDefinition-manual-predefinedShape">
+                                                                        <div
+                                                                            class="owf-page-shapeDefinition-title owf-headline">
                                                                             {{translate('Önceden Tanımlanmış Şekiller')}}    </div>
 
-                                                                        <div class="owf-page-shapeDefinition-manual-predefinedShape-container" tabindex="0">
-                                                                            <svg class="predefinedShape abc" data-ccode="2223" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                        <div
+                                                                            class="owf-page-shapeDefinition-manual-predefinedShape-container"
+                                                                            tabindex="0">
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="2223"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
                                                                                 <text class="abc-cCode">2223</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc" data-ccode="1112" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h55.8 q124.2,0 124.2,-76.43076923076924 v-34.33846153846154"></path>
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="1112"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h55.8 q124.2,0 124.2,-76.43076923076924 v-34.33846153846154"></path>
                                                                                 <text class="abc-cCode">1112</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc" data-ccode="3333" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="3333"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
                                                                                 <text class="abc-cCode">3333</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc" data-ccode="2144" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="2144"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
                                                                                 <text class="abc-cCode">2144</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc" data-ccode="1224" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="1224"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
                                                                                 <text class="abc-cCode">1224</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc" data-ccode="2233" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="2233"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
                                                                                 <text class="abc-cCode">2233</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc " data-ccode="3344" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                            <svg class="predefinedShape abc "
+                                                                                 data-ccode="3344"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
                                                                                 <text class="abc-cCode">3344</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc" data-ccode="1223" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="1223"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
                                                                                 <text class="abc-cCode">1223</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc" data-ccode="1244" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="1244"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
                                                                                 <text class="abc-cCode">1244</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc" data-ccode="1123" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="1123"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
                                                                                 <text class="abc-cCode">1123</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc" data-ccode="1111" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h97.2 q82.8,0 82.8,-50.95384615384616 v-59.815384615384616"></path>
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="1111"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h97.2 q82.8,0 82.8,-50.95384615384616 v-59.815384615384616"></path>
                                                                                 <text class="abc-cCode">1111</text>
                                                                             </svg>
-                                                                            <svg class="predefinedShape abc" data-ccode="2244" viewBox="-200 -150 400 300" width="110px" height="80px" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path class="abc-lens" d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="2244"
+                                                                                 viewBox="-200 -150 400 300"
+                                                                                 width="110px" height="80px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path class="abc-lens"
+                                                                                      d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
                                                                                 <text class="abc-cCode">2244</text>
                                                                             </svg>
 
-                                                                            <svg class="predefinedShape abc" data-ccode="4444" viewBox="-200 -180 400 360" width="110px" height="90px" xmlns="http://www.w3.org/2000/svg">
+                                                                            <svg class="predefinedShape abc"
+                                                                                 data-ccode="4444"
+                                                                                 viewBox="-200 -180 400 360"
+                                                                                 width="110px" height="90px"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens" d="
                                                                                     M-180,0
                                                                                     a180,120 0 1,0 360,0
                                                                                     a180,120 0 1,0 -360,0
-                                                                                    " fill="#d6e9f8" stroke="#578981" stroke-width="2"></path>
+                                                                                    " fill="#d6e9f8" stroke="#578981"
+                                                                                      stroke-width="2"></path>
                                                                                 <text class="abc-cCode">4444</text>
                                                                             </svg>
 
@@ -792,45 +936,52 @@
                                                             </div>
 
 
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
 
-
-
-
-
                                             <div class="clearfix"></div>
                                         </div>
-                                        <div  class="col-3 lens-vu-per" >
-                                                <div class="lens-vu-item-per ">
-                                                    {{translate('lenses_price')}}: <span class="price-lens" id="total-lens"> {!!   num_format(0) !!}</span>
-                                                </div>
-                                                <div class="lens-vu-item-per d-none">
-                                                    {{translate('TinTing_amount')}}: <span class="price-lens" id="total-lens"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
-                                                </div>
-                                                <div class="lens-vu-item-per d-none">
-                                                    {{translate('Base_amount')}}: <span class="price-lens" id="total-lens"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
-                                                </div>
-                                                <div class="lens-vu-item-per d-none">
-                                                    {{translate('Ozel_amount')}}: <span class="price-lens" id="total-lens"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
-                                                </div>
+                                        <div class="col-3 lens-vu-per">
+                                            <div class="lens-vu-item-per ">
+                                                <input type="hidden" id="price_lens" value="0">
+                                                {{translate('lenses_price')}}: <span class="price-lens"
+                                                                                     id="price-lens"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                            </div>
+                                            <div class="lens-vu-item-per d-none"  id="div-price-TinTing">
+                                                <input type="hidden" id="price_TinTing" value="0">
 
-                                                <hr>
-                                                <div class="lens-vu-item-per total-lens ">
-                                                    {{translate('total_price')}}: <span class="price-lens " id="total-lens"> {!!   num_format(0) !!} {{session("currency")["symbol"]}}</span>
-                                                </div>
+                                                {{translate('TinTing_amount')}}: <span class="price-lens"
+                                                                                       id="price-TinTing"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                            </div>
+                                            <div class="lens-vu-item-per d-none" id="div-price-Base">
+                                                <input type="hidden" id="price_Base" value="0">
+
+                                                {{translate('Base_amount')}}: <span class="price-lens"
+                                                                                    id="price-Base"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                            </div>
+                                            <div class="lens-vu-item-per d-none" id="div-price-Ozel">
+                                                <input type="hidden" id="price_Ozel" value="0">
+                                                {{translate('Ozel_amount')}}: <span class="price-lens"
+                                                                                    id="price-Ozel"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                            </div>
+
+                                            <hr>
+                                            <div class="lens-vu-item-per total-lens ">
+                                                {{translate('total_price')}}: <span class="price-lens "
+                                                                                    id="total-lens"> {!!   num_format(0) !!} {{session("currency")["symbol"]}}</span>
+                                            </div>
                                         </div>
-                                    <!--product filter END-->
+                                        <!--product filter END-->
                                     </div>
                                     <!--middle row-->
                                     <div class="row orderInputs">
                                         <div class="col-md-6">
                                             <div class="form-group h-100">
-                                                <table class="table table-bordered text-center" id="Right_Lens_Table" style="border: 5px solid red;">
+                                                <table class="table table-bordered text-center" id="Right_Lens_Table"
+                                                       style="border: 5px solid red;">
                                                     <tbody>
                                                     <tr>
                                                         <td>
@@ -839,9 +990,16 @@
                                                         <td colspan="5">
 
 
-                                                            <div class="check-line" style="width: 100%;text-align: left;">
-                                                                <div class="icheckbox_square-orange icheck-item  checked">
-                                                                    <input type="checkbox" id="RightLens" class="icheck-me checkForLens icheck-input icheck[ho025]" checked="" name="product[Lens][Right][isCheck]" value="1" data-skin="square" data-color="orange" data-rl="Right" >
+                                                            <div class="check-line"
+                                                                 style="width: 100%;text-align: left;">
+                                                                <div
+                                                                    class="icheckbox_square-orange icheck-item  checked">
+                                                                    <input type="checkbox" id="RightLens"
+                                                                           class="icheck-me checkForLens icheck-input icheck[ho025]"
+                                                                           checked=""
+                                                                           name="product[Lens][Right][isCheck]"
+                                                                           value="1" data-skin="square"
+                                                                           data-color="orange" data-rl="Right">
                                                                 </div>
                                                                 <label class="inline icheck-label " for="RightLens">
                                                                     {{translate('I Want  Right Glass')}}
@@ -854,7 +1012,8 @@
                                                     </tr>
 
                                                     <tr>
-                                                        <td rowspan="2" class="verticalMiddle">{{translate('UZAK')}}</td>
+                                                        <td rowspan="2"
+                                                            class="verticalMiddle">{{translate('UZAK')}}</td>
                                                         <td>+/-</td>
                                                         <td>{{translate('SPH')}}</td>
                                                         <td>+/-</td>
@@ -866,7 +1025,8 @@
                                                         <td>
                                                             <select name="product[Lens][Right][Far][SPHDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
-                                                                    data-rl="Right" data-signfor="Right_Far_SPH" id="Right_Far_SPHDeg">
+                                                                    data-rl="Right" data-signfor="Right_Far_SPH"
+                                                                    id="Right_Far_SPHDeg">
                                                                 <option value="+">+</option>
                                                                 <option value="-">-</option>
                                                             </select>
@@ -887,7 +1047,7 @@
                                                                    min="-30"
                                                                    max="30">
 
-{{--                                                            <input type="number" name="product[Lens][Right][Far][SPH]" value="" id="Right_Far_SPH" data-reqval="farSPH" placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH" data-rl="Right" required="" aria-required="true" step="0.5">--}}
+                                                            {{--                                                            <input type="number" name="product[Lens][Right][Far][SPH]" value="" id="Right_Far_SPH" data-reqval="farSPH" placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH" data-rl="Right" required="" aria-required="true" step="0.5">--}}
                                                         </td>
                                                         <td>
                                                             <select name="product[Lens][Right][Far][CYLDeg]"
@@ -917,7 +1077,7 @@
                                                         <td>
                                                             <input
                                                                 type="number"
-                                                                   name="product[Lens][Right][Far][Axis]"
+                                                                name="product[Lens][Right][Far][Axis]"
                                                                 data-reqval="farAX" value=""
                                                                 id="Right_Far_Axis"
                                                                 placeholder=" "
@@ -930,7 +1090,8 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td rowspan="2" class="verticalMiddle">{{translate('YAKIN')}}</td>
+                                                        <td rowspan="2"
+                                                            class="verticalMiddle">{{translate('YAKIN')}}</td>
                                                         <td>+/-</td>
                                                         <td>{{translate('SPH')}}</td>
                                                         <td>+/-</td>
@@ -996,7 +1157,7 @@
                                                             <input
                                                                 type="number"
                                                                 name="product[Lens][Right][Near][Axis]"
-                                                                   data-reqval="nearAX"
+                                                                data-reqval="nearAX"
                                                                 value=""
                                                                 id="Right_Near_Axis"
                                                                 placeholder=" "
@@ -1021,7 +1182,7 @@
                                                                        data-rl="Right"
                                                                        required=""
                                                                        aria-required="true"
-                                                                disabled>
+                                                                       disabled>
                                                             </div>
 
                                                         </td>
@@ -1033,8 +1194,10 @@
                                         <div class="col-md-6">
 
                                             <div class="form-group h-100">
-                                                <table class="table table-bordered text-center" id="Left_Lens_Table" style="border: 5px solid red;">
-                                                    <tbody><tr>
+                                                <table class="table table-bordered text-center" id="Left_Lens_Table"
+                                                       style="border: 5px solid red;">
+                                                    <tbody>
+                                                    <tr>
                                                         <td class="lensLatterCell">
                                                             <span class="bigLatter">L</span>
 
@@ -1043,20 +1206,37 @@
                                                         <td colspan="5">
                                                             <div class="row" style="padding-left: 0;">
                                                                 <div class="col-xs-12">
-                                                                    <div class="check-line" style="width: 100%;text-align: left;">
-                                                                        <div class="icheckbox_square-orange icheck-item ">
-                                                                            <input type="checkbox" id="LeftLens" class="icheck-me checkForLens icheck-input " name="product[Lens][Left][isCheck]" value="1" data-skin="square" data-color="orange" data-rl="Left">
+                                                                    <div class="check-line"
+                                                                         style="width: 100%;text-align: left;">
+                                                                        <div
+                                                                            class="icheckbox_square-orange icheck-item ">
+                                                                            <input type="checkbox" id="LeftLens"
+                                                                                   class="icheck-me checkForLens icheck-input "
+                                                                                   name="product[Lens][Left][isCheck]"
+                                                                                   value="1" data-skin="square"
+                                                                                   data-color="orange" data-rl="Left">
                                                                         </div>
-                                                                        <label class="inline icheck-label " for="LeftLens">
+                                                                        <label class="inline icheck-label "
+                                                                               for="LeftLens">
                                                                             {{translate('I Want Left Glass')}}
                                                                         </label>
 
                                                                     </div>
-                                                                    <div class="check-line" style="width: 100%;text-align: left;">
-                                                                        <div class="icheckbox_square-orange icheck-item ">
-                                                                            <input type="checkbox" id="sameToRight" class="icheck-me popover2 icheck-input icheck[veqwi]" data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left" name="product[Lens][Left][sameToRight]" value="1" data-skin="square" data-color="orange" data-original-title="" title="" disabled="">
+                                                                    <div class="check-line"
+                                                                         style="width: 100%;text-align: left;">
+                                                                        <div
+                                                                            class="icheckbox_square-orange icheck-item ">
+                                                                            <input type="checkbox" id="sameToRight"
+                                                                                   class="icheck-me popover2 icheck-input icheck[veqwi]"
+                                                                                   data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left"
+                                                                                   name="product[Lens][Left][sameToRight]"
+                                                                                   value="1" data-skin="square"
+                                                                                   data-color="orange"
+                                                                                   data-original-title="" title=""
+                                                                                   disabled="">
                                                                         </div>
-                                                                        <label class="inline icheck-label " for="sameToRight">
+                                                                        <label class="inline icheck-label "
+                                                                               for="sameToRight">
                                                                             {{translate('Left glass is the same as right glass')}}
                                                                         </label>
 
@@ -1072,7 +1252,8 @@
                                                     </tr>
 
                                                     <tr>
-                                                        <td rowspan="2" class="verticalMiddle">{{translate('UZAK')}}</td>
+                                                        <td rowspan="2"
+                                                            class="verticalMiddle">{{translate('UZAK')}}</td>
                                                         <td>+/-</td>
                                                         <td>{{translate('SPH')}}</td>
                                                         <td>+/-</td>
@@ -1082,7 +1263,10 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <select name="product[Lens][Left][Far][SPHDeg]" class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect" id="Left_Far_SPHDeg" data-rl="Left" data-signfor="Left_Far_SPH" disabled="">
+                                                            <select name="product[Lens][Left][Far][SPHDeg]"
+                                                                    class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
+                                                                    id="Left_Far_SPHDeg" data-rl="Left"
+                                                                    data-signfor="Left_Far_SPH" disabled="">
                                                                 <option value="+">+</option>
                                                                 <option value="-">-</option>
 
@@ -1092,14 +1276,19 @@
                                                         <td>
                                                             <input type="text" name="product[Lens][Left][Far][SPH]"
                                                                    data-reqval="farSPH" value="" id="Left_Far_SPH"
-                                                                   placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH"
-                                                                   data-rl="Left" required="" aria-required="true" disabled=""
+                                                                   placeholder=" "
+                                                                   class="form-control input-block-level lensVal lensSPH farSPH"
+                                                                   data-rl="Left" required="" aria-required="true"
+                                                                   disabled=""
                                                                    step="0.25"
                                                                    min="-30"
                                                                    max="30">
                                                         </td>
                                                         <td>
-                                                            <select name="product[Lens][Left][Far][CYLDeg]" class="form-control lensPlusMinusSelect CYLPlusMinusSelect input-block-level" style="width: 100%" data-rl="Left" id="Left_Far_CYLDeg" disabled="">
+                                                            <select name="product[Lens][Left][Far][CYLDeg]"
+                                                                    class="form-control lensPlusMinusSelect CYLPlusMinusSelect input-block-level"
+                                                                    style="width: 100%" data-rl="Left"
+                                                                    id="Left_Far_CYLDeg" disabled="">
                                                                 <option value="+">+</option>
                                                                 <option value="-" selected="selected">-</option>
 
@@ -1109,7 +1298,8 @@
                                                         <td>
                                                             <input type="text" name="product[Lens][Left][Far][CYL]"
                                                                    data-reqval="farCYL" value="" id="Left_Far_CYL"
-                                                                   placeholder=" " class="form-control input-block-level input-sm lensVal lensCYL farCYL"
+                                                                   placeholder=" "
+                                                                   class="form-control input-block-level input-sm lensVal lensCYL farCYL"
                                                                    data-rl="Left" disabled=""
                                                                    step="0.25"
                                                                    min="-15"
@@ -1118,7 +1308,8 @@
                                                         <td>
                                                             <input type="text" name="product[Lens][Left][Far][Axis]"
                                                                    data-reqval="farAX" value="" id="Left_Far_Axis"
-                                                                   placeholder=" " class="form-control input-block-level input-sm lensAxis farAX valid"
+                                                                   placeholder=" "
+                                                                   class="form-control input-block-level input-sm lensAxis farAX valid"
                                                                    data-rl="Left" disabled=""
                                                                    step="1"
                                                                    min="0"
@@ -1127,7 +1318,8 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td rowspan="2" class="verticalMiddle">{{translate('YAKIN')}}</td>
+                                                        <td rowspan="2"
+                                                            class="verticalMiddle">{{translate('YAKIN')}}</td>
                                                         <td>+/-</td>
                                                         <td>{{translate('SPH')}}</td>
                                                         <td>+/-</td>
@@ -1137,7 +1329,10 @@
                                                     </tr>
                                                     <tr class="nearTableRow">
                                                         <td>
-                                                            <select name="product[Lens][Left][Near][SPHDeg]" class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect" id="Left_Near_SPHDeg" data-rl="Left" data-signfor="Left_Near_SPH" disabled="">
+                                                            <select name="product[Lens][Left][Near][SPHDeg]"
+                                                                    class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
+                                                                    id="Left_Near_SPHDeg" data-rl="Left"
+                                                                    data-signfor="Left_Near_SPH" disabled="">
                                                                 <option value="+">+</option>
                                                                 <option value="-">-</option>
 
@@ -1147,14 +1342,18 @@
                                                         <td>
                                                             <input type="text" name="product[Lens][Left][Near][SPH]"
                                                                    data-reqval="nearSPH" value="" id="Left_Near_SPH"
-                                                                   placeholder=" " class="form-control input-block-level lensVal lensSPH"
+                                                                   placeholder=" "
+                                                                   class="form-control input-block-level lensVal lensSPH"
                                                                    data-rl="Left" disabled=""
                                                                    step="0.25"
                                                                    min="-30"
                                                                    max="30">
                                                         </td>
                                                         <td>
-                                                            <select name="product[Lens][Left][Near][CYLDeg]" class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect" data-rl="Left" data-signfor="Left_Near_CYL" id="Left_Near_CYLDeg" disabled="">
+                                                            <select name="product[Lens][Left][Near][CYLDeg]"
+                                                                    class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
+                                                                    data-rl="Left" data-signfor="Left_Near_CYL"
+                                                                    id="Left_Near_CYLDeg" disabled="">
                                                                 <option value="+">+</option>
                                                                 <option value="-" selected="selected">-</option>
 
@@ -1163,8 +1362,10 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" name="product[Lens][Left][Near][CYL]"
-                                                                   data-reqval="nearCYL" value="" id="Left_Near_CYL" placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensCYL" data-rl="Left"
+                                                                   data-reqval="nearCYL" value="" id="Left_Near_CYL"
+                                                                   placeholder=" "
+                                                                   class="form-control input-block-level lensVal lensCYL"
+                                                                   data-rl="Left"
                                                                    disabled=""
                                                                    step="0.25"
                                                                    min="-15"
@@ -1173,7 +1374,8 @@
                                                         <td>
                                                             <input type="text" name="product[Lens][Left][Near][Axis]"
                                                                    data-reqval="nearAX" value="" id="Left_Near_Axis"
-                                                                   placeholder=" " class="form-control input-block-level lensAxis nearAX"
+                                                                   placeholder=" "
+                                                                   class="form-control input-block-level lensAxis nearAX"
                                                                    data-rl="Left" disabled=""
                                                                    step="1"
                                                                    min="0"
@@ -1186,13 +1388,25 @@
                                                         </td>
                                                         <td colspan="5">
                                                             <div class="col-md-5 noPadding">
-                                                                <input type="text" name="product[Lens][Left][Addition]" data-reqval="addVal" value="" id="Left_Addition" placeholder="" class="form-control input-block-level lensAddition lensVal" data-rl="Left" required="" aria-required="true" disabled="">
+                                                                <input type="text" name="product[Lens][Left][Addition]"
+                                                                       data-reqval="addVal" value="" id="Left_Addition"
+                                                                       placeholder=""
+                                                                       class="form-control input-block-level lensAddition lensVal"
+                                                                       data-rl="Left" required="" aria-required="true"
+                                                                       disabled="">
 
                                                             </div>
                                                             <div>
                                                                 <div class="col-xs-8" style="padding-right: 0;">
-                                                                    <select name="product[Lens][Left][Diameter]" required="" class="select2-me text-left lensDiam select2-hidden-accessible" style="width: 100%" data-rl="Right" id="Left_Lens_Diam" aria-required="true" tabindex="-1" aria-hidden="true" disabled="" data-select2-id="Left_Lens_Diam">
-                                                                        <option value="" data-select2-id="137">{{translate('Çap Seçiniz')}}</option>
+                                                                    <select name="product[Lens][Left][Diameter]"
+                                                                            required=""
+                                                                            class="select2-me text-left lensDiam select2-hidden-accessible"
+                                                                            style="width: 100%" data-rl="Right"
+                                                                            id="Left_Lens_Diam" aria-required="true"
+                                                                            tabindex="-1" aria-hidden="true" disabled=""
+                                                                            data-select2-id="Left_Lens_Diam">
+                                                                        <option value=""
+                                                                                data-select2-id="137">{{translate('Çap Seçiniz')}}</option>
                                                                     </select>
 
                                                                 </div>
@@ -1241,17 +1455,17 @@
     $(document).on("change", "#Right_Far_SPH,#Right_Near_SPH", function (e) {
         const Far_SPH = $('#Right_Far_SPH').val();
         const Near_SPH = $('#Right_Near_SPH').val();
-        $('#Right_Addition').val(Far_SPH-Near_SPH);
+        $('#Right_Addition').val(Far_SPH - Near_SPH);
     });
     $(document).on("change", "#Left_Far_SPH,#Left_Near_SPH", function (e) {
         const Far_SPH = $('#Left_Far_SPH').val();
         const Near_SPH = $('#Left_Near_SPH').val();
-        $('#Left_Addition').val(Far_SPH-Near_SPH);
+        $('#Left_Addition').val(Far_SPH - Near_SPH);
     });
 
-    $('.predefinedShape').on('click',function () {
+    $('.predefinedShape').on('click', function () {
         $(this).addClass('selected');
-        code =$(this).data('ccode');
+        code = $(this).data('ccode');
         $('#input_predefined_shape').val(code);
         $(this).siblings().removeClass('selected');
     })
@@ -1303,37 +1517,35 @@
     });
     $('#VATintingCheck').on('change', function () {
         if (this.checked) {
-           $('.color_class').removeClass('d-none')
+            $('.color_class').removeClass('d-none')
         } else {
 
             $('.color_class').addClass('d-none')
 
         }
-
+        getPrices();
     });
     $('#VABaseCheck').on('change', function () {
         if (this.checked) {
-           $('.VABaseCheck_class').removeClass('d-none')
+            $('.VABaseCheck_class').removeClass('d-none')
         } else {
-
             $('.VABaseCheck_class').addClass('d-none')
-
         }
 
     });
     $('#specific_diameter').on('change', function () {
         if (this.checked) {
-           $('.specific_diameter_class').removeClass('d-none')
+            $('.specific_diameter_class').removeClass('d-none')
         } else {
 
             $('.specific_diameter_class').addClass('d-none')
 
         }
-
+        getPrices();
     });
     $('#codeCheck').on('change', function () {
         if (this.checked) {
-           $('.owf-page-shapeDefinition-manual-shape ').removeClass('d-none')
+            $('.owf-page-shapeDefinition-manual-shape ').removeClass('d-none')
         } else {
             $('.owf-page-shapeDefinition-manual-shape ').addClass('d-none')
         }
@@ -1352,15 +1564,15 @@
             method: "get",
             url: "/dashboard/lenses/get-dropdown-filter-lenses",
             data: {
-                brand_id:brand_id,
-                focus_id:focus_id,
-                design_id:design_id,
-                index_id:index_id,
-                color_id:color_id,
+                brand_id: brand_id,
+                focus_id: focus_id,
+                design_id: design_id,
+                index_id: index_id,
+                color_id: color_id,
             },
             // contactType: "html",
             success: function (result) {
-                if(result.success){
+                if (result.success) {
                     $("#lens_id").empty().append(result.data.lenses);
                     $("#lens_id").selectpicker("refresh");
                     $("#design_id").empty().append(result.data.designs);
@@ -1389,9 +1601,85 @@
     //         this.value = max;
     //     }
     // });
+    $(document).on("change", "#lens_id ,#special_base ,#VABaseCheck", function () {
+            console.log('ddd')
+        let   lens_id = $('#lens_id').val(),
+              special_base = $('#special_base').val(),
+              check_base =0;
+        if ($('#VABaseCheck').prop('checked')) {
+             check_base = 1;
+        }
+        $.ajax({
+            method: "get",
+            url: "/dashboard/lenses/get-price-lenses",
+            data: {
+                lens_id: lens_id,
+                special_base: special_base,
+                check_base: check_base,
+            },
+            // contactType: "html",
+            success: function (result) {
+                if (result.success) {
+                    var sell_price = result.data.sell_price;
+                    var Base_amount = result.data.Base_amount;
+                    $("#price_lens").val(sell_price);
+                    $("#price-lens").text(sell_price + '{{session("currency")["symbol"]}}');
+                    $("#price_Base").val(Base_amount);
+                    $("#price-Base").text(Base_amount + '{{session("currency")["symbol"]}}');
+                    if(Base_amount > 0){
+                        $('#div-price-Base').removeClass('d-none')
+                    }else {
+                        $('#div-price-Base').addClass('d-none')
+                    }
+                    getPrices();
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: result.msg,
+                        icon: 'error',
+                    })
+                }
 
-    document.querySelectorAll('.number-input').forEach(function(input) {
-        input.addEventListener('input', function() {
+
+            },
+        });
+    })
+    function getPrices() {
+
+
+        let   default_TinTing = 0 ,
+              default_Ozel = 0,
+            price_lens = parseFloat($("#price_lens").val()) || 0,
+            price_Base = parseFloat($("#price_Base").val()) || 0;
+
+
+        if ($('#VATintingCheck').prop('checked')) {
+            default_TinTing = {{$default_TinTing_amount}};
+            $('#div-price-TinTing').removeClass('d-none');
+            $("#price_TinTing").val(default_TinTing);
+            $("#price-TinTing").text(default_TinTing.toFixed(2) + '{{session("currency")["symbol"]}}');
+        }else{
+            $('#div-price-TinTing').addClass('d-none');
+            $("#price_TinTing").val(0);
+            $("#price-TinTing").text("0.00" + '{{session("currency")["symbol"]}}');
+        }
+        if ($('#specific_diameter').prop('checked')) {
+            default_Ozel = {{$default_Ozel_amount}};
+            $('#div-price-Ozel').removeClass('d-none');
+            $("#price_Ozel").val(default_Ozel);
+            $("#price-Ozel").text(default_Ozel.toFixed(2) + '{{session("currency")["symbol"]}}');
+        }else{
+            $('#div-price-Ozel').addClass('d-none');
+            $("#price_Ozel").val(0);
+            $("#price-Ozel").text("0.00" + '{{session("currency")["symbol"]}}');
+        }
+       let total=price_lens+price_Base+default_TinTing+default_Ozel;
+        $('#total-lens').text(total.toFixed(2)+ '{{session("currency")["symbol"]}}')
+
+
+    }
+    document.querySelectorAll('.number-input').forEach(function (input) {
+        input.addEventListener('input', function () {
             const min = parseFloat(this.min);
             const max = parseFloat(this.max);
             const value = parseFloat(this.value);
@@ -1422,20 +1710,20 @@
             sameToRight();
         }
     });
-    function sameToRight () {
-        $('#Left_Far_Axis').val( $('#Right_Far_Axis').val());
-        $('#Left_Near_Axis').val( $('#Right_Near_Axis').val());
-        $('#Left_Far_CYL').val( $('#Right_Far_CYL').val());
-        $('#Left_Near_CYL').val( $('#Right_Near_CYL').val());
-        $('#Left_Far_SPH').val( $('#Right_Far_SPH').val());
-        $('#Left_Near_SPH').val( $('#Right_Near_SPH').val());
-        $('#Left_Addition').val( $('#Right_Addition').val());
 
-        $('#Left_Near_CYLDeg').val( $('#Right_Near_CYLDeg').val());
-        $('#Left_Near_SPHDeg').val( $('#Right_Near_SPHDeg').val());
-        $('#Left_Far_CYLDeg').val( $('#Right_Far_CYLDeg').val());
-        $('#Left_Far_SPHDeg').val( $('#Right_Far_SPHDeg').val());
+    function sameToRight() {
+        $('#Left_Far_Axis').val($('#Right_Far_Axis').val());
+        $('#Left_Near_Axis').val($('#Right_Near_Axis').val());
+        $('#Left_Far_CYL').val($('#Right_Far_CYL').val());
+        $('#Left_Near_CYL').val($('#Right_Near_CYL').val());
+        $('#Left_Far_SPH').val($('#Right_Far_SPH').val());
+        $('#Left_Near_SPH').val($('#Right_Near_SPH').val());
+        $('#Left_Addition').val($('#Right_Addition').val());
 
+        $('#Left_Near_CYLDeg').val($('#Right_Near_CYLDeg').val());
+        $('#Left_Near_SPHDeg').val($('#Right_Near_SPHDeg').val());
+        $('#Left_Far_CYLDeg').val($('#Right_Far_CYLDeg').val());
+        $('#Left_Far_SPHDeg').val($('#Right_Far_SPHDeg').val());
 
 
         $('#Left_Near_CYLDeg').selectpicker('refresh');

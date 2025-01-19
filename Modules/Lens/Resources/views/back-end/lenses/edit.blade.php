@@ -1,8 +1,8 @@
 @extends('back-end.layouts.app')
-@section('title', __('lang.products'))
+@section('title', __('lang.lenses') .' | '. translate('edit_lens'))
 @section('styles')
     <style>
-        .preview-edit-product-container {
+        .preview-edit-lens-container {
             /* display: flex;
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         flex-wrap: wrap;
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         gap: 10px;
@@ -203,11 +203,11 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #476762" href="{{ route('admin.products.index') }}">/
-            @lang('lang.products')</a>
+            style="text-decoration: none;color: #476762" href="{{ route('admin.lenses.index') }}">/
+            {{translate('lenses')}} </a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
-        @lang('lang.edit_product')</li>
+        {{translate('edit_lens')}}</li>
 @endsection
 @section('content')
 <section class="forms py-0">
@@ -217,8 +217,8 @@
 
 
                 {!! Form::open([
-                    'url' =>  route('admin.products.update', $product->id),
-                    'id' => 'product-edit-form',
+                    'url' =>  route('admin.lenses.update', $lens->id),
+                    'id' => 'lens-edit-form',
                     'method' => 'PUT',
                     'class' => '',
                     'enctype' => 'multipart/form-data',
@@ -238,51 +238,22 @@
                         <div class="col-md-1 px-0 d-flex justify-content-center">
                             <div class="i-checks">
                                 <input id="active" name="active" type="checkbox"
-                                    @if (!empty($product->active)) checked @endif value="1"
+                                    @if (!empty($lens->active)) checked @endif value="1"
                                     class="form-control-custom">
                                 <label for="active"><strong>
                                         @lang('lang.active')
                                     </strong></label>
                             </div>
                         </div>
-                        <div class="col-md-2 px-0 d-flex justify-content-center">
-                            <div class="i-checks">
-                                <input id="have_weight" name="have_weight" type="checkbox"
-                                    @if (!empty($product->have_weight)) checked @endif value="1"
-                                    class="form-control-custom">
-                                <label for="have_weight"><strong>
-                                        @lang('lang.have_weight')
-                                    </strong></label>
-                            </div>
-                        </div>
-                        <div class="col-md-2 px-0 d-flex justify-content-center">
-                            <div class="i-checks">
-                                <input id="weighing_scale_barcode" name="weighing_scale_barcode" type="checkbox"
-                                    @if (!empty($product->weighing_scale_barcode)) checked @endif value="1"
-                                    class="form-control-custom">
-                                <label for="weighing_scale_barcode"><strong>
-                                        @lang('lang.weighing_scale_barcode')
-                                    </strong></label>
-                            </div>
-                        </div>
-                        @php
-                            $products_count = Modules\Product\Entities\Product::where('show_at_the_main_pos_page', 'yes')->count();
-                        @endphp
-                        <div class="col-md-3 px-0 d-flex justify-content-center">
-                            <div class="i-checks">
-                                <input id="show_at_the_main_pos_page" name="show_at_the_main_pos_page" type="checkbox"
-                                    @if (isset($products_count) && $products_count < 40) @if (!empty($product->show_at_the_main_pos_page) && $product->show_at_the_main_pos_page == 'yes') checked @endif
-                                @elseif(isset($products_count) && $products_count == 40) disabled @endif
-                                value="1" class="form-control-custom">
-                                <label for="show_at_the_main_pos_page"><strong>@lang('lang.show_at_the_main_pos_page')</strong></label>
-                            </div>
-                        </div>
+
+
+
                     </div>
                 </div>
                 <div
                     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                     <h6 class="mb-0">
-                        @lang('lang.product_information')
+                        {{translate('lens_information')}}
                         <span class=" section-header-pill"></span>
                     </h6>
                 </div>
@@ -290,7 +261,7 @@
                     <div class="card-body p-2">
                         <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
 
-                            <div class="col-md-4 px-5">
+                            <div class="col-md-3 px-5">
                                 <div class="form-group">
                                     {!! Form::label('store_ids', __('lang.store'), [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -306,54 +277,27 @@
                                 </div>
                             </div>
 
-
-                            <div class="col-md-4 px-5">
-                                {!! Form::label('category_id', __('lang.category') . ' *', [
-                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                ]) !!}
-                                <div class="input-group my-group select-button-group">
-
-
-                                    {!! Form::select('category_id[]', $categories,  array_values($category_id_selected), [
-                                        'class' => 'clear_input_form selectpicker form-control',
-                                        'data-live-search' => 'true',
-                                        'id' => 'category_id',
-                                         'multiple',
-                                       'data-actions-box' => 'true',
-                                        'style' => 'width: 80%',
-                                    ]) !!}
-                                    <span class="input-group-btn">
-                            @can('product_module.category.create_and_edit')
-                                            <button class="btn-modal btn-flat select-button "
-                                                    data-href="{{ route('admin.categories.create')  }}?quick_add=1"
-                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                        @endcan
-                        </span>
-                                </div>
-                                <div class="error-msg text-red"></div>
-                            </div>
-
-                            <div class="col-md-4 px-5">
+                            <div class="col-md-3 px-5">
                                 <div class="form-group">
                                     {!! Form::label('name', __('lang.name') . ' *', [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
                                     <div class="input-group my-group select-button-group">
-                                        {!! Form::text('name', $product->name, [
+                                        {!! Form::text('name', $lens->name, [
                                             'class' => 'form-control clear_input_form modal-input app()->isLocale("ar") ? text-end : text-start',
                                             'required',
                                             'placeholder' => __('lang.name'),
                                         ]) !!}
                                         <span class="input-group-btn">
                             <button class="select-button btn-flat translation_btn" type="button"
-                                    data-type="product"><i class="dripicons-web"></i></button>
+                                    data-type="lens"><i class="dripicons-web"></i></button>
                         </span>
                                     </div>
                                 </div>
                                 @include('back-end.layouts.partials.translation_inputs', [
                                     'attribute' => 'name',
-                                    'translations' => $product->translations,
-                                    'type' => 'products',
+                                    'translations' => $lens->translations,
+                                    'type' => 'lenss',
                                 ])
                             </div>
                             <div class="col-md-3 px-5">
@@ -361,7 +305,7 @@
                                     {!! Form::label('sku', __('lang.sku'), [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
-                                    {!! Form::text('sku', $product->sku, [
+                                    {!! Form::text('sku', $lens->sku, [
                                         'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
                                         'id' => 'sku',
                                         'placeholder' => __('lang.sku'),
@@ -373,7 +317,7 @@
                                     {!! Form::label('alert_quantity', __('lang.alert_quantity'), [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
-                                    {!! Form::text('alert_quantity', !empty($product) ? @num_format($product->alert_quantity) : 3, [
+                                    {!! Form::text('alert_quantity', !empty($lens) ? @num_format($lens->alert_quantity) : 3, [
                                         'class' => 'clear_input_form form-control modal-input app()->isLocale("ar") ? text-end : text-start',
                                         'placeholder' => __('lang.alert_quantity'),
                                     ]) !!}
@@ -387,7 +331,7 @@
                                     {!! Form::select(
                                         'color_id',
                                         $colors,
-                                         $product->color_id,
+                                         $lens->color_id,
                                         [
                                             'class' => 'clear_input_form selectpicker form-control',
                                             'data-live-search' => 'true',
@@ -396,7 +340,7 @@
                                         ],
                                     ) !!}
                                     <span class="input-group-btn">
-                                @can('product_module.color.create_and_edit')
+                                @can('lens_module.color.create_and_edit')
                                             <button class="btn-modal select-button btn-flat"
                                                     data-href="{{ route('admin.colors.create') }}?quick_add=1"
                                                     data-container=".view_modal"><i class="fa fa-plus"></i></button>
@@ -404,48 +348,99 @@
                             </span>
                                 </div>
                             </div>
-                            <div class="col-md-2 px-5">
-                                {!! Form::label('size_id', __('lang.size'), [
+                            <div class="col-md-3 px-2">
+                                {!! Form::label('brand_id', __('lang.brands') . ' *', [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
                                 <div class="input-group my-group select-button-group">
-                                    {!! Form::select('size_id', $sizes,  $product->size_id , [
+                                    <input type="hidden"
+                                           id="focus_value_id" />
+
+                                    {!! Form::select('brand_id[]', $brands, $brand_lenses_selected, [
                                         'class' => 'clear_input_form selectpicker form-control',
                                         'data-live-search' => 'true',
+                                        'id' => 'brand_id',
+                                         'multiple',
+                                       'data-actions-box' => 'true',
                                         'style' => 'width: 80%',
-                                        'placeholder' => __('lang.please_select'),
                                     ]) !!}
-                                    <span class="input-group-btn">
-                            @can('product_module.size.create_and_edit')
-                                            <button class="btn-modal select-button btn-flat"
-                                                    data-href="{{ route('admin.sizes.create') }}?quick_add=1"
-                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                        @endcan
-                        </span>
-                                </div>
-                            </div>
-                            <div class="col-md-2 px-5">
-                                {!! Form::label('brand_id', __('lang.brand'), [
-                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                ]) !!}
-                                <div class="input-group my-group select-button-group">
-                                    {!! Form::select('brand_id', $brands,  $product->brand_id, [
-                                        'class' => 'clear_input_form selectpicker form-control',
-                                        'data-live-search' => 'true',
-                                        'style' => 'width: 80%',
-                                        'placeholder' => __('lang.please_select'),
-                                        'required',
-                                    ]) !!}
-                                    <span class="input-group-btn">
-                            @can('product_module.brand.create_and_edit')
-                                            <button class="btn-modal select-button btn-flat"
-                                                    data-href="{{ route('admin.brands.create') }}?quick_add=1"
-                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                        @endcan
-                        </span>
                                 </div>
                                 <div class="error-msg text-red"></div>
                             </div>
+
+                            <div class="col-md-2 px-5">
+                                {!! Form::label('focus_id', __('lang.foci') . ' *', [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                <div class="input-group my-group select-button-group">
+                                    <input type="hidden"
+                                           id="focus_value_id" />
+
+                                    {!! Form::select('focus_id[]', $foci,  $foci_selected, [
+                                        'class' => 'clear_input_form selectpicker form-control',
+                                        'data-live-search' => 'true',
+                                        'id' => 'focus_id',
+                                         'multiple',
+                                       'data-actions-box' => 'true',
+                                        'style' => 'width: 80%',
+                                    ]) !!}
+                                </div>
+                                <div class="error-msg text-red"></div>
+                            </div>
+                            <div class="col-md-2 px-5">
+                                {!! Form::label('index_lens_id', __('lang.index_lenses') . ' *', [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                <div class="input-group my-group select-button-group">
+                                    <input type="hidden"
+                                           id="focus_value_id" />
+
+                                    {!! Form::select('index_lens_id[]', $index_lenses,$index_lenses_selected, [
+                                        'class' => 'clear_input_form selectpicker form-control',
+                                        'data-live-search' => 'true',
+                                        'id' => 'index_lens_id',
+                                         'multiple',
+                                       'data-actions-box' => 'true',
+                                        'style' => 'width: 80%',
+                                    ]) !!}
+                                </div>
+                                <div class="error-msg text-red"></div>
+                            </div>
+
+
+                            <div class="col-md-2 px-5">
+                                {!! Form::label('focus_id', __('lang.purchase_price') . ' *', [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                <div class="input-group my-group select-button-group">
+
+
+                                    {!! Form::text('purchase_price',  @num_format($lens->purchase_price), [
+                                        'class' => 'clear_input_form form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                        'placeholder' => __('lang.purchase_price'),
+                                                                    'required',
+
+                                    ]) !!}
+                                </div>
+                                <div class="error-msg text-red"></div>
+                            </div>
+                            <div class="col-md-2 px-5">
+                                {!! Form::label('sell_price', __('lang.sell_price') . ' *', [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                <div class="input-group my-group select-button-group">
+
+                                    {!! Form::text('sell_price', @num_format($lens->sell_price), [
+                                               'class' => 'clear_input_form form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                               'placeholder' => __('lang.sell_price'),
+                                                                           'required',
+
+                                           ]) !!}
+
+                                </div>
+                                <div class="error-msg text-red"></div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -454,7 +449,7 @@
                 <div
                     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                     <h6 class="mb-0">
-                        @lang('lang.product_image')
+                        {{translate('lens_image')}}
                         <span class=" section-header-pill"></span>
                     </h6>
                 </div>
@@ -464,24 +459,24 @@
                         class="card-body p-2 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                         <div class="variants col-md-6">
                             <div class='file file-upload w-100'>
-                                <label for='file-product-edit-product' class="w-100  modal-input m-0">
+                                <label for='file-lens-edit-lens' class="w-100  modal-input m-0">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                 </label>
                                 <!-- <input  id="file-input" multiple type='file' /> -->
-                                <input type="file" id="file-product-edit-product">
+                                <input type="file" id="file-lens-edit-lens">
                             </div>
                         </div>
 
                         <div class="col-md-6 d-flex justify-content-center">
-                            <div class="preview-edit-product-container">
-                                @if (!empty($product->getFirstMediaUrl('products')))
-                                    <div id="preview{{ $product->id }}" class="preview">
-                                        <img src="{{ $product->getFirstMediaUrl('products') }}"
-                                            id="img{{ $product->id }}" alt="">
+                            <div class="preview-edit-lens-container">
+                                @if (!empty($lens->getFirstMediaUrl('products')))
+                                    <div id="preview{{ $lens->id }}" class="preview">
+                                        <img src="{{ $lens->getFirstMediaUrl('products') }}"
+                                            id="img{{ $lens->id }}" alt="">
                                         <div class="action_div"></div>
                                         <button type="button" class="delete-btn"><i style="font-size: 16px;"
-                                                data-href="{{ route('admin.products.deleteProductImage', $product->id) }}"
-                                                id="deleteBtn{{ $product->id }}" class="fas fa-trash"></i>
+                                                data-href="{{ route('admin.lenses.deleteLensImage', $lens->id) }}"
+                                                id="deleteBtn{{ $lens->id }}" class="fas fa-trash"></i>
                                         </button>
                                     </div>
                                 @endif
@@ -499,74 +494,6 @@
                 <div
                     class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                     <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#discountInfoCollapse" aria-expanded="false"
-                        aria-controls="discountInfoCollapse">
-                        <i class="fas fa-arrow-down"></i>
-                        @lang('lang.discount_information')
-                        <span class="section-header-pill"></span>
-                    </button>
-                </div>
-
-                <div class="collapse"   id="discountInfoCollapse">
-                    <div class="card mb-3">
-                        <div class="card-body p-2">
-                            <div class="col-md-12">
-                                <table class="table table-bordered" id="consumption_table_discount">
-                                    <thead>
-                                        <tr>
-                                            <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount_type')</th>
-                                            <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount')</th>
-                                            <th class="py-2 text-center" style="width: 25%;">@lang('lang.discount_category')</th>
-                                            <th class="py-2 text-center" style="width: 5%;"></th>
-                                            <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount_start_date')</th>
-                                            <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount_end_date')</th>
-                                            <th class="py-2 text-center" style="width: 20%;">@lang('lang.customer_type') <i
-                                                    class="dripicons-question" data-toggle="tooltip"
-                                                    title="@lang('lang.discount_customer_info')"></i></th>
-                                            <th class="py-2 text-center" style="width: 5%;"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $discounts = \Modules\Product\Entities\ProductDiscount::where(
-                                                'product_id',
-                                                $product->id,
-                                            )->get();
-                                            $index_old = 0;
-                                        @endphp
-
-                                        {{-- @if ($product->discount)
-                                            @php
-                                            $index_old=1;
-                                            @endphp
-                                            @include('products.partial.raw_discount', [
-                                                'row_id' => 0,
-                                                'discount_product'=>$products,
-                                            ])
-                                        @endif --}}
-                                        @foreach ($discounts as $discount)
-                                            @include('product::back-end.partial.raw_discount', [
-                                                'row_id' => $loop->index + $index_old,
-                                                'discount' => $discount,
-                                            ])
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                <div class="d-flex justify-content-center">
-                                    <button class="btn btn-main px-5 py-1 add_discount_row"
-                                        type="button">@lang('lang.add_new')</button>
-                                </div>
-                                <input type="hidden" name="raw_discount_index" id="raw_discount_index"
-                                    value="{{ count($discounts) }}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div
-                    class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                    <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
                         data-bs-target="#moreInfoCollapse" aria-expanded="false" aria-controls="moreInfoCollapse">
                         <i class="fas fa-arrow-down"></i>
                         @lang('lang.more_info')
@@ -578,7 +505,7 @@
                         <div class="card-body p-2">
                             <div
                                 class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                                @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket')
+
                                     <div class="col-md-3 px-5">
                                         <div class="form-group">
                                             {!! Form::label('barcode_type', __('lang.barcode_type') . ' *', [
@@ -594,18 +521,17 @@
                                                     'EAN8' => 'EAN-8',
                                                     'EAN13' => 'EAN-13',
                                                 ],
-                                                $product->barcode_type,
+                                                $lens->barcode_type,
                                                 ['class' => 'form-control', 'required'],
                                             ) !!}
                                         </div>
                                     </div>
-                                @endif
                                 <div class="col-md-3 px-5">
                                     <div class="form-group">
                                         {!! Form::label('other_cost', __('lang.other_cost'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                         ]) !!}
-                                        {!! Form::text('other_cost', @num_format($product->other_cost), [
+                                        {!! Form::text('other_cost', @num_format($lens->other_cost), [
                                             'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
                                             'placeholder' => __('lang.other_cost'),
                                         ]) !!}
@@ -614,14 +540,14 @@
                                 <div class="col-md-3 px-5">
                                     {!! Form::label('tax_id', __('lang.tax'), []) !!}
                                     <div class="input-group my-group select-button-group">
-                                        {!! Form::select('tax_id', $taxes, $product->tax_id, [
+                                        {!! Form::select('tax_id', $taxes, $lens->tax_id, [
                                             'class' => 'selectpicker form-control',
                                             'data-live-search' => 'true',
                                             'style' => 'width: 80%',
                                             'placeholder' => __('lang.please_select'),
                                         ]) !!}
                                         <span class="input-group-btn">
-                                            @can('product_module.tax.create')
+                                            @can('lens_module.tax.create')
                                                 <button type="button" class="btn-modal select-button btn-flat"
                                                     data-href="{{ action('TaxController@create') }}?quick_add=1"
                                                     data-container=".view_modal"><i class="fa fa-plus"></i></button>
@@ -638,7 +564,7 @@
                                         {!! Form::select(
                                             'tax_method',
                                             ['inclusive' => __('lang.inclusive'), 'exclusive' => __('lang.exclusive')],
-                                            $product->tax_method,
+                                            $lens->tax_method,
                                             [
                                                 'class' => 'selectpicker form-control',
                                                 'data-live-search' => 'true',
@@ -646,34 +572,6 @@
                                                 'placeholder' => __('lang.please_select'),
                                             ],
                                         ) !!}
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="col-md-4 d-flex @if (app()->isLocale('ar')) justify-content-end @else  justify-content-start @endif">
-                                    <div class="i-checks">
-                                        <input id="show_to_customer" name="show_to_customer" type="checkbox"
-                                            @if ($product->show_to_customer) checked @endif value="1"
-                                            class="form-control-custom">
-                                        <label for="show_to_customer"><strong>@lang('lang.show_to_customer')</strong></label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3 show_to_customer_type_div">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            {!! Form::label('show_to_customer_types', __('lang.show_to_customer_types'), [
-                                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                            ]) !!}
-                                            <i class="dripicons-question" data-toggle="tooltip"
-                                                title="@lang('lang.show_to_customer_types_info')"></i>
-                                            {!! Form::select('show_to_customer_types[]', $customer_types, $product->show_to_customer_types, [
-                                                'class' => 'selectpicker form-control',
-                                                'data-live-search' => 'true',
-                                                'style' => 'width: 80%',
-                                                'multiple',
-                                            ]) !!}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -684,7 +582,7 @@
                 <div class="clearfix"></div>
 
 
-                <div id="cropped_edit_product_images"></div>
+                <div id="cropped_edit_lens_images"></div>
                 <div class="row my-2 justify-content-center align-items-center">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -711,11 +609,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="croppie-edit-product-modal" style="display:none">
-                    <div id="croppie-edit-product-container"></div>
-                    <button data-dismiss="modal" id="croppie-edit-product-cancel-btn" type="button"
+                <div id="croppie-edit-lens-modal" style="display:none">
+                    <div id="croppie-edit-lens-container"></div>
+                    <button data-dismiss="modal" id="croppie-edit-lens-cancel-btn" type="button"
                         class="btn btn-secondary"><i class="fas fa-times"></i></button>
-                    <button id="croppie-edit-product-submit-btn" type="button" class="btn btn-primary"><i
+                    <button id="croppie-edit-lens-submit-btn" type="button" class="btn btn-primary"><i
                             class="fas fa-crop"></i></button>
                 </div>
             </div>
@@ -726,7 +624,6 @@
 @endsection
 
 @section('javascript')
-<script src="{{ asset('js/product_edit.js') }}"></script>
 <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
 
 <script>
@@ -765,20 +662,20 @@
         $('#store_ids').selectpicker('selectAll');
 
         $('#different_prices_for_stores').change();
-        $('#this_product_have_variant').change();
+        $('#this_lens_have_variant').change();
     })
 </script>
 <script>
     $("#submit-btn").on("click", function(e) {
-        getEditProductImages()
+        getEditProductImages();
         e.preventDefault();
         setTimeout(() => {
-            if ($("#product-edit-form").valid()) {
+            if ($("#lens-edit-form").valid()) {
                 tinyMCE.triggerSave();
                 $.ajax({
                     type: "POST",
-                    url: $("#product-edit-form").attr("action"),
-                    data: $("#product-edit-form").serialize(),
+                    url: $("#lens-edit-form").attr("action"),
+                    data: $("#lens-edit-form").serialize(),
                     success: function(response) {
                         if (response.success) {
                             Swal.fire({
@@ -789,6 +686,12 @@
                             setTimeout(() => {
                                 window.close()
                             }, 1000);
+                        }else{
+                            Swal.fire({
+                                title: 'Error',
+                                text: response.msg,
+                                icon: 'error',
+                            });
                         }
                     },
                     error: function(response) {
@@ -804,29 +707,45 @@
             }
         });
     });
-    @if ($product)
-        {{-- document.getElementById("cropBtn{{ $product->id }}").addEventListener('click', () => { --}}
-        {{--    setTimeout(() => { --}}
-        {{--        launchEditProductCropTool(document.getElementById("img{{ $product->id }}")); --}}
-        {{--    }, 500); --}}
-        {{-- }); --}}
-        document.getElementById("deleteBtn{{ $product->id }}").addEventListener('click', () => {
+    @if ($lens)
+
+        document.getElementById("deleteBtn{{ $lens->id }}").addEventListener('click', () => {
             Swal.fire({
-                title: '{{ __('site.Are you sure?') }}',
-                text: "{{ __("site.You won't be able to delete!") }}",
+                title: '{{translate('Are you sure?') }}',
+                text: "{{translate("You won't be able to delete!") }}",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: '{{translate('Yes, delete it!') }}'
             }).then((result) => {
+                let hrf=$("#deleteBtn{{ $lens->id }}").attr("data-href");
+                console.log(hrf);
                 if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        '{{ __('site.Your Image has been deleted.') }}',
-                        'success'
-                    )
-                    $("#preview{{ $product->id }}").remove();
+                        if(hrf){
+                            $.ajax({
+                                type: "get",
+                                url: hrf,
+                                success: function (response) {
+                                    if (response.success) {
+                                        Swal.fire(
+                                            'Deleted!',
+                                            '{{translate("Your Image has been deleted.") }}',
+                                            'success'
+                                        )
+                                        $("#preview{{ $lens->id }}").remove();
+                                    }
+                                }
+                            });
+                        }else{
+                            Swal.fire(
+                                'Deleted!',
+                                '{{translate("Your Image has been deleted.") }}',
+                                'success'
+                            )
+                            $("#preview{{ $lens->id }}").remove();
+                        }
+
                 }
             });
         });
@@ -834,12 +753,12 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
 <script>
-    var fileEditProductInput = document.querySelector('#file-product-edit-product');
-    var previewEditProductContainer = document.querySelector('.preview-edit-product-container');
-    var croppieEditProductModal = document.querySelector('#croppie-edit-product-modal');
-    var croppieEditProductContainer = document.querySelector('#croppie-edit-product-container');
-    var croppieEditProductCancelBtn = document.querySelector('#croppie-edit-product-cancel-btn');
-    var croppieEditProductSubmitBtn = document.querySelector('#croppie-edit-product-submit-btn');
+    var fileEditProductInput = document.querySelector('#file-lens-edit-lens');
+    var previewEditProductContainer = document.querySelector('.preview-edit-lens-container');
+    var croppieEditProductModal = document.querySelector('#croppie-edit-lens-modal');
+    var croppieEditProductContainer = document.querySelector('#croppie-edit-lens-container');
+    var croppieEditProductCancelBtn = document.querySelector('#croppie-edit-lens-cancel-btn');
+    var croppieEditProductSubmitBtn = document.querySelector('#croppie-edit-lens-submit-btn');
 
     // let currentFiles = [];
     fileEditProductInput.addEventListener('change', () => {
@@ -873,11 +792,15 @@
                             dangerMode: true,
                             buttons: ["Cancel", "Delete"],
                         }).then((addPO) => {
-                            if (addPO) {
-                                files.splice(file, 1)
-                                preview.remove();
-                                getEditProductImages()
-                            }
+                               if (addPO) {
+                                   files.splice(file, 1)
+                                   preview.remove();
+                                   getEditProductImages()
+
+                        }
+
+
+
                         });
                     });
 
@@ -962,13 +885,13 @@
 
     function getEditProductImages() {
         setTimeout(() => {
-            const container = document.querySelectorAll('.preview-edit-product-container');
+            const container = document.querySelectorAll('.preview-edit-lens-container');
             let images = [];
-            $("#cropped_edit_product_images").empty();
+            $("#cropped_edit_lens_images").empty();
             for (let i = 0; i < container[0].children.length; i++) {
                 var newInput = $("<input>").attr("type", "hidden").attr("name", "cropImages[]").val(container[0]
                     .children[i].children[0].src);
-                $("#cropped_edit_product_images").append(newInput);
+                $("#cropped_edit_lens_images").append(newInput);
                 images.push(container[0].children[i].children[0].src)
             }
             console.log(images)

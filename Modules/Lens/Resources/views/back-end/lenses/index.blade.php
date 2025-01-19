@@ -9,7 +9,10 @@
         .btn-group .dropdown-toggle::after {
             color: #fff;
         }
+        .table-responsive .table a.btn.btn-modal{
 
+        border: none !important;
+        }
     </style>
 @endsection
 
@@ -88,13 +91,14 @@
                             <th>@lang('lang.purchase_history')</th>
                             <th>@lang('lang.batch_number')</th>
                             <th>@lang('lang.selling_price')</th>
+                            @can('product_module.purchase_price.view')
+                                <th>@lang('lang.purchase_price')</th>
+                            @endcan
                             <th>@lang('lang.color')</th>
                             <th class="sum">@lang('lang.current_stock')</th>
                             <th class="sum">@lang('lang.current_stock_value')</th>
                             <th>@lang('lang.manufacturing_date')</th>
-                            @can('lens_module.purchase_price.view')
-                                <th>@lang('lang.purchase_price')</th>
-                            @endcan
+
                             <th>@lang('lang.active')</th>
                             <th>@lang('lang.created_by')</th>
                             <th>@lang('lang.date_of_creation')</th>
@@ -409,6 +413,13 @@
                         data: 'sell_price',
                         name: 'sell_price'
                     },
+                        @can('product_module.purchase_price.view')
+                    {
+                        data: 'purchase_price',
+                        name: 'purchase_price',
+                        searchable: false
+                    },
+                        @endcan
 
                     {
                         data: 'color',
@@ -434,13 +445,7 @@
                         name: 'add_stock_lines.manufacturing_date'
                     },
 
-                    @can('lens_module.purchase_price.view')
-                        {
-                            data: 'default_purchase_price',
-                            name: 'default_purchase_price',
-                            searchable: false
-                        },
-                    @endcan
+
 
                     {
                         data: 'active',
