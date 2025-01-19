@@ -31,7 +31,9 @@ use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductDiscount;
 use Modules\Product\Entities\ProductStore;
 use Modules\Setting\Entities\Color;
+use Modules\Setting\Entities\SpecialBase;
 use Modules\Setting\Entities\Store;
+use Modules\Setting\Entities\System;
 use Modules\Setting\Entities\Tax;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -1042,10 +1044,12 @@ class LensController extends Controller
 
     /**
      * get Dropdown Filter Lenses.
+     * @param Request $request
+     * @return array{success: true, data: array}
      *
 
      */
-    public function getDropdownFilterLenses(Request $request)
+    public function getDropdownFilterLenses(Request $request): array
     {
         $designs =Design::when($request->focus_id , function ($q) use ($request) {
             return $q-> wherehas('foci', function ($q_f) use ($request) {
@@ -1080,6 +1084,48 @@ class LensController extends Controller
         return [
             'success' => true,
             'data' => $data
+        ];
+    }
+
+
+    /**
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function getPriceLenses(Request $request): array
+    {
+       $lens= Product::where('id', $request->lens_id)->Lens()->first();
+
+        if(!$lens){
+            return [
+                'success' => false,
+                'msg' => translate('lens_not_found'),
+            ];
+        }
+        $stockLines = \Modules\AddStock\Entities\AddStockLine::where('sell_price', '>', 0)
+            ->where('product_id', $lens->id)
+            ->latest()
+            ->first();
+
+        $default["sell_price"]= num_format($stockLines ? $stockLines->sell_price : $lens->sell_price);
+        $default["purchase_price"] = num_format( $stockLines
+            ? $stockLines->purchase_price
+            : $lens->purchase_price);
+
+        $default['Base_amount']=num_format(0);
+        if ($request->check_base && $request->special_base) {
+            $Base=SpecialBase::whereId($request->special_base)->first();
+            if($Base){
+                $default['Base_amount']= num_format($Base->price);
+            }
+        }
+
+
+
+        return [
+            'success' => true,
+            'data' => $default
         ];
     }
 }

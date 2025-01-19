@@ -1397,4 +1397,6 @@
   'add_lens_information' => 'Add lens information',
   'lenses_price' => 'Lenses price',
   'total_price' => 'Total price',
+  'sells' => 'Sells',
+  'returns' => 'Returns',
 );

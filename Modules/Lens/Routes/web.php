@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::post('lenses/multiDeleteRow', [LensController::class,'multiDeleteRow'])->name('lenses.multiDeleteRow');
     Route::post('/update-column-visibility', [LensController::class,'updateColumnVisibility'])->name('lenses.updateColumnVisibility');
     Route::get('lenses/get-dropdown-filter-lenses', [LensController::class,'getDropdownFilterLenses'])->name('lenses.getDropdownFilterLenses');
+    Route::get('lenses/get-price-lenses', [LensController::class,'getPriceLenses'])->name('lenses.getPriceLenses');
     Route::resource('lenses', LensController::class);
 
 
