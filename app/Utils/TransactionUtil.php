@@ -2,32 +2,26 @@
 
 namespace App\Utils;
 
-use Modules\Customer\Http\Controllers\PurchaseOrderController;
-use Modules\Customer\Entities\Consumption;
-use Modules\Customer\Entities\ConsumptionDetail;
-use Modules\Customer\Entities\ConsumptionProduct;
+//use PurchaseOrderController;
+//use Consumption;
+//use ConsumptionDetail;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\CustomerBalanceAdjustment;
 use Modules\Customer\Entities\CustomerImportantDate;
-use Modules\Customer\Entities\DiningTable;
-use Modules\Customer\Entities\EarningOfPoint;
-use Modules\Customer\Entities\PurchaseOrderLine;
-use Modules\Customer\Entities\RedemptionOfPoint;
-use Modules\Customer\Entities\Referred;
-use Modules\Customer\Entities\RewardSystem;
-use Modules\Customer\Entities\Store;
-use Modules\Customer\Entities\Supplier;
-use Modules\Customer\Entities\Tax;
-use Modules\Customer\Entities\Unit;
-use Modules\Customer\Entities\Variation;
+//use PurchaseOrderLine;
+//use RedemptionOfPoint;
+//use Referred;
+//use RewardSystem;
+//use Modules\Setting\Entities\Store;
+//use \Supplier;
+use Modules\Setting\Entities\Tax;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\AddStock\Entities\AddStockLine;
 use Modules\AddStock\Entities\Transaction;
 use Modules\AddStock\Entities\TransactionPayment;
-use Modules\AddStockLine\Entities\TransactionCustomerSize;
-use Modules\AddStockLine\Entities\TransactionSellLine;
+use Modules\Sale\Entities\TransactionSellLine;
 use Modules\Hr\Entities\Employee;
 use Modules\Product\Entities\Product;
 use Modules\Setting\Entities\System;
@@ -152,7 +146,6 @@ class TransactionUtil extends Util
             if (!empty($transaction_sell_lines['transaction_sell_line_id'])) {
                 $transaction_sell_line = TransactionSellLine::find($transaction_sell_lines['transaction_sell_line_id']);
                 $transaction_sell_line->product_id = $line['product_id'];
-                $transaction_sell_line->variation_id = $line['variation_id'];
                 $transaction_sell_line->coupon_discount = !empty($line['coupon_discount']) ? $this->num_uf($line['coupon_discount']) : 0;
                 $transaction_sell_line->coupon_discount_type = !empty($line['coupon_discount_type']) ? $line['coupon_discount_type'] : null;
                 $transaction_sell_line->coupon_discount_amount = !empty($line['coupon_discount_amount']) ? $this->num_uf($line['coupon_discount_amount']) : 0;
@@ -182,7 +175,6 @@ class TransactionUtil extends Util
                 $transaction_sell_line = new TransactionSellLine();
                 $transaction_sell_line->transaction_id = $transaction->id;
                 $transaction_sell_line->product_id = $line['product_id'];
-                $transaction_sell_line->variation_id = $line['variation_id'];
                 $transaction_sell_line->coupon_discount = !empty($line['coupon_discount']) ? $this->num_uf($line['coupon_discount']) : 0;
                 $transaction_sell_line->coupon_discount_type = !empty($line['coupon_discount_type']) ? $line['coupon_discount_type'] : null;
                 $transaction_sell_line->coupon_discount_amount = !empty($line['coupon_discount_amount']) ? $this->num_uf($line['coupon_discount_amount']) : 0;
@@ -207,7 +199,7 @@ class TransactionUtil extends Util
                 $keep_sell_lines[] = $transaction_sell_line->id;
             }
             $stock_id=$line['stock_id'];
-            $this->updateSoldQuantityInAddStockLine($transaction_sell_line->product_id, $transaction_sell_line->variation_id, $transaction->store_id,(float) $line['quantity'], $old_quantity,$stock_id);
+            $this->updateSoldQuantityInAddStockLine($transaction_sell_line->product_id, $transaction->store_id,(float) $line['quantity'], $old_quantity,$stock_id);
         }
 
         //delete sell lines remove by user
@@ -220,22 +212,19 @@ class TransactionUtil extends Util
      * update the sold quanitty in purchase lines
      *
      * @param int $product_id
-     * @param int $variation_id
      * @param int $store_id
      * @param float $new_quantity
      * @param float $old_quantity
      * @return void
      */
-    public function updateSoldQuantityInAddStockLine($product_id, $variation_id, $store_id, $new_quantity, $old_quantity,$stock_id=null)
+    public function updateSoldQuantityInAddStockLine($product_id, $store_id, $new_quantity, $old_quantity,$stock_id=null)
     {
-        $qtyByUnit=Variation::find($variation_id)->number_vs_base_unit==0?1:Variation::find($variation_id)->number_vs_base_unit;
-        $qty_difference = ($qtyByUnit?$qtyByUnit*$new_quantity:$new_quantity) - $old_quantity;
+        $qty_difference = $new_quantity - $old_quantity;
         // $qty_difference =$new_quantity - $old_quantity;
         if ($qty_difference != 0) {
             $add_stock_lines = AddStockLine::leftjoin('transactions', 'add_stock_lines.transaction_id', 'transactions.id')
                 ->where('transactions.store_id', $store_id)
                 ->where('product_id', $product_id)
-                ->where('variation_id', $variation_id)
                 ->select('add_stock_lines.id', DB::raw('SUM(quantity - quantity_sold) as remaining_qty'))
                 ->having('remaining_qty', '>', 0)
                 ->groupBy('add_stock_lines.id')
@@ -870,252 +859,9 @@ class TransactionUtil extends Util
     }
 
 
-    /**
-     * Updates reward point of a customer
-     *
-     * @return void
-     */
-    public function updateCustomerRewardPoints(
-        $customer_id,
-        $earned,
-        $earned_before = 0,
-        $redeemed = 0,
-        $redeemed_before = 0
-    ) {
-        $customer = Customer::find($customer_id);
-
-        //Return if walk in customer
-        if ($customer->is_default == 1) {
-            return false;
-        }
-
-        $total_earned = $earned - $earned_before;
-        $total_redeemed = $redeemed - $redeemed_before;
-
-        $diff = $total_earned - $total_redeemed;
-
-        $customer_points = empty($customer->total_rp) ? 0 : $customer->total_rp;
-        $total_points = $customer_points + $diff;
-
-        $customer->total_rp = $total_points;
-        $customer->total_rp_used += $total_redeemed;
-        $customer->save();
-    }
-
-    /**
-     * Calculates reward points to be earned by a customer
-     *
-     * @return integer
-     */
-    public function calculateTotalRewardPointsValue($customer_id, $store_id)
-    {
-        $total_points_value = 0;
-
-        $customer = Customer::find($customer_id);
-
-        $customer_type_id = (string) $customer->customer_type_id;
-        if (!empty($customer_type_id)) {
-            $earning_of_points = EarningOfPoint::whereJsonContains('customer_type_ids', $customer_type_id)
-                ->whereJsonContains('store_ids', $store_id)
-                ->get();
-
-            foreach ($earning_of_points as $earning_of_point) {
-
-                $redemption_of_point = RedemptionOfPoint::whereJsonContains('redemption_of_points.earning_of_point_ids', (string)$earning_of_point->id)
-                    ->whereJsonContains('redemption_of_points.store_ids', $store_id)
-                    ->first();
-
-                if (!empty($redemption_of_point)) {
-                    if (!empty($redemption_of_point->end_date)) {
-                        //if end date set then check for expiry
-                        if ($redemption_of_point->end_date >= date('Y-m-d') && $redemption_of_point->start_date <= date('Y-m-d')) {
-                            $total_points_value = $this->calculatePointsValue($customer->total_rp,  $redemption_of_point);
-                        }
-                    }
-                }
-            }
-        }
-
-        return $total_points_value;
-    }
-    public function calculatePointsValue($total_points, $redemption_of_point)
-    {
-        return floor(($total_points / 1000) * $redemption_of_point->value_of_1000_points);
-    }
-
-    public function calcuateRedeemPoints($transaction)
-    {
-        $total_points = 0;
-
-        $customer = Customer::find($transaction->customer_id);
-        $store_id = (string) $transaction->store_id;
 
 
-        $customer_type_id = (string) $customer->customer_type_id;
-        if (!empty($customer_type_id)) {
-            $earning_of_points = EarningOfPoint::whereJsonContains('customer_type_ids', $customer_type_id)
-                ->whereJsonContains('store_ids', $store_id)
-                ->get();
 
-            foreach ($earning_of_points as $earning_of_point) {
-
-                $redemption_of_points = RedemptionOfPoint::whereJsonContains('redemption_of_points.earning_of_point_ids', (string)$earning_of_point->id)
-                    ->whereJsonContains('redemption_of_points.store_ids', $store_id)
-                    ->first();
-                if (!empty($redemption_of_points)) {
-                    if (!empty($redemption_of_points->end_date)) {
-                        //if end date set then check for expiry
-                        if ($redemption_of_points->end_date >= date('Y-m-d') && $redemption_of_points->start_date <= date('Y-m-d')) {
-                            $total_points = $this->calculateRedeemPointsByProdct($transaction->transaction_sell_lines,  $redemption_of_points);
-                            break;
-                        }
-                    } else {
-                        //if no end date then its is for unlimited time
-                        $total_points = $this->calculateRedeemPointsByProdct($transaction->transaction_sell_lines,  $redemption_of_points);
-                        break;
-                    }
-                }
-            }
-        }
-
-        return $total_points;
-    }
-
-    public function calculateRedeemPointsByProdct($sell_lines,  $redemption_of_points)
-    {
-        $points = 0;
-
-        foreach ($sell_lines as $line) {
-            //if products in this order is valid for reward
-            $product_id = (int) $line->product_id;
-            $product_contain = RedemptionOfPoint::where('id', $redemption_of_points->id)->whereJsonContains('product_ids', $product_id)->first();
-            if (!empty($product_contain)) {
-                $line->update(['point_redeemed' => 1]);
-                $points += (1000 / $redemption_of_points->value_of_1000_points) * $line->sub_total;
-            }
-        }
-
-        return floor($points);
-    }
-
-    public function calculateRedeemablePointValue($customer_id, $product_array, $store_id)
-    {
-        $customer = Customer::find($customer_id);
-        $store_id = (string) $store_id;
-
-        $total_redeemable = 0;
-        if ($customer->is_default != 1) {
-
-            $customer_type_id = (string) $customer->customer_type_id;
-            if (!empty($customer_type_id)) {
-                $earning_of_points = EarningOfPoint::whereJsonContains('customer_type_ids', $customer_type_id)
-                    ->whereJsonContains('store_ids', $store_id)
-                    ->get();
-
-                foreach ($earning_of_points as $earning_of_point) {
-
-                    $redemption_of_points = RedemptionOfPoint::whereJsonContains('redemption_of_points.earning_of_point_ids', (string)$earning_of_point->id)
-                        ->whereJsonContains('redemption_of_points.store_ids', $store_id)
-                        ->first();
-                    if (!empty($redemption_of_points)) {
-                        if (!empty($redemption_of_points->end_date)) {
-                            //if end date set then check for expiry
-                            if ($redemption_of_points->end_date >= date('Y-m-d') && $redemption_of_points->start_date <= date('Y-m-d')) {
-                                $total_redeemable = $this->calculateRedeemablePointsByProdct($product_array,  $redemption_of_points, $customer_id, $store_id);
-                            }
-                        } else {
-                            //if no end date then its is for unlimited time
-                            $total_redeemable = $this->calculateRedeemablePointsByProdct($product_array,  $redemption_of_points, $customer_id, $store_id);
-                        }
-                    }
-                }
-            }
-        }
-        return $total_redeemable;
-    }
-
-    public function calculateRedeemablePointsByProdct($product_array,  $redemption_of_points, $customer_id, $store_id)
-    {
-        $redeemable = 0;
-        $total_redeemable_value = $this->calculateTotalRewardPointsValue($customer_id, $store_id);
-        foreach ($product_array as $line) {
-            if ($total_redeemable_value > 0) {
-                //if products in this order is valid for redeem
-                $product_id = (int)$line['product_id'];
-                $sub_total = $line['sub_total'];
-                $product_contain = RedemptionOfPoint::where('id', $redemption_of_points->id)->whereJsonContains('product_ids', $product_id)->first();
-                if (!empty($product_contain)) {
-                    if ($total_redeemable_value >= $sub_total) {
-                        $redeemable += $sub_total;
-                        $total_redeemable_value -= $sub_total;
-                    } else {
-                        $redeemable += $total_redeemable_value;
-                        $total_redeemable_value = 0;
-                    }
-                }
-            }
-        }
-
-        return floor($redeemable);
-    }
-    /**
-     * Calculates reward points to be earned from an order
-     *
-     * @return integer
-     */
-    public function calculateRewardPoints($transaction)
-    {
-        $total_points = 0;
-
-        $customer = Customer::find($transaction->customer_id);
-        $store_id = (string) $transaction->store_id;
-
-        $customer_type_id = (string) $customer->customer_type_id;
-
-        if (!empty($customer_type_id)) {
-            $earning_point_system = EarningOfPoint::whereJsonContains('customer_type_ids', $customer_type_id)
-                ->whereJsonContains('store_ids', $store_id)
-                ->first();
-            if (!empty($earning_point_system)) {
-                if (!empty($earning_point_system->end_date)) {
-                    //if end date set then check for expiry
-                    if ($earning_point_system->end_date >= date('Y-m-d')) {
-                        $total_points = $this->calculatePointsByProducts($transaction->transaction_sell_lines,  $earning_point_system);
-                    }
-                } else {
-                    //if no end date then its is for unlimited time
-                    $total_points = $this->calculatePointsByProducts($transaction->transaction_sell_lines,  $earning_point_system);
-                }
-            }
-        }
-
-        return $total_points;
-    }
-
-    /**
-     * calculate point for each valid products
-     *
-     * @param object $sell_lines
-     * @param object $earning_point_system
-     * @return integer
-     */
-    public function calculatePointsByProducts($sell_lines, $earning_point_system)
-    {
-        $points = 0;
-
-        foreach ($sell_lines as $line) {
-            //if products in this order is valid for reward
-            $product_id = $line->product_id;
-            $product_contain = EarningOfPoint::where('id', $earning_point_system->id)->whereJsonContains('product_ids', $product_id)->first();
-
-            if (!empty($product_contain)) {
-                $line->update(['point_earned' => 1]);
-                $points += $earning_point_system->points_on_per_amount * $line->sub_total;
-            }
-        }
-
-        return floor($points);
-    }
 
     public function calculateDiscountAmount($amount, $type, $value)
     {
@@ -1176,7 +922,6 @@ class TransactionUtil extends Util
             'customer_id' => $request->customer_id,
             'final_total' => $this->num_uf($request->final_total),
             'grand_total' => $this->num_uf($request->grand_total),
-            'gift_card_id' => $request->gift_card_id,
             'coupon_id' => $request->coupon_id,
             'is_direct_sale' => !empty($request->is_direct_sale) ? 1 : 0,
             'status' => $request->status,
@@ -1199,27 +944,13 @@ class TransactionUtil extends Util
             'fabric_name' => $request->fabric_name ?? null,
             'fabric_squatch' => $request->fabric_squatch ?? null,
             'prova_datetime' => $request->prova_datetime ?? null,
-            'delivery_datetime' => $request->delivery_datetime ?? null,
             'terms_and_condition_id' => !empty($request->terms_and_condition_id) ? $request->terms_and_condition_id : null,
-            'delivery_zone_id' => !empty($request->delivery_zone_id) ? $request->delivery_zone_id : null,
-            'manual_delivery_zone' => !empty($request->manual_delivery_zone) ? $request->manual_delivery_zone : null,
-            'deliveryman_id' => $request->deliveryman_id_hidden,
-            'delivery_cost' => $this->num_uf($request->delivery_cost),
-            'delivery_address' => $request->delivery_address,
-            'delivery_cost_paid_by_customer' => !empty($request->delivery_cost_paid_by_customer) ? 1 : 0,
-            'delivery_cost_given_to_deliveryman' => !empty($request->delivery_cost_given_to_deliveryman) ? 1 : 0,
-            'dining_table_id' => !empty($request->dining_table_id) ? $request->dining_table_id : null,
-            'dining_room_id' => !empty($request->dining_room_id) ? $request->dining_room_id : null,
             'service_fee_id' => !empty($request->service_fee_id_hidden) ? $request->service_fee_id_hidden : null,
             'service_fee_rate' => !empty($request->service_fee_rate) ? $this->num_uf($request->service_fee_rate) : null,
             'service_fee_value' => !empty($request->service_fee_value) ? $this->num_uf($request->service_fee_value) : null,
             'commissioned_employees' => !empty($request->commissioned_employees) ? $request->commissioned_employees : [],
             'shared_commission' => !empty($request->shared_commission) ? 1 : 0,
         ];
-        if (!empty($request->dining_table_id)) {
-            $dining_table = DiningTable::find($request->dining_table_id);
-            $transaction_data['dining_room_id'] = $dining_table->dining_room_id;
-        }
 
 
         if (!empty($request->transaction_date)) {
@@ -1344,7 +1075,7 @@ class TransactionUtil extends Util
      *
      * @param object $transaction
      * @param array $payment_types
-     * @return void
+     * @return string
      */
     public function getInvoicePrint($transaction, $payment_types, $transaction_invoice_lang = null,$last_due=null)
     {
@@ -1773,41 +1504,6 @@ class TransactionUtil extends Util
         return 'Rets' . $number_only;
     }
 
-    /**
-     * create of update the transaction customersize
-     *
-     * @param object $transaction
-     * @param array $customer_size_details
-     * @return void
-     */
-    public function createOrUpdateTransactionCustomerSize($transaction, $customer_size_details)
-    {
-        $transaction_customer_size = TransactionCustomerSize::firstOrNew(['transaction_id' => $transaction->id]);
-
-        $transaction_customer_size->yoke = $customer_size_details['yoke'];
-        $transaction_customer_size->neck_round = $customer_size_details['neck_round'];
-        $transaction_customer_size->neck_width = $customer_size_details['neck_width'];
-        $transaction_customer_size->neck_deep = $customer_size_details['neck_deep'];
-        $transaction_customer_size->front_neck = $customer_size_details['front_neck'];
-        $transaction_customer_size->back_neck = $customer_size_details['back_neck'];
-        $transaction_customer_size->upper_bust = $customer_size_details['upper_bust'];
-        $transaction_customer_size->bust = $customer_size_details['bust'];
-        $transaction_customer_size->low_bust = $customer_size_details['low_bust'];
-        $transaction_customer_size->shoulder_er = $customer_size_details['shoulder_er'];
-        $transaction_customer_size->arm_hole = $customer_size_details['arm_hole'];
-        $transaction_customer_size->arm_round = $customer_size_details['arm_round'];
-        $transaction_customer_size->wrist_round = $customer_size_details['wrist_round'];
-        $transaction_customer_size->lenght_of_sleeve = $customer_size_details['lenght_of_sleeve'];
-        $transaction_customer_size->waist = $customer_size_details['waist'];
-        $transaction_customer_size->low_waist = $customer_size_details['low_waist'];
-        $transaction_customer_size->hips = $customer_size_details['hips'];
-        $transaction_customer_size->thigh = $customer_size_details['thigh'];
-        $transaction_customer_size->knee_round = $customer_size_details['knee_round'];
-        $transaction_customer_size->calf_round = $customer_size_details['calf_round'];
-        $transaction_customer_size->ankle = $customer_size_details['ankle'];
-
-        $transaction_customer_size->save();
-    }
 
     /**
      * create of update the transaction customersize
@@ -1861,64 +1557,7 @@ class TransactionUtil extends Util
         return ['total_quantity' => $total_quantity, 'old_qty' => $old_qty];
     }
 
-    /**
-     * create or update raw material consumption
-     *
-     * @param object $transaction
-     * @return void
-     */
-    public function createOrUpdateRawMaterialConsumption($transaction)
-    {
-        $sell_lines = $transaction->transaction_sell_lines;
 
-        foreach ($sell_lines as $line) {
-            $line_product = Product::find($line->product_id);
-            $consumption_products = ConsumptionProduct::where('variation_id', $line->variation_id)->get();
-            foreach ($consumption_products as $consumption_product) {
-                $raw_material = Product::find($consumption_product->raw_material_id);
-                if(!empty( $raw_material )){
-                    if ($line_product->automatic_consumption == 1) {
-                        $consumption = Consumption::firstOrNew(['transaction_id' => $transaction->id, 'raw_material_id' => $raw_material->id]);
-                        $consumption->store_id = $transaction->store_id;
-                        $consumption->transaction_id = $transaction->id;
-                        $consumption->raw_material_id = $raw_material->id;
-                        $consumption->consumption_no = uniqid('CONA');
-                        $consumption->date_and_time = $transaction->transaction_date;
-                        $consumption->created_by = Auth::guard('admin')->user()->id;
-                        $consumption->save();
-
-                        $old_qty = 0;
-                        $total_quantity = 0;
-                        $consumption_detail_exist = ConsumptionDetail::where(['consumption_id' => $consumption->id, 'variation_id' => $line->variation_id])->first();
-                        if (!empty($consumption_detail_exist)) {
-                            $old_qty = $consumption_detail_exist->quantity;
-                        }
-
-                        $consumption_detail = ConsumptionDetail::firstOrNew(['consumption_id' => $consumption->id, 'variation_id' => $line->variation_id]);
-                        $consumption_detail->consumption_id = $consumption->id;
-                        $consumption_detail->product_id = $line->product_id;
-                        $consumption_detail->variation_id = $line->variation_id;
-                        $consumption_detail->unit_id = $consumption_product->unit_id;
-                        $consumption_detail->quantity = $consumption_product->amount_used * $line->quantity;
-
-                        $consumption_detail->save();
-
-                        $raw_material_unit = Unit::find($raw_material->units->pluck('id')[0]);
-                        $consumption_unit = Unit::find($consumption_product->unit_id);
-                        $base_unit_multiplier = 1;
-                        if ($raw_material_unit->id != $consumption_unit->id) {
-                            $base_unit_multiplier = $consumption_unit->base_unit_multiplier;
-                        }
-                        $total_quantity = $line->quantity * $consumption_product->amount_used * $base_unit_multiplier;
-                        $old_qty = $old_qty * $base_unit_multiplier;
-
-                        $variation_rw = Variation::where('product_id', $raw_material->id)->first();
-                        $this->productUtil->decreaseProductQuantity($raw_material->id, $variation_rw->id, $transaction->store_id, $total_quantity, $old_qty);
-                    }
-                }
-            }
-        }
-    }
     /**
      * create of update the customer important dates
      *
