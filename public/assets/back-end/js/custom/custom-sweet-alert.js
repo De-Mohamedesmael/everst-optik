@@ -6,11 +6,11 @@
 (function ($) {
     'use strict';
         /* -- Sweet Alert - Basic -- */
-        $("body").on("click", "#sa-basic", function() {      
+        $("body").on("click", "#sa-basic", function() {
             swal("Here's a message!")
         });
         /* -- Sweet Alert - Title -- */
-        $("body").on("click", "#sa-title", function() {    
+        $("body").on("click", "#sa-title", function() {
             swal(
                 'The Theta?',
                 'That thing is still around?',
@@ -18,7 +18,7 @@
                 )
         });
         /* -- Sweet Alert - Success -- */
-        $("body").on("click", "#sa-success", function() {      
+        $("body").on("click", "#sa-success", function() {
             swal(
             {
                 title: 'Nice Work!',
@@ -31,7 +31,7 @@
             )
         });
         /* -- Sweet Alert - Warning -- */
-        $("body").on("click", "#sa-warning", function() {      
+        $("body").on("click", "#sa-warning", function() {
             swal({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -49,7 +49,7 @@
             })
         });
         /* -- Sweet Alert - Parameter -- */
-        $("body").on("click", "#sa-params", function() {      
+        $("body").on("click", "#sa-params", function() {
             swal({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -77,7 +77,7 @@
             })
         });
         /* -- Sweet Alert - Image -- */
-        $("body").on("click", "#sa-image", function() {      
+        $("body").on("click", "#sa-image", function() {
             swal({
                 title: 'Sweet!',
                 text: 'Modal with a custom images',
@@ -86,7 +86,7 @@
             })
         });
         /* -- Sweet Alert - Auto Close Timer -- */
-        $("body").on("click", "#sa-auto-close", function() {      
+        $("body").on("click", "#sa-auto-close", function() {
             swal({
                 title: 'Auto close alert!',
                 text: 'I will close in 2 seconds.',
@@ -96,13 +96,13 @@
             },
             function (dismiss) {
                 if (dismiss === 'timer') {
-                    
+
                 }
             }
             )
         });
         /* -- Sweet Alert - Custom HTML -- */
-        $("body").on("click", "#custom-html", function() {      
+        $("body").on("click", "#custom-html", function() {
             swal({
                 title: '<i>HTML</i> <u>example</u>',
                 type: 'info',
@@ -118,7 +118,7 @@
             })
         });
         /* -- Sweet Alert - Custom Padding Width -- */
-        $("body").on("click", "#custom-padding-width", function() {      
+        $("body").on("click", "#custom-padding-width", function() {
             swal({
                 title: 'Custom width, padding, background.',
                 width: 600,
@@ -127,7 +127,7 @@
             })
         });
         /* -- Sweet Alert - Ajax -- */
-        $("body").on("click", "#sa-ajax", function() {      
+        $("body").on("click", "#sa-ajax", function() {
             swal({
                 title: 'Submit email to run ajax request',
                 input: 'email',
@@ -157,7 +157,7 @@
             })
         });
         /* -- Sweet Alert - Chaining Modal -- */
-        $("body").on("click", "#sa-chaining", function() {      
+        $("body").on("click", "#sa-chaining", function() {
             swal.setDefaults({
                 input: 'text',
                 confirmButtonText: 'Next &rarr;',
@@ -188,7 +188,7 @@
             })
         });
         /* -- Sweet Alert - Dynamic -- */
-        $("body").on("click", "#sa-dynamic", function() {      
+        $("body").on("click", "#sa-dynamic", function() {
             swal.queue([{
                 title: 'Your public IP',
                 confirmButtonText: 'Show my public IP',

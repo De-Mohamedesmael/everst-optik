@@ -180,18 +180,18 @@
                     deleteBtn.innerHTML = '<i style="font-size: 20px;" class="fas fa-trash"></i>';
                     deleteBtn.addEventListener('click', () => {
                         Swal.fire({
-                            title: '{{ __('site.Are you sure?') }}',
-                            text: "{{ __("site.You won't be able to delete!") }}",
+                            title: '{{translate('Are you sure?') }}',
+                            text: "{{translate("You won't be able to delete!") }}",
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, delete it!'
+                            confirmButtonText: '{{translate('Yes, delete it!') }}'
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 Swal.fire(
                                     'Deleted!',
-                                    '{{ __('site.Your Image has been deleted.') }}',
+                                    '{{translate("Your Image has been deleted.") }}',
                                     'success'
                                 )
                                 files.splice(file, 1)

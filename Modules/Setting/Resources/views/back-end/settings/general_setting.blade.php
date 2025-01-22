@@ -647,7 +647,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: '{{translate('Yes, delete it!') }}'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -734,7 +734,7 @@
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33',
-                                confirmButtonText: 'Yes, delete it!'
+                                confirmButtonText: '{{translate('Yes, delete it!') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     Swal.fire(
@@ -880,7 +880,7 @@
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33',
-                                confirmButtonText: 'Yes, delete it!'
+                                confirmButtonText: '{{translate('Yes, delete it!') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     Swal.fire(
@@ -1026,7 +1026,7 @@
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33',
-                                confirmButtonText: 'Yes, delete it!'
+                                confirmButtonText: '{{translate('Yes, delete it!') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     Swal.fire(
