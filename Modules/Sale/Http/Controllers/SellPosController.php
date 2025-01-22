@@ -49,14 +49,15 @@ use Modules\Setting\Entities\TermsAndCondition;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Str;
+use Modules\Sale\Entities\SalesPromotion;
+use Modules\Sale\Entities\TransactionSellLine;
+
 use Yajra\DataTables\Facades\DataTables;
 
 //use Coupon;
 //use GiftCard;
-//use SalesPromotion;
 //use TermsAndCondition;
 //use ServiceFee;
-//use TransactionSellLine;
 
 class SellPosController extends Controller
 {
@@ -290,7 +291,6 @@ class SellPosController extends Controller
             'type' => 'sell',
             'final_total' => $this->commonUtil->num_uf($request->final_total),
             'grand_total' => $this->commonUtil->num_uf($request->grand_total),
-            'gift_card_id' => $request->gift_card_id,
             'coupon_id' => $request->coupon_id,
             'transaction_date' => !empty($request->transaction_date) ? $request->transaction_date : Carbon::now(),
             'payment_status' => 'pending',
@@ -304,7 +304,6 @@ class SellPosController extends Controller
             'fabric_name' => $request->fabric_name ?? null,
             'fabric_squatch' => $request->fabric_squatch ?? null,
             'prova_datetime' => $request->prova_datetime ?? null,
-            'delivery_datetime' => $request->delivery_datetime ?? null,
             'discount_type' => $request->discount_type,
             'discount_value' => $this->commonUtil->num_uf($request->discount_value),
             'discount_amount' => $this->commonUtil->num_uf($request->discount_amount),
@@ -314,22 +313,11 @@ class SellPosController extends Controller
             'add_to_deposit' => $this->commonUtil->num_uf($request->add_to_deposit),
             'tax_id' => !empty($request->tax_id_hidden) ? $request->tax_id_hidden : null,
             'tax_method' => $request->tax_method ?? null,
-            // 'tax_rate' => $request->tax_rate ?? 0,
             'total_tax' => $this->commonUtil->num_uf($request->total_tax),
             'total_item_tax' => $this->commonUtil->num_uf($request->total_item_tax),
             'sale_note' => $request->sale_note,
             'staff_note' => $request->staff_note,
             'terms_and_condition_id' => !empty($request->terms_and_condition_id) ? $request->terms_and_condition_id : null,
-            'delivery_zone_id' => !empty($request->delivery_zone_id) ? $request->delivery_zone_id : null,
-            'manual_delivery_zone' => !empty($request->manual_delivery_zone) ? $request->manual_delivery_zone : null,
-            'deliveryman_id' => !empty($request->deliveryman_id_hidden) ? $request->deliveryman_id_hidden : null,
-            'delivery_status' => 'pending',
-            'delivery_cost' => $this->commonUtil->num_uf($request->delivery_cost),
-            'delivery_address' => $request->delivery_address,
-            'delivery_cost_paid_by_customer' => !empty($request->delivery_cost_paid_by_customer) ? 1 : 0,
-            'delivery_cost_given_to_deliveryman' => !empty($request->delivery_cost_given_to_deliveryman) ? 1 : 0,
-            'dining_table_id' => !empty($request->dining_table_id) ? $request->dining_table_id : null,
-            'dining_room_id' => !empty($request->dining_room_id) ? $request->dining_room_id : null,
             'service_fee_id' => !empty($request->service_fee_id_hidden) ? $request->service_fee_id_hidden : null,
             'service_fee_rate' => !empty($request->service_fee_rate) ? $this->commonUtil->num_uf($request->service_fee_rate) : null,
             'service_fee_value' => !empty($request->service_fee_value) ? $this->commonUtil->num_uf($request->service_fee_value) : null,
@@ -338,11 +326,7 @@ class SellPosController extends Controller
             'created_by' => Auth::user()->id,
         ];
 
-        $transaction_data['dining_room_id'] = null;
-        if (!empty($request->dining_table_id)) {
-            $dining_table = DiningTable::find($request->dining_table_id);
-            $transaction_data['dining_room_id'] = $dining_table->dining_room_id;
-        }
+
         DB::beginTransaction();
 
         if (!empty($request->is_quotation)) {
@@ -363,7 +347,7 @@ class SellPosController extends Controller
                 if ($transaction->status == 'final') {
                     $product = Product::find($sell_line['product_id']);
                     if (!$product->is_service) {
-                        $this->productUtil->decreaseProductQuantity($sell_line['product_id'], $sell_line['variation_id'], $transaction->store_id, (float) $sell_line['quantity']);
+                        $this->productUtil->decreaseProductQuantity($sell_line['product_id'], $transaction->store_id, (float) $sell_line['quantity']);
                     }
                 }
             }
@@ -374,32 +358,17 @@ class SellPosController extends Controller
             foreach ($request->transaction_sell_line as $sell_line) {
                 $product = Product::find($sell_line['product_id']);
                 if (!$product->is_service) {
-                    $this->productUtil->updateBlockQuantity($sell_line['product_id'], $sell_line['variation_id'], $transaction->store_id, (float) $sell_line['quantity'], 'add');
+                    $this->productUtil->updateBlockQuantity($sell_line['product_id'], $transaction->store_id, (float) $sell_line['quantity'], 'add');
                 }
             }
         }
 
-        if ($transaction->status == 'final') {
-            //if transaction is final then calculate the reward points
-            $customer = $this->ifTransactionIsFinalThenCalculateTheRewardPoints($transaction, $request);
-            $customer->staff_note = isset($request->staff_note) ? $request->staff_note : '';
-            if ($request->used_deposit_balance > 0 && $customer->deposit_balance > 0) {
-                $customer->deposit_balance = $customer->deposit_balance - $request->used_deposit_balance;
-            }
-            if ($request->add_to_deposit > 0) {
-                $customer->deposit_balance = $customer->deposit_balance + $request->add_to_deposit;
-            }
-            $customer->added_balance = $customer->added_balance + $request->add_to_customer_balance;
-            $customer->save();
-        }
+
 
         if ($transaction->status != 'draft') {
             foreach ($request->payments as $payment) {
                 $amount = $this->commonUtil->num_uf($payment['amount']) - $this->commonUtil->num_uf($payment['change_amount']);
-                if($payment['method']=='deposit'){
-                $customer->added_balance = $customer->added_balance - $amount;
-                $customer->save();
-                }
+
                 if ($amount > 0) {
                     $payment_data = [
                         'transaction_id' => $transaction->id,
@@ -437,7 +406,7 @@ class SellPosController extends Controller
                         }
                     }
                     $transaction_payment = $this->transactionUtil->createOrUpdateTransactionPayment($transaction, $payment_data);
-                    $transaction = $this->transactionUtil->updateTransactionPaymentStatus($transaction->id);
+                     $this->transactionUtil->updateTransactionPaymentStatus($transaction->id);
                     $this->cashRegisterUtil->addPayments($transaction, $payment_data, 'credit', null, $transaction_payment->id);
                     if ($payment_data['method'] == 'bank_transfer' || $payment_data['method'] == 'card') {
                         $this->moneysafeUtil->addPayment($transaction, $payment_data, 'credit', $transaction_payment->id);
@@ -477,41 +446,6 @@ class SellPosController extends Controller
                 $transaction->addMediaFromDisk($doc, 'temp')->toMediaCollection('sell');
             }
         }
-
-
-        $this->transactionUtil->createOrUpdateRawMaterialConsumption($transaction);
-
-        if (session('system_mode') == 'restaurant') {
-            if (!empty($transaction->dining_table_id)) {
-                $dining_table->current_transaction_id = $transaction->id;
-                $old_status = $dining_table->status;
-                if ($old_status == 'available') {
-                    $dining_table->status = 'order';
-                }
-                $dining_table->save();
-                if ($old_status == 'reserve') {
-                    if (Carbon::now()->gt(Carbon::parse($dining_table->date_and_time))) {
-                        $dining_table->status = 'available';
-                        $dining_table->customer_name = null;
-                        $dining_table->customer_mobile_number = null;
-                        $dining_table->date_and_time = null;
-                    }
-                }
-
-
-                if ($old_status != 'reserve') {
-                    if ($transaction->status == 'final' && $transaction->payment_status != 'pending') {
-                        $dining_table->status = 'available';
-                        $dining_table->customer_name = null;
-                        $dining_table->customer_mobile_number = null;
-                        $dining_table->date_and_time = null;
-                    }
-                }
-                $dining_table->save();
-            }
-        }
-
-
         DB::commit();
 
         $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
@@ -681,18 +615,6 @@ class SellPosController extends Controller
             DB::beginTransaction();
             $transaction = $this->transactionUtil->updateSellTransaction($request, $id);
 
-            if ($transaction->status == 'final') {
-                //if transaction is final then calculate the reward points
-                $customer = $this->ifTransactionIsFinalThenCalculateTheRewardPoints($transaction, $request);
-                if ($request->used_deposit_balance > 0) {
-                    $customer->deposit_balance = $customer->deposit_balance - $request->used_deposit_balance;
-                }
-                if ($request->add_to_deposit > 0) {
-                    $customer->deposit_balance = $customer->deposit_balance + $request->add_to_deposit;
-                }
-                $customer->save();
-            }
-
             if ($transaction->status != 'draft') {
                 if (!empty($request->payments)) {
                     $payment_formated = [];
@@ -781,38 +703,6 @@ class SellPosController extends Controller
                 $transaction_data['dining_room_id'] = $dining_table->dining_room_id;
             }
 
-            $this->transactionUtil->createOrUpdateRawMaterialConsumption($transaction);
-            if (session('system_mode') == 'restaurant') {
-                if (!empty($transaction->dining_table_id)) {
-                    $dining_table->current_transaction_id = $transaction->id;
-                    $old_status = $dining_table->status;
-                    if ($old_status == 'available') {
-                        $dining_table->status = 'order';
-                    }
-                    $dining_table->save();
-                    if ($old_status == 'reserve') {
-                        if (Carbon::now()->gt(Carbon::parse($dining_table->date_and_time))) {
-                            $dining_table->status = 'available';
-                            $dining_table->current_transaction_id = null;
-                            $dining_table->customer_name = null;
-                            $dining_table->customer_mobile_number = null;
-                            $dining_table->date_and_time = null;
-                        }
-                    }
-
-
-                    if ($old_status != 'reserve') {
-                        if ($transaction->status == 'final' && $transaction->payment_status != 'pending') {
-                            $dining_table->status = 'available';
-                            $dining_table->current_transaction_id = null;
-                            $dining_table->customer_name = null;
-                            $dining_table->customer_mobile_number = null;
-                            $dining_table->date_and_time = null;
-                        }
-                    }
-                    $dining_table->save();
-                }
-            }
 
             DB::commit();
 
@@ -1157,7 +1047,6 @@ class SellPosController extends Controller
         $product_details = $this->productUtil->getNonIdentifiableProductDetails($name, $sell_price, $purchase_price, $request);
         if (!empty($product_details)) {
             $product_id = $product_details->product_id;
-            $variation_id = $product_details->variation_id;
             $quantity = $quantity;
             $edit_quantity = $quantity;
         } else {
@@ -1168,7 +1057,7 @@ class SellPosController extends Controller
 
         if (!empty($product_id)) {
             $index = $request->input('row_count');
-            $products = $this->productUtil->getDetailsFromProductByStore($product_id, $variation_id, $store_id, NULL);
+            $products = $this->productUtil->getDetailsFromProductByStore($product_id, $store_id, NULL);
 
             $product_discount_details = $this->productUtil->getProductDiscountDetails($product_id, $customer_id);
             // $sale_promotion_details = $this->productUtil->getSalesPromotionDetail($product_id, $store_id, $customer_id, $added_products);
@@ -1228,7 +1117,6 @@ class SellPosController extends Controller
             if (!empty($result) && !empty($result->weighing_scale_barcode)) {
                 return [
                     'product_id' => $result->product_id,
-                    'variation_id' => $result->variation_id,
                     'qty' => $qty,
                     'success' => true
                 ];
@@ -1649,7 +1537,6 @@ class SellPosController extends Controller
         $store_id = request()->store_id;
         $product_array = request()->product_array;
 
-        $rp_value = $this->transactionUtil->calculateTotalRewardPointsValue($customer_id, $store_id);
 
         $total_redeemable = 0;
 
@@ -1659,7 +1546,7 @@ class SellPosController extends Controller
 
         $customer_type = CustomerType::find($customer->customer_type_id);
 
-        return ['customer' => $customer, 'rp_value' => $rp_value, 'total_redeemable'  => $total_redeemable, 'customer_type_name' => !empty($customer_type) ? $customer_type->name : ''];
+        return ['customer' => $customer, 'total_redeemable'  => $total_redeemable, 'customer_type_name' => !empty($customer_type) ? $customer_type->name : ''];
     }
 
     /**
@@ -1756,20 +1643,20 @@ class SellPosController extends Controller
 
         return  $html_content;
     }
-    public function changeSellingPrice($variation_id): array
+    public function changeSellingPrice($product_id): array
     {
         try {
 
-            $stockLines = AddStockLine::where('variation_id', $variation_id)
+            $stockLines = AddStockLine::where('product_id', $product_id)
                 ->get();
             if (count($stockLines) > 0) {
                 $updateData = ['sell_price' => request()->sell_price, 'updated_by' => Auth::user()->id];
-                AddStockLine::where('variation_id', $variation_id)->update($updateData);
-            } else {
-                $variation = Variation::find($variation_id);
-                $variation->default_sell_price = request()->sell_price;
-                $variation->save();
+                AddStockLine::where('product_id', $product_id)->update($updateData);
             }
+            $product = Product::find($product_id);
+            $product->sell_price = request()->sell_price;
+            $product->save();
+
             $output = [
                 'success' => true,
                 'msg' => __('lang.selling_price_for_this_product_is_changed')
@@ -1784,35 +1671,6 @@ class SellPosController extends Controller
         return $output;
     }
 
-    /**
-     * @param $transaction
-     * @param Request $request
-     * @return mixed
-     */
-    public function ifTransactionIsFinalThenCalculateTheRewardPoints($transaction, Request $request): mixed
-    {
-        $points_earned = $this->transactionUtil->calculateRewardPoints($transaction);
-
-        $transaction->rp_earned = $points_earned;
-        if ($request->is_redeem_points) {
-            // $transaction->rp_redeemed = $request->rp_redeemed; //logic in front end
-            $transaction->rp_redeemed_value = $request->rp_redeemed_value;
-            $rp_redeemed = $this->transactionUtil->calcuateRedeemPoints($transaction); //back end
-            $transaction->rp_redeemed = $rp_redeemed;
-        }
-        $transaction->total_sp_discount = $request->total_sp_discount;
-        $transaction->total_product_discount = $transaction->transaction_sell_lines->whereIn('product_discount_type', ['fixed', 'percentage'])->sum('product_discount_amount');
-        $transaction->total_product_surplus = $transaction->transaction_sell_lines->whereIn('product_discount_type', ['surplus'])->sum('product_discount_amount');
-        $transaction->total_coupon_discount = $transaction->transaction_sell_lines->sum('coupon_discount_amount');
-
-        $transaction->save();
-
-        $this->transactionUtil->updateCustomerRewardPoints($transaction->customer_id, $points_earned, 0, $request->rp_redeemed, 0);
-
-        //update customer deposit balance if any
-        $customer = Customer::find($transaction->customer_id);
-        return $customer;
-    }
     /**
      * @param Request $request
      * @return mixed

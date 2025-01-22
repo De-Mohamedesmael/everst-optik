@@ -447,7 +447,7 @@ function check_for_sale_promotion() {
     var added_products = [];
     var added_qty = [];
     $("#product_table > tbody  > tr").each((ele, tr) => {
-        let product_id_tr = __read_number($(tr).find(".variation_id"));
+        let product_id_tr = __read_number($(tr).find(".product_id"));
         let qty_tr = {
             product_id: product_id_tr,
             qty: __read_number($(tr).find(".quantity")),
@@ -543,7 +543,7 @@ function check_for_sale_promotion() {
                                 .each(function () {
 
                                     var row_product_id = $(this)
-                                        .find(".variation_id")
+                                        .find(".product_id")
                                         .val()
                                         .trim();
                                     var qty = $(this)
@@ -1008,7 +1008,7 @@ $(document).on("change", ".sell_price", function () {
             if (isConfirm) {
             $.ajax({
                 type: "post",
-                url: "/dashboard/pos/change-selling-price/"+$(this).data('variation_id'),
+                url: "/dashboard/pos/change-selling-price/"+$(this).data('product_id'),
                 data: {sell_price:sell_price},
                 success: function (response) {
                      Swal.fire({

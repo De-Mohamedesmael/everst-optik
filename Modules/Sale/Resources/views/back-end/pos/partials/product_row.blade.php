@@ -42,8 +42,8 @@
 
 
 
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][is_service]"
-                    class="is_service" value="{{ $product->is_service }}">
+                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][is_lens]"
+                    class="is_lens" value="{{ $product->is_lens }}">
                 <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][have_weight]"
                     class="have_weight" value="{{ $product->have_weight }}">
                 <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][product_id]"
@@ -139,14 +139,14 @@
                     <input type="number" class="form-control quantity  qty numkey input-number" step="any"
                         autocomplete="off" style="width: 50px;font-size: 14px;font-weight: 600"
                         @isset($check_unit) @if ($check_unit->name == 'قطعه' || $check_unit->name == 'Piece') oninput="this.value = Math.round(this.value);" @endif @endisset
-                        id="quantity" @if (!$product->is_service) max="{{ $product->qty_available }}" @endif
+                        id="quantity" @if (!$product->is_lens) max="{{ $product->qty_available }}" @endif
                         name="transaction_sell_line[{{ $loop->index + $index }}][quantity]" required
                         value="{{ $convertedInputValue }}">
                     {{--
                     <input type="number" class="form-control quantity  qty numkey input-number" step="any"
                         autocomplete="off" style="width: 50px;"
                         @isset($check_unit) @if ($check_unit->name == 'قطعه' || $check_unit->name == 'Piece') oninput="this.value = Math.round(this.value);" @endif @endisset
-                        id="quantity" @if (!$products->is_service) max="{{ $products->qty_available }}" @endif
+                        id="quantity" @if (!$products->is_lens) max="{{ $products->qty_available }}" @endif
                         name="transaction_sell_line[{{ $loop->index + $index }}][quantity]" required
                         value="@if (!empty($edit_quantity)) {{ $edit_quantity }}@else @if (isset($products->quantity)){{ preg_match('/\.\d*[1-9]+/', (string) $products->quantity) ? $products->quantity : @num_format($products->quantity) }}@else{{ 1 }} @endif @endif"> --}}
 
@@ -170,6 +170,7 @@
 
                 <input type="text" class="form-control sell_price text-center d-flex justify-content-center align-items-center"
                     style="outline: none;border: none;padding: 0 !important;width: 100%;height: 100%;font-size: 14px;font-weight: 600"
+                       data-product_id="{{$product->product_id}}"
                     name="transaction_sell_line[{{ $loop->index + $index }}][sell_price]" required
                     @if (!auth()->user()->can('product_module.sell_price.create_and_edit')) readonly @elseif(env('IS_SUB_BRANCH', false)) readonly @endif
                     value="@if (isset($default_sell_price)) {{ @num_format(($default_sell_price+$total_vu)/ $exchange_rate) }}@else{{ 0 }} @endif ">
@@ -286,7 +287,7 @@
                     <div class="d-flex justify-content-center align-items-center"
                         style="width: 100%;height: 100%;font-size: 14px;font-weight: 600">
 
-                        @if ($product->is_service)
+                        @if ($product->is_lens)
                             {{ '-' }}
                         @else
                             @if (isset($product->qty_available))
