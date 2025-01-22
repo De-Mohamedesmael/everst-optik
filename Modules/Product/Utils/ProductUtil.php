@@ -13,6 +13,7 @@ use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductDiscount;
 use Modules\Product\Entities\ProductStore;
 use Modules\Setting\Entities\Store;
+use Modules\Sale\Entities\SalesPromotion;
 
 //use ConsumptionProduct;
 //use EarningOfPoint;
@@ -20,7 +21,6 @@ use Modules\Setting\Entities\Store;
 //use PurchaseReturnLine;
 //use RedemptionOfPoint;
 //use RemoveStockLine;
-//use SalesPromotion;
 //use TransferLine;
 
 class ProductUtil extends Util
@@ -481,7 +481,7 @@ class ProductUtil extends Util
                 ->whereJsonContains('product_ids', $product_id)
                 ->whereDate('start_date', '<=', date('Y-m-d'))
                 ->whereDate('end_date', '>=', date('Y-m-d'))
-                ->orWhere('is_discount_permenant','1')
+                ->orWhere('is_discount_permanent','1')
                 ->get();
             foreach ($sales_promotions as $sales_promotion) {
                 if ($sales_promotion->type == 'item_discount') {
@@ -519,7 +519,7 @@ class ProductUtil extends Util
                 ->whereJsonContains('store_ids', $store_id)
                 ->whereDate('start_date', '<=', date('Y-m-d'))
                 ->whereDate('end_date', '>=', date('Y-m-d'))
-                ->orWhere('is_discount_permenant','1')
+                ->orWhere('is_discount_permanent','1')
                 ->get();
             foreach ($sales_promotions as $sales_promotion) {
                 $v_sales_promotion = $this->getSalePromotionDetailsIfValidForThisSaleArray($sales_promotion, $added_products, $qty_array);
@@ -1223,13 +1223,13 @@ class ProductUtil extends Util
      * @param string $old_quantity
      * @return void
      */
-    public function updateBlockQuantity($product_id, $variation_id, $store_id, $qty, $type = 'add')
+    public function updateBlockQuantity($product_id, $store_id, $qty, $type = 'add')
     {
         if ($type == 'add') {
-            ProductStore::where('product_id', $product_id)->where('variation_id', $variation_id)->where('store_id', $store_id)->increment('block_qty', $qty);
+            ProductStore::where('product_id', $product_id)->where('store_id', $store_id)->increment('block_qty', $qty);
         }
         if ($type == 'subtract') {
-            ProductStore::where('product_id', $product_id)->where('variation_id', $variation_id)->where('store_id', $store_id)->decrement('block_qty', $qty);
+            ProductStore::where('product_id', $product_id)->where('store_id', $store_id)->decrement('block_qty', $qty);
         }
     }
 
