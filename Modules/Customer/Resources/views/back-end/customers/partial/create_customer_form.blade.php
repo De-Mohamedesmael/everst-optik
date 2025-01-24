@@ -44,7 +44,6 @@
                 {!! Form::number('age', null, [
                     'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
                     'placeholder' => __('lang.age'),
-                    'required',
                 ]) !!}
             </div>
             <div class="col-md-2 mb-2">

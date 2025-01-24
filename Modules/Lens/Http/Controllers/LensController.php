@@ -1068,21 +1068,23 @@ class LensController extends Controller
             ->latest()
             ->first();
 
-        $default["sell_price"]= num_format($stockLines ? $stockLines->sell_price : $lens->sell_price);
-        $default["purchase_price"] = num_format( $stockLines
+        $default["sell_price"]= $stockLines ? $stockLines->sell_price : $lens->sell_price;
+        $default["purchase_price"] = $stockLines
             ? $stockLines->purchase_price
-            : $lens->purchase_price);
+            : $lens->purchase_price;
 
-        $default['Base_amount']=num_format(0);
+        $default['Base_amount']=0;
         if ($request->check_base && $request->special_base) {
             $Base=SpecialBase::whereId($request->special_base)->first();
             if($Base){
-                $default['Base_amount']= num_format($Base->price);
+                $default['Base_amount']= $Base->price;
             }
         }
 
 
-
+        $default['sell_price_format']=num_format($default['sell_price']);
+        $default['purchase_price_format']=num_format($default['purchase_price']);
+        $default['Base_amount_format']=num_format($default['Base_amount']);
         return [
             'success' => true,
             'data' => $default

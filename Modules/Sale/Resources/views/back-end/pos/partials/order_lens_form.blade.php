@@ -1602,7 +1602,6 @@
     //     }
     // });
     $(document).on("change", "#lens_id ,#special_base ,#VABaseCheck", function () {
-            console.log('ddd')
         let   lens_id = $('#lens_id').val(),
               special_base = $('#special_base').val(),
               check_base =0;
@@ -1623,9 +1622,9 @@
                     var sell_price = result.data.sell_price;
                     var Base_amount = result.data.Base_amount;
                     $("#price_lens").val(sell_price);
-                    $("#price-lens").text(sell_price + '{{session("currency")["symbol"]}}');
+                    $("#price-lens").text(result.data.sell_price_format + '{{session("currency")["symbol"]}}');
                     $("#price_Base").val(Base_amount);
-                    $("#price-Base").text(Base_amount + '{{session("currency")["symbol"]}}');
+                    $("#price-Base").text(result.data.Base_amount_format + '{{session("currency")["symbol"]}}');
                     if(Base_amount > 0){
                         $('#div-price-Base').removeClass('d-none')
                     }else {

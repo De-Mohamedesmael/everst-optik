@@ -17,9 +17,12 @@ class CreatePrescriptionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->string('doctor_name');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->unsignedBigInteger('sell_line_id');
+            $table->foreign('sell_line_id')->references('id')->on('transaction_sell_lines');
             $table->string('date');
-            $table->text('note')->nullable();
+            $table->json('data')->nullable();
             $table->timestamps();
         });
     }

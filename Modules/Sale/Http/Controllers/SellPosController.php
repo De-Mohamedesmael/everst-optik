@@ -291,15 +291,11 @@ class SellPosController extends Controller
             'type' => 'sell',
             'final_total' => $this->commonUtil->num_uf($request->final_total),
             'grand_total' => $this->commonUtil->num_uf($request->grand_total),
-            'coupon_id' => $request->coupon_id,
             'transaction_date' => !empty($request->transaction_date) ? $request->transaction_date : Carbon::now(),
             'payment_status' => 'pending',
             'invoice_no' => $this->productUtil->getNumberByType('sell'),
-            'ticket_number' => $this->transactionUtil->getTicketNumber(),
             'is_direct_sale' => !empty($request->is_direct_sale) ? 1 : 0,
             'status' => $request->status,
-            'sale_note' => $request->sale_note,
-            'staff_note' => $request->staff_note,
             'customer_size_id' => $request->customer_size_id_hidden ?? null,
             'fabric_name' => $request->fabric_name ?? null,
             'fabric_squatch' => $request->fabric_squatch ?? null,
@@ -327,16 +323,8 @@ class SellPosController extends Controller
         ];
 
 
-        DB::beginTransaction();
 
-        if (!empty($request->is_quotation)) {
-            $transaction_data['is_quotation'] = 1;
-            $transaction_data['status'] = 'draft';
-            $transaction_data['invoice_no'] = $this->productUtil->getNumberByType('quotation');
-            $transaction_data['block_qty'] = !empty($request->block_qty) ? 1 : 0;
-            $transaction_data['block_for_days'] = !empty($request->block_for_days) ? $request->block_for_days : 0; //reverse the block qty handle by command using cron jobs
-            $transaction_data['validity_days'] = !empty($request->validity_days) ? $request->validity_days : 0;
-        }
+        DB::beginTransaction();
         $transaction = Transaction::create($transaction_data);
 
 
@@ -349,16 +337,6 @@ class SellPosController extends Controller
                     if (!$product->is_service) {
                         $this->productUtil->decreaseProductQuantity($sell_line['product_id'], $transaction->store_id, (float) $sell_line['quantity']);
                     }
-                }
-            }
-        }
-
-        // if quotation and qty is blocked(reserved) for sale
-        if ($transaction->is_quotation && $transaction->block_qty) {
-            foreach ($request->transaction_sell_line as $sell_line) {
-                $product = Product::find($sell_line['product_id']);
-                if (!$product->is_service) {
-                    $this->productUtil->updateBlockQuantity($sell_line['product_id'], $transaction->store_id, (float) $sell_line['quantity'], 'add');
                 }
             }
         }
@@ -383,7 +361,6 @@ class SellPosController extends Controller
                         'cheque_number' => !empty($payment['cheque_number']) ? $payment['cheque_number'] : null,
                         'bank_name' => !empty($payment['bank_name']) ? $payment['bank_name'] : null,
                         'ref_number' => !empty($payment['ref_number']) ? $payment['ref_number'] : null,
-                        'gift_card_number' => $request->gift_card_number,
                         'amount_to_be_used' => $request->amount_to_be_used,
                         'payment_note' => $request->payment_note,
                         'change_amount' => $payment['change_amount'] ?? 0,
@@ -416,23 +393,12 @@ class SellPosController extends Controller
             }
 
 
-            if (!empty($transaction->coupon_id)) {
-                Coupon::where('id', $transaction->coupon_id)->update(['used' => 1]);
-            }
 
-            if (!empty($transaction->gift_card_id)) {
-                $remaining_balance = $this->commonUtil->num_uf($request->remaining_balance);
-                $used = 0;
-                if ($remaining_balance == 0) {
-                    $used = 1;
-                }
-                GiftCard::where('id', $transaction->gift_card_id)->update(['balance' => $remaining_balance, 'used' => $used]);
-            }
+
+
         }
 
-        if (!empty($request->transaction_customer_size)) {
-            $this->transactionUtil->createOrUpdateTransactionCustomerSize($transaction, $request->transaction_customer_size);
-        }
+
 
         // $this->transactionUtil->createOrUpdateTransactionSupplierService($transaction, $request);
 
@@ -488,29 +454,6 @@ class SellPosController extends Controller
 
             return redirect()->back()->with('status', $output);
         }
-
-        if (!empty($transaction->dining_table_id)) {
-            $html_content = $this->transactionUtil->getInvoicePrint($transaction, $payment_types, $request->invoice_lang, $last_due);
-
-            $output = [
-                'success' => true,
-                'html_content' => $html_content,
-                'msg' => __('lang.success')
-            ];
-
-            if ($request->dining_action_type == 'save') {
-                $output = [
-                    'success' => true,
-                    'msg' => __('lang.success')
-                ];
-            }
-            return $output;
-        }
-
-        if ($request->submit_type == 'send' && $transaction->is_quotation) {
-            $this->notificationUtil->sendQuotationToCustomer($transaction->id, $request->emails);
-        }
-
 
         $html_content = $this->transactionUtil->getInvoicePrint($transaction, $payment_types, $request->invoice_lang, $last_due);
 

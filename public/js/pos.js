@@ -618,7 +618,9 @@ function calculate_sub_totals() {
         let quantity = __read_number($(tr).find(".quantity"));
         item_quantity+=quantity;
         let sell_price = __read_number($(tr).find(".sell_price"));
+
         let price_hidden = __read_number($(tr).find(".price_hidden"));
+        console.log(sell_price,price_hidden,$(tr).find(".price_hidden").val(),$(tr).find(".sell_price").val());
         let sub_total = 0;
         if (sell_price > price_hidden) {
 
@@ -1092,13 +1094,16 @@ $(document).on("submit", "form#quick_add_customer_form", function (e) {
                 var customer_id = result.customer_id;
                 $.ajax({
                     method: "get",
-                    url: "/dashboard/dashboard/customers/s/get-dropdown",
+                    url: "/dashboard/customers/get-dropdown",
                     data: {},
                     contactType: "html",
                     success: function (data_html) {
                         $("#customer_id").empty().append(data_html);
                         $("#customer_id").selectpicker("refresh");
                         $("#customer_id").selectpicker("val", customer_id);
+                        getCustomerBalance();
+
+
                     },
                 });
             } else {
@@ -2265,9 +2270,31 @@ $(document).on("click", ".add_to_deposit", function () {
     $(this).attr("disabled", true);
 });
 
-function getCustomerBalance() {
-    let customer_id = $("#customer_id").val();
+function clearOrderLens() {
+    $('#orderLensFormCreate')[0].reset();
 
+    $('#orderLensFormCreate input[type="checkbox"], #orderLensFormCreate input[type="radio"]').prop('checked', false);
+    $("#price-lens").text("0.00");
+    $("#total-lens").text("0.00");
+    $('#orderLensFormCreate select').prop('selectedIndex', 0);
+    $("#orderLensFormCreate .selectpicker").selectpicker("refresh");
+    $('#orderLensFormCreate input[type="text"], #orderLensFormCreate input[type="number"]').val('');
+    $('#moreInfoCollapse').removeClass('show');
+    $('.color_class').addClass('d-none');
+    $('.VABaseCheck_class').addClass('d-none');
+    $('.specific_diameter_class').addClass('d-none');
+    $('.owf-page-shapeDefinition-manual-shape').addClass('d-none');
+    $('#div-price-TinTing').addClass('d-none');
+    $('#div-price-Base').addClass('d-none');
+    $('#div-price-Ozel').addClass('d-none');
+
+
+}
+
+    function getCustomerBalance() {
+
+    let customer_id = $("#customer_id").val();
+        clearOrderLens();
     $.ajax({
         method: "get",
         url: "/dashboard/pos/get-customer-balance/" + customer_id,
