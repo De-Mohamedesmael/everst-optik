@@ -259,37 +259,36 @@ $(document).ready(function () {
     });
 });
 // ++++++++++++++++++++++++ Customer Type Form +++++++++++++++++++++
-$(document).on("submit", "#quick_add_customer_form", function (e) {
-    e.preventDefault();
-    console.log("Quick Add Customer Form");
-    var data = $(this).serialize();
-    $.ajax({
-        method: "post",
-        url: $(this).attr("action"),
-        dataType: "json",
-        data: data,
-        success: function (result) {
-            if (result.success) {
-                Swal.fire("Success", result.msg, "success");
-                $("#add_customer").modal("hide");
-                var customer_id = result.id;
-                $.ajax({
-                    method: "get",
-                    url: "/dashboard/dashboard/customers/s/get-dropdown",
-                    data: {},
-                    contactType: "html",
-                    success: function (data_html) {
-                        $("#client_id").empty().append(data_html[0]);
-
-                        $("#client_id").val(data_html[1]).change();
-                    },
-                });
-            } else {
-                Swal.fire("Error", result.msg, "error");
-            }
-        },
-    });
-});
+// $(document).on("submit", "#quick_add_customer_form", function (e) {
+//     e.preventDefault();
+//     var data = $(this).serialize();
+//     $.ajax({
+//         method: "post",
+//         url: $(this).attr("action"),
+//         dataType: "json",
+//         data: data,
+//         success: function (result) {
+//             if (result.success) {
+//                 Swal.fire("Success", result.msg, "success");
+//                 $("#add_customer").modal("hide");
+//                 var customer_id = result.id;
+//                 $.ajax({
+//                     method: "get",
+//                     url: "/dashboard/customers/get-dropdown",
+//                     data: {},
+//                     contactType: "html",
+//                     success: function (data_html) {
+//                         $("#client_id").empty().append(data_html[0]);
+//
+//                         $("#client_id").val(data_html[1]).change();
+//                     },
+//                 });
+//             } else {
+//                 Swal.fire("Error", result.msg, "error");
+//             }
+//         },
+//     });
+// });
 // +++++++++++++++++++++++ customer_cities_Dropdown ++++++++++++++++++++
 $(document).on("submit", "#customer-region-form", function (e) {
     e.preventDefault();
@@ -309,7 +308,7 @@ $(document).on("submit", "#customer-region-form", function (e) {
                 console.log("Outer Second Ajax Request : ", result);
                 $.ajax({
                     method: "get",
-                    url: "/dashboard/dashboard/customers/s/get-dropdown-city/" + state_id,
+                    url: "/dashboard/customers/get-dropdown-city/" + state_id,
                     data: {},
                     contactType: "html",
                     success: function (data_html) {
@@ -346,7 +345,7 @@ $(document).on("submit", "#customer-quarter-form", function (e) {
                 console.log("Outer Second Ajax Request : ", result);
                 $.ajax({
                     method: "get",
-                    url: "/dashboard/dashboard/customers/s/get-dropdown-quarter/" + city_id,
+                    url: "/dashboard/customers/get-dropdown-quarter/" + city_id,
                     data: {},
                     contactType: "html",
                     success: function (data_html) {
@@ -382,7 +381,7 @@ $(document).on("submit", "#customer-type-form2", function (e) {
                 console.log("Outer Second Ajax Request : ", result);
                 $.ajax({
                     method: "get",
-                    url: "/dashboard/dashboard/customers/s/get-dropdown-customer-type/",
+                    url: "/dashboard/customers/get-dropdown-customer-type/",
                     data: {},
                     contactType: "html",
                     success: function (data_html) {

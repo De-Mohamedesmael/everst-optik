@@ -5,6 +5,7 @@ namespace App\Utils;
 //use PurchaseOrderController;
 //use Consumption;
 //use ConsumptionDetail;
+use Illuminate\Support\Facades\Cache;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\CustomerBalanceAdjustment;
 use Modules\Customer\Entities\CustomerImportantDate;
@@ -14,6 +15,7 @@ use Modules\Customer\Entities\CustomerImportantDate;
 //use RewardSystem;
 //use Modules\Setting\Entities\Store;
 //use \Supplier;
+use Modules\Customer\Entities\Prescription;
 use Modules\Setting\Entities\Tax;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -140,15 +142,13 @@ class TransactionUtil extends Util
     public function createOrUpdateTransactionSellLine($transaction, $transaction_sell_lines)
     {
         $keep_sell_lines = [];
-
+        $is_lens=0;
         foreach ($transaction_sell_lines as $line) {
             $old_quantity = 0;
+
             if (!empty($transaction_sell_lines['transaction_sell_line_id'])) {
                 $transaction_sell_line = TransactionSellLine::find($transaction_sell_lines['transaction_sell_line_id']);
                 $transaction_sell_line->product_id = $line['product_id'];
-                $transaction_sell_line->coupon_discount = !empty($line['coupon_discount']) ? $this->num_uf($line['coupon_discount']) : 0;
-                $transaction_sell_line->coupon_discount_type = !empty($line['coupon_discount_type']) ? $line['coupon_discount_type'] : null;
-                $transaction_sell_line->coupon_discount_amount = !empty($line['coupon_discount_amount']) ? $this->num_uf($line['coupon_discount_amount']) : 0;
                 $transaction_sell_line->promotion_discount = !empty($line['promotion_discount']) ? $this->num_uf($line['promotion_discount']) : 0;
                 $transaction_sell_line->promotion_discount_type = !empty($line['promotion_discount_type']) ? $line['promotion_discount_type'] : null;
                 $transaction_sell_line->promotion_discount_amount = !empty($line['promotion_discount_amount']) ? $this->num_uf($line['promotion_discount_amount']) : 0;
@@ -156,7 +156,6 @@ class TransactionUtil extends Util
                 $transaction_sell_line->product_discount_type = !empty($line['product_discount_type']) ? $line['product_discount_type'] : null;
                 $transaction_sell_line->product_discount_amount = !empty($line['product_discount_amount']) ? $this->num_uf($line['product_discount_amount']) : 0;
                 $transaction_sell_line->discount_category = !empty($line['discount_category']) ? $line['discount_category'] : '';
-
                 $transaction_sell_line->batch_number = !empty($line['batch_number']) ?$line['batch_number']: null;
                 $old_quantity = $transaction_sell_line->quantity;
                 $transaction_sell_line->quantity =(float) $line['quantity'];
@@ -167,17 +166,16 @@ class TransactionUtil extends Util
                 $transaction_sell_line->tax_method = !empty($line['tax_method']) ? $line['tax_method'] : null;
                 $transaction_sell_line->tax_rate = !empty($line['tax_rate']) ? $this->num_uf($line['tax_rate']) : 0;
                 $transaction_sell_line->item_tax = !empty($line['item_tax']) ? $this->num_uf($line['item_tax']) : 0;
-                $transaction_sell_line->cost_ratio_per_one = $this->num_uf($line['cost_ratio_per_one']);
                 $transaction_sell_line->save();
                 $keep_sell_lines[] = $line['transaction_sell_line_id'];
+
+
             }
             else {
                 $transaction_sell_line = new TransactionSellLine();
                 $transaction_sell_line->transaction_id = $transaction->id;
+                $transaction_sell_line->is_lens = $line['is_lens'];
                 $transaction_sell_line->product_id = $line['product_id'];
-                $transaction_sell_line->coupon_discount = !empty($line['coupon_discount']) ? $this->num_uf($line['coupon_discount']) : 0;
-                $transaction_sell_line->coupon_discount_type = !empty($line['coupon_discount_type']) ? $line['coupon_discount_type'] : null;
-                $transaction_sell_line->coupon_discount_amount = !empty($line['coupon_discount_amount']) ? $this->num_uf($line['coupon_discount_amount']) : 0;
                 $transaction_sell_line->promotion_discount = !empty($line['promotion_discount']) ? $this->num_uf($line['promotion_discount']) : 0;
                 $transaction_sell_line->promotion_discount_type = !empty($line['promotion_discount_type']) ? $line['promotion_discount_type'] : null;
                 $transaction_sell_line->promotion_discount_amount = !empty($line['promotion_discount_amount']) ? $this->num_uf($line['promotion_discount_amount']) : 0;
@@ -194,14 +192,28 @@ class TransactionUtil extends Util
                 $transaction_sell_line->tax_method = !empty($line['tax_method']) ? $line['tax_method'] : null;
                 $transaction_sell_line->tax_rate = !empty($line['tax_rate']) ? $this->num_uf($line['tax_rate']) : 0;
                 $transaction_sell_line->item_tax = !empty($line['item_tax']) ? $this->num_uf($line['item_tax']) : 0;
-                $transaction_sell_line->cost_ratio_per_one = $this->num_uf($line['cost_ratio_per_one']);
                 $transaction_sell_line->save();
                 $keep_sell_lines[] = $transaction_sell_line->id;
+                if($line['is_lens']){
+                    $is_lens=$line['is_lens'];
+                    $KeyLens=$line['KeyLens'];
+                    $data=Cache::get($KeyLens);
+                    $prescription_data=[
+                        'customer_id' => $transaction->customer_id,
+                        'product_id' => $line['product_id'],
+                        'sell_line_id' => $transaction_sell_line->id,
+                        'date' => date('Y-m-d'),
+                        'data' => json_encode($data),
+                    ];
+
+                    Prescription::create($prescription_data);
+                }
             }
             $stock_id=$line['stock_id'];
             $this->updateSoldQuantityInAddStockLine($transaction_sell_line->product_id, $transaction->store_id,(float) $line['quantity'], $old_quantity,$stock_id);
         }
-
+        $transaction->is_lens=$is_lens;
+        $transaction->save();
         //delete sell lines remove by user
         TransactionSellLine::where('transaction_id', $transaction->id)->whereNotIn('id', $keep_sell_lines)->delete();
 
@@ -1122,7 +1134,7 @@ class TransactionUtil extends Util
         }
 
         if ($invoice_lang == 'ar_and_en') {
-            $html_content = view('sale_pos.partials.invoice_ar_and_end')->with(compact(
+            $html_content = view('sale::back-end.pos.partials.invoice_ar_and_end')->with(compact(
                 'transaction',
                 'payment_types',
                 'print_gift_invoice',
@@ -1130,7 +1142,7 @@ class TransactionUtil extends Util
                 'last_due'
             ))->render();
         } else {
-            $html_content = view('sale_pos.partials.invoice')->with(compact(
+            $html_content = view('sale::back-end.pos.partials.invoice')->with(compact(
                 'transaction',
                 'payment_types',
                 'invoice_lang',
@@ -1143,7 +1155,7 @@ class TransactionUtil extends Util
         if ($transaction->is_direct_sale == 1) {
             $sale = $transaction;
             $payment_type_array = $payment_types;
-            $html_content = view('sale_pos.partials.commercial_invoice')->with(compact(
+            $html_content = view('sale::back-end.pos.partials.commercial_invoice')->with(compact(
                 'sale',
                 'payment_type_array',
                 'invoice_lang',
@@ -1155,7 +1167,7 @@ class TransactionUtil extends Util
         if ($transaction->is_quotation == 1 && $transaction->status == 'draft') {
             $sale = $transaction;
             $payment_type_array = $payment_types;
-            $html_content = view('sale_pos.partials.commercial_invoice')->with(compact(
+            $html_content = view('sale::back-end.pos.partials.commercial_invoice')->with(compact(
                 'sale',
                 'payment_type_array',
                 'invoice_lang'
@@ -1165,30 +1177,6 @@ class TransactionUtil extends Util
         return $html_content;
     }
 
-    /**
-     * get ticket number for restaurants
-     *
-     * @return int
-     */
-    public function getTicketNumber($number = 1)
-    {
-        $ticket_count = Transaction::whereDate('transaction_date', Carbon::now()->format('Y-m-d'))
-            ->where('type', 'sell')
-            ->orderBy('created_at', 'desc')
-            ->count();
-        $ticket_number = $ticket_count + $number;
-
-        $ticket_exist = Transaction::whereDate('transaction_date', Carbon::now()->format('Y-m-d'))
-            ->where('type', 'sell')
-            ->where('ticket_number', $ticket_number)
-            ->exists();
-
-        if (!empty($ticket_exist)) {
-            return $this->getTicketNumber($number + 1);
-        } else {
-            return $ticket_number;
-        }
-    }
 
     /**
      * calculate the cost of sold products for restaurants

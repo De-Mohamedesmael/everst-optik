@@ -25,7 +25,7 @@
         </div>
 
         <div class="modal-footer d-flex justify-content-center align-content-center gap-3">
-            <button type="submit" class="col-3 py-1 btn btn-main">@lang('lang.save')</button>
+            <button type="submit" class="col-3 py-1 btn btn-main" data-dismiss="modal">@lang('lang.save')</button>
             <button type="button" class="col-3 py-1 btn btn-danger" data-dismiss="modal">@lang('lang.close')</button>
         </div>
 

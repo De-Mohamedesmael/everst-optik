@@ -308,7 +308,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-2 mb-2 mb-lg-0">
+                                    <div class="col-lg-3 mb-2 mb-lg-0">
                                         <div class="col-12 p-0 ml-1 input-group my-group d-flex flex-row justify-content-between height-responsive text-center"
                                             style="background-color: white; border: none;
                                  border: 1px solid #bbb;
@@ -825,8 +825,6 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
                 @include('sale::back-end.pos.partials.payment_modal')
                 @include('sale::back-end.pos.partials.discount_modal')
-                {{-- @include('sale::back-end.pos.partials.tax_modal') --}}
-                @include('sale::back-end.pos.partials.coupon_modal')
                 @include('sale::back-end.pos.partials.contact_details_modal')
                 @include('sale::back-end.pos.partials.weighing_scale_modal')
                 @include('sale::back-end.pos.partials.non_identifiable_item_modal')
@@ -1075,12 +1073,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <div id="dining_model" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                    class="modal text-left">
-                </div>
-                <div id="dining_table_action_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                    class="modal fade text-left">
-                </div>
+
             </div>
         </div>
     </div>
