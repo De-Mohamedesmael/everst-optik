@@ -98,7 +98,7 @@
 }
 
 #submit-btn,
-.submit-btn {
+.submit-btn  {
     background-color: var(--secondary-color);
     color: white;
     width: 100%;

@@ -227,9 +227,9 @@ class PrescriptionController extends Controller
         $prescriptions= Prescription::when(\request()->customer_id , function ($q){
             $q->where('customer_id', \request()->customer_id);
         })->orderBy('date', 'asc')
-            ->selectRaw("CONCAT(doctor_name, ' - ', date) AS name, id")
+            ->selectRaw(" date AS name, id")
             ->pluck('name', 'id');
-        return $this->commonUtil->createDropdownHtml($prescriptions);
+        return $this->commonUtil->createDropdownHtml($prescriptions,__('lang.please_select'));
     }
 
     /**

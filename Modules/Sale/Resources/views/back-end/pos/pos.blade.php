@@ -37,6 +37,27 @@
         .card {
             box-shadow: none !important;
         }
+        button#submit-btn-pay {
+            border-radius: 6px !important;
+        }
+        .toast {
+            background-color: #030303;
+        }
+        .toast-info {
+            background-color: #3276b1;
+        }
+        .toast-info2 {
+            background-color: #2f96b4;
+        }
+        .toast-error {
+            background-color: #bd362f;
+        }
+        .toast-success {
+            background-color: #51a351;
+        }
+        .toast-warning {
+            background-color: #f89406;
+        }
     </style>
 @endsection
 
@@ -1081,14 +1102,11 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
 
 <!-- This will be printed -->
-<section class="invoice print_section print-only" id="receipt_section"> </section>
 @endsection
 
 @section('javascript')
-
 <script src="{{ asset('js/onscan.min.js') }}"></script>
 <script src="{{ asset('js/pos.js') }}"></script>
-    //
 <script>
     $(document).on("click", "#btn-lens-add", function (e) {
         e.preventDefault();
