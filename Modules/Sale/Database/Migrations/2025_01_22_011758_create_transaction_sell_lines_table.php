@@ -27,6 +27,7 @@ class CreateTransactionSellLinesTable extends Migration
             $table->string('promotion_discount_type')->nullable();
             $table->decimal('promotion_discount', 15, 4)->nullable();
             $table->decimal('promotion_discount_amount', 15, 4)->nullable();
+
             $table->string('product_discount_type')->nullable();
             $table->decimal('product_discount_value', 15, 4)->default(0);
             $table->decimal('product_discount_amount', 15, 4)->default(0);

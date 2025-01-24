@@ -6,6 +6,7 @@ namespace App\Utils;
 //use Consumption;
 //use ConsumptionDetail;
 use Illuminate\Support\Facades\Cache;
+
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\CustomerBalanceAdjustment;
 use Modules\Customer\Entities\CustomerImportantDate;
@@ -15,7 +16,9 @@ use Modules\Customer\Entities\CustomerImportantDate;
 //use RewardSystem;
 //use Modules\Setting\Entities\Store;
 //use \Supplier;
+
 use Modules\Customer\Entities\Prescription;
+
 use Modules\Setting\Entities\Tax;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -149,6 +152,7 @@ class TransactionUtil extends Util
             if (!empty($transaction_sell_lines['transaction_sell_line_id'])) {
                 $transaction_sell_line = TransactionSellLine::find($transaction_sell_lines['transaction_sell_line_id']);
                 $transaction_sell_line->product_id = $line['product_id'];
+
                 $transaction_sell_line->promotion_discount = !empty($line['promotion_discount']) ? $this->num_uf($line['promotion_discount']) : 0;
                 $transaction_sell_line->promotion_discount_type = !empty($line['promotion_discount_type']) ? $line['promotion_discount_type'] : null;
                 $transaction_sell_line->promotion_discount_amount = !empty($line['promotion_discount_amount']) ? $this->num_uf($line['promotion_discount_amount']) : 0;
@@ -176,6 +180,7 @@ class TransactionUtil extends Util
                 $transaction_sell_line->transaction_id = $transaction->id;
                 $transaction_sell_line->is_lens = $line['is_lens'];
                 $transaction_sell_line->product_id = $line['product_id'];
+
                 $transaction_sell_line->promotion_discount = !empty($line['promotion_discount']) ? $this->num_uf($line['promotion_discount']) : 0;
                 $transaction_sell_line->promotion_discount_type = !empty($line['promotion_discount_type']) ? $line['promotion_discount_type'] : null;
                 $transaction_sell_line->promotion_discount_amount = !empty($line['promotion_discount_amount']) ? $this->num_uf($line['promotion_discount_amount']) : 0;

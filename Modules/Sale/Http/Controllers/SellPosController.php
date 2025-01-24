@@ -323,6 +323,7 @@ class SellPosController extends Controller
         ];
 
 
+
         DB::beginTransaction();
         $transaction = Transaction::create($transaction_data);
 
@@ -339,6 +340,7 @@ class SellPosController extends Controller
                 }
             }
         }
+
 
 
         if ($transaction->status != 'draft') {
