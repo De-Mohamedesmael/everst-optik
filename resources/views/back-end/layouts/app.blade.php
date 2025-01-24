@@ -528,8 +528,9 @@
     @yield('styles')
     @stack('style')
 </head>
+<section class="invoice print_section print-only" id="receipt_section"> </section>
 
-<div class="horizontal-layout relative">
+<div class="horizontal-layout relative  no-print">
     <div id="loader" style="display: none;"></div>
     <div class="overlay">
         <div style="width: 55%;overflow: hidden;position: relative;">
@@ -541,7 +542,7 @@
 
     </div>
 
-    <div id="content">
+    <div id="content  no-print">
         <div id="infobar-notifications-sidebar" class="infobar-notifications-sidebar">
             <div class="infobar-notifications-sidebar-head d-flex w-100 justify-content-between">
                 <h4>Notifications</h4><a href="javascript:void(0)" id="infobar-notifications-close"
@@ -706,7 +707,7 @@
             </div>
         </div>
         <!-- Start Containerbar -->
-        <div id="containerbar" class=" bg-white">
+        <div id="containerbar " class=" bg-white">
 
             @include('back-end.layouts.partials.header')
             <div id="closing_cash_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -721,7 +722,7 @@
 
                 @yield('breadcrumbbar')
 
-                <div class="animate-in-page">
+                <div class="animate-in-page  no-print">
                     <div class="breadcrumbbar m-0 px-3 py-0">
                         <div
                             class="d-flex align-items-center justify-content-between @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
@@ -749,7 +750,7 @@
                     </div>
                 </div>
                 @yield('content')
-                <div class="modal modal-jobs-edit animate__animated" data-animate-in="animate__rollIn"
+                <div class="modal modal-jobs-edit animate__animated  no-print" data-animate-in="animate__rollIn"
                      data-animate-out="animate__rollOut"
                      id="editModal" tabindex="-1" role="dialog" aria-labelledby="editBrandModalLabel"
                      style="display: none;"
@@ -834,10 +835,8 @@
         current_url = "{{ url()->current() }}";
     </script>
 
-
     <!-- Start js -->
     @include('back-end.layouts.partials.javascript')
-
     @yield('javascript')
 
 

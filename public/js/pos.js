@@ -1520,8 +1520,18 @@ $(document).on("click", "#quick-pay-btn", function (e) {
     $("#pay_from_balance").val("1")
     pos_form_obj.submit();
 });
-$("button#submit-btn").click(function () {
+$(document).on("click", "#submit-btn", function (e) {
     //Check if products is present or not.
+
+    // $("body").css({
+    //     "overflow-y": "auto",
+    //     "height": "fit-content"
+    // }).removeClass("modal-open");
+    // document.body.style.paddingRight = "";
+    // $("#add-payment").attr("aria-hidden",true);
+    // $("#add-payment").attr("aria-modal",'');
+    // $("#add-payment").modal("hide").removeClass('show').hide();
+
     if ($("table#product_table tbody").find(".product_row").length <= 0) {
         toastr.warning("No Product Added");
         return false;
@@ -1582,38 +1592,17 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (result) {
                     if (result.success == 1) {
-                        if ($("#is_quotation").val()) {
-                            if ($("#submit_type").val() === "print") {
-                                pos_print(result.html_content);
-                            } else {
-                                 Swal.fire({
-                    title: 'Success',
-                    text: result.msg,
-                    icon: 'success',
-                });
-                                location.reload();
-                            }
-                            return false;
-                        }
+
                         $("#add-payment").modal("hide");
                         toastr.success(result.msg);
-
-                        if ($("#status").val() == "draft") {
-                            if ($("#edit_pos_form").length > 0) {
-                                setTimeout(() => {
-                                    window.close();
-                                }, 3000);
-                            }
-                        }
-                        if (
-                            $("#print_the_transaction").prop("checked") == false
-                        ) {
+                        if ($("#print_the_transaction").prop("checked") == false) {
                             if ($("#edit_pos_form").length > 0) {
                                 setTimeout(() => {
                                     window.close();
                                 }, 1500);
                             }
                         }
+
                         if (
                             $("#print_the_transaction").prop("checked") &&
                             $("#status").val() !== "draft" &&
@@ -1625,26 +1614,6 @@ $(document).ready(function () {
                             pos_print(result.html_content);
                         }
 
-                        if (
-                            $("form#edit_pos_form").length > 0 &&
-                            $("#dining_action_type").val() === "save"
-                        ) {
-                            setTimeout(() => {
-                                window.close();
-                            }, 3000);
-                        }
-
-                        if (
-                            $("#print_and_draft_hidden").val() ===
-                            "print_and_draft"
-                        ) {
-                            pos_print(result.html_content);
-                            Swal.fire({
-                                title:"",
-                                text:LANG.the_order_is_saved_to_draft,
-                                icon:"success"
-                            });
-                        }
 
                         reset_pos_form();
                         getFilterProductRightSide();
@@ -1688,6 +1657,7 @@ function syntaxHighlight(json) {
 }
 function pos_print(receipt) {
     $("#receipt_section").html(receipt);
+    console.log('receipt_section');
     __currency_convert_recursively($("#receipt_section"));
     __print_receipt("receipt_section");
 }
@@ -1862,7 +1832,7 @@ $(document).ready(function () {
         },
         columnDefs: [
             {
-                targets: [9],
+                targets: [8],
                 orderable: false,
                 searchable: false,
             },
@@ -1874,7 +1844,6 @@ $(document).ready(function () {
             { data: "method", name: "transaction_payments.method" },
             { data: "ref_number", name: "transaction_payments.ref_number" },
             { data: "status", name: "transactions.status" },
-            { data: "deliveryman_name", name: "deliveryman_name" },
             { data: "created_by", name: "users.name" },
             { data: "canceled_by", name: "canceled_by" },
             { data: "action", name: "action" },
@@ -1951,7 +1920,7 @@ $(document).ready(function () {
         },
         columnDefs: [
             {
-                targets: [9],
+                targets: [8],
                 orderable: false,
                 searchable: false,
             },
@@ -1965,7 +1934,6 @@ $(document).ready(function () {
             { data: "mobile_number", name: "customers.mobile_number" },
             { data: "method", name: "transaction_payments.method" },
             { data: "status", name: "transactions.status" },
-            { data: "deliveryman_name", name: "deliveryman.employee_name" },
             { data: "action", name: "action" },
         ],
         createdRow: function (row, data, dataIndex) {},
@@ -2078,7 +2046,6 @@ function get_recent_transactions() {
                 d.method = $("#rt_method").val();
                 d.created_by = $("#rt_created_by").val();
                 d.customer_id = $("#rt_customer_id").val();
-                d.deliveryman_id = $("#rt_deliveryman_id").val();
             },
         },
         columnDefs: [
@@ -2104,7 +2071,6 @@ function get_recent_transactions() {
             { data: "ref_number", name: "transaction_payments.ref_number" },
             { data: "status", name: "transactions.status" },
             { data: "payment_status", name: "transactions.payment_status" },
-            { data: "deliveryman_name", name: "deliveryman.employee_name" },
             { data: "created_by", name: "users.name" },
             { data: "canceled_by", name: "canceled_by" },
             { data: "action", name: "action" },

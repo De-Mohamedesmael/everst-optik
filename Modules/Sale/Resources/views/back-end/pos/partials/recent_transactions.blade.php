@@ -13,7 +13,6 @@
                 <th>@lang('lang.ref_number')</th>
                 <th>@lang('lang.status')</th>
                 <th>@lang('lang.payment_status')</th>
-                <th>@lang('lang.delivery_man')</th>
                 <th>@lang('lang.cashier')</th>
                 <th>@lang('lang.canceled_by')</th>
                 <th class="notexport">@lang('lang.action')</th>
