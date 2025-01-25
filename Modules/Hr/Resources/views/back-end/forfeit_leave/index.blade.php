@@ -87,7 +87,7 @@
                                     </td>
                                     <td>{{ ucfirst($leave->created_by) }}</td>
                                     <td>
-                                        <a data-href="{{ action('GeneralController@viewUploadedFiles', ['model_name' => 'ForfeitLeave', 'model_id' => $leave->id, 'collection_name' => 'forfeit_leave']) }}"
+                                        <a data-href="{{ route('admin.view-uploaded-files', ['model_name' => 'ForfeitLeave', 'model_id' => $leave->id, 'collection_name' => 'forfeit_leave']) }}"
                                             data-container=".view_modal"
                                             class="btn btn-danger btn-modal text-white">@lang('lang.view')</a>
                                     </td>

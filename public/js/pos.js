@@ -1884,7 +1884,7 @@ $(document).ready(function () {
         },
     });
 
-    draft_table = $("#draft_table").DataTable({
+    lens_table = $("#lens_table").DataTable({
         lengthChange: true,
         paging: true,
         info: false,
@@ -1911,7 +1911,7 @@ $(document).ready(function () {
                 .attr("autocomplete", "off");
         },
         ajax: {
-            url: "/dashboard/pos/get-draft-transactions",
+            url: "/dashboard/pos/get-lens-transactions",
             data: function (d) {
                 d.start_date = $("#draft_start_date").val();
                 d.end_date = $("#draft_end_date").val();
@@ -1980,9 +1980,9 @@ $(document).on("shown.bs.modal", "#recentTransaction", function () {
     // recent_transaction_table.ajax.reload();
     get_recent_transactions();
 });
-$(document).on("click", "#view-draft-btn", function () {
-    $("#draftTransaction").modal("show");
-    draft_table.ajax.reload();
+$(document).on("click", "#view-lens-btn", function () {
+    $("#lensTransaction").modal("show");
+    lens_table.ajax.reload();
 });
 $(document).on("click", "#view-online-order-btn", function () {
     $("#onlineOrderTransaction").modal("show");
@@ -1994,7 +1994,7 @@ $(document).ready(function () {
         "change",
         "#draft_start_date, #draft_end_date, #draft_deliveryman_id",
         function () {
-            draft_table.ajax.reload();
+            lens_table.ajax.reload();
         }
     );
 
@@ -2436,7 +2436,7 @@ $(document).on("click", ".remove_draft", function (e) {
                                                 text:result.msg,
                                                 icon:"success"
                                             });
-                                            draft_table.ajax.reload();
+                                            lens_table.ajax.reload();
                                         } else {
                                              Swal.fire({
                                                 title: 'Error',
@@ -2517,7 +2517,7 @@ $(document).on("click", "a.draft_cancel", function (e) {
                                                 icon:"success"
                                             });
 
-                                            draft_table.ajax.reload();
+                                            lens_table.ajax.reload();
                                         } else {
                                              Swal.fire({
                                                 title: 'Error',
