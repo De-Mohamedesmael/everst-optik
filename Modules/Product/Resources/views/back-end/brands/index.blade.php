@@ -44,7 +44,7 @@
                                 <tbody>
                                     @foreach ($brands as $brand)
                                         <tr>
-                                            <td><img src="@if (!empty($brand->getFirstMediaUrl('brand'))) {{ $brand->getFirstMediaUrl('brand') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                            <td><img src="@if (!empty($brand->getFirstMediaUrl('brand'))) {{ $brand->getFirstMediaUrl('brand') }}@else{{ asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) }} @endif"
                                                     alt="photo" width="50" height="50">
                                             </td>
                                             <td>{{ $brand->name }}</td>

@@ -198,7 +198,7 @@ class ProductController extends Controller
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {
-                        return '<img src="' . asset('/uploads/' . session('logo')) . '" height="50px" width="50px">';
+                        return '<img src="' . asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) . '" height="50px" width="50px">';
                     }
                 })
                 ->editColumn('is_service',function ($row) {

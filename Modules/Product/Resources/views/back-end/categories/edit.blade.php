@@ -65,7 +65,7 @@
                                         <img src="{{ $category->getFirstMediaUrl('category') }}"
                                             id="img{{ $category->id }}" alt="">
                                     @else
-                                        <img src="{{ asset('/uploads/' . session('logo')) }}" alt=""
+                                        <img src="{{ asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) }}" alt=""
                                             id="img{{ $category->id }}">
                                     @endif
                                 </div>

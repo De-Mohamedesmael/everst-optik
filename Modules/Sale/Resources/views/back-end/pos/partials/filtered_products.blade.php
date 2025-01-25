@@ -17,7 +17,7 @@
         title="{{ $product->name }}"
         data-product="{{ $product->name . ' (' . $product->color->name . ')' }}">
         <div class="w-100">
-            <img src="@if (!empty($product->getFirstMediaUrl('products'))) {{ $product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+            <img src="@if (!empty($product->getFirstMediaUrl('products'))) {{ $product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) }} @endif"
                 width="100%" />
         </div>
         <p><span style="font-size:12px !important; font-weight: bold; color: black;">{{$product->name }}</span>

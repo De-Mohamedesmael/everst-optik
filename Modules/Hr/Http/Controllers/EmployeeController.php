@@ -103,7 +103,7 @@ class EmployeeController extends Controller
                         return '<img src="' . $row->getFirstMediaUrl('employee_photo') . '"
                         alt="photo" width="50" height="50">';
                     } else {
-                        return '<img src="' . asset('/uploads/' . session('logo')) . '" alt="photo" width="50" height="50">';
+                        return '<img src="' . asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) . '" alt="photo" width="50" height="50">';
                     }
                 })
                 ->addColumn('annual_leave_balance', function ($row) {
