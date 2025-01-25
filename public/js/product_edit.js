@@ -227,18 +227,20 @@ $(document).on("change", "#sell_price", function () {
 });
 $(document).on("change", "#sku", function () {
     let sku = $(this).val();
+    if (sku.trim() !== "" && sku) {
 
-    $.ajax({
-        method: "get",
-        url: "/dashboard/products/check-sku/" + sku,
-        data: {},
-        success: function (result) {
-            console.log(result.success);
-            if (!result.success) {
-                swal("Error", result.msg, "error");
-            }
-        },
-    });
+        $.ajax({
+            method: "get",
+            url: "/dashboard/products/check-sku/" + sku,
+            data: {},
+            success: function (result) {
+                console.log(result.success);
+                if (!result.success) {
+                    swal("Error", result.msg, "error");
+                }
+            },
+        });
+    }
 });
 $(document).on("change", "#purchase_price", function () {
     $(".default_purchase_price").val($(this).val());

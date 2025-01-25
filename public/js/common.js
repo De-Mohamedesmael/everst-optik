@@ -582,17 +582,19 @@ $(document).on("click", "table.ajax_view tbody tr", function (e) {
 });
 $(document).on("change", "#sku", function () {
     let sku = $(this).val();
+    if (sku.trim() !== "" && sku) {
 
-    $.ajax({
-        method: "get",
-        url: "/dashboard/products/check-sku/" + sku,
-        data: {},
-        success: function (result) {
-            if (!result.success) {
-                swal("Error", result.msg, "error");
-            }
-        },
-    });
+        $.ajax({
+            method: "get",
+            url: "/dashboard/products/check-sku/" + sku,
+            data: {},
+            success: function (result) {
+                if (!result.success) {
+                    swal("Error", result.msg, "error");
+                }
+            },
+        });
+    }
 });
 $(document).on("click", ".btn", function () {
     let data_dismiss = $(this).data("dismiss");
