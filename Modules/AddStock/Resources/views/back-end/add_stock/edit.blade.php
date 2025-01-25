@@ -155,7 +155,7 @@
                                             @foreach ($add_stock->add_stock_lines as $product)
                                                 <tr class="product_row">
                                                     <td class="row_number"></td>
-                                                    <td><img src="@if (!empty($product->product) && !empty($product->product->getFirstMediaUrl('products'))) {{ $product->product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                                    <td><img src="@if (!empty($product->product) && !empty($product->product->getFirstMediaUrl('products'))) {{ $product->product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) }} @endif"
                                                             alt="photo" width="50" height="50"></td>
                                                     <td>
                                                         <h6 style="width: 100%;height: 100%;"

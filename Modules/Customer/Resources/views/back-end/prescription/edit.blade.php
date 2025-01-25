@@ -50,7 +50,7 @@
                                     <img src="{{ $brand->getFirstMediaUrl('brand') }}" id="img{{ $brand->id }}"
                                         alt="">
                                 @else
-                                    <img src="{{ asset('/uploads/' . session('logo')) }}" alt=""
+                                    <img src="{{ asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) }}" alt=""
                                         id="img{{ $brand->id }}">
                                 @endif
                             </div>

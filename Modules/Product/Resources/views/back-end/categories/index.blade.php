@@ -44,7 +44,7 @@
                                     @foreach ($categories as $category)
                                         <tr>
                                             <td>
-                                                <img src="@if (!empty($category->getFirstMediaUrl('category'))) {{ $category->getFirstMediaUrl('category') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                                <img src="@if (!empty($category->getFirstMediaUrl('category'))) {{ $category->getFirstMediaUrl('category') }}@else{{ asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) }} @endif"
                                                     alt="photo" width="50" height="50">
                                             </td>
                                             <td>{{ $category->name }}</td>

@@ -737,7 +737,7 @@ class AddStockController extends Controller
                 $products_array[$product->product_id]['name'] = $product->name;
                 $products_array[$product->product_id]['sku'] = $product->sub_sku;
                 $products_array[$product->product_id]['type'] = $product->type;
-                $products_array[$product->product_id]['image'] = !empty($product->getFirstMediaUrl('products')) ? $product->getFirstMediaUrl('products') : asset('/uploads/' . session('logo'));
+                $products_array[$product->product_id]['image'] = !empty($product->getFirstMediaUrl('products')) ? $product->getFirstMediaUrl('products') : asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo'));
 
             }
 

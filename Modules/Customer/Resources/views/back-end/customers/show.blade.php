@@ -123,7 +123,7 @@
                                             <div class="col-md-6">
                                                 <div class="thumbnail">
                                                     <img style="width: 200px; height: 200px;" class="img-fluid"
-                                                        src="@if ($customer->getFirstMediaUrl('customer_photo')) {{ $customer->getFirstMediaUrl('customer_photo') }} @else {{asset('/uploads/' . session('logo'))}}@endif"
+                                                        src="@if ($customer->getFirstMediaUrl('customer_photo')) {{ $customer->getFirstMediaUrl('customer_photo') }} @else {{asset('/uploads/' . Modules\Setting\Entities\System::getProperty('logo'))}}@endif"
                                                         alt="Customer photo">
                                                 </div>
                                             </div>

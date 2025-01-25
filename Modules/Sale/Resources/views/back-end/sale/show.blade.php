@@ -62,7 +62,7 @@
                         <tbody>
                             @foreach ($sale->transaction_sell_lines as $line)
                             <tr>
-                                <td><img src="@if (!empty($line->product) && !empty($line->product->getFirstMediaUrl('product'))) {{ $line->product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                <td><img src="@if (!empty($line->product) && !empty($line->product->getFirstMediaUrl('product'))) {{ $line->product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) }} @endif"
                                         alt="photo" width="50" height="50"></td>
                                 <td>
                                     {{ $line->product->name ?? '' }}
