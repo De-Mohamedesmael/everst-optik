@@ -749,7 +749,9 @@
                         </div>
                     </div>
                 </div>
-                @yield('content')
+                <div id="content">
+                   @yield('content')
+                </div>
                 <div class="modal modal-jobs-edit animate__animated  no-print" data-animate-in="animate__rollIn"
                      data-animate-out="animate__rollOut"
                      id="editModal" tabindex="-1" role="dialog" aria-labelledby="editBrandModalLabel"
