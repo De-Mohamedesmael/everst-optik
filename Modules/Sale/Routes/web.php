@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Sale\Http\Controllers\SellController;
 use Modules\Sale\Http\Controllers\SellPosController;
 
 /*
@@ -29,8 +30,7 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('pos/add-discounts', [SellPosController::class , 'addDiscounts'])->name('pos.addDiscounts');
     Route::get('pos/get-products-discount', [SellPosController::class , 'getProductDiscount'])->name('pos.getProductDiscount');
     Route::get('pos/get-products-items-by-filter', [SellPosController::class , 'getProductItemsByFilter'])->name('pos.getProductItemsByFilter');
-    Route::get('pos/get-online-order-transactions', [SellPosController::class , 'getOnlineOrderTransactions'])->name('pos.getOnlineOrderTransactions');
-    Route::get('pos/get-draft-transactions', [SellPosController::class , 'getDraftTransactions'])->name('pos.getDraftTransactions');
+    Route::get('pos/get-lens-transactions', [SellPosController::class , 'getLensTransactions'])->name('pos.getLensTransactions');
     Route::get('pos/get-recent-transactions', [SellPosController::class , 'getRecentTransactions'])->name('pos.getRecentTransactions');
     Route::get('pos/get-customer-details/{customer_id}', [SellPosController::class , 'getCustomerDetails'])->name('pos.getCustomerDetails');
     Route::get('pos/get-customer-balance/{customer_id}', [SellPosController::class , 'getCustomerBalance'])->name('pos.getCustomerBalance');
@@ -42,4 +42,15 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::post('pos/save-lens-data', [SellPosController::class , 'SaveLens'])->name('pos.SaveLens');
 
     Route::resource('pos', SellPosController::class);
+
+
+
+
+    Route::post('sale/save-import', 'SellController@saveImport');
+    Route::get('sale/get-import', 'SellController@getImport');
+    Route::get('sale/print/{id}', 'SellController@print');
+    Route::get('sale/get-total-details', 'SellController@getTotalDetails')->name('sale.getTotalDetails');
+    Route::resource('sale', SellController::class);
+
+
 });

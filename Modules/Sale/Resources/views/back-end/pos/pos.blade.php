@@ -197,29 +197,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         <input type="hidden" name="tax_type" id="tax_type" value="">
 
 
-                                <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">
 
-                                    <div class="col-6">
-                                        <button type="button" id="print_and_draft"
-                                            class="btn btn-link btn-sm d-flex justify-content-center align-items-center height-responsive"
-                                            style="background-color: #e6e6e6 ; border: none;
-                                    border-radius: 16px;
-                                    color: #373737;
-                                                box-shadow: 0 8px 6px -5px #bbb;
-                                    padding: 12px;
-                                    width: 100%;
-                                   ">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1.5em"
-                                                viewBox="0 0 512 512">
-                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                <path
-                                                    d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
-                                            </svg>
-                                        </button>
-                                        <input type="hidden" id="print_and_draft_hidden" name="print_and_draft_hidden"
-                                            value="print_and_draft">
-                                    </div>
-                                </div>
 
                             </div>
 
@@ -827,9 +805,9 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
-                                <button data-method="draft"
+                                <button data-method="lens"
                                         style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
-                                        type="button" class="btn  w-75 pos-button  btn-custom" id="view-draft-btn"
+                                        type="button" class="btn  w-75 pos-button  btn-custom" id="view-lens-btn"
                                         data-href="#{{-- --}}">
                                     <div style="width: 18px">
                                         <img class="w-100 h-100"
@@ -968,7 +946,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
                 </div>
                 <!-- draft transaction modal -->
-                <div id="draftTransaction" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                <div id="lensTransaction" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
                     class="modal text-left">
 
                     <div class="modal-dialog" role="document" style="min-width: 95%;">
@@ -977,7 +955,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                             <div
                                 class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                                 <h5 class="modal-title  px-2 position-relative d-flex align-items-center"
-                                    style="gap: 5px;">@lang('lang.draft_transactions')
+                                    style="gap: 5px;">{{trans('lens_transactions')}}
                                     <span class="header-pill"></span>
                                 </h5>
                                 <button type="button"
@@ -992,28 +970,28 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         class="row @if (app()->isLocale('ar')) flex-row-reverse justify-content-end @else justify-content-start flex-row @endif align-items-center">
                                         <div class="col-md-4 px-5">
                                             <div class="form-group">
-                                                {!! Form::label('draft_start_date', __('lang.start_date'), [
+                                                {!! Form::label('lens_start_date', __('lang.start_date'), [
                                                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end :
                                                 text-start',
                                                 ]) !!}
                                                 {!! Form::text('start_date', null, [
                                                 'class' => 'form-control modal-input app()->isLocale("ar") ? text-end :
                                                 text-start',
-                                                'id' => 'draft_start_date',
+                                                'id' => 'lens_start_date',
                                                 ]) !!}
                                             </div>
                                         </div>
 
                                         <div class="col-md-4 px-5">
                                             <div class="form-group">
-                                                {!! Form::label('draft_end_date', __('lang.end_date'), [
+                                                {!! Form::label('lens_end_date', __('lang.end_date'), [
                                                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end :
                                                 text-start',
                                                 ]) !!}
                                                 {!! Form::text('end_date', null, [
                                                 'class' => 'form-control modal-input app()->isLocale("ar") ? text-end :
                                                 text-start',
-                                                'id' => 'draft_end_date',
+                                                'id' => 'lens_end_date',
                                                 ]) !!}
                                             </div>
                                         </div>
@@ -1022,7 +1000,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                 </div>
 
                                 <div class="col-md-12">
-                                    @include('sale::back-end.pos.partials.view_draft')
+                                    @include('sale::back-end.pos.partials.view_lens_order')
                                 </div>
                             </div>
 

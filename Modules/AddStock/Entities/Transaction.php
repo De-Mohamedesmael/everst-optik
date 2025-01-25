@@ -92,27 +92,27 @@ class Transaction extends Model  implements HasMedia
     }
 
 
-    public function canceled_by_user()
+    public function canceled_by_admin()
     {
         return $this->belongsTo(Admin::class, 'canceled_by', 'id')->withDefault(['name' => '']);
     }
-    public function created_by_user()
+    public function created_by_admin()
     {
         return $this->belongsTo(Admin::class, 'created_by', 'id')->withDefault(['name' => '']);
     }
-    public function approved_by_user()
+    public function approved_by_admin()
     {
         return $this->belongsTo(Admin::class, 'approved_by', 'id')->withDefault(['name' => '']);
     }
-    public function requested_by_user()
+    public function requested_by_admin()
     {
         return $this->belongsTo(Admin::class, 'requested_by', 'id')->withDefault(['name' => '']);
     }
-    public function received_by_user()
+    public function received_by_admin()
     {
         return $this->belongsTo(Admin::class, 'received_by', 'id')->withDefault(['name' => '']);
     }
-    public function declined_by_user()
+    public function declined_by_admin()
     {
         return $this->belongsTo(Admin::class, 'declined_by', 'id')->withDefault(['name' => '']);
     }

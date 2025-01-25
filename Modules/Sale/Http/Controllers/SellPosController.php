@@ -476,16 +476,7 @@ class SellPosController extends Controller
         return $output;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -669,16 +660,7 @@ class SellPosController extends Controller
         return $output;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
 
     /**
      * filter the products by brand or category
@@ -990,7 +972,6 @@ class SellPosController extends Controller
         $product_details = $this->productUtil->getNonIdentifiableProductDetails($name, $sell_price, $purchase_price, $request);
         if (!empty($product_details)) {
             $product_id = $product_details->product_id;
-            $quantity = $quantity;
             $edit_quantity = $quantity;
         } else {
             $output['success'] = false;
@@ -1020,6 +1001,7 @@ class SellPosController extends Controller
     /**
      * Parse the weighing barcode.
      *
+     * @param $scale_barcode
      * @return array
      */
     private function __parseWeighingBarcode($scale_barcode): array
@@ -1139,9 +1121,6 @@ class SellPosController extends Controller
             if (!empty(request()->customer_id)) {
                 $query->where('transactions.customer_id', request()->customer_id);
             }
-            if (!empty(request()->deliveryman_id)) {
-                $query->where('transactions.deliveryman_id', request()->deliveryman_id);
-            }
             if (!empty(request()->created_by)) {
                 $query->where('transactions.created_by', request()->created_by);
             }
@@ -1175,7 +1154,7 @@ class SellPosController extends Controller
                 'return_parent',
                 'customer',
                 'transaction_payments',
-                'canceled_by_user',
+                'canceled_by_admin',
             ])
                 ->groupBy('transactions.id');
 
@@ -1258,7 +1237,7 @@ class SellPosController extends Controller
                 })
                 ->editColumn('created_by', '{{$created_by_name}}')
                 ->editColumn('canceled_by', function ($row) {
-                    return !empty($row->canceled_by_user) ? $row->canceled_by_user->name : '';
+                    return !empty($row->canceled_by_admin) ? $row->canceled_by_admin->name : '';
                 })
                 ->addColumn(
                     'action',
@@ -1335,16 +1314,16 @@ class SellPosController extends Controller
      *
      *
      */
-    public function getDraftTransactions(Request $request)
+    public function getLensTransactions(Request $request)
     {
         if (request()->ajax()) {
             $store_id = $this->transactionUtil->getFilterOptionValues($request)['store_id'];
-            $pos_id = $this->transactionUtil->getFilterOptionValues($request)['pos_id'];
 
             $query = Transaction::leftjoin('transaction_payments', 'transactions.id', 'transaction_payments.transaction_id')
                 ->leftjoin('customers', 'transactions.customer_id', 'customers.id')
+                ->leftjoin('transaction_sell_lines', 'transactions.id', 'transaction_sell_lines.transaction_id')
                 ->leftjoin('customer_types', 'customers.customer_type_id', 'customer_types.id')
-                ->where('type', 'sell')->whereIn('status', ['draft', 'canceled'])->whereNull('transactions.dining_table_id')->whereNull('transactions.restaurant_order_id');
+                ->where('type', 'sell')->where('transaction_sell_lines.is_lens', true);
 
             if (!empty($store_id)) {
                 $query->where('transactions.store_id', $store_id);
@@ -1355,16 +1334,14 @@ class SellPosController extends Controller
             if (!empty(request()->end_date)) {
                 $query->whereDate('transaction_date', '<=', request()->end_date);
             }
-            if (!empty(request()->deliveryman_id)) {
-                $query->where('transactions.deliveryman_id', request()->deliveryman_id);
-            }
+
 
             $transactions = $query->select(
                 'transactions.*',
                 'customer_types.name as customer_type_name',
                 'customers.name as customer_name',
                 'customers.mobile_number',
-            )->with(['deliveryman']);
+            );
 
             return DataTables::of($transactions)
                 ->editColumn('transaction_date', '{{@format_datetime($transaction_date)}}')
@@ -1398,46 +1375,39 @@ class SellPosController extends Controller
                     function ($row) {
                         $html = '<div class="btn-group">';
 
-                        if (auth()->user()->can('sale.pos.view')) {
-                            $html .=
-                                ' <a data-href="' . action('SellController@print', $row->id) . '"
-                        class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
-                        data-toggle="tooltip" class="dripicons-print"></i></a>';
-                        }
-                        if (auth()->user()->can('sale.pos.view')) {
-                            $html .=
-                                '<a data-href="' . action('SellController@show', $row->id) . '"
-                                class="btn btn-primary text-white  btn-modal" data-container=".view_modal"><i
-                                title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
-                        }
-                        $html .=
-                            '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
-                        title="' . __('lang.edit') . '" data-toggle="tooltip"
-                        class="dripicons-document-edit"></i></a>';
-                        if ($row->status != 'canceled') {
-                            $html .=
-                                '<a data-href="' .route('admin.pos.updateStatusToCancel', $row->id) . '?status=final" data-check_password="' . action('AdminController@checkPassword', Auth::user()->id) . '" class="btn btn-danger draft_cancel text-white"><i
-                            title="' . __('lang.cancel') . '" data-toggle="tooltip"
-                            class="fa fa-ban"></i></a>';
-                        }
-                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
-                            $html .=
-                                '<button class="btn btn-danger remove_draft" data-href=' . action(
-                                    'SellController@destroy',
-                                    $row->id
-                                ) . '
-                                data-check_password="' . action('AdminController@checkPassword', Auth::user()->id) . '"
-                                title="' . __('lang.delete') . '" data-toggle="tooltip"
-                                ><i class="dripicons-trash"></i></button>';
-                        }
+//                        if (auth()->user()->can('sale.pos.view')) {
+//                            $html .=
+//                                ' <a data-href="' . action('SellController@print', $row->id) . '"
+//                        class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
+//                        data-toggle="tooltip" class="dripicons-print"></i></a>';
+//                        }
+//                        if (auth()->user()->can('sale.pos.view')) {
+//                            $html .=
+//                                '<a data-href="' . action('SellController@show', $row->id) . '"
+//                                class="btn btn-primary text-white  btn-modal" data-container=".view_modal"><i
+//                                title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
+//                        }
+//                        $html .=
+//                            '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
+//                        title="' . __('lang.edit') . '" data-toggle="tooltip"
+//                        class="dripicons-document-edit"></i></a>';
+//                        if ($row->status != 'canceled') {
+//                            $html .=
+//                                '<a data-href="' .route('admin.pos.updateStatusToCancel', $row->id) . '?status=final" data-check_password="' . action('AdminController@checkPassword', Auth::user()->id) . '" class="btn btn-danger draft_cancel text-white"><i
+//                            title="' . __('lang.cancel') . '" data-toggle="tooltip"
+//                            class="fa fa-ban"></i></a>';
+//                        }
+//                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
+//                            $html .=
+//                                '<button class="btn btn-danger remove_draft" data-href=' . action(
+//                                    'SellController@destroy',
+//                                    $row->id
+//                                ) . '
+//                                data-check_password="' . action('AdminController@checkPassword', Auth::user()->id) . '"
+//                                title="' . __('lang.delete') . '" data-toggle="tooltip"
+//                                ><i class="dripicons-trash"></i></button>';
+//                        }
 
-
-                        $html .=
-                            '<a target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final"
-                            title="' . __('lang.pay_now') . '" data-toggle="tooltip"
-                            class="btn btn-success draft_pay"><i class="fa fa-money"></i></a>';
-
-                        $html .= '</div>';
                         return $html;
                     }
                 )
