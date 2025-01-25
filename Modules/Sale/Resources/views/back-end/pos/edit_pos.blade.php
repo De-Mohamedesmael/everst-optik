@@ -625,7 +625,7 @@
                 <div id="recentTransaction" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
                     class="modal text-left">
 
-                    <div class="modal-dialog modal-xl" role="document" style="max-width: 65%;">
+                    <div class="modal-dialog modal-xl" role="document" style="max-width: 80%;">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">@lang('lang.recent_transactions')</h4>

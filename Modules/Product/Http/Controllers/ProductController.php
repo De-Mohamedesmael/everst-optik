@@ -336,7 +336,7 @@ class ProductController extends Controller
                         }
                         if (auth()->user()->can('stock.add_stock.create_and_edit')) {
                             $html .=
-                                '<li><a target="_blank" href="' . /* route('admin.add-stock.create', ['product_id' => $row->product_id, 'product_id' => $row->id])*/'#' . '" class="btn"
+                                '<li><a target="_blank" href="' . route('admin.add-stock.create', ['product_id' => $row->id]) . '" class="btn"
                             target="_blank"><i class="fa fa-plus"></i> ' . __('lang.add_new_stock') . '</a></li>';
                         }
                         if (auth()->user()->can('product_module.products.delete')) {

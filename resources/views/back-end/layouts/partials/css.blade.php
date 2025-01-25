@@ -48,7 +48,7 @@
 
 <link rel="stylesheet" href="{{ asset('vendor/jquery-timepicker/jquery.timepicker.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/awesome-bootstrap-checkbox.css') }}" type="text/css">
-<link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap-select.min.css') }}" type="text/css">
+{{--<link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap-select.min.css') }}" type="text/css">--}}
 <!-- Font Awesome CSS-->
 <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" type="text/css">
 <!-- Drip icon font-->

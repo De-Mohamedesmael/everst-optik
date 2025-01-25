@@ -1,6 +1,16 @@
 @extends('back-end.layouts.app')
 @section('title', __('lang.customer_details'))
 
+
+@section('styles')
+
+    <style>
+        .nav-tabs .nav-item .nav-link.active {
+            border-color: transparent;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+    </style>
+@endsection
 @section('content')
     <section class="forms py-0">
         <div class="container-fluid">
@@ -82,7 +92,7 @@
                                     @if ($balance < 0)
                                         <div class="col-md-12">
                                             <button
-                                                data-href="{{ action('TransactionPaymentController@getCustomerDue', $customer->id) }}"
+                                                data-href="{{ route('admin.transactionPayment.payCustomerDue', $customer->id) }}"
                                                 class="btn btn-primary btn-modal"
                                                 data-container=".view_modal">@lang('lang.pay')</button>
                                         </div>
@@ -117,7 +127,7 @@
                                                         class="balance @if ($balance < 0) text-red @endif">{{ $balance }}</span>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <b>@lang('lang.created_by'):</b> {{ $customer->created_by_user?->name }}
+                                                    <b>@lang('lang.created_by'):</b> {{ $customer->created_by_admin?->name }}
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -230,7 +240,7 @@
                                                         </td>
                                                         <td>
                                                             @if ($return->transaction_payments->count() > 0)
-                                                                {{ $return->transaction_payments->last()->created_by_user->name }}
+                                                                {{ $return->transaction_payments->last()->created_by_admin->name }}
                                                             @endif
                                                         </td>
                                                         <td>
@@ -249,7 +259,7 @@
                                                                     @can('sale.pos.view')
                                                                         <li>
 
-                                                                            <a data-href="{{ action('SellReturnController@show', $return->return_parent_id) }}"
+                                                                            <a data-href="#{{-- action('SellReturnController@show', $return->return_parent_id) --}}"
                                                                                 data-container=".view_modal"
                                                                                 class="btn btn-modal"><i
                                                                                     class="fa fa-eye"></i>
@@ -259,7 +269,7 @@
                                                                     @endcan
                                                                     @can('sale.pos.create_and_edit')
                                                                         <li>
-                                                                            <a href="{{ action('SellReturnController@add', $return->return_parent_id) }}"
+                                                                            <a href="#{{-- action('SellReturnController@add', $return->return_parent_id) --}}"
                                                                                 class="btn"><i
                                                                                     class="dripicons-document-edit"></i>
                                                                                 @lang('lang.edit')</a>
@@ -269,8 +279,8 @@
 
                                                                     @can('sale.pos.delete')
                                                                         <li>
-                                                                            <a data-href="{{ action('SellController@destroy', $return->id) }}"
-                                                                                data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
+                                                                            <a data-href="{{ route('admin.sale.destroy', $return->id) }}"
+                                                                                data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
                                                                                 class="btn text-red delete_item"><i
                                                                                     class="fa fa-trash"></i>
                                                                                 @lang('lang.delete')</a>
@@ -386,7 +396,7 @@
                                                                     @can('sale.pos.delete')
                                                                         <li>
                                                                             <a data-href="{{ action('SellController@destroy', $discount->id) }}"
-                                                                                data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
+                                                                                data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
                                                                                 class="btn text-red delete_item"><i
                                                                                     class="fa fa-trash"></i>
                                                                                 @lang('lang.delete')</a>
@@ -489,7 +499,7 @@
                                                                         user="menu">
                                                                         @can('sale.pay.create_and_edit')
                                                                             <li>
-                                                                                <a data-href="{{ route('admin.customers.paymentDuetEdit', $payment->id) }}"
+                                                                                <a data-href="{{ route('admin.transaction.addPayment', $payment->id) }}"
                                                                                     data-container=".view_modal"
                                                                                     class="btn btn-modal"><i
                                                                                         class="dripicons-document-edit"></i>
@@ -498,8 +508,8 @@
                                                                         @endcan
                                                                         @can('sale.pay.delete')
                                                                             <li>
-                                                                                <a data-href="{{ route('admin.customers.destroyPayContactDue', $payment->id) }}"
-                                                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
+                                                                                <a data-href="{{ route('admin.transaction-payment.destroy', $payment->id) }}"
+                                                                                    data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
                                                                                     class="btn text-red delete_item"><i
                                                                                         class="fa fa-trash"></i>
                                                                                     @lang('lang.delete')</a>
@@ -577,7 +587,7 @@
                         .attr('autocomplete', 'off');
                 },
                 ajax: {
-                    url: "/dashboard/customers//{{ $customer->id }}",
+                    url: "/dashboard/customers/{{ $customer->id }}",
                     data: function(d) {
                         d.start_date = $('#start_date').val();
                         d.end_date = $('#end_date').val();
@@ -600,7 +610,7 @@
                         name: "customers.name"
                     },
                     {
-                        data: "products_",
+                        data: "products",
                         name: "products.name"
                     },
                     {
@@ -641,7 +651,7 @@
 
                     {
                         data: "created_by",
-                        name: "users.name"
+                        name: "admins.name"
                     },
                     {
                         data: "files",

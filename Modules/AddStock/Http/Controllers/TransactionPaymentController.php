@@ -3,6 +3,10 @@
 namespace Modules\AddStock\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\DebtPayment;
 use Modules\Customer\Entities\DebtTransactionPayment;
@@ -96,23 +100,15 @@ class TransactionPaymentController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse|array
      */
-    public function store(Request $request)
+    public function store(Request $request): array|RedirectResponse
     {
         try {
             $data = $request->except('_token');
@@ -221,10 +217,10 @@ class TransactionPaymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $transaction_id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Application|Factory|View
      */
-    public function show($id)
+    public function show($id): Factory|View|Application
     {
         $transaction = Transaction::find($id);
         $payment_type_array = $this->commonUtil->getPaymentTypeArrayForPos();
@@ -233,31 +229,14 @@ class TransactionPaymentController extends Controller
             'payment_type_array'
         ));
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $gift_card_number
-     * @return \Illuminate\Http\Response
-     */
-    public function showMethodGiftCard($gift_card_number)
-    {
 
-        $transaction_payments=TransactionPayment::with('transaction')
-            ->where('gift_card_number',$gift_card_number)->get();
-
-        $payment_type_array = $this->commonUtil->getPaymentTypeArrayForPos();
-        return view('gift_card.show')->with(compact(
-            'transaction_payments',
-            'payment_type_array'
-        ));
-    }
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $transaction_payment_id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit($id): Factory|View|Application
     {
         $payment = TransactionPayment::find($id);
         $payment_type_array = $this->commonUtil->getPaymentTypeArray();
@@ -271,7 +250,7 @@ class TransactionPaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

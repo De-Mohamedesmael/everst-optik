@@ -1,14 +1,16 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
             <div
-                class="modal-header d-flex justify-content-between py-0 @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                <h5 class="modal-title" id="exampleLargeModalLabel">{{ $product->name }}</h5>
-                <button type="button" class="close m-0" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+                class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                <h5 class="modal-title position-relative  d-flex align-items-center" style="gap: 5px;">{{ $product->name }}
+                    <span class=" header-pill"></span>
+                </h5>
 
+                <button type="button" data-dismiss="modal" aria-label="Close"
+                        class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
+                        aria-hidden="true" style="border-radius: 10px !important;"><i class="dripicons-cross"></i></span></button>
+                <span class="position-absolute modal-border"></span>
+            </div>
 
             <div class="modal-body">
                 <div class="row">
@@ -18,12 +20,6 @@
                                 <label style="font-weight: bold;" for="">@lang('lang.sku'): </label>
                                 {{ $product->sku }} <br>
 
-                                <label style="font-weight: bold;" for="">@lang('lang.categories'): </label>
-                                @if (!empty($product->categories))
-                                    @foreach($product->categories as $category)
-                                        <span class="cat-name">{{ $category->name }}</span>
-                                    @endforeach
-                                @endif <br>
 
                                 <label style="font-weight: bold;" for="">@lang('lang.brand'): </label>
                                 @if (!empty($product->brand))
@@ -66,29 +62,7 @@
                     </div>
 
 
-                    @if ($add_stocks->count() > 0)
-                        <div class="col-md-12">
-                            <br>
-                            <br>
-                            <h4>@lang('lang.expiry_details')</h4>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr class="bg-success text-white">
-                                        <th>@lang('lang.store_name')</th>
-                                        <th>@lang('lang.current_stock')</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($add_stocks as $add_stock)
-                                        <tr>
-                                            <td>{{ $add_stock->store->name ?? '' }}</td>
-                                            <td>{{ number_format($add_stock->current_stock,Modules\Setting\Entities\System::getProperty('numbers_length_after_dot')) }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
+
 
                     <div class="col-md-12">
                         <br>

@@ -467,10 +467,13 @@
 @section('javascript')
     {{-- <script src="{{ asset('front/js/bootstrap.min.js') }}"></script> --}}
 
+
     <script src="{{ asset('js/add_stock.js') }}"></script>
     <script src="{{ asset('js/product_selection.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+
+
             var hiddenColumnArray = JSON.parse('{!! addslashes(json_encode(Cache::get('key_' . auth()->id(), []))) !!}');
 
             $.each(hiddenColumnArray, function (index, value) {
@@ -520,18 +523,12 @@
         });
         $(document).on('click', '#add-selected-btn', function () {
             $('#select_products_modal').modal('hide');
-            // $.each(product_selected, function(index, value) {
-            //     get_label_product_row(value.product_id, value.variation_id);
-            // });
+
             get_label_multipe_product_row(product_selected)
             product_selected = [];
             product_table.ajax.reload();
         })
-        @if (!empty($product_id) && !empty($variation_id))
-        $(document).ready(function () {
-            get_label_product_row({{ $product_id }}, {{ $variation_id }});
-        })
-        @endif
+
         $('#po_no').change(function () {
             let po_no = $(this).val();
 
@@ -659,5 +656,11 @@
             $(`#arrow${i}`).toggleClass("fa-arrow-down fa-arrow-up")
         }
     </script>
-
+    @if (!empty($product_id))
+        <script type="text/javascript">
+            $(document).ready(function () {
+                get_label_product_row({{ $product_id }});
+            })
+        </script>
+    @endif
 @endsection
