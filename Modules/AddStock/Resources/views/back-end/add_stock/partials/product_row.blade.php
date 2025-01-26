@@ -18,7 +18,7 @@
     <tr class="product_row">
         <td class="row_number"></td>
         <td><img
-                src="@if (!empty($product->getFirstMediaUrl('products'))) {{ $product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                src="@if (!empty($product->getFirstMediaUrl('products'))) {{ $product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) }} @endif"
                 alt="photo" width="50" height="50"></td>
         <td>
             <h6 style="width: 100%;height: 100%;" class="d-flex justify-content-center align-items-center">

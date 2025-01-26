@@ -28,17 +28,6 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('add-stock/get-import', [AddStockController::class,'getImport'])->name('add-stock.getImport');
     Route::resource('add-stock', AddStockController::class);
 
-    #########################################
-    ##         transaction-payment         ##
-    ########################################
-
-    Route::post('transaction-payment/pay-customer-due/{customer_id}', [TransactionPaymentController::class , 'payCustomerDue'])->name('transaction-payment.payCustomerDue');
-    Route::get('transaction-payment/get-customer-due/{customer_id}/{extract_due?}', [TransactionPaymentController::class , 'getCustomerDue'])->name('transaction-payment.getCustomerDue');
-    Route::get('transaction-payment/add-payment/{id}', [TransactionPaymentController::class , 'addPayment'])->name('transaction-payment.addPayment');
-    Route::get('transaction-payment/by-method-gift-card/{gift_card_number}', [TransactionPaymentController::class , 'showMethodGiftCard'])->name('transaction-payment.showMethodGiftCard');
-    Route::resource('transaction-payment', TransactionPaymentController::class);
-
-
 
 
 });

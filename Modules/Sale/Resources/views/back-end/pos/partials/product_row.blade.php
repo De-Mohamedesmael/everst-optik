@@ -72,14 +72,8 @@
                     class="tax_rate" value="{{ @num_format($product->tax_rate) }}">
                 <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][item_tax]"
                     class="item_tax" value="0">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][coupon_discount]"
-                    class="coupon_discount_value" value="0">
-                <!-- value is percentage or fixed value from coupon data -->
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][coupon_discount_type]"
-                    class="coupon_discount_type" value="">
-                <!-- value is percentage or fixed value from coupon data -->
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][coupon_discount_amount]"
-                    class="coupon_discount_amount" value="0">
+                <input type="hidden" value="{{$KeyLens}}" name="transaction_sell_line[{{ $loop->index + $index }}][KeyLens]">
+
                 <!-- after calculation actual discounted amount for row products row -->
                 <input type="hidden"
                     name="transaction_sell_line[{{ $loop->index + $index }}][promotion_purchase_condition]"
@@ -317,7 +311,6 @@
         <tr class="lens-row-{{ $loop->index + $index }}">
             <td>
                 <div  class="lens-vu" >
-                    <input type="hidden" value="{{$KeyLens}}" name="KeyLens">
                     @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)
                         <div class="lens-vu-item">
                             {{translate('TinTing_amount')}}

@@ -68,7 +68,6 @@ class AddStockController extends Controller
         if (request()->ajax()) {
             $default_currency_id = System::getProperty('currency');
             $store_id = $this->transactionUtil->getFilterOptionValues($request)['store_id'];
-            $pos_id = $this->transactionUtil->getFilterOptionValues($request)['pos_id'];
 
             $query=Transaction::leftjoin('add_stock_lines', 'transactions.id', 'add_stock_lines.transaction_id')
                 ->leftjoin('admins', 'transactions.created_by', '=', 'admins.id')
@@ -737,7 +736,7 @@ class AddStockController extends Controller
                 $products_array[$product->product_id]['name'] = $product->name;
                 $products_array[$product->product_id]['sku'] = $product->sub_sku;
                 $products_array[$product->product_id]['type'] = $product->type;
-                $products_array[$product->product_id]['image'] = !empty($product->getFirstMediaUrl('products')) ? $product->getFirstMediaUrl('products') : asset('/uploads/' . session('logo'));
+                $products_array[$product->product_id]['image'] = !empty($product->getFirstMediaUrl('products')) ? $product->getFirstMediaUrl('products') : asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo'));
 
             }
 

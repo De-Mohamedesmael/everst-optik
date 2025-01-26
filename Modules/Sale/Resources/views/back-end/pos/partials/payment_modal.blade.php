@@ -1,6 +1,9 @@
 <!-- payment modal -->
-<div id="add-payment" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-    <div role="document" class="modal-dialog modal-lg">
+<div id="add-payment"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+class="modal fade">
+<div role="document" class="modal-dialog modal-lg">
+{{--<div id="add-payment" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">--}}
+{{--    <div role="document" class="modal-dialog modal-lg">--}}
         <div class="modal-content">
             {{-- --}}
             <div
@@ -9,7 +12,7 @@
                     style="gap: 5px;">@lang('lang.finalize_sale')
                     <span class=" header-pill"></span>
                 </h5>
-                <button id="submit-btn" type="button" class="btn btn-main mt-3">@lang('lang.submit')</button>
+                <button id="submit-btn" type="button" class="btn btn-main mt-3 "  data-dismiss="modal">@lang('lang.submit')</button>
                 <button type="button" data-dismiss="modal" aria-label="Close"
                     class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white close-payment-madal">
                     <span aria-hidden="true">

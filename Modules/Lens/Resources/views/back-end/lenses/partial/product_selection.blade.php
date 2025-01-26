@@ -226,7 +226,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary"
                     id="add-selected-btn{{ $index ?? '' }}">@lang('lang.add')</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">@lang('lang.close')</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">@lang( 'lang.close' )</button>
             </div>
 
         </div>

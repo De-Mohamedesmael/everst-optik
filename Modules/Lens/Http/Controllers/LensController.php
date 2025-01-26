@@ -7,6 +7,9 @@ use App\Models\Admin;
 use App\Utils\ProductUtil;
 use App\Utils\TransactionUtil;
 use App\Utils\Util;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -66,7 +69,7 @@ class LensController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function getLensStocks(Request $request)
     {
@@ -96,7 +99,7 @@ class LensController extends Controller
     /**
      * Display a listing of the resource.
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function index(Request $request)
     {
@@ -175,7 +178,7 @@ class LensController extends Controller
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {
-                        return '<img src="' . asset('/uploads/' . session('logo')) . '" height="50px" width="50px">';
+                        return '<img src="' . asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) . '" height="50px" width="50px">';
                     }
                 })
                 ->editColumn('is_service',function ($row) {
@@ -302,7 +305,7 @@ class LensController extends Controller
                         }
                         if (auth()->user()->can('stock.add_stock.create_and_edit')) {
                             $html .=
-                                '<li><a target="_blank" href="' . /* route('admin.add-stock.create', ['product_id' => $row->product_id, 'product_id' => $row->id])*/'#' . '" class="btn"
+                                '<li><a target="_blank" href="' .  route('admin.add-stock.create', ['product_id' => $row->id]) . '" class="btn"
                             target="_blank"><i class="fa fa-plus"></i> ' . __('lang.add_new_stock') . '</a></li>';
                         }
                         if (auth()->user()->can('lens_module.lens.delete')) {
@@ -385,7 +388,7 @@ class LensController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -510,7 +513,6 @@ class LensController extends Controller
             ];
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -538,11 +540,11 @@ class LensController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function show($id)
     {
-        if (!auth()->user()->can('lens_module.lenses.view')) {
+        if (!auth()->user()->can('lens_module.lens.view')) {
             abort(403, translate('Unauthorized action.'));
         }
 
@@ -570,7 +572,7 @@ class LensController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
@@ -807,9 +809,9 @@ class LensController extends Controller
      * get the list of porduct purchases
      *
      * @param [type] $id
-     * @return void
+     * @return Factory|View|Application
      */
-    public function getPurchaseHistory($id)
+    public function getPurchaseHistory($id): Factory|View|Application
     {
         $product = Product::find($id);
         $add_stocks = Transaction::leftjoin('add_stock_lines', 'transactions.id', 'add_stock_lines.transaction_id')
@@ -1068,21 +1070,23 @@ class LensController extends Controller
             ->latest()
             ->first();
 
-        $default["sell_price"]= num_format($stockLines ? $stockLines->sell_price : $lens->sell_price);
-        $default["purchase_price"] = num_format( $stockLines
+        $default["sell_price"]= $stockLines ? $stockLines->sell_price : $lens->sell_price;
+        $default["purchase_price"] = $stockLines
             ? $stockLines->purchase_price
-            : $lens->purchase_price);
+            : $lens->purchase_price;
 
-        $default['Base_amount']=num_format(0);
+        $default['Base_amount']=0;
         if ($request->check_base && $request->special_base) {
             $Base=SpecialBase::whereId($request->special_base)->first();
             if($Base){
-                $default['Base_amount']= num_format($Base->price);
+                $default['Base_amount']= $Base->price;
             }
         }
 
 
-
+        $default['sell_price_format']=num_format($default['sell_price']);
+        $default['purchase_price_format']=num_format($default['purchase_price']);
+        $default['Base_amount_format']=num_format($default['Base_amount']);
         return [
             'success' => true,
             'data' => $default

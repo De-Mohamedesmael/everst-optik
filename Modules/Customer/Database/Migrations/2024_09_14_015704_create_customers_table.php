@@ -18,7 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('name')->nullable();
             $table->unsignedBigInteger('customer_type_id');
             $table->string('mobile_number', 16);
-            $table->integer('age')->default(0);
+            $table->integer('age')->nullable();
             $table->enum('gender', [1,2]);
             $table->string('address', 150)->nullable();
             $table->string('email')->nullable();

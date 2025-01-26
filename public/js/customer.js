@@ -24,7 +24,7 @@ $(document).on("change", "select.referred_type", function () {
     if (referred_type == "customer") {
         $.ajax({
             method: "GET",
-            url: "/dashboard/dashboard/customers/s/get-dropdown",
+            url: "/dashboard/customers/get-dropdown",
             data: {},
             success: function (result) {
                 $(referred_row).find("select.referred_by").html(result);

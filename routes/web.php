@@ -35,6 +35,7 @@ Route::post('contact-us', [GeneralController::class, 'sendContactUs'])->name('ad
 Route::get('testing', [GeneralController::class, 'callTesting'])->name('admin.testing');
 Route::get('get-system-property/{key}', [GeneralController::class, 'getSystemProperty'])
     ->middleware('timezone')->name('admin.get-system-property');
+Route::get('general/view-uploaded-files/{model_name}/{model_id}', [GeneralController::class,'viewUploadedFiles'])->name('admin.view-uploaded-files');
 Route::get('query/{query}', [GeneralController::class, 'runQuery'])->name('admin.query');
 Route::get('/clear-cache', function () {
     \Artisan::call('cache:clear');

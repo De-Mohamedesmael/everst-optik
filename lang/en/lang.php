@@ -1405,4 +1405,8 @@
   'Are you sure?' => 'Are you sure ',
   'Yes, delete it!' => 'Yes  delete it!',
   'edit_lens' => 'Edit lens',
+  'lens_not_found' => 'Lens not found',
+  'sales_lenses_list' => 'Sales lenses list',
+  'Filtter' => 'Filtter',
+  'Filter' => 'Filter',
 );

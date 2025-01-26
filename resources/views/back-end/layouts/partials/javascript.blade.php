@@ -23,7 +23,7 @@
 </script>
 
 <script type="text/javascript" src="{{ asset('vendor/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('vendor/bootstrap/js/bootstrap-select.min.js') }}"></script>
+{{--<script type="text/javascript" src="{{ asset('vendor/bootstrap/js/bootstrap-select.min.js') }}"></script>--}}
 <script type="text/javascript" src="{{ asset('vendor/keyboard/js/jquery.keyboard.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/keyboard/js/jquery.keyboard.extension-autocomplete.js') }}">
 </script>

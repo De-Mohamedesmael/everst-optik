@@ -62,7 +62,7 @@ $("#submit-btn").on("click", function (e) {
     e.preventDefault();
     let sku = $('#sku').val();
 
-    if (sku.trim() !== "") {
+    if (sku.trim() !== "" && sku) {
       $.ajax({
         method: "get",
         url: "/dashboard/products/check-sku/" + sku,

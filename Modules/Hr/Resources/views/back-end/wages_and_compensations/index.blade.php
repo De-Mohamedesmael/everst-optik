@@ -192,7 +192,7 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a data-href="{{ action('GeneralController@viewUploadedFiles', ['model_name' => 'WagesAndCompensation', 'model_id' => $wages_and_compensation->id, 'collection_name' => 'wages_and_compensation']) }}"
+                                                    <a data-href="{{ route('admin.view-uploaded-files', ['model_name' => 'WagesAndCompensation', 'model_id' => $wages_and_compensation->id, 'collection_name' => 'wages_and_compensation']) }}"
                                                         data-container=".view_modal"
                                                         class="btn btn-warning btn-modal text-white">@lang('lang.view')</a>
                                                 </td>

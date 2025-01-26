@@ -198,7 +198,7 @@ class ProductController extends Controller
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {
-                        return '<img src="' . asset('/uploads/' . session('logo')) . '" height="50px" width="50px">';
+                        return '<img src="' . asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) . '" height="50px" width="50px">';
                     }
                 })
                 ->editColumn('is_service',function ($row) {
@@ -336,7 +336,7 @@ class ProductController extends Controller
                         }
                         if (auth()->user()->can('stock.add_stock.create_and_edit')) {
                             $html .=
-                                '<li><a target="_blank" href="' . /* route('admin.add-stock.create', ['product_id' => $row->product_id, 'product_id' => $row->id])*/'#' . '" class="btn"
+                                '<li><a target="_blank" href="' . route('admin.add-stock.create', ['product_id' => $row->id]) . '" class="btn"
                             target="_blank"><i class="fa fa-plus"></i> ' . __('lang.add_new_stock') . '</a></li>';
                         }
                         if (auth()->user()->can('product_module.products.delete')) {

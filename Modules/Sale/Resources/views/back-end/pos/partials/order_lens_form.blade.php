@@ -656,144 +656,6 @@
                                                                             </linearGradient>
                                                                         </defs>
                                                                     </svg>
-
-                                                                    {{--    <div class="owf-page-shapeDefinition-manual-shape-abc">
-
-
-
-                                                                        <!-- CCode controls -->
-                                                                        <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlTopLeft">
-                                                                            <button type="button" class="owf-button ui basic button" data-index="1" data-value="1">
-                                                                                <span class="owf-button-label">1</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="1" data-value="2">
-                                                                                <span class="owf-button-label">2</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button selected" data-index="1" data-value="3">
-                                                                                <span class="owf-button-label">3</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="1" data-value="4">
-                                                                                <span class="owf-button-label">4</span>
-                                                                            </button>      </div>
-                                                                        <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlTopRight">
-                                                                            <button type="button" class="owf-button ui basic button" data-index="0" data-value="1">
-                                                                                <span class="owf-button-label">1</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="0" data-value="2">
-                                                                                <span class="owf-button-label">2</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button selected" data-index="0" data-value="3">
-                                                                                <span class="owf-button-label">3</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="0" data-value="4">
-                                                                                <span class="owf-button-label">4</span>
-                                                                            </button>      </div>
-                                                                        <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlBottomLeft">
-                                                                            <button type="button" class="owf-button ui basic button" data-index="2" data-value="1">
-                                                                                <span class="owf-button-label">1</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="2" data-value="2">
-                                                                                <span class="owf-button-label">2</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="2" data-value="3">
-                                                                                <span class="owf-button-label">3</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button selected" data-index="2" data-value="4">
-                                                                                <span class="owf-button-label">4</span>
-                                                                            </button>      </div>
-                                                                        <div class="owf-page-shapeDefinition-manual-shape-controlBox owf-page-shapeDefinition-manual-shape-controlBottomRight">
-                                                                            <button type="button" class="owf-button ui basic button" data-index="3" data-value="1">
-                                                                                <span class="owf-button-label">1</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="3" data-value="2">
-                                                                                <span class="owf-button-label">2</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button" data-index="3" data-value="3">
-                                                                                <span class="owf-button-label">3</span>
-                                                                            </button>        <button type="button" class="owf-button ui basic button selected" data-index="3" data-value="4">
-                                                                                <span class="owf-button-label">4</span>
-                                                                            </button>      </div>
-
-                                                                        <!-- Actual SVG box -->
-                                                                        <div class="owf-page-shapeDefinition-manual-shape-svg">
-                                                                            <svg id="shape_view_svg" class="abc transitioning" viewBox="-575 -270 1000 720" xmlns="http://www.w3.org/2000/svg">
-                                                                                <!-- Indicator text pieces -->
-                                                                                <text id="abc_text_a" class="abc-indicator abc-text" x="0" y="0" transform="translate(-104.14285714285717, 325)"><tspan>A-Boyutu</tspan><title>A-Boyutu</title></text>
-                                                                                <text id="abc_text_b" class="abc-indicator abc-text" x="0" y="0" transform="translate(-450, 0) rotate(90)"><tspan>B-Boyutu</tspan><title>B-Boyutu</title></text>
-                                                                                <text id="abc_text_dbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(300.85714285714283, 325)"><tspan>DBL</tspan><title>DBL</title></text>
-                                                                                <text id="abc_text_adbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 400)"><tspan>A-Boyutu + DBL</tspan><title>A-Boyutu + DBL</title></text>
-
-                                                                                <!-- Size indicator lines -->
-                                                                                <line id="abc_line_shape_top_end" class="abc-indicator abc-line" x1="0" y1="0" x2="-1000" y2="0" transform="translate(-104.14285714285714, -185.14285714285714) scale(0.3958571428571429, 1)"></line>
-                                                                                <line id="abc_line_shape_bottom_end" class="abc-indicator abc-line" x1="0" y1="0" x2="-1000" y2="0" transform="translate(-104.14285714285714, 185.14285714285714) scale(0.3958571428571429, 1)"></line>
-                                                                                <line id="abc_line_shape_left_end" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="450" transform="translate(-405, 0)"></line>
-                                                                                <line id="abc_line_shape_right_end" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="375" transform="translate(196.7142857142857, 0)"></line>
-                                                                                <line id="abc_line_dbl_end" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="450" transform="translate(405, 0)"></line>
-
-                                                                                <!-- A size arrow -->
-                                                                                <line id="abc_line_a" class="abc-indicator abc-line" x1="0" y1="0" x2="1000" y2="0" transform="translate(-360, 350) scale(0.5117142857142857, 1)"></line>
-                                                                                <line id="abc_line_a_arrow_left" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="-1" y2="0" transform="translate(-360, 350)"></line>
-                                                                                <line id="abc_line_a_arrow_right" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="1" y2="0" transform="translate(151.71428571428567, 350)"></line>
-
-                                                                                <!-- B size arrow -->
-                                                                                <line id="abc_line_b" class="abc-indicator abc-line" x1="0" y1="0" x2="0" y2="1000" transform="translate(-475, -140.14285714285714) scale(1, 0.2802857142857143)"></line>
-                                                                                <line id="abc_line_b_arrow_top" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="0" y2="-1" transform="translate(-475, -140.14285714285714)"></line>
-                                                                                <line id="abc_line_b_arrow_bottom" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="0" y2="1" transform="translate(-475, 140.14285714285714)"></line>
-
-                                                                                <!-- DBL arrow -->
-                                                                                <line id="abc_line_dbl" class="abc-indicator abc-line" x1="0" y1="0" x2="1000" y2="0" transform="translate(241.7142857142857, 350) scale(0.11828571428571427, 1)"></line>
-                                                                                <line id="abc_line_dbl_arrow_left" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="-1" y2="0" transform="translate(241.7142857142857, 350)"></line>
-                                                                                <line id="abc_line_dbl_arrow_right" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="1" y2="0" transform="translate(360, 350)"></line>
-
-                                                                                <!-- A size + DBL arrow -->
-                                                                                <line id="abc_line_adbl" class="abc-indicator abc-line" x1="0" y1="0" x2="1000" y2="0" transform="translate(-360, 425) scale(0.72, 1)"></line>
-                                                                                <line id="abc_line_adbl_arrow_left" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="-1" y2="0" transform="translate(-360, 425)"></line>
-                                                                                <line id="abc_line_adbl_arrow_right" class="abc-indicator abc-line abc-arrow" x1="0" y1="0" x2="1" y2="0" transform="translate(360, 425)"></line>
-
-                                                                                <!-- Indicator text pieces -->
-                                                                                <text id="abc_text_a" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0)"><tspan></tspan><title></title></text>
-                                                                                <text id="abc_text_b" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0) rotate(90)"><tspan></tspan><title></title></text>
-                                                                                <text id="abc_text_dbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0)"><tspan></tspan><title></title></text>
-                                                                                <text id="abc_text_adbl" class="abc-indicator abc-text" x="0" y="0" transform="translate(0, 0)"><tspan></tspan><title></title></text>
-
-                                                                                <!-- DBL -->
-                                                                                <path id="dbl_shape" class="abc-dbl abc-curve incomplete" d="M196.7142857142857,0 q104.14285714285714,-104.14285714285714 208.28571428571428,0"></path>
-
-                                                                                <!-- Selected shape -->
-                                                                                <path id="abc_shape_selected_fill" class="abc-lens" d="M196.7142857142857,0 v-18.514285714285712 q0,-166.62857142857143 -270.77142857142854,-166.62857142857143 h-30.085714285714285 h-30.085714285714285 q-270.77142857142854,0 -270.77142857142854,166.62857142857143 v18.514285714285712 v0 a300.85714285714283,185.14285714285714 0 0 0 300.85714285714283,185.14285714285714 h0 h0 a300.85714285714283,-185.14285714285714 0 0 0 300.85714285714283,-185.14285714285714 v-0"></path>
-
-                                                                                <!-- Shape: top right -->
-                                                                                <g id="abc_shape_top_right" class="abc-shape-quadrant" data-index="0">
-                                                                                    <path class="abc-outline abc-outline-blue" data-index="0" data-value="1" d="M196.7142857142857,0 v-99.97714285714287 q0,-85.16571428571427 -138.3942857142857,-85.16571428571427 h-162.46285714285713"></path>
-                                                                                    <path class="abc-outline abc-outline-red" data-index="0" data-value="2" d="M196.7142857142857,0 v-57.394285714285715 q0,-127.74857142857142 -207.59142857142854,-127.74857142857142 h-93.26571428571428"></path>
-                                                                                    <path class="abc-outline abc-outline-green" data-index="0" data-value="3" d="M196.7142857142857,0 v-18.514285714285712 q0,-166.62857142857143 -270.77142857142854,-166.62857142857143 h-30.085714285714285"></path>
-                                                                                    <path class="abc-outline abc-outline-orange" data-index="0" data-value="4" d="M196.7142857142857,0 v-0 a-300.85714285714283,-185.14285714285714 0 0 0 -300.85714285714283,-185.14285714285714 h-0"></path>
-                                                                                    <path class="abc-invisible" d="M186.8785714285714,0 v-0 a-285.8142857142857,-175.88571428571427 0 0 0 -285.8142857142857,-175.88571428571427 h-0"></path>
-                                                                                    <path class="abc-curve" d="M196.7142857142857,0 v-18.514285714285712 q0,-166.62857142857143 -270.77142857142854,-166.62857142857143 h-30.085714285714285"></path>
-                                                                                </g>
-
-                                                                                <!-- Shape: top left -->
-                                                                                <g id="abc_shape_top_left" class="abc-shape-quadrant" data-index="1">
-                                                                                    <path class="abc-outline abc-outline-blue" data-index="1" data-value="1" d="M-104.14285714285714,-185.14285714285714 h-162.46285714285713 q-138.3942857142857,0 -138.3942857142857,85.16571428571427 v99.97714285714287"></path>
-                                                                                    <path class="abc-outline abc-outline-red" data-index="1" data-value="2" d="M-104.14285714285714,-185.14285714285714 h-93.26571428571428 q-207.59142857142854,0 -207.59142857142854,127.74857142857142 v57.394285714285715"></path>
-                                                                                    <path class="abc-outline abc-outline-green" data-index="1" data-value="3" d="M-104.14285714285714,-185.14285714285714 h-30.085714285714285 q-270.77142857142854,0 -270.77142857142854,166.62857142857143 v18.514285714285712"></path>
-                                                                                    <path class="abc-outline abc-outline-orange" data-index="1" data-value="4" d="M-104.14285714285714,-185.14285714285714 h-0 a-300.85714285714283,185.14285714285714 0 0 0 -300.85714285714283,185.14285714285714 v0"></path>
-                                                                                    <path class="abc-invisible" d="M-98.93571428571428,-175.88571428571427 h-0 a-285.8142857142857,175.88571428571427 0 0 0 -285.8142857142857,175.88571428571427 v0"></path>
-                                                                                    <path class="abc-curve" d="M-104.14285714285714,-185.14285714285714 h-30.085714285714285 q-270.77142857142854,0 -270.77142857142854,166.62857142857143 v18.514285714285712"></path>
-                                                                                </g>
-
-                                                                                <!-- Shape: bottom left -->
-                                                                                <g id="abc_shape_bottom_left" class="abc-shape-quadrant" data-index="2">
-                                                                                    <path class="abc-outline abc-outline-blue" data-index="2" data-value="1" d="M-405,0 v99.97714285714287 q0,85.16571428571427 138.3942857142857,85.16571428571427 h162.46285714285713"></path>
-                                                                                    <path class="abc-outline abc-outline-red" data-index="2" data-value="2" d="M-405,0 v57.394285714285715 q0,127.74857142857142 207.59142857142854,127.74857142857142 h93.26571428571428"></path>
-                                                                                    <path class="abc-outline abc-outline-green" data-index="2" data-value="3" d="M-405,0 v18.514285714285712 q0,166.62857142857143 270.77142857142854,166.62857142857143 h30.085714285714285"></path>
-                                                                                    <path class="abc-outline abc-outline-orange" data-index="2" data-value="4" d="M-405,0 v0 a300.85714285714283,185.14285714285714 0 0 0 300.85714285714283,185.14285714285714 h0"></path>
-                                                                                    <path class="abc-invisible" d="M-384.75,0 v0 a285.8142857142857,175.88571428571427 0 0 0 285.8142857142857,175.88571428571427 h0"></path>
-                                                                                    <path class="abc-curve" d="M-405,0 v0 a300.85714285714283,185.14285714285714 0 0 0 300.85714285714283,185.14285714285714 h0"></path>
-                                                                                </g>
-
-                                                                                <!-- Shape: bottom right -->
-                                                                                <g id="abc_shape_bottom_right" class="abc-shape-quadrant" data-index="3">
-                                                                                    <path class="abc-outline abc-outline-blue" data-index="3" data-value="1" d="M-104.14285714285714,185.14285714285714 h162.46285714285713 q138.3942857142857,0 138.3942857142857,-85.16571428571427 v-99.97714285714287"></path>
-                                                                                    <path class="abc-outline abc-outline-red" data-index="3" data-value="2" d="M-104.14285714285714,185.14285714285714 h93.26571428571428 q207.59142857142854,0 207.59142857142854,-127.74857142857142 v-57.394285714285715"></path>
-                                                                                    <path class="abc-outline abc-outline-green" data-index="3" data-value="3" d="M-104.14285714285714,185.14285714285714 h30.085714285714285 q270.77142857142854,0 270.77142857142854,-166.62857142857143 v-18.514285714285712"></path>
-                                                                                    <path class="abc-outline abc-outline-orange" data-index="3" data-value="4" d="M-104.14285714285714,185.14285714285714 h0 a300.85714285714283,-185.14285714285714 0 0 0 300.85714285714283,-185.14285714285714 v-0"></path>
-                                                                                    <path class="abc-invisible" d="M-98.93571428571428,175.88571428571427 h0 a285.8142857142857,-175.88571428571427 0 0 0 285.8142857142857,-175.88571428571427 v-0"></path>
-                                                                                    <path class="abc-curve" d="M-104.14285714285714,185.14285714285714 h0 a300.85714285714283,-185.14285714285714 0 0 0 300.85714285714283,-185.14285714285714 v-0"></path>
-                                                                                </g>
-                                                                            </svg>
-                                                                        </div>
-                                                                    </div>
-                                                    --}}
                                                                     <input type="hidden" value=""
                                                                            name="product[VA][code][value]"
                                                                            id="input_predefined_shape">
@@ -1047,7 +909,6 @@
                                                                    min="-30"
                                                                    max="30">
 
-                                                            {{--                                                            <input type="number" name="product[Lens][Right][Far][SPH]" value="" id="Right_Far_SPH" data-reqval="farSPH" placeholder=" " class="form-control input-block-level lensVal lensSPH farSPH" data-rl="Right" required="" aria-required="true" step="0.5">--}}
                                                         </td>
                                                         <td>
                                                             <select name="product[Lens][Right][Far][CYLDeg]"
@@ -1081,7 +942,7 @@
                                                                 data-reqval="farAX" value=""
                                                                 id="Right_Far_Axis"
                                                                 placeholder=" "
-                                                                class="form-control input-block-level input-sm lensAxis farAX valid"
+                                                                class="form-control input-block-level input-sm lensAxis farAX  number-input"
                                                                 data-rl="Right"
                                                                 step="1"
                                                                 min="0"
@@ -1119,7 +980,7 @@
                                                                    id="Right_Near_SPH"
                                                                    data-reqval="nearSPH"
                                                                    placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensSPH"
+                                                                   class="form-control input-block-level lensVal lensSPH  number-input"
                                                                    data-rl="Right"
                                                                    required
                                                                    aria-required="true"
@@ -1146,7 +1007,7 @@
                                                                 value=""
                                                                 id="Right_Near_CYL"
                                                                 placeholder=" "
-                                                                class="form-control input-block-level lensVal lensCYL"
+                                                                class="form-control input-block-level lensVal lensCYL  number-input"
                                                                 data-rl="Right"
                                                                 step="0.25"
                                                                 min="-15"
@@ -1161,7 +1022,7 @@
                                                                 value=""
                                                                 id="Right_Near_Axis"
                                                                 placeholder=" "
-                                                                class="form-control input-block-level lensAxis nearAX"
+                                                                class="form-control input-block-level lensAxis nearAX  number-input"
                                                                 data-rl="Right"
                                                                 step="1"
                                                                 min="0"
@@ -1203,8 +1064,8 @@
 
 
                                                         </td>
-                                                        <td colspan="5">
-                                                            <div class="row" style="padding-left: 0;">
+                                                         <td colspan="5">
+                                                             <div class="row" style="padding-left: 0;">
                                                                 <div class="col-xs-12">
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
@@ -1274,10 +1135,10 @@
 
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Left][Far][SPH]"
+                                                            <input type="number" name="product[Lens][Left][Far][SPH]"
                                                                    data-reqval="farSPH" value="" id="Left_Far_SPH"
                                                                    placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensSPH farSPH"
+                                                                   class="form-control input-block-level lensVal lensSPH farSPH number-input"
                                                                    data-rl="Left" required="" aria-required="true"
                                                                    disabled=""
                                                                    step="0.25"
@@ -1296,20 +1157,20 @@
 
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Left][Far][CYL]"
+                                                            <input type="number" name="product[Lens][Left][Far][CYL]"
                                                                    data-reqval="farCYL" value="" id="Left_Far_CYL"
                                                                    placeholder=" "
-                                                                   class="form-control input-block-level input-sm lensVal lensCYL farCYL"
+                                                                   class="form-control input-block-level input-sm lensVal lensCYL farCYL number-input"
                                                                    data-rl="Left" disabled=""
                                                                    step="0.25"
                                                                    min="-15"
                                                                    max="15">
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Left][Far][Axis]"
+                                                            <input type="number" name="product[Lens][Left][Far][Axis]"
                                                                    data-reqval="farAX" value="" id="Left_Far_Axis"
                                                                    placeholder=" "
-                                                                   class="form-control input-block-level input-sm lensAxis farAX valid"
+                                                                   class="form-control input-block-level input-sm lensAxis farAX number-input"
                                                                    data-rl="Left" disabled=""
                                                                    step="1"
                                                                    min="0"
@@ -1340,10 +1201,10 @@
 
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Left][Near][SPH]"
+                                                            <input type="number" name="product[Lens][Left][Near][SPH]"
                                                                    data-reqval="nearSPH" value="" id="Left_Near_SPH"
                                                                    placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensSPH"
+                                                                   class="form-control input-block-level lensVal lensSPH  number-input"
                                                                    data-rl="Left" disabled=""
                                                                    step="0.25"
                                                                    min="-30"
@@ -1361,10 +1222,10 @@
 
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Left][Near][CYL]"
+                                                            <input type="number" name="product[Lens][Left][Near][CYL]"
                                                                    data-reqval="nearCYL" value="" id="Left_Near_CYL"
                                                                    placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensCYL"
+                                                                   class="form-control input-block-level lensVal lensCYL number-input"
                                                                    data-rl="Left"
                                                                    disabled=""
                                                                    step="0.25"
@@ -1372,10 +1233,10 @@
                                                                    max="15">
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="product[Lens][Left][Near][Axis]"
+                                                            <input type="number" name="product[Lens][Left][Near][Axis]"
                                                                    data-reqval="nearAX" value="" id="Left_Near_Axis"
                                                                    placeholder=" "
-                                                                   class="form-control input-block-level lensAxis nearAX"
+                                                                   class="form-control input-block-level lensAxis nearAX number-input"
                                                                    data-rl="Left" disabled=""
                                                                    step="1"
                                                                    min="0"
@@ -1388,31 +1249,14 @@
                                                         </td>
                                                         <td colspan="5">
                                                             <div class="col-md-5 noPadding">
-                                                                <input type="text" name="product[Lens][Left][Addition]"
+                                                                <input type="number" name="product[Lens][Left][Addition]"
                                                                        data-reqval="addVal" value="" id="Left_Addition"
                                                                        placeholder=""
-                                                                       class="form-control input-block-level lensAddition lensVal"
+                                                                       class="form-control input-block-level lensAddition lensVal number-input"
                                                                        data-rl="Left" required="" aria-required="true"
                                                                        disabled="">
 
                                                             </div>
-                                                            <div>
-                                                                <div class="col-xs-8" style="padding-right: 0;">
-                                                                    <select name="product[Lens][Left][Diameter]"
-                                                                            required=""
-                                                                            class="select2-me text-left lensDiam select2-hidden-accessible"
-                                                                            style="width: 100%" data-rl="Right"
-                                                                            id="Left_Lens_Diam" aria-required="true"
-                                                                            tabindex="-1" aria-hidden="true" disabled=""
-                                                                            data-select2-id="Left_Lens_Diam">
-                                                                        <option value=""
-                                                                                data-select2-id="137">{{translate('Çap Seçiniz')}}</option>
-                                                                    </select>
-
-                                                                </div>
-                                                            </div>
-
-
                                                         </td>
 
                                                     </tr>
@@ -1444,6 +1288,149 @@
     //design_id =>  products
     //index_id =>  products
     //color_id =>  products
+    $('#prescription_id').on('change', function () {
+        if ($(this).val()) {
+            $.ajax({
+                method: "get",
+                url: "{{route('admin.sale.getPrescriptionDetails')}}",
+                data: {
+                    prescription_id: $(this).val(),
+                },
+                // contactType: "html",
+                success: function (result) {
+                    if (result.success) {
+                        let prescription=result.data.prescription,
+                         Lens=prescription.Lens,
+                         lens_id = result.data.lens_id;
+                        $("#lens_id").val(lens_id).change().selectpicker("refresh");
+
+                        // Axis
+                        // CYL
+                        // CYLDeg
+                        // SPH
+                        // SPHDeg
+                        // isCheck
+                        if(Lens.Right) {
+                            if (Lens.Right.isCheck === '1') {
+                                $("#RightLens").prop('checked', true);
+                                let Right_Addition = 0;
+                                if (Lens.Right.Far) {
+                                    Right_Addition += parseFloat(Lens.Right.Far.SPH);
+                                    $("#Right_Far_CYL").val(Lens.Right.Far.CYL);
+                                    $("#Right_Far_CYLDeg").val(Lens.Right.Far.CYLDeg).change();
+                                    $("#Right_Far_SPH").val(Lens.Right.Far.SPH);
+                                    $("#Right_Far_SPHDeg").val(Lens.Right.Far.SPHDeg).change();
+                                    $("#Right_Far_Axis").val(Lens.Right.Far.Axis);
+                                }
+
+                                if (Lens.Right.Near) {
+                                    Right_Addition -= parseFloat(Lens.Right.Near.SPH);
+                                    $("#Right_Near_CYL").val(Lens.Right.Near.CYL);
+                                    $("#Right_Near_CYLDeg").val(Lens.Right.Near.CYLDeg).change();
+                                    $("#Right_Near_SPH").val(Lens.Right.Near.SPH);
+                                    $("#Right_Near_SPHDeg").val(Lens.Right.Near.SPHDeg).change();
+                                    $("#Right_Near_Axis").val(Lens.Right.Near.Axis);
+                                }
+                                $("#Right_Addition").val(Right_Addition);
+
+                            }
+                        }
+                        if(Lens.Left) {
+
+                            if(Lens.Left.isCheck === '1'){
+                                $("#LeftLens").prop('checked',true);
+                                LeftLensChecked();
+                                let Left_Addition =0;
+
+                                if(Lens.Left.sameToRight){
+                                    $("#sameToRight").prop('checked',true);
+                                    sameToRight();
+
+                                }
+                                if(Lens.Left.Far){
+                                    Left_Addition+=parseFloat( Lens.Left.Far.SPH);
+                                    $("#Left_Far_CYL").val(Lens.Left.Far.CYL);
+                                    $("#Left_Far_CYLDeg").val(Lens.Left.Far.CYLDeg).change();
+                                    $("#Left_Far_SPH").val(Lens.Left.Far.SPH);
+                                    $("#Left_Far_SPHDeg").val(Lens.Left.Far.SPHDeg).change();
+                                    $("#Left_Far_Axis").val(Lens.Left.Far.Axis);
+                                }
+
+                                if(Lens.Left.Near){
+                                    Left_Addition-=parseFloat( Lens.Left.Near.SPH);
+
+                                    $("#Left_Near_CYL").val(Lens.Left.Near.CYL);
+                                    $("#Left_Near_CYLDeg").val(Lens.Left.Near.CYLDeg).change();
+                                    $("#Left_Near_SPH").val(Lens.Left.Near.SPH);
+                                    $("#Left_Near_SPHDeg").val(Lens.Left.Near.SPHDeg).change();
+                                    $("#Left_Near_Axis").val(Lens.Left.Near.Axis);
+                                }
+                                $("#Left_Addition").val(Left_Addition);
+                            }else{
+                                LeftLensUnChecked();
+                            }
+
+
+                        }
+
+                        if(prescription.VA){
+                            if(prescription.VA.Base){
+                                $('.VABaseCheck_class').removeClass('d-none')
+                                $("#VABaseCheck").prop('checked', true);
+                                $('#special_base').val(prescription.VA.Base.value).change();
+                            }
+
+                            if(prescription.VA.Ozel){
+                                if(prescription.VA.Ozel.isCheck){
+                                    $("#specific_diameter").prop('checked', true);
+                                    $('#specific_diameter_input').val(prescription.VA.Ozel.value)
+                                    $('.specific_diameter_class').removeClass('d-none')
+                                }
+                            }
+                            if(prescription.VA.TinTing){
+                                $('.color_class').removeClass('d-none')
+                                $("#VATintingCheck").prop('checked', true);
+                                $('#color_product').val(prescription.VA.TinTing.value).change();
+                            }
+                            if(prescription.VA.code){
+                                $("#codeCheck").prop('checked', true);
+                                $('.owf-page-shapeDefinition-manual-shape').removeClass('d-none')
+                                $('#input_predefined_shape').val(prescription.VA.code.value).change();
+                                $('.abc-cCode').each(function(index, element) {
+                                    const elementText = $(element).text();
+                                    if(elementText === prescription.VA.code.value){
+                                        $(element).parent().addClass('selected');
+                                    }
+                                });
+
+                            }
+
+
+                        }
+
+
+
+
+                        changePrice();
+                    } else {
+                        changePrice();
+                        Swal.fire({
+                            title: 'Error',
+                            text: result.msg,
+                            icon: 'error',
+                        })
+                    }
+
+
+                },
+            });
+        } else {
+
+            clearOrderLens();
+            changePrice();
+        }
+
+    });
     $(document).on("change", "#Right_Far_Axis", function (e) {
         const Far_Axis = $('#Right_Far_Axis').val();
         $('#Right_Near_Axis').val(Far_Axis);
@@ -1474,44 +1461,10 @@
     $('#LeftLens').on('change', function () {
         var cke;
         if (this.checked) {
-            $('#sameToRight').attr('disabled', false);
-            $('#Left_Far_Axis').attr('disabled', false);
-            $('#Left_Near_Axis').attr('disabled', false);
-            $('#Left_Far_CYL').attr('disabled', false);
-            $('#Left_Near_CYL').attr('disabled', false);
-            $('#Left_Far_SPH').attr('disabled', false);
-            $('#Left_Near_SPH').attr('disabled', false);
-
-
-            $('#Left_Near_CYLDeg').prop('disabled', false);
-            $('#Left_Near_SPHDeg').prop('disabled', false);
-            $('#Left_Far_CYLDeg').prop('disabled', false);
-            $('#Left_Far_SPHDeg').prop('disabled', false);
+            LeftLensChecked();
         } else {
-            cke = $('#sameToRight');
-            cke.attr('disabled', true);
-            cke.prop('checked', false);
+            LeftLensUnChecked();
 
-            $('#Left_Near_CYLDeg').prop('disabled', true);
-            $('#Left_Near_SPHDeg').prop('disabled', true);
-            $('#Left_Far_CYLDeg').prop('disabled', true);
-            $('#Left_Far_SPHDeg').prop('disabled', true);
-
-            $('#Left_Far_Axis').attr('disabled', true);
-            $('#Left_Near_Axis').attr('disabled', true);
-            $('#Left_Far_CYL').attr('disabled', true);
-            $('#Left_Near_CYL').attr('disabled', true);
-            $('#Left_Far_SPH').attr('disabled', true);
-            $('#Left_Near_SPH').attr('disabled', true);
-
-
-            $('#Left_Far_Axis').val('');
-            $('#Left_Near_Axis').val('');
-            $('#Left_Far_CYL').val('');
-            $('#Left_Near_CYL').val('');
-            $('#Left_Far_SPH').val('');
-            $('#Left_Near_SPH').val('');
-            $('#Left_Addition').val('');
         }
 
     });
@@ -1602,12 +1555,56 @@
     //     }
     // });
     $(document).on("change", "#lens_id ,#special_base ,#VABaseCheck", function () {
-            console.log('ddd')
+        changePrice();
+    });
+
+
+    function LeftLensUnChecked() {
+        cke = $('#sameToRight');
+        cke.attr('disabled', true);
+        cke.prop('checked', false);
+
+        $('#Left_Near_CYLDeg').prop('disabled', true);
+        $('#Left_Near_SPHDeg').prop('disabled', true);
+        $('#Left_Far_CYLDeg').prop('disabled', true);
+        $('#Left_Far_SPHDeg').prop('disabled', true);
+
+        $('#Left_Far_Axis').attr('disabled', true);
+        $('#Left_Near_Axis').attr('disabled', true);
+        $('#Left_Far_CYL').attr('disabled', true);
+        $('#Left_Near_CYL').attr('disabled', true);
+        $('#Left_Far_SPH').attr('disabled', true);
+        $('#Left_Near_SPH').attr('disabled', true);
+
+
+        $('#Left_Far_Axis').val('');
+        $('#Left_Near_Axis').val('');
+        $('#Left_Far_CYL').val('');
+        $('#Left_Near_CYL').val('');
+        $('#Left_Far_SPH').val('');
+        $('#Left_Near_SPH').val('');
+        $('#Left_Addition').val('');
+    }
+    function LeftLensChecked() {
+        $('#sameToRight').attr('disabled', false);
+        $('#Left_Far_Axis').attr('disabled', false);
+        $('#Left_Near_Axis').attr('disabled', false);
+        $('#Left_Far_CYL').attr('disabled', false);
+        $('#Left_Near_CYL').attr('disabled', false);
+        $('#Left_Far_SPH').attr('disabled', false);
+        $('#Left_Near_SPH').attr('disabled', false);
+
+        $('#Left_Near_CYLDeg').prop('disabled', false);
+        $('#Left_Near_SPHDeg').prop('disabled', false);
+        $('#Left_Far_CYLDeg').prop('disabled', false);
+        $('#Left_Far_SPHDeg').prop('disabled', false);
+    }
+    function changePrice() {
         let   lens_id = $('#lens_id').val(),
-              special_base = $('#special_base').val(),
-              check_base =0;
+            special_base = $('#special_base').val(),
+            check_base =0;
         if ($('#VABaseCheck').prop('checked')) {
-             check_base = 1;
+            check_base = 1;
         }
         $.ajax({
             method: "get",
@@ -1623,9 +1620,9 @@
                     var sell_price = result.data.sell_price;
                     var Base_amount = result.data.Base_amount;
                     $("#price_lens").val(sell_price);
-                    $("#price-lens").text(sell_price + '{{session("currency")["symbol"]}}');
+                    $("#price-lens").text(result.data.sell_price_format + '{{session("currency")["symbol"]}}');
                     $("#price_Base").val(Base_amount);
-                    $("#price-Base").text(Base_amount + '{{session("currency")["symbol"]}}');
+                    $("#price-Base").text(result.data.Base_amount_format + '{{session("currency")["symbol"]}}');
                     if(Base_amount > 0){
                         $('#div-price-Base').removeClass('d-none')
                     }else {
@@ -1643,10 +1640,8 @@
 
             },
         });
-    })
+    }
     function getPrices() {
-
-
         let   default_TinTing = 0 ,
               default_Ozel = 0,
             price_lens = parseFloat($("#price_lens").val()) || 0,

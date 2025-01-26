@@ -291,15 +291,11 @@ class SellPosController extends Controller
             'type' => 'sell',
             'final_total' => $this->commonUtil->num_uf($request->final_total),
             'grand_total' => $this->commonUtil->num_uf($request->grand_total),
-            'coupon_id' => $request->coupon_id,
             'transaction_date' => !empty($request->transaction_date) ? $request->transaction_date : Carbon::now(),
             'payment_status' => 'pending',
             'invoice_no' => $this->productUtil->getNumberByType('sell'),
-            'ticket_number' => $this->transactionUtil->getTicketNumber(),
             'is_direct_sale' => !empty($request->is_direct_sale) ? 1 : 0,
             'status' => $request->status,
-            'sale_note' => $request->sale_note,
-            'staff_note' => $request->staff_note,
             'customer_size_id' => $request->customer_size_id_hidden ?? null,
             'fabric_name' => $request->fabric_name ?? null,
             'fabric_squatch' => $request->fabric_squatch ?? null,
@@ -327,16 +323,8 @@ class SellPosController extends Controller
         ];
 
 
-        DB::beginTransaction();
 
-        if (!empty($request->is_quotation)) {
-            $transaction_data['is_quotation'] = 1;
-            $transaction_data['status'] = 'draft';
-            $transaction_data['invoice_no'] = $this->productUtil->getNumberByType('quotation');
-            $transaction_data['block_qty'] = !empty($request->block_qty) ? 1 : 0;
-            $transaction_data['block_for_days'] = !empty($request->block_for_days) ? $request->block_for_days : 0; //reverse the block qty handle by command using cron jobs
-            $transaction_data['validity_days'] = !empty($request->validity_days) ? $request->validity_days : 0;
-        }
+        DB::beginTransaction();
         $transaction = Transaction::create($transaction_data);
 
 
@@ -349,16 +337,6 @@ class SellPosController extends Controller
                     if (!$product->is_service) {
                         $this->productUtil->decreaseProductQuantity($sell_line['product_id'], $transaction->store_id, (float) $sell_line['quantity']);
                     }
-                }
-            }
-        }
-
-        // if quotation and qty is blocked(reserved) for sale
-        if ($transaction->is_quotation && $transaction->block_qty) {
-            foreach ($request->transaction_sell_line as $sell_line) {
-                $product = Product::find($sell_line['product_id']);
-                if (!$product->is_service) {
-                    $this->productUtil->updateBlockQuantity($sell_line['product_id'], $transaction->store_id, (float) $sell_line['quantity'], 'add');
                 }
             }
         }
@@ -383,7 +361,6 @@ class SellPosController extends Controller
                         'cheque_number' => !empty($payment['cheque_number']) ? $payment['cheque_number'] : null,
                         'bank_name' => !empty($payment['bank_name']) ? $payment['bank_name'] : null,
                         'ref_number' => !empty($payment['ref_number']) ? $payment['ref_number'] : null,
-                        'gift_card_number' => $request->gift_card_number,
                         'amount_to_be_used' => $request->amount_to_be_used,
                         'payment_note' => $request->payment_note,
                         'change_amount' => $payment['change_amount'] ?? 0,
@@ -416,23 +393,12 @@ class SellPosController extends Controller
             }
 
 
-            if (!empty($transaction->coupon_id)) {
-                Coupon::where('id', $transaction->coupon_id)->update(['used' => 1]);
-            }
 
-            if (!empty($transaction->gift_card_id)) {
-                $remaining_balance = $this->commonUtil->num_uf($request->remaining_balance);
-                $used = 0;
-                if ($remaining_balance == 0) {
-                    $used = 1;
-                }
-                GiftCard::where('id', $transaction->gift_card_id)->update(['balance' => $remaining_balance, 'used' => $used]);
-            }
+
+
         }
 
-        if (!empty($request->transaction_customer_size)) {
-            $this->transactionUtil->createOrUpdateTransactionCustomerSize($transaction, $request->transaction_customer_size);
-        }
+
 
         // $this->transactionUtil->createOrUpdateTransactionSupplierService($transaction, $request);
 
@@ -489,29 +455,6 @@ class SellPosController extends Controller
             return redirect()->back()->with('status', $output);
         }
 
-        if (!empty($transaction->dining_table_id)) {
-            $html_content = $this->transactionUtil->getInvoicePrint($transaction, $payment_types, $request->invoice_lang, $last_due);
-
-            $output = [
-                'success' => true,
-                'html_content' => $html_content,
-                'msg' => __('lang.success')
-            ];
-
-            if ($request->dining_action_type == 'save') {
-                $output = [
-                    'success' => true,
-                    'msg' => __('lang.success')
-                ];
-            }
-            return $output;
-        }
-
-        if ($request->submit_type == 'send' && $transaction->is_quotation) {
-            $this->notificationUtil->sendQuotationToCustomer($transaction->id, $request->emails);
-        }
-
-
         $html_content = $this->transactionUtil->getInvoicePrint($transaction, $payment_types, $request->invoice_lang, $last_due);
 
 
@@ -533,16 +476,7 @@ class SellPosController extends Controller
         return $output;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -726,16 +660,7 @@ class SellPosController extends Controller
         return $output;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
 
     /**
      * filter the products by brand or category
@@ -1047,7 +972,6 @@ class SellPosController extends Controller
         $product_details = $this->productUtil->getNonIdentifiableProductDetails($name, $sell_price, $purchase_price, $request);
         if (!empty($product_details)) {
             $product_id = $product_details->product_id;
-            $quantity = $quantity;
             $edit_quantity = $quantity;
         } else {
             $output['success'] = false;
@@ -1077,6 +1001,7 @@ class SellPosController extends Controller
     /**
      * Parse the weighing barcode.
      *
+     * @param $scale_barcode
      * @return array
      */
     private function __parseWeighingBarcode($scale_barcode): array
@@ -1196,9 +1121,6 @@ class SellPosController extends Controller
             if (!empty(request()->customer_id)) {
                 $query->where('transactions.customer_id', request()->customer_id);
             }
-            if (!empty(request()->deliveryman_id)) {
-                $query->where('transactions.deliveryman_id', request()->deliveryman_id);
-            }
             if (!empty(request()->created_by)) {
                 $query->where('transactions.created_by', request()->created_by);
             }
@@ -1221,7 +1143,6 @@ class SellPosController extends Controller
                 'transactions.transaction_date',
                 'transactions.service_fee_value',
                 'transactions.invoice_no',
-                'transactions.deliveryman_id',
                 'transaction_payments.paid_on',
                 'admins.name as created_by_name',
                 'customers.name as customer_name',
@@ -1233,8 +1154,7 @@ class SellPosController extends Controller
                 'return_parent',
                 'customer',
                 'transaction_payments',
-                'deliveryman',
-                'canceled_by_user',
+                'canceled_by_admin',
             ])
                 ->groupBy('transactions.id');
 
@@ -1284,13 +1204,7 @@ class SellPosController extends Controller
                         return '';
                     }
                 })
-                ->addColumn('deliveryman_name', function ($row) {
-                    if (!empty($row->deliveryman)) {
-                        return $row->deliveryman->employee_name;
-                    } else {
-                        return '';
-                    }
-                })
+
                 ->editColumn('payment_status', function ($row) {
                     if ($row->payment_status == 'pending') {
                         return '<span class="badge badge-warning">' . __('lang.pay_later') . '</span>';
@@ -1323,58 +1237,40 @@ class SellPosController extends Controller
                 })
                 ->editColumn('created_by', '{{$created_by_name}}')
                 ->editColumn('canceled_by', function ($row) {
-                    return !empty($row->canceled_by_user) ? $row->canceled_by_user->name : '';
+                    return !empty($row->canceled_by_admin) ? $row->canceled_by_admin->name : '';
                 })
                 ->addColumn(
                     'action',
                     function ($row) {
                         $html = '<div class="btn-group">';
 
+
                         if (auth()->user()->can('sale.pos.view')) {
                             $html .=
-                                ' <a data-href="' . action('SellController@print', $row->id) . '"
-                            class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
-                                data-toggle="tooltip" class="dripicons-print"></i></a>';
+                                ' <a data-href="' . route('admin.sale.print', $row->id) . '"
+                        class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
+                        data-toggle="tooltip" class="dripicons-print"></i></a>';
                         }
                         if (auth()->user()->can('sale.pos.view')) {
                             $html .=
-                                '<a data-href="' . action('SellController@show', $row->id) . '"
-                            class="btn btn-primary text-white  btn-modal" data-container=".view_modal"><i
+                                '<a data-href="' . route('admin.sale.show',  $row->id) . '"
+                                class="btn btn-primary text-white  btn-modal" data-container=".view_modal" data-dismiss="modal" ><i
                                 title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
                         }
-                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
+                        $html .=
+                            '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
+                        title="' . __('lang.edit') . '" data-toggle="tooltip"
+                        class="dripicons-document-edit"></i></a>';
+
+                        if (auth()->user()->can('sale.pos.delete')) {
                             $html .=
-                                '<a target="_blank" href="' . action('SellController@edit', $row->id) . '" class="btn btn-success"><i
-                            title="' . __('lang.edit') . '" data-toggle="tooltip"
-                            class="dripicons-document-edit"></i></a>';
+                                '<button class="btn btn-danger delete_item" data-href=' . route('admin.pos.destroy', $row->id).'
+                                data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
+                                title="' . __('lang.delete') . '" data-toggle="tooltip"  data-dismiss="modal"
+                                ><i class="dripicons-trash"></i></button>';
                         }
-                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
-                            $html .=
-                                '<a data-href="' . action('SellController@destroy', $row->id) . '"
-                            title="' . __('lang.delete') . '" data-toggle="tooltip"
-                            data-check_password="' . action('AdminController@checkPassword', Auth::user()->id) . '"
-                            class="btn btn-danger delete_item" style="color: white"><i class="fa fa-trash"></i></a>';
-                        }
-                        if (auth()->user()->can('return.sell_return.create_and_edit')) {
-                            $html .=
-                                '  <a href="' . action('SellReturnController@add', $row->id) . '"
-                                title="' . __('lang.sell_return') . '" data-toggle="tooltip" class="btn btn-secondary"
-                                style="color: white"><i class="fa fa-undo"></i></a>';
-                        }
-                        if (auth()->user()->can('sale.pay.create_and_edit')) {
-                            if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
-                                $final_total = $row->final_total;
-                                if (!empty($row->return_parent)) {
-                                    $final_total = $this->commonUtil->num_f($row->final_total - $row->return_parent->final_total);
-                                }
-                                if ($final_total > 0) {
-                                    $html .=
-                                        '<a data-href="' . action('TransactionPaymentController@addPayment', ['id' => $row->id]) . '"
-                                    title="' . __('lang.pay_now') . '" data-toggle="tooltip" data-container=".view_modal"
-                                    class="btn btn-modal btn-success" style="color: white"><i class="fa fa-money"></i></a>';
-                                }
-                            }
-                        }
+
+
                         $html .= '</div>';
                         return $html;
                     }
@@ -1400,16 +1296,16 @@ class SellPosController extends Controller
      *
      *
      */
-    public function getDraftTransactions(Request $request)
+    public function getLensTransactions(Request $request)
     {
         if (request()->ajax()) {
             $store_id = $this->transactionUtil->getFilterOptionValues($request)['store_id'];
-            $pos_id = $this->transactionUtil->getFilterOptionValues($request)['pos_id'];
 
             $query = Transaction::leftjoin('transaction_payments', 'transactions.id', 'transaction_payments.transaction_id')
                 ->leftjoin('customers', 'transactions.customer_id', 'customers.id')
+                ->leftjoin('transaction_sell_lines', 'transactions.id', 'transaction_sell_lines.transaction_id')
                 ->leftjoin('customer_types', 'customers.customer_type_id', 'customer_types.id')
-                ->where('type', 'sell')->whereIn('status', ['draft', 'canceled'])->whereNull('transactions.dining_table_id')->whereNull('transactions.restaurant_order_id');
+                ->where('type', 'sell')->where('transaction_sell_lines.is_lens', true);
 
             if (!empty($store_id)) {
                 $query->where('transactions.store_id', $store_id);
@@ -1420,16 +1316,14 @@ class SellPosController extends Controller
             if (!empty(request()->end_date)) {
                 $query->whereDate('transaction_date', '<=', request()->end_date);
             }
-            if (!empty(request()->deliveryman_id)) {
-                $query->where('transactions.deliveryman_id', request()->deliveryman_id);
-            }
+
 
             $transactions = $query->select(
                 'transactions.*',
                 'customer_types.name as customer_type_name',
                 'customers.name as customer_name',
                 'customers.mobile_number',
-            )->with(['deliveryman']);
+            );
 
             return DataTables::of($transactions)
                 ->editColumn('transaction_date', '{{@format_datetime($transaction_date)}}')
@@ -1450,13 +1344,7 @@ class SellPosController extends Controller
                     }
                 })
 
-                ->addColumn('deliveryman_name', function ($row) {
-                    if (!empty($row->deliveryman)) {
-                        return $row->deliveryman->employee_name;
-                    } else {
-                        return '';
-                    }
-                })
+
                 ->editColumn('status', function ($row) {
                     if ($row->status == 'canceled') {
                         return '<span class="badge badge-danger">' . __('lang.cancel') . '</span>';
@@ -1469,46 +1357,33 @@ class SellPosController extends Controller
                     function ($row) {
                         $html = '<div class="btn-group">';
 
+
+
                         if (auth()->user()->can('sale.pos.view')) {
                             $html .=
-                                ' <a data-href="' . action('SellController@print', $row->id) . '"
+                                ' <a data-href="' . route('admin.sale.print', $row->id) . '"
                         class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
                         data-toggle="tooltip" class="dripicons-print"></i></a>';
                         }
                         if (auth()->user()->can('sale.pos.view')) {
                             $html .=
-                                '<a data-href="' . action('SellController@show', $row->id) . '"
-                                class="btn btn-primary text-white  btn-modal" data-container=".view_modal"><i
+                                '<a data-href="' . route('admin.sale.show',  $row->id) . '"
+                                class="btn btn-primary text-white  btn-modal" data-container=".view_modal" data-dismiss="modal" ><i
                                 title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
                         }
                         $html .=
                             '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
                         title="' . __('lang.edit') . '" data-toggle="tooltip"
                         class="dripicons-document-edit"></i></a>';
-                        if ($row->status != 'canceled') {
+
+                        if (auth()->user()->can('sale.pos.delete')) {
                             $html .=
-                                '<a data-href="' .route('admin.pos.updateStatusToCancel', $row->id) . '?status=final" data-check_password="' . action('AdminController@checkPassword', Auth::user()->id) . '" class="btn btn-danger draft_cancel text-white"><i
-                            title="' . __('lang.cancel') . '" data-toggle="tooltip"
-                            class="fa fa-ban"></i></a>';
-                        }
-                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
-                            $html .=
-                                '<button class="btn btn-danger remove_draft" data-href=' . action(
-                                    'SellController@destroy',
-                                    $row->id
-                                ) . '
-                                data-check_password="' . action('AdminController@checkPassword', Auth::user()->id) . '"
-                                title="' . __('lang.delete') . '" data-toggle="tooltip"
+                                '<button class="btn btn-danger delete_item" data-href=' . route('admin.pos.destroy', $row->id).'
+                                data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
+                                title="' . __('lang.delete') . '" data-toggle="tooltip" data-dismiss="modal"
                                 ><i class="dripicons-trash"></i></button>';
                         }
 
-
-                        $html .=
-                            '<a target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final"
-                            title="' . __('lang.pay_now') . '" data-toggle="tooltip"
-                            class="btn btn-success draft_pay"><i class="fa fa-money"></i></a>';
-
-                        $html .= '</div>';
                         return $html;
                     }
                 )

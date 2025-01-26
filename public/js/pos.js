@@ -618,7 +618,9 @@ function calculate_sub_totals() {
         let quantity = __read_number($(tr).find(".quantity"));
         item_quantity+=quantity;
         let sell_price = __read_number($(tr).find(".sell_price"));
+
         let price_hidden = __read_number($(tr).find(".price_hidden"));
+        console.log(sell_price,price_hidden,$(tr).find(".price_hidden").val(),$(tr).find(".sell_price").val());
         let sub_total = 0;
         if (sell_price > price_hidden) {
 
@@ -1092,13 +1094,16 @@ $(document).on("submit", "form#quick_add_customer_form", function (e) {
                 var customer_id = result.customer_id;
                 $.ajax({
                     method: "get",
-                    url: "/dashboard/dashboard/customers/s/get-dropdown",
+                    url: "/dashboard/customers/get-dropdown",
                     data: {},
                     contactType: "html",
                     success: function (data_html) {
                         $("#customer_id").empty().append(data_html);
                         $("#customer_id").selectpicker("refresh");
                         $("#customer_id").selectpicker("val", customer_id);
+                        getCustomerBalance();
+
+
                     },
                 });
             } else {
@@ -1515,8 +1520,18 @@ $(document).on("click", "#quick-pay-btn", function (e) {
     $("#pay_from_balance").val("1")
     pos_form_obj.submit();
 });
-$("button#submit-btn").click(function () {
+$(document).on("click", "#submit-btn", function (e) {
     //Check if products is present or not.
+
+    // $("body").css({
+    //     "overflow-y": "auto",
+    //     "height": "fit-content"
+    // }).removeClass("modal-open");
+    // document.body.style.paddingRight = "";
+    // $("#add-payment").attr("aria-hidden",true);
+    // $("#add-payment").attr("aria-modal",'');
+    // $("#add-payment").modal("hide").removeClass('show').hide();
+
     if ($("table#product_table tbody").find(".product_row").length <= 0) {
         toastr.warning("No Product Added");
         return false;
@@ -1577,38 +1592,17 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (result) {
                     if (result.success == 1) {
-                        if ($("#is_quotation").val()) {
-                            if ($("#submit_type").val() === "print") {
-                                pos_print(result.html_content);
-                            } else {
-                                 Swal.fire({
-                    title: 'Success',
-                    text: result.msg,
-                    icon: 'success',
-                });
-                                location.reload();
-                            }
-                            return false;
-                        }
+
                         $("#add-payment").modal("hide");
                         toastr.success(result.msg);
-
-                        if ($("#status").val() == "draft") {
-                            if ($("#edit_pos_form").length > 0) {
-                                setTimeout(() => {
-                                    window.close();
-                                }, 3000);
-                            }
-                        }
-                        if (
-                            $("#print_the_transaction").prop("checked") == false
-                        ) {
+                        if ($("#print_the_transaction").prop("checked") == false) {
                             if ($("#edit_pos_form").length > 0) {
                                 setTimeout(() => {
                                     window.close();
                                 }, 1500);
                             }
                         }
+
                         if (
                             $("#print_the_transaction").prop("checked") &&
                             $("#status").val() !== "draft" &&
@@ -1620,26 +1614,6 @@ $(document).ready(function () {
                             pos_print(result.html_content);
                         }
 
-                        if (
-                            $("form#edit_pos_form").length > 0 &&
-                            $("#dining_action_type").val() === "save"
-                        ) {
-                            setTimeout(() => {
-                                window.close();
-                            }, 3000);
-                        }
-
-                        if (
-                            $("#print_and_draft_hidden").val() ===
-                            "print_and_draft"
-                        ) {
-                            pos_print(result.html_content);
-                            Swal.fire({
-                                title:"",
-                                text:LANG.the_order_is_saved_to_draft,
-                                icon:"success"
-                            });
-                        }
 
                         reset_pos_form();
                         getFilterProductRightSide();
@@ -1683,6 +1657,7 @@ function syntaxHighlight(json) {
 }
 function pos_print(receipt) {
     $("#receipt_section").html(receipt);
+    console.log('receipt_section');
     __currency_convert_recursively($("#receipt_section"));
     __print_receipt("receipt_section");
 }
@@ -1857,7 +1832,7 @@ $(document).ready(function () {
         },
         columnDefs: [
             {
-                targets: [9],
+                targets: [8],
                 orderable: false,
                 searchable: false,
             },
@@ -1869,7 +1844,6 @@ $(document).ready(function () {
             { data: "method", name: "transaction_payments.method" },
             { data: "ref_number", name: "transaction_payments.ref_number" },
             { data: "status", name: "transactions.status" },
-            { data: "deliveryman_name", name: "deliveryman_name" },
             { data: "created_by", name: "users.name" },
             { data: "canceled_by", name: "canceled_by" },
             { data: "action", name: "action" },
@@ -1910,7 +1884,7 @@ $(document).ready(function () {
         },
     });
 
-    draft_table = $("#draft_table").DataTable({
+    lens_table = $("#lens_table").DataTable({
         lengthChange: true,
         paging: true,
         info: false,
@@ -1937,7 +1911,7 @@ $(document).ready(function () {
                 .attr("autocomplete", "off");
         },
         ajax: {
-            url: "/dashboard/pos/get-draft-transactions",
+            url: "/dashboard/pos/get-lens-transactions",
             data: function (d) {
                 d.start_date = $("#draft_start_date").val();
                 d.end_date = $("#draft_end_date").val();
@@ -1946,7 +1920,7 @@ $(document).ready(function () {
         },
         columnDefs: [
             {
-                targets: [9],
+                targets: [8],
                 orderable: false,
                 searchable: false,
             },
@@ -1960,7 +1934,6 @@ $(document).ready(function () {
             { data: "mobile_number", name: "customers.mobile_number" },
             { data: "method", name: "transaction_payments.method" },
             { data: "status", name: "transactions.status" },
-            { data: "deliveryman_name", name: "deliveryman.employee_name" },
             { data: "action", name: "action" },
         ],
         createdRow: function (row, data, dataIndex) {},
@@ -2007,9 +1980,9 @@ $(document).on("shown.bs.modal", "#recentTransaction", function () {
     // recent_transaction_table.ajax.reload();
     get_recent_transactions();
 });
-$(document).on("click", "#view-draft-btn", function () {
-    $("#draftTransaction").modal("show");
-    draft_table.ajax.reload();
+$(document).on("click", "#view-lens-btn", function () {
+    $("#lensTransaction").modal("show");
+    lens_table.ajax.reload();
 });
 $(document).on("click", "#view-online-order-btn", function () {
     $("#onlineOrderTransaction").modal("show");
@@ -2021,7 +1994,7 @@ $(document).ready(function () {
         "change",
         "#draft_start_date, #draft_end_date, #draft_deliveryman_id",
         function () {
-            draft_table.ajax.reload();
+            lens_table.ajax.reload();
         }
     );
 
@@ -2073,7 +2046,6 @@ function get_recent_transactions() {
                 d.method = $("#rt_method").val();
                 d.created_by = $("#rt_created_by").val();
                 d.customer_id = $("#rt_customer_id").val();
-                d.deliveryman_id = $("#rt_deliveryman_id").val();
             },
         },
         columnDefs: [
@@ -2099,7 +2071,6 @@ function get_recent_transactions() {
             { data: "ref_number", name: "transaction_payments.ref_number" },
             { data: "status", name: "transactions.status" },
             { data: "payment_status", name: "transactions.payment_status" },
-            { data: "deliveryman_name", name: "deliveryman.employee_name" },
             { data: "created_by", name: "users.name" },
             { data: "canceled_by", name: "canceled_by" },
             { data: "action", name: "action" },
@@ -2265,9 +2236,31 @@ $(document).on("click", ".add_to_deposit", function () {
     $(this).attr("disabled", true);
 });
 
-function getCustomerBalance() {
-    let customer_id = $("#customer_id").val();
+function clearOrderLens() {
+    $('#orderLensFormCreate')[0].reset();
 
+    $('#orderLensFormCreate input[type="checkbox"], #orderLensFormCreate input[type="radio"]').prop('checked', false);
+    $("#price-lens").text("0.00");
+    $("#total-lens").text("0.00");
+    $('#orderLensFormCreate select').prop('selectedIndex', 0);
+    $("#orderLensFormCreate .selectpicker").selectpicker("refresh");
+    $('#orderLensFormCreate input[type="text"], #orderLensFormCreate input[type="number"]').val('');
+    $('#moreInfoCollapse').removeClass('show');
+    $('.color_class').addClass('d-none');
+    $('.VABaseCheck_class').addClass('d-none');
+    $('.specific_diameter_class').addClass('d-none');
+    $('.owf-page-shapeDefinition-manual-shape').addClass('d-none');
+    $('#div-price-TinTing').addClass('d-none');
+    $('#div-price-Base').addClass('d-none');
+    $('#div-price-Ozel').addClass('d-none');
+
+
+}
+
+    function getCustomerBalance() {
+
+    let customer_id = $("#customer_id").val();
+        clearOrderLens();
     $.ajax({
         method: "get",
         url: "/dashboard/pos/get-customer-balance/" + customer_id,
@@ -2443,7 +2436,7 @@ $(document).on("click", ".remove_draft", function (e) {
                                                 text:result.msg,
                                                 icon:"success"
                                             });
-                                            draft_table.ajax.reload();
+                                            lens_table.ajax.reload();
                                         } else {
                                              Swal.fire({
                                                 title: 'Error',
@@ -2524,7 +2517,7 @@ $(document).on("click", "a.draft_cancel", function (e) {
                                                 icon:"success"
                                             });
 
-                                            draft_table.ajax.reload();
+                                            lens_table.ajax.reload();
                                         } else {
                                              Swal.fire({
                                                 title: 'Error',
