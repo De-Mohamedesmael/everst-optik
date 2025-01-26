@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\AddStock\Http\Controllers\TransactionPaymentController;
 use Modules\Sale\Http\Controllers\SellController;
 use Modules\Sale\Http\Controllers\SellPosController;
 
@@ -45,12 +46,19 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
 
 
 
-
-    Route::post('sale/save-import', 'SellController@saveImport');
-    Route::get('sale/get-import', 'SellController@getImport');
-    Route::get('sale/print/{id}', 'SellController@print');
-    Route::get('sale/get-total-details', 'SellController@getTotalDetails')->name('sale.getTotalDetails');
+    Route::get('sale/get-prescription-lenses', [SellController::class,'getPrescriptionDetails'])->name('sale.getPrescriptionDetails');
+    Route::post('sale/save-import', [SellController::class,'saveImport'])->name('sale.saveImport');
+    Route::get('sale/get-import', [SellController::class,'getImport'])->name('sale.getImport');
+    Route::get('sale/print/{id}', [SellController::class,'print'])->name('sale.print');
+    Route::get('sale/get-total-details', [SellController::class,'getTotalDetails'])->name('sale.getTotalDetails');
     Route::resource('sale', SellController::class);
+
+
+
+    Route::post('transaction-payment/pay-customer-due/{customer_id}', [TransactionPaymentController::class,'payCustomerDue'])->name('transactionPayment.payCustomerDue');
+    Route::get('transaction-payment/get-customer-due/{customer_id}/{extract_due}', [TransactionPaymentController::class,'getCustomerDue'])->name('transaction.getCustomerDue');
+    Route::get('transaction-payment/add-payment/{id}', [TransactionPaymentController::class,'addPayment'])->name('transaction.addPayment');
+    Route::resource('transaction-payment', TransactionPaymentController::class);
 
 
 });

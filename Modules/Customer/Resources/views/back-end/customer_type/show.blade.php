@@ -253,7 +253,7 @@
 {{--                                                                    @can('sale.pos.delete')--}}
 {{--                                                                        <li>--}}
 {{--                                                                            <a data-href="{{ action('SellController@destroy', $discount->id) }}"--}}
-{{--                                                                                data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"--}}
+{{--                                                                                data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"--}}
 {{--                                                                                class="btn text-red delete_item"><i--}}
 {{--                                                                                    class="fa fa-trash"></i>--}}
 {{--                                                                                @lang('lang.delete')</a>--}}

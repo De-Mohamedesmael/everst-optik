@@ -68,7 +68,6 @@ class AddStockController extends Controller
         if (request()->ajax()) {
             $default_currency_id = System::getProperty('currency');
             $store_id = $this->transactionUtil->getFilterOptionValues($request)['store_id'];
-            $pos_id = $this->transactionUtil->getFilterOptionValues($request)['pos_id'];
 
             $query=Transaction::leftjoin('add_stock_lines', 'transactions.id', 'add_stock_lines.transaction_id')
                 ->leftjoin('admins', 'transactions.created_by', '=', 'admins.id')

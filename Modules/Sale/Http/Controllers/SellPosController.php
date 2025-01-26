@@ -1266,7 +1266,7 @@ class SellPosController extends Controller
 //                            $html .=
 //                                '<a data-href="' . action('SellController@destroy', $row->id) . '"
 //                            title="' . __('lang.delete') . '" data-toggle="tooltip"
-//                            data-check_password="' . action('AdminController@checkPassword', Auth::user()->id) . '"
+//                            data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
 //                            class="btn btn-danger delete_item" style="color: white"><i class="fa fa-trash"></i></a>';
 //                        }
 //                        if (auth()->user()->can('return.sell_return.create_and_edit')) {
@@ -1393,7 +1393,7 @@ class SellPosController extends Controller
 //                        class="dripicons-document-edit"></i></a>';
 //                        if ($row->status != 'canceled') {
 //                            $html .=
-//                                '<a data-href="' .route('admin.pos.updateStatusToCancel', $row->id) . '?status=final" data-check_password="' . action('AdminController@checkPassword', Auth::user()->id) . '" class="btn btn-danger draft_cancel text-white"><i
+//                                '<a data-href="' .route('admin.pos.updateStatusToCancel', $row->id) . '?status=final" data-check_password="' . route('admin.check-password', Auth::user()->id) . '" class="btn btn-danger draft_cancel text-white"><i
 //                            title="' . __('lang.cancel') . '" data-toggle="tooltip"
 //                            class="fa fa-ban"></i></a>';
 //                        }
@@ -1403,7 +1403,7 @@ class SellPosController extends Controller
 //                                    'SellController@destroy',
 //                                    $row->id
 //                                ) . '
-//                                data-check_password="' . action('AdminController@checkPassword', Auth::user()->id) . '"
+//                                data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
 //                                title="' . __('lang.delete') . '" data-toggle="tooltip"
 //                                ><i class="dripicons-trash"></i></button>';
 //                        }

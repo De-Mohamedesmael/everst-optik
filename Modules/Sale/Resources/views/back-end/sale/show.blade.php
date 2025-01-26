@@ -1,17 +1,23 @@
-<div class="modal-dialog no-print" role="document" style="max-width: 55%">
+<div class="modal-dialog no-print" role="document" style="max-width: 70%">
     <div class="modal-content">
-        <x-modal-header>
+        <div
+            class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+            <h5 class="modal-title position-relative  d-flex align-items-center" style="gap: 5px;">{{ trans('sale') }}
+                <span class=" header-pill"></span>
+            </h5>
 
-            <h4 class="modal-title">@lang('lang.sale')</h4>
-
-        </x-modal-header>
+            <button type="button" data-dismiss="modal" aria-label="Close"
+                    class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
+                    aria-hidden="true" style="border-radius: 10px !important;"><i class="dripicons-cross"></i></span></button>
+            <span class="position-absolute modal-border"></span>
+        </div>
 
         <div class="modal-body">
             <div class="row">
                 <div class="col-md-6">
                     <div class="col-md-12">
                         <h5>@lang('lang.invoice_no'): {{ $sale->invoice_no }} @if (!empty($sale->return_parent))
-                            <a data-href="{{ action('SellReturnController@show', $sale->id) }}"
+                            <a data-href="{{-- action('SellReturnController@show', $sale->id) --}}"
                                 data-container=".view_modal" class="btn btn-modal" style="color: #007bff;">R</a>
                             @endif
                         </h5>
@@ -198,7 +204,7 @@
                 </div>
             </div>
             @endif
-            @include('transaction_payment.partials.payment_table', [
+            @include('addstock::back-end.transaction_payment.partials.payment_table', [
             'payments' => $sale->transaction_payments,
             ])
 
@@ -299,10 +305,10 @@
         </div>
 
         <div class="modal-footer">
-            <a data-href="{{ action('SellController@print', $sale->id) }}"
+            <a data-href="{{ route('admin.sale.print', $sale->id) }}"
                 class="btn btn-primary col-6 text-white print-invoice"><i class="dripicons-print"></i>
                 @lang('lang.print')</a>
-            <button type="button" class="btn btn-default col-6" data-dismiss="modal">@lang('lang.close')</button>
+            <button type="button" class="btn btn-outline-danger col-6" data-dismiss="modal">@lang('lang.close')</button>
         </div>
 
 

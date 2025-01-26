@@ -11,6 +11,8 @@ use App\Utils\TransactionUtil;
 use App\Utils\Util;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +22,7 @@ use Illuminate\View\View;
 use Modules\AddStock\Entities\Transaction;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\CustomerType;
+use Modules\Customer\Entities\Prescription;
 use Modules\Hr\Entities\Employee;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
@@ -378,38 +381,29 @@ class SellController extends Controller
                         </button>
                         <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">';
 
-//                        if (auth()->user()->can('sale.pos.create_and_edit')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . action('SellController@print', $row->id) . '"
-//                                    class="btn print-invoice"><i class="dripicons-print"></i>
-//                                    ' . __('lang.generate_invoice') . '</a>
-//                            </li>';
-//                        }
-//                        if (auth()->user()->can('sale.pos.create_and_edit')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . action('SellController@print', $row->id) . '?print_gift_invoice=true"
-//                                    class="btn print-invoice"><i class="fa fa-gift"></i>
-//                                    ' . __('lang.print_gift_invoice') . '</a>
-//                            </li>';
-//                        }
-//                        $html .= '<li class="divider"></li>';
-//                        if (auth()->user()->can('sale.pos.view')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . action('SellController@show', $row->id) . '" data-container=".view_modal"
-//                                    class="btn btn-modal"><i class="fa fa-eye"></i> ' . __('lang.view') . '</a>
-//                            </li>';
-//                        }
-//                        $html .= '<li class="divider"></li>';
-//                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
-//                            $html .=
-//                                '<li>
-//                                <a href="' . action('SellController@edit', $row->id) . '" class="btn"><i
-//                                        class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a>
-//                            </li>';
-//                        }
+                        if (auth()->user()->can('sale.pos.create_and_edit')) {
+                            $html .=
+                                '<li>
+                                <a data-href="' . route('admin.sale.print', $row->id) . '"
+                                    class="btn print-invoice"><i class="dripicons-print"></i>
+                                    ' . __('lang.generate_invoice') . '</a>
+                            </li>';
+                        }
+
+                        if (auth()->user()->can('sale.pos.view')) {
+                            $html .=
+                                '<li>
+                                <a data-href="' . route('admin.sale.show', $row->id) . '" data-container=".view_modal"
+                                    class="btn btn-modal"><i class="fa fa-eye"></i> ' . __('lang.view') . '</a>
+                            </li>';
+                        }
+                        if (auth()->user()->can('sale.pos.create_and_edit')) {
+                            $html .=
+                                '<li>
+                                <a href="' . route('admin.sale.edit', $row->id) . '" class="btn"><i
+                                        class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a>
+                            </li>';
+                        }
 //                        $html .= '<li class="divider"></li>';
 //                        if (auth()->user()->can('return.sell_return.create_and_edit')) {
 //                            //                            if (empty($row->return_parent)) {
@@ -446,16 +440,15 @@ class SellController extends Controller
 //                                    ' . __('lang.view_payments') . '</a>
 //                                </li>';
 //                        }
-//                        $html .= '<li class="divider"></li>';
-//                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . action('SellController@destroy', $row->id) . '"
-//                                    data-check_password="' . action('UserController@checkPassword', Auth::user()->id) . '"
-//                                    class="btn text-red delete_item"><i class="fa fa-trash"></i>
-//                                    ' . __('lang.delete') . '</a>
-//                                </li>';
-//                        }
+                        if (auth()->user()->can('sale.pay.delete')) {
+                            $html .=
+                                '<li>
+                                <a data-href="' . route('admin.sale.destroy', $row->id) . '"
+                                    data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
+                                    class="btn text-red delete_item"><i class="fa fa-trash"></i>
+                                    ' . __('lang.delete') . '</a>
+                                </li>';
+                        }
                         $html .= '</div>';
                         return $html;
                     }
@@ -598,4 +591,93 @@ class SellController extends Controller
         }
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return Factory|\Illuminate\Contracts\View\View|Application
+     */
+    public function show(int $id): Factory|\Illuminate\Contracts\View\View|Application
+    {
+        $sale = Transaction::find($id);
+        $payment_type_array = $this->commonUtil->getPaymentTypeArrayForPos();
+
+        return view('sale::back-end.sale.show')->with(compact(
+            'sale',
+            'payment_type_array',
+        ));
+    }
+
+    /**
+     * print the transaction
+     *
+     * @param int $id
+     * @return array
+     */
+    public function print($id)
+    {
+        try {
+            $transaction = Transaction::find($id);
+
+            $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
+
+            $html_content = $this->transactionUtil->getInvoicePrint($transaction, $payment_types);
+
+            $output = [
+                'success' => true,
+                'html_content' => $html_content,
+                'msg' => __('lang.success')
+            ];
+        } catch (\Exception $e) {
+            Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
+            $output = [
+                'success' => false,
+                'msg' => __('lang.something_went_wrong')
+            ];
+        }
+
+        return $output;
+    }
+
+
+
+    /**
+     * Get Prescription Details by ID
+     *
+     * @return array
+     */
+    public function getPrescriptionDetails(): array
+    {
+        try {
+            $prescription = Prescription::find(request()->prescription_id);
+            if($prescription){
+//                dd();
+                $output = [
+                    'success' => true,
+                    'data' => [
+                        'lens_id'=>$prescription->product_id,
+                        'prescription'=>json_decode($prescription->data)
+                    ],
+                    'msg' => __('lang.success')
+                ];
+            }else{
+
+                $output = [
+                    'success' => true,
+                    'data' => [],
+                    'msg' => __('lang.success')
+                ];
+            }
+
+
+        } catch (\Exception $e) {
+            Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
+            $output = [
+                'success' => false,
+                'msg' => __('lang.something_went_wrong')
+            ];
+        }
+
+        return $output;
+    }
 }

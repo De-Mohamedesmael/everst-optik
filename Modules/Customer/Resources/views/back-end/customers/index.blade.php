@@ -276,7 +276,7 @@
                         name: 'purchases',
                         render: function(data, type, row) {
                             if (type === 'display' && row.id !== null) {
-                                var url = '{{ url('customer') }}/' + row.id + '?show=purchases';
+                                var url = '{{ url('/dashboard/customers') }}/' + row.id + '?show=purchases';
                                 return '<a href="' + url + '">' + data + '</a>';
                             } else {
                                 return data;
@@ -288,7 +288,7 @@
                         name: 'discount',
                         render: function(data, type, row) {
                             if (type === 'display' && row.id !== null) {
-                                var url = '{{ url('customer') }}/' + row.id + '?show=discounts';
+                                var url = '{{ url('/dashboard/customers') }}/' + row.id + '?show=discounts';
                                 return '<a href="' + url + '">' + data + '</a>';
                             } else {
                                 return data;

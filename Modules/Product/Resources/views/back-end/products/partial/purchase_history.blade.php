@@ -1,12 +1,15 @@
-<div class="modal-dialog" role="document" style="max-width: 65%;">
+<div class="modal-dialog" role="document" style="max-width: 80%;">
     <div class="modal-content">
+        <div
+            class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+            <h5 class="modal-title position-relative  d-flex align-items-center" style="gap: 5px;">{{ __('lang.customer_details') }}
+                <span class=" header-pill"></span>
+            </h5>
 
-
-        <div class="modal-header">
-
-            <h4 class="modal-title">@lang('lang.purchase_history') ({{$product->name}})</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                    aria-hidden="true">&times;</span></button>
+            <button type="button" data-dismiss="modal" aria-label="Close"
+                    class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
+                    aria-hidden="true" style="border-radius: 10px !important;"><i class="dripicons-cross"></i></span></button>
+            <span class="position-absolute modal-border"></span>
         </div>
 
         <div class="modal-body">
@@ -19,7 +22,6 @@
                                 <th>@lang('lang.invoice_no')</th>
                                 <th>@lang('lang.date_and_time')</th>
                                 <th>@lang('lang.invoice_date')</th>
-                                <th>@lang('lang.supplier')</th>
                                 <th>@lang('lang.value')</th>
                                 <th>@lang('lang.created_by')</th>
                                 <th>@lang('lang.paid_amount')</th>
@@ -37,9 +39,7 @@
                                 <td>{{$add_stock->invoice_no}}</td>
                                 <td> {{@format_datetime($add_stock->created_at)}}</td>
                                 <td> {{@format_date($add_stock->transaction_date)}}</td>
-                                <td>
-                                    {{$add_stock->supplier->name}}
-                                </td>
+
                                 <td>
                                     {{@num_format($add_stock->final_total)}}
                                 </td>
@@ -65,37 +65,35 @@
                                         </button>
                                         <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
                                             user="menu">
-                                            @can('add_stock.add_stock.view')
-                                            <li>
-                                                <a href="{{route('admin.add-stock.show', $add_stock->id)}}"
-                                                    class=""><i class="fa fa-eye btn"></i> @lang('lang.view')</a>
-                                            </li>
-                                            <li class="divider"></li>
+                                            @can('stock.add_stock.view')
+                                                <li>
+                                                    <a href="{{route('admin.add-stock.show', $add_stock->id)}}"
+                                                       class=""><i class="fa fa-eye btn"></i> @lang('lang.view')</a>
+                                                </li>
                                             @endcan
-                                            @can('add_stock.add_stock.create_and_edit')
-                                            <li>
-                                                <a href="{{route('admin.add-stock.edit', $add_stock->id)}}"><i
-                                                        class="dripicons-document-edit btn"></i>@lang('lang.edit')</a>
-                                            </li>
-                                            <li class="divider"></li>
+                                            @can('stock.add_stock.create_and_edit')
+                                                <li>
+                                                    <a href="{{route('admin.add-stock.edit', $add_stock->id)}}"><i
+                                                            class="dripicons-document-edit btn"></i>@lang('lang.edit')</a>
+                                                </li>
                                             @endcan
-                                            @can('add_stock.add_stock.delete')
-                                            <li>
-                                                <a data-href="{{route('admin.add-stock.destroy', $add_stock->id)}}"
-                                                    data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
-                                                    class="btn text-red delete_item"><i class="dripicons-trash"></i>
-                                                    @lang('lang.delete')</a>
-                                            </li>
+                                            @can('stock.add_stock.delete')
+                                                <li>
+                                                    <a data-href="{{route('admin.add-stock.destroy', $add_stock->id)}}"
+                                                       data-check_password="{{route('admin.check-password', Auth::user()->id)}}"
+                                                       class="btn text-red delete_item"><i class="dripicons-trash"></i>
+                                                        @lang('lang.delete')</a>
+                                                </li>
                                             @endcan
-                                            @can('add_stock.pay.create_and_edit')
-                                            @if($add_stock->payment_status != 'paid')
-                                            <li>
-                                                <a data-href="{{action('TransactionPaymentController@addPayment', ['id' => $add_stock->id])}}"
-                                                    data-container=".view_modal" class="btn btn-modal"><i
-                                                        class="fa fa-money"></i>
-                                                    @lang('lang.pay')</a>
-                                            </li>
-                                            @endif
+                                            @can('stock.pay.create_and_edit')
+                                                @if($add_stock->payment_status != 'paid')
+                                                    <li>
+                                                        <a data-href="{{route('admin.transaction.addPayment', ['id' => $add_stock->id])}}"
+                                                           data-container=".view_modal" class="btn btn-modal"><i
+                                                                class="fa fa-money"></i>
+                                                            @lang('lang.pay')</a>
+                                                    </li>
+                                                @endif
                                             @endcan
                                         </ul>
                                     </div>
@@ -113,7 +111,7 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">@lang( 'lang.close' )</button>
+            <button type="button" class="btn btn-outline-danger" >@lang( 'lang.close' )</button>
         </div>
 
 
