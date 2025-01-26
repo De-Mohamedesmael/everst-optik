@@ -1244,51 +1244,33 @@ class SellPosController extends Controller
                     function ($row) {
                         $html = '<div class="btn-group">';
 
-//                        if (auth()->user()->can('sale.pos.view')) {
-//                            $html .=
-//                                ' <a data-href="' . action('SellController@print', $row->id) . '"
-//                            class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
-//                                data-toggle="tooltip" class="dripicons-print"></i></a>';
-//                        }
-//                        if (auth()->user()->can('sale.pos.view')) {
-//                            $html .=
-//                                '<a data-href="' . action('SellController@show', $row->id) . '"
-//                            class="btn btn-primary text-white  btn-modal" data-container=".view_modal"><i
-//                                title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
-//                        }
-//                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
-//                            $html .=
-//                                '<a target="_blank" href="' . action('SellController@edit', $row->id) . '" class="btn btn-success"><i
-//                            title="' . __('lang.edit') . '" data-toggle="tooltip"
-//                            class="dripicons-document-edit"></i></a>';
-//                        }
-//                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
-//                            $html .=
-//                                '<a data-href="' . action('SellController@destroy', $row->id) . '"
-//                            title="' . __('lang.delete') . '" data-toggle="tooltip"
-//                            data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
-//                            class="btn btn-danger delete_item" style="color: white"><i class="fa fa-trash"></i></a>';
-//                        }
-//                        if (auth()->user()->can('return.sell_return.create_and_edit')) {
-//                            $html .=
-//                                '  <a href="' . action('SellReturnController@add', $row->id) . '"
-//                                title="' . __('lang.sell_return') . '" data-toggle="tooltip" class="btn btn-secondary"
-//                                style="color: white"><i class="fa fa-undo"></i></a>';
-//                        }
-//                        if (auth()->user()->can('sale.pay.create_and_edit')) {
-//                            if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
-//                                $final_total = $row->final_total;
-//                                if (!empty($row->return_parent)) {
-//                                    $final_total = $this->commonUtil->num_f($row->final_total - $row->return_parent->final_total);
-//                                }
-//                                if ($final_total > 0) {
-//                                    $html .=
-//                                        '<a data-href="' . action('TransactionPaymentController@addPayment', ['id' => $row->id]) . '"
-//                                    title="' . __('lang.pay_now') . '" data-toggle="tooltip" data-container=".view_modal"
-//                                    class="btn btn-modal btn-success" style="color: white"><i class="fa fa-money"></i></a>';
-//                                }
-//                            }
-//                        }
+
+                        if (auth()->user()->can('sale.pos.view')) {
+                            $html .=
+                                ' <a data-href="' . route('admin.sale.print', $row->id) . '"
+                        class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
+                        data-toggle="tooltip" class="dripicons-print"></i></a>';
+                        }
+                        if (auth()->user()->can('sale.pos.view')) {
+                            $html .=
+                                '<a data-href="' . route('admin.sale.show',  $row->id) . '"
+                                class="btn btn-primary text-white  btn-modal" data-container=".view_modal" data-dismiss="modal" ><i
+                                title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
+                        }
+                        $html .=
+                            '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
+                        title="' . __('lang.edit') . '" data-toggle="tooltip"
+                        class="dripicons-document-edit"></i></a>';
+
+                        if (auth()->user()->can('sale.pos.delete')) {
+                            $html .=
+                                '<button class="btn btn-danger delete_item" data-href=' . route('admin.pos.destroy', $row->id).'
+                                data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
+                                title="' . __('lang.delete') . '" data-toggle="tooltip"  data-dismiss="modal"
+                                ><i class="dripicons-trash"></i></button>';
+                        }
+
+
                         $html .= '</div>';
                         return $html;
                     }
@@ -1375,38 +1357,32 @@ class SellPosController extends Controller
                     function ($row) {
                         $html = '<div class="btn-group">';
 
-//                        if (auth()->user()->can('sale.pos.view')) {
-//                            $html .=
-//                                ' <a data-href="' . action('SellController@print', $row->id) . '"
-//                        class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
-//                        data-toggle="tooltip" class="dripicons-print"></i></a>';
-//                        }
-//                        if (auth()->user()->can('sale.pos.view')) {
-//                            $html .=
-//                                '<a data-href="' . action('SellController@show', $row->id) . '"
-//                                class="btn btn-primary text-white  btn-modal" data-container=".view_modal"><i
-//                                title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
-//                        }
-//                        $html .=
-//                            '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
-//                        title="' . __('lang.edit') . '" data-toggle="tooltip"
-//                        class="dripicons-document-edit"></i></a>';
-//                        if ($row->status != 'canceled') {
-//                            $html .=
-//                                '<a data-href="' .route('admin.pos.updateStatusToCancel', $row->id) . '?status=final" data-check_password="' . route('admin.check-password', Auth::user()->id) . '" class="btn btn-danger draft_cancel text-white"><i
-//                            title="' . __('lang.cancel') . '" data-toggle="tooltip"
-//                            class="fa fa-ban"></i></a>';
-//                        }
-//                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
-//                            $html .=
-//                                '<button class="btn btn-danger remove_draft" data-href=' . action(
-//                                    'SellController@destroy',
-//                                    $row->id
-//                                ) . '
-//                                data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
-//                                title="' . __('lang.delete') . '" data-toggle="tooltip"
-//                                ><i class="dripicons-trash"></i></button>';
-//                        }
+
+
+                        if (auth()->user()->can('sale.pos.view')) {
+                            $html .=
+                                ' <a data-href="' . route('admin.sale.print', $row->id) . '"
+                        class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
+                        data-toggle="tooltip" class="dripicons-print"></i></a>';
+                        }
+                        if (auth()->user()->can('sale.pos.view')) {
+                            $html .=
+                                '<a data-href="' . route('admin.sale.show',  $row->id) . '"
+                                class="btn btn-primary text-white  btn-modal" data-container=".view_modal" data-dismiss="modal" ><i
+                                title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
+                        }
+                        $html .=
+                            '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
+                        title="' . __('lang.edit') . '" data-toggle="tooltip"
+                        class="dripicons-document-edit"></i></a>';
+
+                        if (auth()->user()->can('sale.pos.delete')) {
+                            $html .=
+                                '<button class="btn btn-danger delete_item" data-href=' . route('admin.pos.destroy', $row->id).'
+                                data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
+                                title="' . __('lang.delete') . '" data-toggle="tooltip" data-dismiss="modal"
+                                ><i class="dripicons-trash"></i></button>';
+                        }
 
                         return $html;
                     }
