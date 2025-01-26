@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Modules\AddStock\Entities\Transaction;
@@ -31,6 +32,8 @@ use Modules\Setting\Entities\Currency;
 use Modules\Setting\Entities\Store;
 use Modules\Setting\Entities\System;
 use Modules\Setting\Entities\Tax;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Yajra\DataTables\Facades\DataTables;
 
 class SellController extends Controller
@@ -67,9 +70,11 @@ class SellController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @throws Exception
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    public function index(Request $request)
+    public function index(Request $request): Factory|\Illuminate\Contracts\View\View|Application
     {
         $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
         $default_currency_id = System::getProperty('currency');
@@ -115,7 +120,6 @@ class SellController extends Controller
 
                 }
                 $product_ids = $products->pluck('id');
-//                dd($product_ids);
             }
 
 
@@ -213,7 +217,6 @@ class SellController extends Controller
 
 
             return DataTables::of($sales)
-                // ->setTotalRecords(100)
                 ->editColumn('transaction_date', '{{@format_datetime($created_at)}}')
                 ->editColumn('invoice_no', function ($row) {
                     $string = $row->invoice_no . ' ';
@@ -651,7 +654,6 @@ class SellController extends Controller
         try {
             $prescription = Prescription::find(request()->prescription_id);
             if($prescription){
-//                dd();
                 $output = [
                     'success' => true,
                     'data' => [

@@ -46,6 +46,7 @@ use Modules\Setting\Entities\StorePos;
 use Modules\Setting\Entities\System;
 use Modules\Setting\Entities\Tax;
 use Modules\Setting\Entities\TermsAndCondition;
+use Mpdf\MpdfException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Str;
@@ -140,7 +141,6 @@ class SellPosController extends Controller
         $taxes = Tax::getDropdown();
         $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
         $cashiers = Employee::getDropdownByJobType('Cashier', true, true);
-        $deliverymen = Employee::getDropdownByJobType('Deliveryman');
         $tac = TermsAndCondition::getDropdownInvoice();
         $walk_in_customer = Customer::where('is_default', 1)->first();
         $stores = Store::getDropdown();
@@ -181,7 +181,6 @@ class SellPosController extends Controller
             'special_bases',
             'colors',
             'lenses',
-            'deliverymen',
             'tac',
             'brands',
             'store_pos',
@@ -270,11 +269,13 @@ class SellPosController extends Controller
         }
         return $new_balance;
     }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
      * @return RedirectResponse|array
+     * @throws MpdfException
      */
     public function store(Request $request): array|RedirectResponse
     {
@@ -488,35 +489,43 @@ class SellPosController extends Controller
     {
         $transaction = Transaction::findOrFail($id);
 
-        $categories = Category::whereNull('parent_id')->get();
-        $sub_categories = Category::whereNotNull('parent_id')->get();
+        $categories = Category::groupBy('categories.id')->get();
         $brands = Brand::all();
         $store_pos = StorePos::where('admin_id', Auth::user()->id)->first();
         $customers = Customer::getCustomerArrayWithMobile();
         $taxes = Tax::getDropdown();
         $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
-        $deliverymen = Employee::getDropdownByJobType('Deliveryman');
-        $tac = TermsAndCondition::where('type', 'invoice')->orderBy('name', 'asc')->pluck('name', 'id');
-        $walk_in_customer = Customer::where('name', 'Walk-in-customer')->first();
-        $product_classes = ProductClass::select('name', 'id')->get();
         $cashiers = Employee::getDropdownByJobType('Cashier', true, true);
-        $weighing_scale_setting = System::getProperty('weighing_scale_setting') ?  json_decode(System::getProperty('weighing_scale_setting'), true) : [];
+        $tac = TermsAndCondition::getDropdownInvoice();
+        $walk_in_customer = Customer::where('is_default', 1)->first();
         $stores = Store::getDropdown();
         $store_poses = [];
+        $weighing_scale_setting = System::getProperty('weighing_scale_setting') ?  json_decode(System::getProperty('weighing_scale_setting'), true) : [];
         $languages = System::getLanguageDropdown();
-        $service_fees = ServiceFee::pluck('name', 'id');
-        $delivery_zones = DeliveryZone::pluck('name', 'id');
         $exchange_rate_currencies = $this->commonUtil->getCurrenciesExchangeRateArray(true);
         $employees = Employee::getCommissionEmployeeDropdown();
-        $delivery_men = Employee::getDropdownByJobType('Deliveryman');
 
+        $brand_lens = BrandLens::with('features')->get();
+        $special_bases=SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
+
+        $brand_lenses=BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $design_lenses=Design::orderBy('name', 'asc')->pluck('name', 'id');
+        $foci=Focus::orderBy('name', 'asc')->pluck('name', 'id');
+        $index_lenses=IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors=Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $lenses=Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
         return view('sale::back-end.pos.edit')->with(compact(
             'transaction',
+            'brand_lens',
+            'special_bases',
+            'brand_lenses',
+            'design_lenses',
+            'foci',
+            'index_lenses',
+            'colors',
+            'lenses',
             'categories',
             'walk_in_customer',
-            'deliverymen',
-            'product_classes',
-            'sub_categories',
             'tac',
             'brands',
             'store_pos',
@@ -528,10 +537,7 @@ class SellPosController extends Controller
             'stores',
             'store_poses',
             'languages',
-            'service_fees',
             'employees',
-            'delivery_zones',
-            'delivery_men',
             'exchange_rate_currencies',
         ));
     }

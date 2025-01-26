@@ -21,6 +21,7 @@ use Modules\Hr\Http\Controllers\LeaveController;
 Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'timezone'],'prefix' => 'dashboard','as'=>'admin.'], function () {
     Route::post('admins/check-password/{id}', [AdminController::class, 'checkPassword'])->name('check-password');
 //    Route::post('admins/check-admin-password/{id}}', [AdminController::class, 'checkAdminPassword'])->name('check-passwordord');
+    Route::get('admins/get-get-profile', [AdminController::class ,'getProfile'])->name('getProfile');
 
     Route::group(['prefix' => 'hr','as'=>'hr.'], function () {
         Route::resource('jobs', JobController::class);
@@ -36,6 +37,10 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
 
         Route::get('leave/get-leave-details/{employee_id}', [LeaveController::class ,'getLeaveDetails'])->name('getLeaveDetails');
         Route::resource('leave', LeaveController::class);
+
+
+
+
         Route::get('attendance/get-attendance-row/{row_index}', [AttendanceController::class ,'getAttendanceRow'])->name('getAttendanceRow');
         Route::resource('attendances', AttendanceController::class);
         Route::get('wages-and-compensations/change-status-to-paid/{id}', [WagesAndCompensationController::class ,'changeStatusToPaid'])->name('changeStatusToPaid');
