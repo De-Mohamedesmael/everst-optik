@@ -12,7 +12,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-
 // use App\Models\WagesAndCompensation;
 
 class GeneralController extends Controller
@@ -35,6 +34,27 @@ class GeneralController extends Controller
     {
         $this->commonUtil = $commonUtil;
         $this->notificationUtil = $notificationUtil;
+    }
+
+
+    public function viewUploadedFiles($model_name, $model_id)
+    {
+        $collection_name = request()->collection_name;
+
+        $item = $model_name::find($model_id);
+
+        $uploaded_files = [];
+        if (!empty($item)) {
+            if (!empty($collection_name)) {
+                $uploaded_files = $item->getMedia($collection_name);
+            }
+        }
+
+
+
+        return view('back-end.layouts.partials.view_uploaded_files')->with(compact(
+            'uploaded_files'
+        ));
     }
     public function switchLanguage($lang): RedirectResponse
     {

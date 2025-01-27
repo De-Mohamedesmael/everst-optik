@@ -1,5 +1,5 @@
 @php use Illuminate\Support\Facades\Cache; @endphp
-@forelse ($products as $product)
+@if($product)
 
     <tr class="product_row">
         @if (!empty($is_direct_sale))
@@ -20,10 +20,21 @@
                             : $product->purchase_price;
                         $cost_ratio_per_one = $stockLines ? $stockLines->cost_ratio_per_one : 0;
                         $total_vu=0;
+                        $data_len=null;
                         if($product->is_lens){
                             $cach_lens= Cache::get($KeyLens);
-                            if(isset($cach_lens['VA_amount']))
-                            $total_vu=$cach_lens['VA_amount']['total'];
+                            if(isset($cach_lens['VA_amount'])){
+                                $total_vu=$cach_lens['VA_amount']['total'];
+                            }elseif($old_len){
+                                if($old_len->data != null || $old_len->data != 'null'){
+                                    $data_len=json_decode($old_len->data);
+                                    if(isset($data_len->VA_amount)){
+                                        $total_vu=$data_len->VA_amount->total;
+                                    }
+                                }
+
+
+                            }
                         }
 
 
@@ -42,58 +53,58 @@
 
 
 
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][is_lens]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][is_lens]"
                     class="is_lens" value="{{ $product->is_lens }}">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][have_weight]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][have_weight]"
                     class="have_weight" value="{{ $product->have_weight }}">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][product_id]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][product_id]"
                     class="product_id" value="{{ $product->product_id }}">
 
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][stock_id]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][stock_id]"
                     class="batch_number_id"
                     value="@if ($product->stock_id) {{ $product->stock_id }}@else {{ false }} @endif">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][batch_number]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][batch_number]"
                     class="batch_number"
                     value="@if ($product->batch_number) {{ $product->batch_number }}@else {{ false }} @endif">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][price_hidden]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][price_hidden]"
                     class="price_hidden"
                     value="@if(isset($default_sell_price)) {{ @num_format($default_sell_price / $exchange_rate) }}@else{{ 0 }} @endif">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][purchase_price]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][purchase_price]"
                     class="purchase_price"
                     value="@if (isset($default_purchase_price)) {{ @num_format($default_purchase_price / $exchange_rate) }}@else{{ 0 }} @endif">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][cost_ratio_per_one]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][cost_ratio_per_one]"
                     class="cost_ratio_per_one"
                     value="@if (isset($cost_ratio_per_one)) {{ @num_format($cost_ratio_per_one / $exchange_rate) }}@else{{ 0 }} @endif">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][tax_id]" class="tax_id"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][tax_id]" class="tax_id"
                     value="{{ $product->tax_id }}">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][tax_method]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][tax_method]"
                     class="tax_method" value="{{ $product->tax_method }}">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][tax_rate]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][tax_rate]"
                     class="tax_rate" value="{{ @num_format($product->tax_rate) }}">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][item_tax]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][item_tax]"
                     class="item_tax" value="0">
-                <input type="hidden" value="{{$KeyLens}}" name="transaction_sell_line[{{ $loop->index + $index }}][KeyLens]">
+                <input type="hidden" value="{{$KeyLens}}" name="transaction_sell_line[{{  $index }}][KeyLens]">
 
                 <!-- after calculation actual discounted amount for row products row -->
                 <input type="hidden"
-                    name="transaction_sell_line[{{ $loop->index + $index }}][promotion_purchase_condition]"
+                    name="transaction_sell_line[{{  $index }}][promotion_purchase_condition]"
                     class="promotion_purchase_condition"
                     value="@if (!empty($sale_promotion_details)) {{ $sale_promotion_details->purchase_condition }}@else{{ 0 }} @endif">
                 <input type="hidden"
-                    name="transaction_sell_line[{{ $loop->index + $index }}][promotion_purchase_condition_amount]"
+                    name="transaction_sell_line[{{  $index }}][promotion_purchase_condition_amount]"
                     class="promotion_purchase_condition_amount"
                     value="@if (!empty($sale_promotion_details)) {{ $sale_promotion_details->purchase_condition_amount }}@else{{ 0 }} @endif">
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][promotion_discount]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][promotion_discount]"
                     class="promotion_discount_value"
                     value="@if (!empty($sale_promotion_details)) {{ $sale_promotion_details->discount_value }}@else{{ 0 }} @endif">
                 <input type="hidden"
-                    name="transaction_sell_line[{{ $loop->index + $index }}][promotion_discount_type]"
+                    name="transaction_sell_line[{{  $index }}][promotion_discount_type]"
                     class="promotion_discount_type"
                     value="@if (!empty($sale_promotion_details)) {{ $sale_promotion_details->discount_type }}@else{{ 0 }} @endif">
                 <input type="hidden"
-                    name="transaction_sell_line[{{ $loop->index + $index }}][promotion_discount_amount]"
+                    name="transaction_sell_line[{{  $index }}][promotion_discount_amount]"
                     class="promotion_discount_amount" value="0">
-                @php $loop_index= $loop->index + $index @endphp
+                @php $loop_index=  $index @endphp
             </div>
         </td>
 
@@ -134,16 +145,8 @@
                         autocomplete="off" style="width: 50px;font-size: 14px;font-weight: 600"
                         @isset($check_unit) @if ($check_unit->name == 'قطعه' || $check_unit->name == 'Piece') oninput="this.value = Math.round(this.value);" @endif @endisset
                         id="quantity" @if (!$product->is_lens) max="{{ $product->qty_available }}" @endif
-                        name="transaction_sell_line[{{ $loop->index + $index }}][quantity]" required
+                        name="transaction_sell_line[{{  $index }}][quantity]" required
                         value="{{ $convertedInputValue }}">
-                    {{--
-                    <input type="number" class="form-control quantity  qty numkey input-number" step="any"
-                        autocomplete="off" style="width: 50px;"
-                        @isset($check_unit) @if ($check_unit->name == 'قطعه' || $check_unit->name == 'Piece') oninput="this.value = Math.round(this.value);" @endif @endisset
-                        id="quantity" @if (!$products->is_lens) max="{{ $products->qty_available }}" @endif
-                        name="transaction_sell_line[{{ $loop->index + $index }}][quantity]" required
-                        value="@if (!empty($edit_quantity)) {{ $edit_quantity }}@else @if (isset($products->quantity)){{ preg_match('/\.\d*[1-9]+/', (string) $products->quantity) ? $products->quantity : @num_format($products->quantity) }}@else{{ 1 }} @endif @endif"> --}}
-
 
                     <span class="input-group-btn">
                         <button type="button"
@@ -165,7 +168,7 @@
                 <input type="text" class="form-control sell_price text-center d-flex justify-content-center align-items-center"
                     style="outline: none;border: none;padding: 0 !important;width: 100%;height: 100%;font-size: 14px;font-weight: 600"
                        data-product_id="{{$product->product_id}}"
-                    name="transaction_sell_line[{{ $loop->index + $index }}][sell_price]" required
+                    name="transaction_sell_line[{{  $index }}][sell_price]" required
                     @if (!auth()->user()->can('product_module.sell_price.create_and_edit')) readonly @elseif(env('IS_SUB_BRANCH', false)) readonly @endif
                     value="@if (isset($default_sell_price)) {{ @num_format(($default_sell_price+$total_vu)/ $exchange_rate) }}@else{{ 0 }} @endif ">
             </div>
@@ -197,13 +200,13 @@
                 <div class="input-group" style="width: 100%;height: 100%;">
                     <input type="hidden"
                         class="form-control product_discount_type  discount_type{{ $product->product_id }}"
-                        name="transaction_sell_line[{{ $loop->index + $index }}][product_discount_type]"
+                        name="transaction_sell_line[{{  $index }}][product_discount_type]"
                         value="{{ $convertedDiscountType }}">
 
 
                     <input type="hidden"
                         class="form-control product_discount_value  discount_value{{ $product->product_id }}"
-                        name="transaction_sell_line[{{ $loop->index + $index }}][product_discount_value]"
+                        name="transaction_sell_line[{{  $index }}][product_discount_value]"
                         value="{{ $convertedDiscountAmount }}">
 
 
@@ -212,7 +215,7 @@
                         <input type="text"
                             style="outline: none;border: none;padding: 0!important;height: 100%;font-size: 14px;font-weight: 600;text-align: center"
                             class="form-control product_discount_amount  discount_amount{{ $product->product_id }}"
-                            name="transaction_sell_line[{{ $loop->index + $index }}][product_discount_amount]"
+                            name="transaction_sell_line[{{  $index }}][product_discount_amount]"
                             readonly value="{{ $convertedDiscountAmount }}">
 
                     </div>
@@ -251,7 +254,7 @@
                         @endif
                     </select>
                 @endif
-                <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][discount_category]"
+                <input type="hidden" name="transaction_sell_line[{{  $index }}][discount_category]"
                     class="discount_category_name{{ $product->product_id }}" />
             </div>
         </td>
@@ -268,7 +271,7 @@
                 <span class="sub_total_span d-flex justify-content-center align-items-center"
                     style="font-weight: bold;width: 100%; height: 100%;font-size: 14px"></span>
                 <input type="hidden" class="form-control sub_total"
-                    name="transaction_sell_line[{{ $loop->index + $index }}][sub_total]">
+                    name="transaction_sell_line[{{  $index }}][sub_total]">
             </div>
         </td>
 
@@ -296,7 +299,7 @@
             <div class="d-flex justify-content-around align-items-center" style="width: 100%;height: 100%;">
 
                 <button type="button" class="btn p-0 remove_row"
-                    style="background-color: transparent;outline: none;border: none" data-index="{{ $loop->index + $index }}">
+                    style="background-color: transparent;outline: none;border: none" data-index="{{  $index }}">
                     <div class="image-responsive">
                         <img style="width: 100%; border-radius: 5px" src="{{ url('images/delete.png') }}"
                             alt="">
@@ -306,9 +309,88 @@
             </div>
         </td>
     </tr>
+    @if($old_len && $data_len && $total_vu > 0)
+        <tr class="lens-row-{{  $index }}">
+            <td>
+                <div  class="lens-vu" >
+                    @if(isset($data_len->VA_amount->TinTing_amount) && $data_len->VA_amount->TinTing_amount > 0)
+                        <div class="lens-vu-item">
+                            {{translate('TinTing_amount')}}
+                        </div>
+                    @endif
+                    @if(isset($data_len->VA_amount->Base_amount) && $data_len->VA_amount->Base_amount > 0)
+                        <div class="lens-vu-item">
+                            {{translate('Base_amount')}}
+                        </div>
+                    @endif
+                    @if(isset($data_len->VA_amount->Ozel_amount) && $data_len->VA_amount->Ozel_amount > 0)
+                        <div class="lens-vu-item">
+                            {{translate('Ozel_amount')}}
+                        </div>
+                    @endif
+                </div>
+            </td>
+            <td>
+                <div  class="lens-vu" >
+                    @if(isset($data_len->VA_amount->TinTing_amount) && $data_len->VA_amount->TinTing_amount > 0)
+                        <div class="lens-vu-item">
+                            {{$data_len->VA->TinTing->text}}
+                        </div>
+                    @endif
+                    @if(isset($data_len->VA_amount->Base_amount) && $data_len->VA_amount->Base_amount > 0)
+                        <div class="lens-vu-item">
+                            {{$data_len->VA->Base->text}}
+                        </div>
+                    @endif
+                    @if(isset($data_len->VA_amount->Ozel_amount) && $data_len->VA_amount->Ozel_amount > 0)
+                        <div class="lens-vu-item">
+                            {{$data_len->VA->Ozel->text}}
+                        </div>
+                    @endif
+                </div>
+            </td>
+            <td
+                style="font-size: 12px;padding:3px;margin:2px;width:12%; height:40px">
+                <div class="lens-vu-price" style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
+                    @if(isset($data_len->VA_amount->TinTing_amount) && $data_len->VA_amount->TinTing_amount > 0)
+                        <div class="lens-vu-item">
+                            <span class="lens-vu-price">{{$data_len->VA_amount->TinTing_amount}}</span>
+                        </div>
+                    @endif
+                    @if(isset($data_len->VA_amount->Base_amount) && $data_len->VA_amount->Base_amount > 0)
+                        <div class="lens-vu-item">
+                            <span class="lens-vu-price">{{$data_len->VA_amount->Base_amount}}</span>
+                        </div>
+                    @endif
+                    @if(isset($data_len->VA_amount->Ozel_amount) && $data_len->VA_amount->Ozel_amount > 0)
+                        <div class="lens-vu-item">
+                            <span class="lens-vu-price">{{$data_len->VA_amount->Ozel_amount}}</span>
+                        </div>
+                    @endif
+                </div>
+            </td>
 
-    @if($product->is_lens && $total_vu > 0)
-        <tr class="lens-row-{{ $loop->index + $index }}">
+            <td>
+                <div  class="lens-vu" >
+                    @if(isset($data_len->VA->code->isCheck) && $data_len->VA->code->isCheck)
+                        <div class="lens-vu-item">
+                            {{translate('code_title')}}
+                        </div>
+                    @endif
+                </div>
+            </td>
+            <td>
+                <div  class="lens-vu" >
+                    @if(isset($data_len->VA->code->isCheck) && $data_len->VA->code->isCheck)
+                        <div class="lens-vu-item">
+                            {{$data_len->VA->code->text}}
+                        </div>
+                    @endif
+                </div>
+            </td>
+        </tr>
+    @elseif($product->is_lens && $total_vu > 0)
+        <tr class="lens-row-{{  $index }}">
             <td>
                 <div  class="lens-vu" >
                     @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)
@@ -387,6 +469,9 @@
                 </div>
             </td>
         </tr>
+
+
+
     @endif
-@empty
-@endforelse
+@endif
+

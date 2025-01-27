@@ -67,7 +67,7 @@
                                         role="tab" data-toggle="tab">@lang('lang.info')</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link @if (request()->show == 'purchases') active @endif" href="#purchases"
+                                    <a  id="view-purchases-a"  class="nav-link @if (request()->show == 'purchases') active @endif" href="#purchases"
                                         role="tab" data-toggle="tab">@lang('lang.purchases')</a>
                                 </li>
                                 <li class="nav-item">
@@ -81,6 +81,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link @if (request()->show == 'view_payments') active @endif"
                                         href="#view-payments" role="tab" data-toggle="tab">@lang('lang.view_payments')</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="view-prescriptions-a" class="nav-link @if (request()->show == 'view_prescriptions') active @endif"
+                                       href="#view-prescriptions" role="tab"  data-toggle="tab">{{translate('view prescriptions')}}</a>
                                 </li>
                             </ul>
 
@@ -109,6 +113,10 @@
                                                 <div class="col-md-12">
                                                     <b>@lang('lang.customer_type'):</b> <span
                                                         class="customer_customer_type_span">{{ $customer->customer_type->name ?? '' }}</span>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <b>@lang('lang.age'):</b> <span
+                                                        class="customer_email_span">{{ $customer->age ?? '' }}</span>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <b>@lang('lang.mobile'):</b> <span
@@ -527,6 +535,42 @@
                                         </table>
                                     </div>
                                 </div>
+                                <div role="tabpanel"
+                                     class="tab-pane fade @if (request()->show == 'view_prescriptions') show active @endif"
+                                     id="view-prescriptions">
+                                    <div class="table-responsive">
+                                        <table class="table" id="prescriptions_table">
+                                            <thead>
+                                            <tr>
+                                                <th>@lang('lang.invoice_no')</th>
+                                                <th>@lang('lang.lens')</th>
+                                                <th>@lang('lang.date')</th>
+                                                <th >@lang('lang.amount')</th>
+                                                <th >@lang('lang.VA_amount')</th>
+                                                <th>@lang('lang.created_by')</th>
+                                                <th>@lang('lang.action')</th>
+
+
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -561,7 +605,178 @@
         }
 
         $(document).ready(function() {
-            sales_table = $("#sales_table").DataTable({
+            $(document).on('click', '#view-purchases-a', function() {
+                sales_table = $("#sales_table").DataTable({
+                    lengthChange: true,
+                    paging: true,
+                    info: false,
+                    bAutoWidth: false,
+                    // order: [],
+                    language: {
+                        url: dt_lang_url,
+                    },
+                    lengthMenu: [
+                        [10, 25, 50, 75, 100, 200, 500, -1],
+                        [10, 25, 50, 75, 100, 200, 500, "All"],
+                    ],
+                    dom: "lBfrtip",
+                    stateSave: true,
+                    buttons: buttons,
+                    processing: true,
+                    serverSide: true,
+                    aaSorting: [
+                        [0, "desc"]
+                    ],
+                    initComplete: function () {
+                        $(this.api().table().container()).find('input').parent().wrap('<form>').parent()
+                            .attr('autocomplete', 'off');
+                    },
+                    ajax: {
+                        url: "/dashboard/customers/{{ $customer->id }}",
+                        data: function (d) {
+                            d.start_date = $('#start_date').val();
+                            d.end_date = $('#end_date').val();
+                        },
+                    },
+                    columnDefs: [{
+                        targets: "date",
+                        type: "date-eu",
+                    }],
+                    columns: [{
+                        data: "transaction_date",
+                        name: "transaction_date"
+                    },
+                        {
+                            data: "invoice_no",
+                            name: "invoice_no"
+                        },
+                        {
+                            data: "customer_name",
+                            name: "customers.name"
+                        },
+                        {
+                            data: "products",
+                            name: "products.name"
+                        },
+                        {
+                            data: "received_currency_symbol",
+                            name: "received_currency_symbol",
+                            searchable: false
+                        },
+                        {
+                            data: "discount_amount",
+                            name: "discount_amount"
+                        },
+                        {
+                            data: "final_total",
+                            name: "final_total"
+                        },
+                        {
+                            data: "paid",
+                            name: "transaction_payments.amount",
+                            searchable: false
+                        },
+                        {
+                            data: "due",
+                            name: "transaction_payments.amount",
+                            searchable: false
+                        },
+                        {
+                            data: "paid_on",
+                            name: "transaction_payments.paid_on"
+                        },
+                        {
+                            data: "status",
+                            name: "transactions.status"
+                        },
+                        {
+                            data: "rp_earned",
+                            name: "rp_earned"
+                        },
+
+                        {
+                            data: "created_by",
+                            name: "admins.name"
+                        },
+                        {
+                            data: "files",
+                            name: "files"
+                        },
+                        {
+                            data: "action",
+                            name: "action"
+                        },
+                    ],
+                    createdRow: function (row, data, dataIndex) {
+                    },
+                    footerCallback: function (row, data, start, end, display) {
+                        var intVal = function (i) {
+                            return typeof i === "string" ?
+                                i.replace(/[\$,]/g, "") * 1 :
+                                typeof i === "number" ?
+                                    i :
+                                    0;
+                        };
+
+                        this.api()
+                            .columns(".currencies", {
+                                page: "current"
+                            }).every(function () {
+                            var column = this;
+                            let currencies_html = '';
+                            $.each(currency_obj, function (key, value) {
+                                currencies_html +=
+                                    `<h6 class="footer_currency" data-is_default="${value.is_default}"  data-currency_id="${value.currency_id}">${value.symbol}</h6>`
+                                $(column.footer()).html(currencies_html);
+                            });
+                        })
+                        this.api()
+                            .columns(".sum", {
+                                page: "current"
+                            })
+                            .every(function () {
+                                var column = this;
+                                var currency_total = [];
+                                $.each(currency_obj, function (key, value) {
+                                    currency_total[value.currency_id] = 0;
+                                });
+                                column.data().each(function (group, i) {
+                                    b = $(group).text();
+                                    currency_id = $(group).data('currency_id');
+
+                                    $.each(currency_obj, function (key, value) {
+                                        if (currency_id == value.currency_id) {
+                                            currency_total[value.currency_id] += intVal(
+                                                b);
+                                        }
+                                    });
+                                });
+                                var footer_html = '';
+                                $.each(currency_obj, function (key, value) {
+                                    footer_html +=
+                                        `<h6 class="currency_total currency_total_${value.currency_id}" data-currency_id="${value.currency_id}" data-is_default="${value.is_default}" data-conversion_rate="${value.conversion_rate}" data-base_conversion="${currency_total[value.currency_id] * value.conversion_rate}" data-orig_value="${currency_total[value.currency_id]}">${__currency_trans_from_en(currency_total[value.currency_id], false)}</h6>`
+                                });
+                                $(column.footer()).html(
+                                    footer_html
+                                );
+                            });
+                    },
+                });
+            });
+        });
+
+        // $(document).ready(function() {
+        //     $(document).on('click', '.clear_filter', function() {
+        //         $('.sale_filter').val('');
+        //         $('.sale_filter').selectpicker('refresh');
+        //         rewards_table.ajax.reload();
+        //     });
+        //     $(document).on('change', '.sale_filter', function() {
+        //         rewards_table.ajax.reload();
+        //     });
+        // })
+        $(document).on('click', '#view-prescriptions-a', function() {
+            prescriptions_table = $("#prescriptions_table").DataTable({
                 lengthChange: true,
                 paging: true,
                 info: false,
@@ -587,7 +802,7 @@
                         .attr('autocomplete', 'off');
                 },
                 ajax: {
-                    url: "/dashboard/customers/{{ $customer->id }}",
+                    url: "{{route('admin.customers.prescriptions', ['customer_id'=>$customer->id])}}",
                     data: function(d) {
                         d.start_date = $('#start_date').val();
                         d.end_date = $('#end_date').val();
@@ -598,69 +813,34 @@
                     type: "date-eu",
                 }],
                 columns: [{
-                        data: "transaction_date",
-                        name: "transaction_date"
+                    data: "invoice_no",
+                    name: "invoice_no"
+                },
+                    {
+                        data: "lens",
+                        name: "lens"
                     },
                     {
-                        data: "invoice_no",
-                        name: "invoice_no"
+                        data: "date",
+                        name: "date"
                     },
                     {
-                        data: "customer_name",
-                        name: "customers.name"
+                        data: "amount",
+                        name: "amount"
                     },
                     {
-                        data: "products",
-                        name: "products.name"
+                        data: "VA_amount",
+                        name: "VA_amount",
+                        // searchable: false
                     },
-                    {
-                        data: "received_currency_symbol",
-                        name: "received_currency_symbol",
-                        searchable: false
-                    },
-                    {
-                        data: "discount_amount",
-                        name: "discount_amount"
-                    },
-                    {
-                        data: "final_total",
-                        name: "final_total"
-                    },
-                    {
-                        data: "paid",
-                        name: "transaction_payments.amount",
-                        searchable: false
-                    },
-                    {
-                        data: "due",
-                        name: "transaction_payments.amount",
-                        searchable: false
-                    },
-                    {
-                        data: "paid_on",
-                        name: "transaction_payments.paid_on"
-                    },
-                    {
-                        data: "status",
-                        name: "transactions.status"
-                    },
-                    {
-                        data: "rp_earned",
-                        name: "rp_earned"
-                    },
-
                     {
                         data: "created_by",
                         name: "admins.name"
                     },
                     {
-                        data: "files",
-                        name: "files"
-                    },
-                    {
                         data: "action",
                         name: "action"
-                    },
+                    }
                 ],
                 createdRow: function(row, data, dataIndex) {},
                 footerCallback: function(row, data, start, end, display) {
@@ -668,22 +848,22 @@
                         return typeof i === "string" ?
                             i.replace(/[\$,]/g, "") * 1 :
                             typeof i === "number" ?
-                            i :
-                            0;
+                                i :
+                                0;
                     };
 
                     this.api()
                         .columns(".currencies", {
                             page: "current"
                         }).every(function() {
-                            var column = this;
-                            let currencies_html = '';
-                            $.each(currency_obj, function(key, value) {
-                                currencies_html +=
-                                    `<h6 class="footer_currency" data-is_default="${value.is_default}"  data-currency_id="${value.currency_id}">${value.symbol}</h6>`
-                                $(column.footer()).html(currencies_html);
-                            });
-                        })
+                        var column = this;
+                        let currencies_html = '';
+                        $.each(currency_obj, function(key, value) {
+                            currencies_html +=
+                                `<h6 class="footer_currency" data-is_default="${value.is_default}"  data-currency_id="${value.currency_id}">${value.symbol}</h6>`
+                            $(column.footer()).html(currencies_html);
+                        });
+                    })
                     this.api()
                         .columns(".sum", {
                             page: "current"
@@ -717,16 +897,5 @@
                 },
             });
         });
-
-        $(document).ready(function() {
-            $(document).on('click', '.clear_filter', function() {
-                $('.sale_filter').val('');
-                $('.sale_filter').selectpicker('refresh');
-                rewards_table.ajax.reload();
-            });
-            $(document).on('change', '.sale_filter', function() {
-                rewards_table.ajax.reload();
-            });
-        })
     </script>
 @endsection

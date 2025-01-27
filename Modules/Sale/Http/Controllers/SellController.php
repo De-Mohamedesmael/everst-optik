@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Modules\AddStock\Entities\Transaction;
@@ -31,6 +32,8 @@ use Modules\Setting\Entities\Currency;
 use Modules\Setting\Entities\Store;
 use Modules\Setting\Entities\System;
 use Modules\Setting\Entities\Tax;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Yajra\DataTables\Facades\DataTables;
 
 class SellController extends Controller
@@ -67,7 +70,9 @@ class SellController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @throws Exception
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function index(Request $request)
     {
@@ -115,7 +120,6 @@ class SellController extends Controller
 
                 }
                 $product_ids = $products->pluck('id');
-//                dd($product_ids);
             }
 
 
@@ -213,7 +217,6 @@ class SellController extends Controller
 
 
             return DataTables::of($sales)
-                // ->setTotalRecords(100)
                 ->editColumn('transaction_date', '{{@format_datetime($created_at)}}')
                 ->editColumn('invoice_no', function ($row) {
                     $string = $row->invoice_no . ' ';
@@ -367,7 +370,7 @@ class SellController extends Controller
                     return !empty($row->canceled_by_admin) ? $row->canceled_by_admin->name : '';
                 })
                 ->addColumn('files', function ($row) {
-                    return ' <a data-href="' . route('admin.view-uploaded-files', ['model_name' => 'Transaction', 'model_id' => $row->id, 'collection_name' => 'sell']) . '"
+                    return ' <a data-href="' . route('admin.view-uploaded-files', ['model_name' => '\Modules\AddStock\Entities\Transaction', 'model_id' => $row->id, 'collection_name' => 'sell']) . '"
                     data-container=".view_modal"
                     class="btn btn-default btn-modal">' . __('lang.view') . '</a>';
                 })
@@ -400,7 +403,7 @@ class SellController extends Controller
                         if (auth()->user()->can('sale.pos.create_and_edit')) {
                             $html .=
                                 '<li>
-                                <a href="' . route('admin.sale.edit', $row->id) . '" class="btn"><i
+                                <a href="' . route('admin.pos.edit', $row->id) . '" class="btn"><i
                                         class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a>
                             </li>';
                         }
@@ -651,7 +654,6 @@ class SellController extends Controller
         try {
             $prescription = Prescription::find(request()->prescription_id);
             if($prescription){
-//                dd();
                 $output = [
                     'success' => true,
                     'data' => [
