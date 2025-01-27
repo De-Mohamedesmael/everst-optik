@@ -366,9 +366,7 @@ class ProductUtil extends Util
             array_push($selectRaws,'add_stock_lines.batch_number');
             array_push($selectRaws,'add_stock_lines.id as stock_id');
         }
-        $product->select($selectRaws);
-        $products=$product->groupBy('products.id')->get();
-        return $products;
+        return $product->select($selectRaws)->first();
 }
 
     /**

@@ -70,11 +70,11 @@ class SellController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return Application|Factory|\Illuminate\Contracts\View\View
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function index(Request $request): Factory|\Illuminate\Contracts\View\View|Application
+    public function index(Request $request)
     {
         $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
         $default_currency_id = System::getProperty('currency');
@@ -370,7 +370,7 @@ class SellController extends Controller
                     return !empty($row->canceled_by_admin) ? $row->canceled_by_admin->name : '';
                 })
                 ->addColumn('files', function ($row) {
-                    return ' <a data-href="' . route('admin.view-uploaded-files', ['model_name' => 'Transaction', 'model_id' => $row->id, 'collection_name' => 'sell']) . '"
+                    return ' <a data-href="' . route('admin.view-uploaded-files', ['model_name' => '\Modules\AddStock\Entities\Transaction', 'model_id' => $row->id, 'collection_name' => 'sell']) . '"
                     data-container=".view_modal"
                     class="btn btn-default btn-modal">' . __('lang.view') . '</a>';
                 })
@@ -403,7 +403,7 @@ class SellController extends Controller
                         if (auth()->user()->can('sale.pos.create_and_edit')) {
                             $html .=
                                 '<li>
-                                <a href="' . route('admin.sale.edit', $row->id) . '" class="btn"><i
+                                <a href="' . route('admin.pos.edit', $row->id) . '" class="btn"><i
                                         class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a>
                             </li>';
                         }

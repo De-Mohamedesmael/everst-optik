@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Setting\Http\Controllers\ColorController;
 use Modules\Setting\Http\Controllers\DesignController;
+use Modules\Setting\Http\Controllers\ExchangeRateController;
 use Modules\Setting\Http\Controllers\FocusController;
 use Modules\Setting\Http\Controllers\IndexLensController;
 use Modules\Setting\Http\Controllers\SettingController;
@@ -33,9 +34,20 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('store',StoreController::class);
 
 
+    Route::get('store-pos/get-pos-details-by-store/{store_id}', [StorePosController::class,'getPosDetailsByStore']);
     Route::resource('store-pos', StorePosController::class);
 
 
+
+    Route::get('exchange-rate/get-currency-dropdown', [ExchangeRateController::class,'getExchangeRateCurrencyDropdown']);
+    Route::get('exchange-rate/get-exchange-rate-by-currency', [ExchangeRateController::class,'getExchangeRateByCurrency']);
+    Route::resource('exchange-rate', ExchangeRateController::class);
+
+
+
+    Route::get('tax/get-dropdown-html-by-store', [TaxController::class,'getDropdownHtmlByStore']);
+    Route::get('tax/get-dropdown', [TaxController::class,'getDropdown']);
+    Route::get('tax/get-details/{tax_id}', [TaxController::class,'getDetails']);
     Route::resource('tax', TaxController::class);
 
 

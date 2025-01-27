@@ -27,6 +27,7 @@ use Modules\CashRegister\Entities\CashRegister;
 use Modules\CashRegister\Entities\CashRegisterTransaction;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\CustomerType;
+use Modules\Customer\Entities\Prescription;
 use Modules\Hr\Entities\Employee;
 use Modules\Lens\Entities\BrandLens;
 use Modules\Lens\Entities\Design;
@@ -859,6 +860,7 @@ class SellPosController extends Controller
             $currency_id = $request->input('currency_id');
             $dining_table_id = $request->input('dining_table_id');
             $is_direct_sale = $request->input('is_direct_sale');
+            $sell_lines_id = $request->input('sell_lines_id');
             $KeyLens = $request->input('KeyLens');
 
             $exchange_rate = $this->commonUtil->getExchangeRateByCurrency($currency_id, $request->store_id);
@@ -881,8 +883,14 @@ class SellPosController extends Controller
                 }
             }
             if (!empty($product_id)) {
+                $old_len=null;
+
                 $index = $request->input('row_count');
-                $products = $this->productUtil->getDetailsFromProductByStore($product_id, $store_id, $batch_number_id);
+                $product = $this->productUtil->getDetailsFromProductByStore($product_id, $store_id, $batch_number_id);
+                if($product->is_lens){
+                    $old_len=Prescription::where('sell_line_id',$sell_lines_id)->where('product_id',$product_id)->first();
+                }
+
                 $System = System::where('key', 'weight_product' . $store_pos_id)->first();
                 if (!$System) {
                     System::Create([
@@ -897,13 +905,14 @@ class SellPosController extends Controller
 
                 if (empty($edit_quantity)) {
                     $quantity =  $have_weight ? (float)$have_weight : 1;
-                    $edit_quantity = !$products->first()->have_weight ? $request->input('edit_quantity') : $quantity;
+                    $edit_quantity = !$product->have_weight ? $request->input('edit_quantity') : $quantity;
                 }
                 $product_all_discounts_categories = $this->productUtil->getProductAllDiscountCategories($product_id);
                 $sale_promotion_details = null;
                 $html_content =  view('sale::back-end.pos.partials.product_row')
                     ->with(compact(
-                        'products',
+                        'product',
+                        'old_len',
                         'index',
                         'sale_promotion_details',
                         'product_all_discounts_categories',

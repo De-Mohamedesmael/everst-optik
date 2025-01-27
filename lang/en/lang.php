@@ -1408,4 +1408,7 @@
   'lens_not_found' => 'Lens not found',
   'sales_lenses_list' => 'Sales lenses list',
   'Filter' => 'Filter',
+  'view prescriptions' => 'View prescriptions',
+  'Close' => 'Close',
+  'prescriptions' => 'Prescriptions',
 );

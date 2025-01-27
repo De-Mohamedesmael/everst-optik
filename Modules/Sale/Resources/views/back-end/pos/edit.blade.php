@@ -1095,7 +1095,7 @@
             @foreach ($transaction->transaction_sell_lines as $line)
             get_label_product_row({{ $line->product_id }},null,
                 {{ $line->quantity }},
-                {{ $loop->index }})
+                {{ $loop->index }},null,null,{{$line->id}})
             @endforeach
         });
         $(document).on("click", "#btn-lens-add", function (e) {

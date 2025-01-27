@@ -1,4 +1,90 @@
 $(document).ready(function () {
+
+    customer_sales_table = $("#customer_sales_table").DataTable({
+        lengthChange: true,
+        paging: true,
+        info: false,
+        bAutoWidth: false,
+        language: {
+            url: dt_lang_url,
+        },
+        lengthMenu: [
+            [10, 25, 50, 75, 100, 200, 500, -1],
+            [10, 25, 50, 75, 100, 200, 500, "All"],
+        ],
+        dom: "lBfrtip",
+        stateSave: true,
+        buttons: buttons,
+        processing: true,
+        serverSide: true,
+        aaSorting: [[0, "desc"]],
+        initComplete: function () {
+            $(this.api().table().container())
+                .find("input")
+                .parent()
+                .wrap("<form>")
+                .parent()
+                .attr("autocomplete", "off");
+        },
+        ajax: {
+            url: "/dashboard/pos/get-recent-transactions",
+            data: function (d) {
+                d.customer_id = $("#customer_id").val();
+            },
+        },
+        columnDefs: [
+            {
+                targets: [8],
+                orderable: false,
+                searchable: false,
+            },
+        ],
+        columns: [
+            { data: "transaction_date", name: "transaction_date" },
+            { data: "invoice_no", name: "invoice_no" },
+            { data: "final_total", name: "final_total" },
+            { data: "method", name: "transaction_payments.method" },
+            { data: "ref_number", name: "transaction_payments.ref_number" },
+            { data: "status", name: "transactions.status" },
+            { data: "created_by", name: "users.name" },
+            { data: "canceled_by", name: "canceled_by" },
+            { data: "action", name: "action" },
+        ],
+        createdRow: function (row, data, dataIndex) {},
+        footerCallback: function (row, data, start, end, display) {
+            var intVal = function (i) {
+                return typeof i === "string"
+                    ? i.replace(/[\$,]/g, "") * 1
+                    : typeof i === "number"
+                        ? i
+                        : 0;
+            };
+
+            this.api()
+                .columns(".sum", { page: "current" })
+                .every(function () {
+                    var column = this;
+                    if (column.data().count()) {
+                        var sum = column.data().reduce(function (a, b) {
+                            a = intVal(a);
+                            if (isNaN(a)) {
+                                a = 0;
+                            }
+
+                            b = intVal(b);
+                            if (isNaN(b)) {
+                                b = 0;
+                            }
+
+                            return a + b;
+                        });
+                        $(column.footer()).html(
+                            __currency_trans_from_en(sum, false)
+                        );
+                    }
+                });
+        },
+    });
     //Prevent enter key function except texarea
     $("form").on("keyup keypress", function (e) {
         var keyCode = e.keyCode || e.which;
@@ -96,7 +182,7 @@ $(document).on("change", "#store_id", function () {
     if ($("#store_id").val()) {
         $.ajax({
             method: "get",
-            url: "/store-pos/get-pos-details-by-store/" + $("#store_id").val(),
+            url: "/dashboard/store-pos/get-pos-details-by-store/" + $("#store_id").val(),
             data: {},
             success: function (result) {
                 if (result) {
@@ -114,7 +200,7 @@ $(document).on("change", "#store_id", function () {
 
         $.ajax({
             method: "GET",
-            url: "/dashboard/taxes/get-dropdown-html-by-store",
+            url: "/dashboard/tax/get-dropdown-html-by-store",
             data: { store_id: $("select#store_id").val() },
             success: function (result) {
                 $('select#tax_id').html(result);
@@ -131,7 +217,7 @@ function getCurrencyDropDown() {
 
     $.ajax({
         method: "get",
-        url: "/exchange-rate/get-currency-dropdown",
+        url: "/dashboard/exchange-rate/get-currency-dropdown",
         data: { store_id: store_id },
         success: function (result) {
             $("#received_currency_id").html(result);
@@ -148,7 +234,7 @@ $(document).on("change", "select#received_currency_id", function () {
     getFilterProductRightSide();
     $.ajax({
         method: "GET",
-        url: "/exchange-rate/get-exchange-rate-by-currency",
+        url: "/dashboard/exchange-rate/get-exchange-rate-by-currency",
         data: {
             store_id: store_id,
             currency_id: currency_id,
@@ -297,7 +383,6 @@ $(document).ready(function () {
                     string += item.text +"  "+ item.batch_number;
                     }
             }
-            console.log(item)
             return $("<li>")
                 .append("<div>" + string + "</div>")
                 .appendTo(ul);
@@ -311,14 +396,15 @@ function get_label_product_row(
     edit_quantity = 1,
     edit_row_count = 0,
     weighing_scale_barcode = null,
-    KeyLens=null
+    KeyLens=null,
+    sell_lines_id=null,
 ) {
     //Get item addition method
     var add_via_ajax = true;
 
     var is_added = false;
     var is_batch = false;
-
+    console.log('get_label_product_row => ', sell_lines_id);
     //Search for variation id in each row of pos table
     $("#product_table tbody")
         .find("tr")
@@ -409,6 +495,7 @@ function get_label_product_row(
                 dining_table_id: $("#dining_table_id").val(),
                 is_direct_sale: $("#is_direct_sale").val(),
                 batch_number_id:add_stock_lines_id,
+                sell_lines_id:sell_lines_id,
                 KeyLens:KeyLens
             },
             success: function (result) {
@@ -466,7 +553,6 @@ function check_for_sale_promotion() {
             added_qty: JSON.stringify(added_qty),
         },
         success: function (result) {
-            console.log('aa',result)
             if (result.valid) {
                 let  discount = 0;
                 let  sum_item_discount = 0;
@@ -550,8 +636,6 @@ function check_for_sale_promotion() {
                                         .find(".qty")
                                         .val()
                                         .trim();
-                                        console.log(row_product_id)
-                                        console.log(product_id)
                                     if (row_product_id == product_id) {
                                         if (discount_type == "fixed") {
                                             $(this)
@@ -582,7 +666,6 @@ function check_for_sale_promotion() {
                     }
 
                 });
-                console.log('sales_promotion-cost_span=>',sum_item_discount,discount)
                 $("span#sales_promotion-cost_span").text(
                     __currency_trans_from_en(sum_item_discount+discount, false)
                 );
@@ -620,7 +703,6 @@ function calculate_sub_totals() {
         let sell_price = __read_number($(tr).find(".sell_price"));
 
         let price_hidden = __read_number($(tr).find(".price_hidden"));
-        console.log(sell_price,price_hidden,$(tr).find(".price_hidden").val(),$(tr).find(".sell_price").val());
         let sub_total = 0;
         if (sell_price > price_hidden) {
 
@@ -653,12 +735,7 @@ function calculate_sub_totals() {
             sub_total = price_hidden * quantity;
         } else {
             sub_total = price_hidden * quantity;
-            console.log("quantity "+ quantity)
-            console.log("price_hidden "+ price_hidden)
-            console.log("sub_total "+ sub_total)
         }
-        // console.log(quantity)
-        // console.log(quantity)
         __write_number($(tr).find(".sub_total"), sub_total);
         let product_discount = calculate_product_discount(tr);
         product_discount_total += product_discount;
@@ -683,7 +760,6 @@ function calculate_sub_totals() {
             .find(".sub_total_span")
             .text(__currency_trans_from_en(sub_total, false));
         total +=  roundToNearestQuarter(sub_total);
-        console.log(total)
         item_count++;
 
         calculate_promotion_discount(tr);
@@ -1657,7 +1733,6 @@ function syntaxHighlight(json) {
 }
 function pos_print(receipt) {
     $("#receipt_section").html(receipt);
-    console.log('receipt_section');
     __currency_convert_recursively($("#receipt_section"));
     __print_receipt("receipt_section");
 }
@@ -1797,94 +1872,17 @@ $(document).on("click", "#recent-transaction-btn", function () {
     $("#recentTransaction").modal("show");
 });
 
-$(document).ready(function () {
-    customer_sales_table = $("#customer_sales_table").DataTable({
-        lengthChange: true,
-        paging: true,
-        info: false,
-        bAutoWidth: false,
-        language: {
-            url: dt_lang_url,
-        },
-        lengthMenu: [
-            [10, 25, 50, 75, 100, 200, 500, -1],
-            [10, 25, 50, 75, 100, 200, 500, "All"],
-        ],
-        dom: "lBfrtip",
-        stateSave: true,
-        buttons: buttons,
-        processing: true,
-        serverSide: true,
-        aaSorting: [[0, "desc"]],
-        initComplete: function () {
-            $(this.api().table().container())
-                .find("input")
-                .parent()
-                .wrap("<form>")
-                .parent()
-                .attr("autocomplete", "off");
-        },
-        ajax: {
-            url: "/dashboard/pos/get-recent-transactions",
-            data: function (d) {
-                d.customer_id = $("#customer_id").val();
-            },
-        },
-        columnDefs: [
-            {
-                targets: [8],
-                orderable: false,
-                searchable: false,
-            },
-        ],
-        columns: [
-            { data: "transaction_date", name: "transaction_date" },
-            { data: "invoice_no", name: "invoice_no" },
-            { data: "final_total", name: "final_total" },
-            { data: "method", name: "transaction_payments.method" },
-            { data: "ref_number", name: "transaction_payments.ref_number" },
-            { data: "status", name: "transactions.status" },
-            { data: "created_by", name: "users.name" },
-            { data: "canceled_by", name: "canceled_by" },
-            { data: "action", name: "action" },
-        ],
-        createdRow: function (row, data, dataIndex) {},
-        footerCallback: function (row, data, start, end, display) {
-            var intVal = function (i) {
-                return typeof i === "string"
-                    ? i.replace(/[\$,]/g, "") * 1
-                    : typeof i === "number"
-                    ? i
-                    : 0;
-            };
 
-            this.api()
-                .columns(".sum", { page: "current" })
-                .every(function () {
-                    var column = this;
-                    if (column.data().count()) {
-                        var sum = column.data().reduce(function (a, b) {
-                            a = intVal(a);
-                            if (isNaN(a)) {
-                                a = 0;
-                            }
-
-                            b = intVal(b);
-                            if (isNaN(b)) {
-                                b = 0;
-                            }
-
-                            return a + b;
-                        });
-                        $(column.footer()).html(
-                            __currency_trans_from_en(sum, false)
-                        );
-                    }
-                });
-        },
-    });
-
-    lens_table = $("#lens_table").DataTable({
+$(document).on("shown.bs.modal", "#contact_details_modal", function () {
+    customer_sales_table.ajax.reload();
+});
+$(document).on("shown.bs.modal", "#recentTransaction", function () {
+    // recent_transaction_table.ajax.reload();
+    get_recent_transactions();
+});
+$(document).on("click", "#view-lens-btn", function () {
+    $("#lensTransaction").modal("show");
+    $("#lens_table").DataTable({
         lengthChange: true,
         paging: true,
         info: false,
@@ -1942,8 +1940,8 @@ $(document).ready(function () {
                 return typeof i === "string"
                     ? i.replace(/[\$,]/g, "") * 1
                     : typeof i === "number"
-                    ? i
-                    : 0;
+                        ? i
+                        : 0;
             };
 
             this.api()
@@ -1971,18 +1969,6 @@ $(document).ready(function () {
                 });
         },
     });
-
-});
-$(document).on("shown.bs.modal", "#contact_details_modal", function () {
-    customer_sales_table.ajax.reload();
-});
-$(document).on("shown.bs.modal", "#recentTransaction", function () {
-    // recent_transaction_table.ajax.reload();
-    get_recent_transactions();
-});
-$(document).on("click", "#view-lens-btn", function () {
-    $("#lensTransaction").modal("show");
-    lens_table.ajax.reload();
 });
 $(document).on("click", "#view-online-order-btn", function () {
     $("#onlineOrderTransaction").modal("show");
@@ -1990,13 +1976,7 @@ $(document).on("click", "#view-online-order-btn", function () {
     $(".online-order-badge").text(0);
 });
 $(document).ready(function () {
-    $(document).on(
-        "change",
-        "#draft_start_date, #draft_end_date, #draft_deliveryman_id",
-        function () {
-            lens_table.ajax.reload();
-        }
-    );
+
 
     $(document).on(
         "change",
@@ -2330,7 +2310,6 @@ $(document).on("submit", "form#add_payment_form", function (e) {
     let submitButton = $("#submit_form_button");
     if (!updateadd_payment_formClicked) {
 
-        console.log('ojj')
         $.ajax({
             method: "post",
             url: $(this).attr("action"),
@@ -2566,7 +2545,6 @@ $(document).ready(function () {
             suffixKeyCodes: [13], // enter-key expected at the end of a scan
             reactToPaste: true, // Compatibility to built-in scanners in paste-mode (as opposed to keyboard-mode)
             onScan: function (sCode, iQty) {
-                // console.log("Scanned: " + iQty + "x " + sCode);
                 $("input#weighing_scale_barcode").val(sCode);
                 $("button#weighing_scale_submit").trigger("click");
             },
@@ -2887,8 +2865,6 @@ $(document).on("change", "#upload_documents", function (event) {
                 },
             });
         }
-    } else {
-        console.log("nada");
     }
 });
 
@@ -2904,8 +2880,6 @@ $(document).on("change", ".discount_category", function (e) {
         },
         success: function (response) {
             if(response.result){
-                console.log(response.result)
-                console.log("dddddd")
                 qty=__read_number($(this).find('.quantity'))
                 $(".discount_type"+product_id).val(response.result.discount_type);
                 __write_number($(".discount_value"+product_id), response.result.discount);
