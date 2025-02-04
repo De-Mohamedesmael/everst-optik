@@ -495,22 +495,27 @@ class ProductUtil extends Util
             }
         }
     }
+
     /**
      * get the sales promotion details for products if valid for this sale
      *
-     * @param int $product_id
      * @param int $store_id
      * @param int $customer_id
-     * @return object
+     * @param array $added_products
+     * @param array $qty_array
+     * @return object|array
      */
-    public function getSalePromotionDetailsIfValidForThisSale($store_id, $customer_id, $added_products = [], $qty_array = [])
+    public function getSalePromotionDetailsIfValidForThisSale($store_id, $customer_id, $added_products = [], $qty_array = []): object|array
     {
         $customer = Customer::find($customer_id);
         $store_id = (string) $store_id;
         $added_products = (array)$added_products;
-
+        if(!$customer){
+            return [];
+        }
         $customer_type_id = (string) $customer->customer_type_id;
         $array_sales_promotions=[];
+
         if (!empty($customer_type_id)) {
             $sales_promotions = SalesPromotion::
                     whereJsonContains('customer_type_ids', $customer_type_id)

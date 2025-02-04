@@ -1411,4 +1411,5 @@
   'view prescriptions' => 'View prescriptions',
   'Close' => 'Close',
   'prescriptions' => 'Prescriptions',
+  'select_customer' => 'Select customer',
 );

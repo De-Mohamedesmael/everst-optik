@@ -2144,31 +2144,33 @@ function getPrescriptionData() {
 }
 function getCustomerData() {
     let customer_id = $("#customer_id").val();
+    if(customer_id){
+        $.ajax({
+            method: "get",
+            url:
+                "/dashboard/customers/get-details-by-transaction-type/" +
+                customer_id +
+                "/sell",
+            data: {},
+            success: function (result) {
+                $(".customer_name").text(result.name);
+                $(".customer_name_span").text(result.name);
+                $(".customer_address").text(result.address);
+                $(".customer_address_span").text(result.address);
+                $(".customer_age_span").text(result.age);
+                $(".customer_gender_span").text(result.gender);
+                $(".customer_type_name").text(result.customer_type);
 
-    $.ajax({
-        method: "get",
-        url:
-            "/dashboard/customers/get-details-by-transaction-type/" +
-            customer_id +
-            "/sell",
-        data: {},
-        success: function (result) {
-            $(".customer_name").text(result.name);
-            $(".customer_name_span").text(result.name);
-            $(".customer_address").text(result.address);
-            $(".customer_address_span").text(result.address);
-            $(".customer_age_span").text(result.age);
-            $(".customer_gender_span").text(result.gender);
-            $(".customer_type_name").text(result.customer_type);
+                $(".customer_due_span").text(
+                    __currency_trans_from_en(result.due, false)
+                );
+                $(".customer_due").text(
+                    __currency_trans_from_en(result.due, false)
+                );
+            },
+        });
+    }
 
-            $(".customer_due_span").text(
-                __currency_trans_from_en(result.due, false)
-            );
-            $(".customer_due").text(
-                __currency_trans_from_en(result.due, false)
-            );
-        },
-    });
 
 }
 
@@ -2240,38 +2242,42 @@ function clearOrderLens() {
     function getCustomerBalance() {
 
     let customer_id = $("#customer_id").val();
+
         clearOrderLens();
-    $.ajax({
-        method: "get",
-        url: "/dashboard/pos/get-customer-balance/" + customer_id,
-        data: {},
-        dataType: "json",
-        success: function (result) {
-            $(".customer_balance").text(
-                __currency_trans_from_en(result.balance, false)
-            );
-            $(".staff_note").text(result.staff_note);
-            $(".customer_balance").removeClass("text-red");
-            if (result.balance < 0) {
-                $(".customer_balance").addClass("text-red");
-            }
-            $(".remaining_balance_text").text(
-                __currency_trans_from_en(result.balance, false)
-            );
-            $(".balance_error_msg").addClass("hide");
-            $("#remaining_deposit_balance").val(result.balance);
-            $(".current_deposit_balance").text(
-                __currency_trans_from_en(result.balance, false)
-            );
-            $("#current_deposit_balance").val(result.balance);
-            if (result.balance < 0) {
-                $("#pay_customer_due_btn").attr("disabled", false);
-            } else {
-                $("#pay_customer_due_btn").attr("disabled", true);
-            }
-            calculate_sub_totals();
-        },
-    });
+        if(customer_id){
+            $.ajax({
+                method: "get",
+                url: "/dashboard/pos/get-customer-balance/" + customer_id,
+                data: {},
+                dataType: "json",
+                success: function (result) {
+                    $(".customer_balance").text(
+                        __currency_trans_from_en(result.balance, false)
+                    );
+                    $(".staff_note").text(result.staff_note);
+                    $(".customer_balance").removeClass("text-red");
+                    if (result.balance < 0) {
+                        $(".customer_balance").addClass("text-red");
+                    }
+                    $(".remaining_balance_text").text(
+                        __currency_trans_from_en(result.balance, false)
+                    );
+                    $(".balance_error_msg").addClass("hide");
+                    $("#remaining_deposit_balance").val(result.balance);
+                    $(".current_deposit_balance").text(
+                        __currency_trans_from_en(result.balance, false)
+                    );
+                    $("#current_deposit_balance").val(result.balance);
+                    if (result.balance < 0) {
+                        $("#pay_customer_due_btn").attr("disabled", false);
+                    } else {
+                        $("#pay_customer_due_btn").attr("disabled", true);
+                    }
+                    calculate_sub_totals();
+                },
+            });
+        }
+
 }
 
 $(document).on("click", ".redeem_btn", function () {

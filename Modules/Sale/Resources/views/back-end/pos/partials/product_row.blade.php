@@ -22,9 +22,17 @@
                         $total_vu=0;
                         $data_len=null;
                         if($product->is_lens){
+                            $edit_quantity=0;
                             $cach_lens= Cache::get($KeyLens);
+                            if(isset($cach_lens['Lens']['Left']['isCheck'])){
+                                $edit_quantity+=1;
+                            }
+                             if(isset($cach_lens['Lens']['Right']['isCheck'])){
+                                $edit_quantity+=1;
+                            }
                             if(isset($cach_lens['VA_amount'])){
                                 $total_vu=$cach_lens['VA_amount']['total'];
+
                             }elseif($old_len){
                                 if($old_len->data != null || $old_len->data != 'null'){
                                     $data_len=json_decode($old_len->data);
@@ -469,9 +477,6 @@
                 </div>
             </td>
         </tr>
-
-
-
     @endif
 @endif
 
