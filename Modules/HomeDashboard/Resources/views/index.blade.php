@@ -36,7 +36,7 @@
                         <a href={{  route('admin.products.index')  }}>
                             <div class="card p-3">
                                 <img class="card-img-top"
-                                     src="{{ asset('assets/back-end/images/dashboard-icon/dairy-products.png') }}"
+                                     src="{{ asset('assets/back-end/images/optical-shop_10606636.gif') }}"
                                      alt="Card image cap">
                                 <div class="card-body pt-2 p-0 text-center">
                                     <a class="font-weight-bold text-decoration-none card-title font-16"

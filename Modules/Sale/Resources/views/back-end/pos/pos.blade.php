@@ -58,6 +58,12 @@
         .toast-warning {
             background-color: #f89406;
         }
+
+
+        label#customer_id-error {
+            position: absolute;
+            bottom: -35px;
+        }
     </style>
 @endsection
 
@@ -217,12 +223,12 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         margin: auto;
                                         flex-wrap: nowrap;
                                         padding-right:25px">
-                                            {!! Form::select('customer_id', $customers, !empty($walk_in_customer) ?
-                                            $walk_in_customer->id : null, [
+                                            {!! Form::select('customer_id', $customers,  null, [
                                             'class' => 'selectpicker ',
                                             'data-live-search' => 'true',
                                             'style' => 'width: 80%',
                                             'id' => 'customer_id',
+                                            'placeholder' => translate('select_customer'),
                                             'required',
                                             ]) !!}
                                             <span class="input-group-btn">

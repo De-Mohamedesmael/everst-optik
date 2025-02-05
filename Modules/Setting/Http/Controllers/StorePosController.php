@@ -151,4 +151,20 @@ class StorePosController extends Controller
 
         return $output;
     }
+
+    /**
+     * get store pos details by store id
+     *
+     * @param int $store_id
+     * @return void
+     */
+    public function getPosDetailsByStore($store_id)
+    {
+        $store_pos = StorePos::where('store_id', $store_id)
+            ->where('admin_id', Auth::user()->id)->first();
+        if(empty($store_pos)){
+            $store_pos = StorePos::where('store_id', $store_id)->first();
+        }
+        return $store_pos;
+    }
 }

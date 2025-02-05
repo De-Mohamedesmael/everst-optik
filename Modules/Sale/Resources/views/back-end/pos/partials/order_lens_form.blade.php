@@ -370,8 +370,8 @@
 </style>
 @php
     use Modules\Setting\Entities\System;
-    $default_TinTing_amount = num_format(System::getProperty('TinTing_amount')?:10);
-    $default_Ozel_amount = num_format(System::getProperty('Ozel_amount')?:10);
+    $default_TinTing_amount = System::getProperty('TinTing_amount')?:10;
+    $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
 @endphp
 <div id="navigation">
     <div class="container-fluid" id="content">

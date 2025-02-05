@@ -31,6 +31,8 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('customers/pay-customer-due/{customer_id}', [CustomerController::class , 'getPayContactDue']);
     Route::get('customers/get-important-date-row', [CustomerController::class , 'getImportantDateRow']);
     Route::post('customers/update-address/{customer_id}', [CustomerController::class , 'updateAddress']);
+    Route::get('customers/prescriptions/{customer_id}', [CustomerController::class , 'getPrescriptions'])->name('customers.prescriptions');
+    Route::get('customers/prescriptions-show/{prescription_id}', [CustomerController::class , 'getPrescriptionShow'])->name('customers.getPrescriptionShow');
     Route::resource('customers', CustomerController::class);
 
 

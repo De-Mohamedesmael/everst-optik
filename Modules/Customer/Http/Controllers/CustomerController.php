@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Modules\CashRegister\Entities\CashRegisterTransaction;
+use Modules\Customer\Entities\Prescription;
 use Modules\Setting\Entities\Currency;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\CustomerType;
@@ -182,14 +183,14 @@ class CustomerController extends Controller
                 </button>
                 <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">';
 
-//                if (auth()->user()->can('customer_module.customer.view')) {
-//                    $html .=
-//                        '<li>
-//                        <a href="' . route('admin.customers.show', $row->id) . '">
-//                        <i class="dripicons-document"></i>
-//                            ' .__('lang.view') . '</a>
-//                            </li>';
-//                }
+                if (auth()->user()->can('customer_module.customer.view')) {
+                    $html .=
+                        '<li>
+                        <a href="' . route('admin.customers.show', $row->id) . '">
+                        <i class="dripicons-document"></i>
+                            ' .__('lang.view') . '</a>
+                            </li>';
+                }
 
                 if (auth()->user()->can('customer_module.customer.create_and_edit')) {
                     $html .=
@@ -529,7 +530,7 @@ class CustomerController extends Controller
                     return !empty($row->canceled_by_user) ? $row->canceled_by_user->name : '';
                 })
                 ->addColumn('files', function ($row) {
-                    return ' <a data-href="' . route('admin.view-uploaded-files', ['model_name' => 'Transaction', 'model_id' => $row->id, 'collection_name' => 'sell']) . '"
+                    return ' <a data-href="' . route('admin.view-uploaded-files', ['model_name' => '\Modules\AddStock\Entities\Transaction', 'model_id' => $row->id, 'collection_name' => 'sell']) . '"
                     data-container=".view_modal"
                     class="btn btn-default btn-modal">' . __('lang.view') . '</a>';
                 })
@@ -542,7 +543,29 @@ class CustomerController extends Controller
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">';
+                        if (auth()->user()->can('sale.pos.create_and_edit')) {
+                            $html .=
+                                '<li>
+                                <a data-href="' . route('admin.sale.print', $row->id) . '"
+                                    class="btn print-invoice"><i class="dripicons-print"></i>
+                                    ' . __('lang.generate_invoice') . '</a>
+                            </li>';
+                        }
 
+                        if (auth()->user()->can('sale.pos.view')) {
+                            $html .=
+                                '<li>
+                                <a data-href="' . route('admin.sale.show', $row->id) . '" data-container=".view_modal"
+                                    class="btn btn-modal"><i class="fa fa-eye"></i> ' . __('lang.view') . '</a>
+                            </li>';
+                        }
+                        if (auth()->user()->can('sale.pos.create_and_edit')) {
+                            $html .=
+                                '<li>
+                                <a href="' . route('admin.pos.edit', $row->id) . '" class="btn"><i
+                                        class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a>
+                            </li>';
+                        }
 //                        if (auth()->user()->can('sale.pos.create_and_edit')) {
 //                            $html .=
 //                                '<li>
@@ -600,15 +623,15 @@ class CustomerController extends Controller
 //                                    ' . __('lang.view_payments') . '</a>
 //                                </li>';
 //                        }
-//                        if (auth()->user()->can('sale.pos.create_and_edit')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . action('SellController@destroy', $row->id) . '"
-//                                    data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
-//                                    class="btn text-red delete_item"><i class="fa fa-trash"></i>
-//                                    ' . __('lang.delete') . '</a>
-//                                </li>';
-//                        }
+                        if (auth()->user()->can('sale.pay.delete')) {
+                            $html .=
+                                '<li>
+                                <a data-href="' . route('admin.sale.destroy', $row->id) . '"
+                                    data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
+                                    class="btn text-red delete_item"><i class="fa fa-trash"></i>
+                                    ' . __('lang.delete') . '</a>
+                                </li>';
+                        }
                         $html .= '</div>';
                         return $html;
                     }
@@ -1116,5 +1139,135 @@ class CustomerController extends Controller
             ->sum('amount');
 
         return $transaction->final_total - $total_paid;
+    }
+
+    /**
+     *  get Prescriptions To Customer By ID
+     * @param int $id
+     *
+     */
+    public function getPrescriptions(int $id)
+    {
+        if (request()->ajax()) {
+
+            $query = Prescription::
+            leftjoin('transaction_sell_lines', 'prescriptions.sell_line_id', 'transaction_sell_lines.id')
+            ->leftjoin('transactions', 'transaction_sell_lines.transaction_id', 'transactions.id')
+            ->leftjoin('admins', 'transactions.created_by', 'admins.id')
+            ->leftjoin('products', 'prescriptions.product_id', 'products.id')
+            ->where('prescriptions.customer_id', $id);
+
+            if (!empty(request()->startdate)) {
+                $query->where('prescriptions.date','>=', request()->startdate. ' ' . Carbon::parse(request()->start_time)->format('H:i:s'));
+            }
+            if (!empty(request()->enddate)) {
+                $query->where('prescriptions.transaction_date','<=', request()->enddate. ' ' . Carbon::parse(request()->start_time)->format('H:i:s'));
+            }
+
+// data: "invoice_no",
+//                    name: "invoice_no"
+//                },
+//                    {
+//                        data: "lens",
+//                        name: "lens"
+//                    },
+//                    {
+//                        data: "date",
+//                        name: "date"
+//                    },
+//                    {
+//                        data: "products",
+//                        name: "products.name"
+//                    },
+//                    {
+//                        data: "amount",
+//                        name: "amount"
+//                    },
+//                    {
+//                        data: "VA_amount",
+//                        name: "VA_amount",
+//                        // searchable: false
+//                    },
+//                    {
+//                        data: "created_by",
+//                        name: "admins.name"
+//                    },
+            $query->select(
+                'prescriptions.*',
+                'transactions.invoice_no',
+                'transaction_sell_lines.sell_price as product_price_sell',
+                'products.name as product_name',
+                'products.sku as product_sku',
+                'admins.name as created_by_name'
+            );
+            $prescriptions = $query->groupBy('prescriptions.id');
+            return DataTables::of($prescriptions)
+                ->addColumn('lens', function ($row) {
+                    return $row->product_name.'|'.$row->product_sku;
+                })
+                ->addColumn('amount', function ($row) {
+                    $data_len=json_decode($row->data);
+                        if($data_len && $data_len != 'null'){
+                            return $row->product_price_sell;
+                        }
+                    return 0;
+                })
+                ->addColumn('VA_amount', function ($row) {
+                    $data_len=json_decode($row->data);
+                    if($data_len && $data_len != 'null'){
+                        return $data_len->VA_amount->total;
+                    }
+                    return 0;
+                })
+                ->editColumn('created_by', '{{$created_by_name}}')
+
+                ->addColumn(
+                    'action',
+                    function ($row) {
+                        $html = '';
+                            if (auth()->user()->can('sale.pos.view')) {
+                                $html .= ' <a data-href="' . route('admin.customers.getPrescriptionShow', [ 'prescription_id' => $row->id]) . '"
+                                data-container=".view_modal"
+                                class="btn btn-default btn-modal"><i class="fa fa-eye"></i>' . __('lang.view') . '</a>';
+                            }
+                        return $html;
+                    }
+                )
+                ->rawColumns([
+                    'lens',
+                    'date',
+                    'amount',
+                    'VA_amount',
+                    'created_by',
+                    'action'
+                ])
+                ->make(true);
+        }
+        return null;
+    }
+    /**
+     *  show Prescriptions   By ID
+     * @param int $Prescription_id
+     *
+     */
+    public function getPrescriptionShow(int $Prescription_id)
+    {
+            $prescription = Prescription::
+            leftjoin('transaction_sell_lines', 'prescriptions.sell_line_id', 'transaction_sell_lines.id')
+                ->leftjoin('transactions', 'transaction_sell_lines.transaction_id', 'transactions.id')
+                ->leftjoin('admins', 'transactions.created_by', 'admins.id')
+                ->leftjoin('products', 'prescriptions.product_id', 'products.id')
+                ->where('prescriptions.id', $Prescription_id)
+                ->select(
+                'prescriptions.*',
+                'transactions.invoice_no',
+                'transaction_sell_lines.sell_price as product_price_sell',
+                'products.name as product_name',
+                'products.sku as product_sku',
+                'admins.name as created_by_name'
+            )->first();
+        return view('customer::back-end.customers.partial.view_prescription')->with(compact(
+            'prescription'
+        ));
     }
 }
