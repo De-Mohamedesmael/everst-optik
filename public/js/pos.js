@@ -2138,6 +2138,13 @@ function getPrescriptionData() {
         success: function (data_html) {
             $("#prescription_id").empty().append(data_html);
             $("#prescription_id").selectpicker("refresh");
+            old_prescription_id=  $('#old_prescription_id').val();
+            console.log('old_prescription_id',old_prescription_id);
+
+            if(old_prescription_id){
+                console.log('old_prescription_id',old_prescription_id);
+                $("#prescription_id").selectpicker("val", old_prescription_id);
+            }
         },
     });
 

@@ -386,12 +386,26 @@
                         </div>
                     @endif
                 </div>
+                <div  class="lens-vu" >
+                    @if(isset($data_len->VA->Special->isCheck) && $data_len->VA->Special->isCheck && $data_len->VA->Special->text)
+                        <div class="lens-vu-item">
+                            {{translate('special_addition')}}
+                        </div>
+                    @endif
+                </div>
             </td>
             <td>
                 <div  class="lens-vu" >
                     @if(isset($data_len->VA->code->isCheck) && $data_len->VA->code->isCheck)
                         <div class="lens-vu-item">
                             {{$data_len->VA->code->text}}
+                        </div>
+                    @endif
+                </div>
+                <div  class="lens-vu" >
+                    @if(isset($data_len->VA->Special->isCheck) && $data_len->VA->Special->isCheck && $data_len->VA->Special->text)
+                        <div class="lens-vu-item">
+                            {{$data_len->VA->Special->text}}
                         </div>
                     @endif
                 </div>
@@ -466,12 +480,26 @@
                         </div>
                     @endif
                 </div>
+                <div  class="lens-vu" >
+                    @if(isset($cach_lens['VA']['Special']['isCheck']) && $cach_lens['VA']['Special']['isCheck'])
+                        <div class="lens-vu-item">
+                            {{translate('special_addition')}}
+                        </div>
+                    @endif
+                </div>
             </td>
             <td>
                 <div  class="lens-vu" >
-                    @if(isset($cach_lens['VA']['code']['isCheck']) && $cach_lens['VA']['code']['isCheck'])
+                    @if(isset($cach_lens['VA']['code']['isCheck']) && $cach_lens['VA']['code']['isCheck']&& $cach_lens['VA']['Special']['text'])
                         <div class="lens-vu-item">
                             {{$cach_lens['VA']['code']['text']}}
+                        </div>
+                    @endif
+                </div>
+                <div  class="lens-vu" >
+                    @if(isset($cach_lens['VA']['Special']['isCheck']) && $cach_lens['VA']['Special']['isCheck'] && $cach_lens['VA']['Special']['text'])
+                        <div class="lens-vu-item">
+                            {{$cach_lens['VA']['Special']['text']}}
                         </div>
                     @endif
                 </div>

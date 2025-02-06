@@ -41,6 +41,7 @@ use Modules\Setting\Entities\Brand;
 use Modules\Setting\Entities\Color;
 use Modules\Setting\Entities\Currency;
 use Modules\Setting\Entities\MoneySafeTransaction;
+use Modules\Setting\Entities\SpecialAddition;
 use Modules\Setting\Entities\SpecialBase;
 use Modules\Setting\Entities\Store;
 use Modules\Setting\Entities\StorePos;
@@ -153,6 +154,7 @@ class SellPosController extends Controller
 
         $brand_lens = BrandLens::with('features')->get();
         $special_bases=SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
+        $special_additions=SpecialAddition::orderBy('name', 'asc')->pluck('name', 'id');
 
         $brand_lenses=BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
         $design_lenses=Design::orderBy('name', 'asc')->pluck('name', 'id');
@@ -180,6 +182,7 @@ class SellPosController extends Controller
             'foci',
             'index_lenses',
             'special_bases',
+            'special_additions',
             'colors',
             'lenses',
             'tac',
@@ -508,6 +511,7 @@ class SellPosController extends Controller
 
         $brand_lens = BrandLens::with('features')->get();
         $special_bases=SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
+        $special_additions=SpecialAddition::orderBy('name', 'asc')->pluck('name', 'id');
 
         $brand_lenses=BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
         $design_lenses=Design::orderBy('name', 'asc')->pluck('name', 'id');
@@ -519,6 +523,7 @@ class SellPosController extends Controller
             'transaction',
             'brand_lens',
             'special_bases',
+            'special_additions',
             'brand_lenses',
             'design_lenses',
             'foci',
@@ -1276,7 +1281,20 @@ class SellPosController extends Controller
                             '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
                         title="' . __('lang.edit') . '" data-toggle="tooltip"
                         class="dripicons-document-edit"></i></a>';
-
+                        if (auth()->user()->can('sale.pay.create_and_edit')) {
+                            if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
+                                $final_total = $row->final_total;
+                                if (!empty($row->return_parent)) {
+                                    $final_total = $this->commonUtil->num_f($row->final_total - $row->return_parent->final_total);
+                                }
+                                if ($final_total > 0) {
+                                    $html .=
+                                        '<a data-href="' . route('admin.transaction.addPayment', ['id' => $row->id]) . '"
+                                    title="' . __('lang.pay_now') . '" data-toggle="tooltip" data-container=".view_modal"
+                                    class="btn btn-primary text-white  btn-modal" style="color: white"><i class="fa fa-money"></i></a>';
+                                }
+                            }
+                        }
                         if (auth()->user()->can('sale.pos.delete')) {
                             $html .=
                                 '<button class="btn btn-danger delete_item" data-href=' . route('admin.pos.destroy', $row->id).'
@@ -1390,7 +1408,20 @@ class SellPosController extends Controller
                             '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
                         title="' . __('lang.edit') . '" data-toggle="tooltip"
                         class="dripicons-document-edit"></i></a>';
-
+                        if (auth()->user()->can('sale.pay.create_and_edit')) {
+                            if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
+                                $final_total = $row->final_total;
+                                if (!empty($row->return_parent)) {
+                                    $final_total = $this->commonUtil->num_f($row->final_total - $row->return_parent->final_total);
+                                }
+                                if ($final_total > 0) {
+                                    $html .=
+                                        '<a data-href="' . route('admin.transaction.addPayment', ['id' => $row->id]) . '"
+                                    title="' . __('lang.pay_now') . '" data-toggle="tooltip" data-container=".view_modal" data-dismiss="modal"
+                                    class="btn btn-primary text-white  btn-modal" style="color: white"><i class="fa fa-money"></i></a>';
+                                }
+                            }
+                        }
                         if (auth()->user()->can('sale.pos.delete')) {
                             $html .=
                                 '<button class="btn btn-danger delete_item" data-href=' . route('admin.pos.destroy', $row->id).'
@@ -1636,6 +1667,11 @@ class SellPosController extends Controller
             $total=$total+$VA_amount['Ozel_amount'];
             $VA['Ozel']=$request->product['VA']['Ozel'];
             $VA['Ozel']['text']=$request->product['VA']['Ozel']['value'];
+        }
+        if(isset($request->product['VA']['Special']['isCheck']) && $request->product['VA']['Special']['isCheck'] != null){
+            $Special=SpecialAddition::whereId($request->product['VA']['Special']['value'])->first();
+            $VA['Special']=$request->product['VA']['Special'];
+            $VA['Special']['text']=$Special?->name;
         }
         $VA['code']=$request->product['VA']['code'];
         $VA['code']['text']=$request->product['VA']['code']['value'];

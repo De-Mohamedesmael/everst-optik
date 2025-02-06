@@ -56,9 +56,15 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
 
 
     Route::post('transaction-payment/pay-customer-due/{customer_id}', [TransactionPaymentController::class,'payCustomerDue'])->name('transactionPayment.payCustomerDue');
-    Route::get('transaction-payment/get-customer-due/{customer_id}/{extract_due}', [TransactionPaymentController::class,'getCustomerDue'])->name('transaction.getCustomerDue');
+    Route::get('transaction-payment/get-customer-due/{customer_id}/{extract_due?}', [TransactionPaymentController::class,'getCustomerDue'])->name('transaction.getCustomerDue');
     Route::get('transaction-payment/add-payment/{id}', [TransactionPaymentController::class,'addPayment'])->name('transaction.addPayment');
-    Route::resource('transaction-payment', TransactionPaymentController::class);
+//    Route::resource('transaction-payment', TransactionPaymentController::class);
 
-
+//    Route::get('transaction-payment', [TransactionPaymentController::class, 'index'])->name('transaction-payment.index');
+//    Route::get('transaction-payment/create', [TransactionPaymentController::class, 'create'])->name('transaction-payment.create');
+    Route::post('transaction-payment', [TransactionPaymentController::class, 'store'])->name('transaction-payment.store');
+    Route::get('transaction-payment/{id}', [TransactionPaymentController::class, 'show'])->name('transaction-payment.show');
+    Route::get('transaction-payment/{id}/edit', [TransactionPaymentController::class, 'edit'])->name('transaction-payment.edit');
+    Route::put('transaction-payment/{id}', [TransactionPaymentController::class, 'update'])->name('transaction-payment.update');
+    Route::delete('transaction-payment/{id}', [TransactionPaymentController::class, 'destroy'])->name('transaction-payment.destroy');
 });

@@ -518,7 +518,14 @@
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif colors-button"
                                                    href="{{ route('admin.special_bases.index') }}" target="_blank"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
-                                                    <i class="mdi mdi-circle"></i>@lang('lang.special_bases')
+                                                    <i class="mdi mdi-circle"></i>{{translate('special_bases')}}
+                                                </a>
+                                            </li>
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif colors-button"
+                                                   href="{{ route('admin.special_additions.index') }}" target="_blank"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>{{translate('special_additions')}}
                                                 </a>
                                             </li>
                                         </ul>

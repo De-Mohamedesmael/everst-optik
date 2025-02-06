@@ -206,8 +206,10 @@ class CustomerController extends Controller
                     if (isset($balance) && $balance < 0){
                     $html .=
                     '<li>
-                    <a data-href="#"
-                    class="btn-modal" data-container=".view_modal"><i class="fa fa-money "></i>
+                    <a data-href="' . route('admin.transaction.getCustomerDue', $row->id) . '"
+
+
+                    class="btn-modal" data-container=".view_modal"style="cursor: pointer"><i class="fa fa-money "></i>
                         ' .__('lang.pay_customer_due') . '</a>
                         </li>';
                     }
@@ -216,8 +218,8 @@ class CustomerController extends Controller
                     if (isset($balance) && $balance > 0){
                     $html .=
                     '<li>
-                    <a data-href="#"
-                    class="btn-modal" data-container=".view_modal"><i class="fa fa-money"></i>
+                    <a data-href="' . route('admin.transaction.getCustomerDue', ['customer_id'=>$row->id,'extract_due'=>'true']) . '"
+                    class="btn-modal" data-container=".view_modal" style="cursor: pointer"><i class="fa fa-money"></i>
                         ' .__('lang.extract_customer_due') . '</a>
                         </li>';
                     }

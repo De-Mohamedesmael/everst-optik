@@ -9,6 +9,7 @@ use Modules\Setting\Http\Controllers\IndexLensController;
 use Modules\Setting\Http\Controllers\SettingController;
 use Modules\Setting\Http\Controllers\SizeController;
 use Modules\Setting\Http\Controllers\MoneySafeController;
+use Modules\Setting\Http\Controllers\SpecialAdditionController;
 use Modules\Setting\Http\Controllers\StoreController;
 use Modules\Setting\Http\Controllers\StorePosController;
 use Modules\Setting\Http\Controllers\TaxController;
@@ -60,6 +61,8 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('special_bases', SpecialBaseController::class);
 
 
+    Route::get('special_addition/get-dropdown', [SpecialAdditionController::class,'getDropdown'])->name('special_addition.dropdown');
+    Route::resource('special_additions', SpecialAdditionController::class);
 
 
     //money safe
