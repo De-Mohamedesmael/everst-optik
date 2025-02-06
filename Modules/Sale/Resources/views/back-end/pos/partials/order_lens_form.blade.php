@@ -1525,7 +1525,7 @@
                                 $("#VATintingCheck").prop('checked', true);
                                 $('#color_product').val(prescription.VA.TinTing.value).change();
                             }
-                            if(prescription.VA.code){
+                            if(prescription.VA.code && rescription.VA.code !== '' && rescription.VA.code !== 'null' ){
                                 $("#codeCheck").prop('checked', true);
                                 $('.owf-page-shapeDefinition-manual-shape').removeClass('d-none')
                                 $('#input_predefined_shape').val(prescription.VA.code.value).change();
