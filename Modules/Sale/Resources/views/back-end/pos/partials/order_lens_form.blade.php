@@ -372,6 +372,8 @@
     use Modules\Setting\Entities\System;
     $default_TinTing_amount = System::getProperty('TinTing_amount')?:10;
     $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
+
+
 @endphp
 <div id="navigation">
     <div class="container-fluid" id="content">
@@ -533,7 +535,7 @@
                                                     <div class="card-body p-2">
                                                         <div
                                                             class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                                                            <div class="col-md-3 px-5">
+                                                            <div class="col-md-3 ">
                                                                 <div class="noBorderRight">
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
@@ -561,7 +563,7 @@
                                                                        ]) !!}
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-3 px-5">
+                                                            <div class="col-md-3 ">
                                                                 <div class="noBorderRight">
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
@@ -588,7 +590,7 @@
                                                                        ]) !!}
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-3 px-5">
+                                                            <div class="col-md-3 ">
                                                                 <div class="noBorderRight">
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
@@ -614,7 +616,33 @@
                                                                        ]) !!}
                                                                 </div>
                                                             </div>
-
+                                                            <div class="col-md-3 ">
+                                                                <div class="noBorderRight">
+                                                                    <div class="check-line"
+                                                                         style="width: 100%;text-align: left;">
+                                                                        <div
+                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0]">
+                                                                            <input type="checkbox" id="VASpecialCheck"
+                                                                                   data-subs="vaBaseList"
+                                                                                   class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
+                                                                                   name="product[VA][Special][isCheck]"
+                                                                                   value="1" data-skin="square"
+                                                                                   data-color="orange"></div>
+                                                                        <label class="inline icheck-label icheck[wzqw0]"
+                                                                               for="VASpecialCheck">{{translate("Özel eklemeler")}}</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-none VASpecialCheck_class">
+                                                                    {!! Form::select('product[VA][Special][value]', $special_additions ,null, [
+                                                                           'class' => ' selectpicker form-control',
+                                                                           'data-live-search' => 'true',
+                                                                           'style' => 'width: 80%',
+                                                                          'data-actions-box' => 'true',
+                                                                           'id' => 'special_addition',
+                                                                           'placeholder' => __('lang.please_select'),
+                                                                       ]) !!}
+                                                                </div>
+                                                            </div>
                                                             <div class="col-md-12 px-5">
                                                                 <div class="noBorderRight">
                                                                     <div class="check-line"
@@ -849,7 +877,7 @@
                                                         <td>
                                                             <span class="bigLatter">R</span>
                                                         </td>
-                                                        <td colspan="5">
+                                                        <td colspan="6">
 
 
                                                             <div class="check-line"
@@ -858,10 +886,11 @@
                                                                     class="icheckbox_square-orange icheck-item  checked">
                                                                     <input type="checkbox" id="RightLens"
                                                                            class="icheck-me checkForLens icheck-input icheck[ho025]"
-                                                                           checked=""
+                                                                           checked
                                                                            name="product[Lens][Right][isCheck]"
-                                                                           value="1" data-skin="square"
-                                                                           data-color="orange" data-rl="Right">
+                                                                           value="1"
+                                                                           data-skin="square"
+                                                                           data-color="orange" data-rl="Right" >
                                                                 </div>
                                                                 <label class="inline icheck-label " for="RightLens">
                                                                     {{translate('I Want  Right Glass')}}
@@ -1031,23 +1060,63 @@
 
                                                     </tr>
                                                     <tr>
+                                                        <td rowspan="2"
+                                                            class="verticalMiddle"></td>
+                                                        <td> </td>
                                                         <td>{{translate('Adisyon')}}</td>
-                                                        <td colspan="5">
-                                                            <div class="col-md-5 noPadding">
-                                                                <input type="number"
-                                                                       name="product[Lens][Right][Addition]"
-                                                                       data-reqval="addVal" value=""
-                                                                       id="Right_Addition"
-                                                                       placeholder=""
-                                                                       class="form-control input-block-level lensAddition lensVal"
-                                                                       data-rl="Right"
-                                                                       required=""
-                                                                       aria-required="true"
-                                                                       disabled>
-                                                            </div>
+                                                        <td></td>
+                                                        <td>{{translate('MF')}}</td>
+                                                        <td>{{translate('Yük')}}</td>
 
-                                                        </td>
                                                     </tr>
+                                                    <tr class="nearTableRow">
+                                                        <td></td>
+                                                        <td>
+                                                            <input type="number"
+                                                                   name="product[Lens][Right][Addition]"
+                                                                   data-reqval="addVal" value=""
+                                                                   id="Right_Addition"
+                                                                   placeholder=""
+                                                                   class="form-control input-block-level lensAddition lensVal"
+                                                                   data-rl="Right"
+                                                                   required=""
+                                                                   aria-required="true"
+                                                                   disabled>
+                                                        </td>
+                                                        <td></td>
+
+                                                        <td>
+                                                            <input
+                                                                type="number"
+                                                                name="product[Lens][Right][Distance]"
+                                                                data-reqval="Distance"
+                                                                value=""
+                                                                id="Right_Distance"
+                                                                placeholder=" "
+                                                                class="form-control input-block-level lensAxis nearAX  number-input"
+                                                                data-rl="Right"
+                                                                step="o.50"
+                                                                min="o.50"
+                                                                max="45">
+                                                        </td>
+                                                        <td>
+                                                            <input
+                                                                type="number"
+                                                                name="product[Lens][Right][Height]"
+                                                                data-reqval="Height"
+                                                                value=""
+                                                                id="Right_Height"
+                                                                placeholder=" "
+                                                                class="form-control input-block-level lensAxis nearAX  number-input"
+                                                                data-rl="Right"
+                                                                step="o.25"
+                                                                min="o.25"
+                                                                max="45">
+                                                        </td>
+
+
+                                                    </tr>
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1245,21 +1314,59 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td>{{translate('Adisyon')}}
-                                                        </td>
-                                                        <td colspan="5">
-                                                            <div class="col-md-5 noPadding">
-                                                                <input type="number" name="product[Lens][Left][Addition]"
-                                                                       data-reqval="addVal" value="" id="Left_Addition"
-                                                                       placeholder=""
-                                                                       class="form-control input-block-level lensAddition lensVal number-input"
-                                                                       data-rl="Left" required="" aria-required="true"
-                                                                       disabled="">
-
-                                                            </div>
-                                                        </td>
+                                                        <td rowspan="2"
+                                                            class="verticalMiddle"></td>
+                                                        <td> </td>
+                                                        <td>{{translate('Adisyon')}}</td>
+                                                        <td></td>
+                                                        <td>{{translate('MF')}}</td>
+                                                        <td>{{translate('Yük')}}</td>
 
                                                     </tr>
+                                                    <tr class="nearTableRow">
+                                                        <td></td>
+                                                        <td>
+                                                            <input type="number" name="product[Lens][Left][Addition]"
+                                                                   data-reqval="addVal" value="" id="Left_Addition"
+                                                                   placeholder=""
+                                                                   class="form-control input-block-level lensAddition lensVal number-input"
+                                                                   data-rl="Left" required="" aria-required="true"
+                                                                   disabled="">
+                                                        </td>
+                                                        <td></td>
+
+                                                        <td>
+                                                            <input
+                                                                type="number"
+                                                                name="product[Lens][Left][Distance]"
+                                                                data-reqval="Distance"
+                                                                value=""
+                                                                id="Left_Distance"
+                                                                placeholder=" "
+                                                                class="form-control input-block-level lensAxis nearAX  number-input"
+                                                                data-rl="Left"
+                                                                step="o.50"
+                                                                min="o.50"
+                                                                max="45"disabled="">
+                                                        </td>
+                                                        <td>
+                                                            <input
+                                                                type="number"
+                                                                name="product[Lens][Left][Height]"
+                                                                data-reqval="Height"
+                                                                value=""
+                                                                id="Left_Height"
+                                                                placeholder=" "
+                                                                class="form-control input-block-level lensAxis nearAX  number-input"
+                                                                data-rl="Left"
+                                                                step="o.25"
+                                                                min="o.25"
+                                                                max="45" disabled="">
+                                                        </td>
+
+
+                                                    </tr>
+
 
                                                     </tbody>
                                                 </table>
@@ -1282,26 +1389,38 @@
 <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
 
 <script>
-
+    @if(isset($prescription_id))
+    document.addEventListener("DOMContentLoaded", function() {
+        getPrescription();
+    });
+    @endif
     //brand_lens => products
     //focus_id => design_id & products
     //design_id =>  products
     //index_id =>  products
     //color_id =>  products
     $('#prescription_id').on('change', function () {
-        if ($(this).val()) {
+
+        getPrescription();
+    });
+
+    function getPrescription(){
+        if ($('#prescription_id').val()) {
+            RightLensClear();
+            LeftLensClear();
             $.ajax({
                 method: "get",
                 url: "{{route('admin.sale.getPrescriptionDetails')}}",
                 data: {
-                    prescription_id: $(this).val(),
+                    prescription_id: $('#prescription_id').val(),
                 },
                 // contactType: "html",
                 success: function (result) {
+
                     if (result.success) {
                         let prescription=result.data.prescription,
-                         Lens=prescription.Lens,
-                         lens_id = result.data.lens_id;
+                            Lens=prescription.Lens,
+                            lens_id = result.data.lens_id;
                         $("#lens_id").val(lens_id).change().selectpicker("refresh");
 
                         // Axis
@@ -1324,14 +1443,21 @@
                                 }
 
                                 if (Lens.Right.Near) {
-                                    Right_Addition -= parseFloat(Lens.Right.Near.SPH);
+                                    if(Lens.Right.Near.SPH !== ''  && Lens.Right.Near.SPH){
+                                        Right_Addition -= parseFloat(Lens.Right.Near.SPH);
+                                    }
                                     $("#Right_Near_CYL").val(Lens.Right.Near.CYL);
                                     $("#Right_Near_CYLDeg").val(Lens.Right.Near.CYLDeg).change();
                                     $("#Right_Near_SPH").val(Lens.Right.Near.SPH);
                                     $("#Right_Near_SPHDeg").val(Lens.Right.Near.SPHDeg).change();
                                     $("#Right_Near_Axis").val(Lens.Right.Near.Axis);
                                 }
+                                console.log(Right_Addition)
                                 $("#Right_Addition").val(Right_Addition);
+                                $("#Right_Distance").val(Lens.Right.Distance);
+                                $("#Right_Height").val(Lens.Right.Height);
+
+
 
                             }
                         }
@@ -1366,6 +1492,8 @@
                                     $("#Left_Near_Axis").val(Lens.Left.Near.Axis);
                                 }
                                 $("#Left_Addition").val(Left_Addition);
+                                $("#Left_Distance").val(Lens.Left.Distance);
+                                $("#Left_Height").val(Lens.Left.Height);
                             }else{
                                 LeftLensUnChecked();
                             }
@@ -1378,6 +1506,11 @@
                                 $('.VABaseCheck_class').removeClass('d-none')
                                 $("#VABaseCheck").prop('checked', true);
                                 $('#special_base').val(prescription.VA.Base.value).change();
+                            }
+                            if(prescription.VA.Special){
+                                $('.VASpecialCheck_class').removeClass('d-none')
+                                $("#VASpecialCheck").prop('checked', true);
+                                $('#special_addition').val(prescription.VA.Special.value).change();
                             }
 
                             if(prescription.VA.Ozel){
@@ -1413,12 +1546,13 @@
 
                         changePrice();
                     } else {
+
                         changePrice();
-                        Swal.fire({
-                            title: 'Error',
-                            text: result.msg,
-                            icon: 'error',
-                        })
+                        // Swal.fire({
+                        //     title: 'Error',
+                        //     text: result.msg,
+                        //     icon: 'error',
+                        // })
                     }
 
 
@@ -1430,7 +1564,7 @@
             changePrice();
         }
 
-    });
+    }
     $(document).on("change", "#Right_Far_Axis", function (e) {
         const Far_Axis = $('#Right_Far_Axis').val();
         $('#Right_Near_Axis').val(Far_Axis);
@@ -1483,6 +1617,14 @@
             $('.VABaseCheck_class').removeClass('d-none')
         } else {
             $('.VABaseCheck_class').addClass('d-none')
+        }
+
+    });
+    $('#VASpecialCheck').on('change', function () {
+        if (this.checked) {
+            $('.VASpecialCheck_class').removeClass('d-none')
+        } else {
+            $('.VASpecialCheck_class').addClass('d-none')
         }
 
     });
@@ -1559,6 +1701,33 @@
     });
 
 
+    function RightLensClear() {
+
+        $('#Right_Far_Axis').val('');
+        $('#Right_Near_Axis').val('');
+        $('#Right_Far_CYL').val('');
+        $('#Right_Near_CYL').val('');
+        $('#Right_Far_SPH').val('');
+        $('#Right_Near_SPH').val('');
+        $('#Right_Addition').val('');
+
+        $('#Right_Height').val('');
+        $('#Right_Distance').val('');
+
+    }
+    function LeftLensClear() {
+        $('#Left_Far_Axis').val('');
+        $('#Left_Near_Axis').val('');
+        $('#Left_Far_CYL').val('');
+        $('#Left_Near_CYL').val('');
+        $('#Left_Far_SPH').val('');
+        $('#Left_Near_SPH').val('');
+        $('#Left_Addition').val('');
+
+        $('#Left_Height').val('');
+        $('#Left_Distance').val('');
+
+    }
     function LeftLensUnChecked() {
         cke = $('#sameToRight');
         cke.attr('disabled', true);
@@ -1575,15 +1744,11 @@
         $('#Left_Near_CYL').attr('disabled', true);
         $('#Left_Far_SPH').attr('disabled', true);
         $('#Left_Near_SPH').attr('disabled', true);
+        $('#Left_Distance').prop('disabled', true);
+        $('#Left_Height').prop('disabled', true);
 
 
-        $('#Left_Far_Axis').val('');
-        $('#Left_Near_Axis').val('');
-        $('#Left_Far_CYL').val('');
-        $('#Left_Near_CYL').val('');
-        $('#Left_Far_SPH').val('');
-        $('#Left_Near_SPH').val('');
-        $('#Left_Addition').val('');
+
     }
     function LeftLensChecked() {
         $('#sameToRight').attr('disabled', false);
@@ -1598,6 +1763,9 @@
         $('#Left_Near_SPHDeg').prop('disabled', false);
         $('#Left_Far_CYLDeg').prop('disabled', false);
         $('#Left_Far_SPHDeg').prop('disabled', false);
+
+        $('#Left_Distance').prop('disabled', false);
+        $('#Left_Height').prop('disabled', false);
     }
     function changePrice() {
         let   lens_id = $('#lens_id').val(),
@@ -1719,6 +1887,8 @@
         $('#Left_Near_SPHDeg').val($('#Right_Near_SPHDeg').val());
         $('#Left_Far_CYLDeg').val($('#Right_Far_CYLDeg').val());
         $('#Left_Far_SPHDeg').val($('#Right_Far_SPHDeg').val());
+        $('#Left_Distance').val($('#Right_Distance').val());
+        $('#Left_Height').val($('#Right_Height').val());
 
 
         $('#Left_Near_CYLDeg').selectpicker('refresh');

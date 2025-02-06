@@ -56,7 +56,7 @@ class TransactionPaymentController extends Controller
      * addPayment
      *
      * @param integer $transaction_id
-     * @return void
+     * @return Application|Factory|View
      */
     public function addPayment($transaction_id)
     {
@@ -81,7 +81,7 @@ class TransactionPaymentController extends Controller
                 $amount = $finalTotal - $transactionPaymentsSum;
             }
         }
-        return view('transaction_payment.add_payment')->with(compact(
+        return view('addstock::back-end.transaction_payment.add_payment')->with(compact(
             'payment_type_array',
             'transaction_id',
             'transaction',
@@ -200,6 +200,7 @@ class TransactionPaymentController extends Controller
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
+            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -224,7 +225,7 @@ class TransactionPaymentController extends Controller
     {
         $transaction = Transaction::find($id);
         $payment_type_array = $this->commonUtil->getPaymentTypeArrayForPos();
-        return view('transaction_payment.show')->with(compact(
+        return view('addstock::back-end.transaction_payment.show')->with(compact(
             'transaction',
             'payment_type_array'
         ));
@@ -241,7 +242,7 @@ class TransactionPaymentController extends Controller
         $payment = TransactionPayment::find($id);
         $payment_type_array = $this->commonUtil->getPaymentTypeArray();
 
-        return view('transaction_payment.edit')->with(compact(
+        return view('addstock::back-end.transaction_payment.edit')->with(compact(
             'payment',
             'payment_type_array'
         ));
@@ -369,16 +370,16 @@ class TransactionPaymentController extends Controller
      * get the modal of customer pay due
      *
      * @param int $customer_id
-     * @return void
+     * @return Application|Factory|View
      */
     public function getCustomerDue($customer_id, $extract_due = 'false')
     {
         $customer = Customer::find($customer_id);
 
-        $due = abs(app('App\Http\Controllers\CustomerController')->getCustomerBalance($customer_id)['balance']);
+        $due = abs(app('Modules\Customer\Http\Controllers\CustomerController')->getCustomerBalance($customer_id)['balance']);
         $payment_type_array = $this->commonUtil->getPaymentTypeArray();
 
-        return view('transaction_payment.pay_customer_due')->with(compact(
+        return view('addstock::back-end.transaction_payment.pay_customer_due')->with(compact(
             'payment_type_array',
             'due',
             'customer',

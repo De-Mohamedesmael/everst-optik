@@ -419,30 +419,29 @@ class SellController extends Controller
 //                        }
 //                        $html .= '<li class="divider"></li>';
 //                        if (auth()->user()->can('sale.pay.create_and_edit')) {
-//                            if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
-//                                $final_total = $row->final_total;
-//                                if (!empty($row->return_parent)) {
-//                                    $final_total = $this->commonUtil->num_f($row->final_total - $row->return_parent->final_total);
-//                                }
-//                                if ($final_total > 0) {
-//                                    $html .=
-//                                        ' <li>
-//                                    <a data-href="' . action('TransactionPaymentController@addPayment', $row->id) . '"
-//                                        data-container=".view_modal" class="btn btn-modal"><i class="fa fa-plus"></i>
-//                                        ' . __('lang.add_payment') . '</a>
-//                                    </li>';
-//                                }
-//                            }
-//                        }
-//                        $html .= '<li class="divider"></li>';
-//                        if (auth()->user()->can('sale.pay.view')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . action('TransactionPaymentController@show', $row->id) . '"
-//                                    data-container=".view_modal" class="btn btn-modal"><i class="fa fa-money"></i>
-//                                    ' . __('lang.view_payments') . '</a>
-//                                </li>';
-//                        }
+                            if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
+                                $final_total = $row->final_total;
+                                if (!empty($row->return_parent)) {
+                                    $final_total = $this->commonUtil->num_f($row->final_total - $row->return_parent->final_total);
+                                }
+                                if ($final_total > 0) {
+                                    $html .=
+                                        ' <li>
+                                    <a data-href="' . route('admin.transaction.addPayment', $row->id) . '"
+                                        data-container=".view_modal" class="btn btn-modal"><i class="fa fa-plus"></i>
+                                        ' . __('lang.add_payment') . '</a>
+                                    </li>';
+                                }
+                            }
+
+                        if (auth()->user()->can('sale.pay.view')) {
+                            $html .=
+                                '<li>
+                                <a data-href="' . route('admin.transaction-payment.show', $row->id) . '"
+                                    data-container=".view_modal" class="btn btn-modal"><i class="fa fa-money"></i>
+                                    ' . __('lang.view_payments') . '</a>
+                                </li>';
+                        }
                         if (auth()->user()->can('sale.pay.delete')) {
                             $html .=
                                 '<li>

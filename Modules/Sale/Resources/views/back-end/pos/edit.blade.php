@@ -64,6 +64,18 @@
 @section('content')
     @php
         $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers');
+        $prescription_id=null;
+
+    if($transaction){
+        foreach ($transaction->transaction_sell_lines as $line){
+            if($line->is_lens){
+               $prescription_id= \Modules\Customer\Entities\Prescription::where('sell_line_id',$line->id)->first()?->id;
+
+            }
+
+
+        }
+    }
     @endphp
     <section class="forms pos-section no-print p-0">
         <div class="container-fluid">
@@ -81,6 +93,7 @@
                     <source src="{{ asset('audio/beep-long.mp3') }}">
                     </source>
                 </audio>
+                <input type="hidden" id="old_prescription_id" value="{{$prescription_id}}">
 
                 <div class="col-md-9">
                     {!! Form::open([
@@ -958,7 +971,7 @@
                                 <div
                                     class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                                     <h5 class="modal-title  px-2 position-relative d-flex align-items-center"
-                                        style="gap: 5px;">{{trans('lens_transactions')}}
+                                        style="gap: 5px;">{{translate('lens_transactions')}}
                                         <span class="header-pill"></span>
                                     </h5>
                                     <button type="button"

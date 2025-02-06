@@ -961,7 +961,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                             <div
                                 class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                                 <h5 class="modal-title  px-2 position-relative d-flex align-items-center"
-                                    style="gap: 5px;">{{trans('lens_transactions')}}
+                                    style="gap: 5px;">{{translate('lens_transactions')}}
                                     <span class="header-pill"></span>
                                 </h5>
                                 <button type="button"

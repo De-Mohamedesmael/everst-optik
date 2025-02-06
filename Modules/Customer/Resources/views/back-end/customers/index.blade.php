@@ -302,7 +302,7 @@
                     // },
                     {
                         data: 'created_by',
-                        name: 'users.name'
+                        name: 'admins.name'
                     },
                     {
                         data: 'joining_date',
