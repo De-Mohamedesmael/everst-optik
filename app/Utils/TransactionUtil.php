@@ -939,11 +939,8 @@ class TransactionUtil extends Util
             'customer_id' => $request->customer_id,
             'final_total' => $this->num_uf($request->final_total),
             'grand_total' => $this->num_uf($request->grand_total),
-            'coupon_id' => $request->coupon_id,
             'is_direct_sale' => !empty($request->is_direct_sale) ? 1 : 0,
             'status' => $request->status,
-            'sale_note' => $request->sale_note,
-            'staff_note' => $request->staff_note,
             'discount_type' => $request->discount_type,
             'discount_value' => $this->num_uf($request->discount_value),
             'discount_amount' => $this->num_uf($request->discount_amount),
@@ -952,12 +949,10 @@ class TransactionUtil extends Util
             'block_for_days' => 0,
             'tax_id' => $request->tax_id_hidden ?? null,
             'tax_method' => $request->tax_method ?? null,
-            // 'tax_rate' => $request->tax_rate ?? 0,
             'total_tax' => $this->num_uf($request->total_tax),
             'total_item_tax' => $this->num_uf($request->total_item_tax),
             'sale_note' => $request->sale_note,
             'staff_note' => $request->staff_note,
-            'customer_size_id' => $request->customer_size_id_hidden ?? null,
             'fabric_name' => $request->fabric_name ?? null,
             'fabric_squatch' => $request->fabric_squatch ?? null,
             'prova_datetime' => $request->prova_datetime ?? null,
@@ -1000,10 +995,6 @@ class TransactionUtil extends Util
             if (!empty($line['transaction_sell_line_id'])) {
                 $transaction_sell_line = TransactionSellLine::find($line['transaction_sell_line_id']);
                 $transaction_sell_line->product_id = $line['product_id'];
-                $transaction_sell_line->variation_id = $line['variation_id'];
-                $transaction_sell_line->coupon_discount = !empty($line['coupon_discount']) ? $this->num_uf($line['coupon_discount']) : 0;
-                $transaction_sell_line->coupon_discount_type = !empty($line['coupon_discount_type']) ? $line['coupon_discount_type'] : null;
-                $transaction_sell_line->coupon_discount_amount = !empty($line['coupon_discount_amount']) ? $this->num_uf($line['coupon_discount_amount']) : 0;
                 if ($transaction_status == 'draft') {
                     $old_qty = 0;
                 } else {
@@ -1027,20 +1018,16 @@ class TransactionUtil extends Util
                 $keep_sell_lines[] = $line['transaction_sell_line_id'];
                 $product = Product::find($line['product_id']);
                 if (!$product->is_service) {
-                    $this->productUtil->decreaseProductQuantity($line['product_id'], $line['variation_id'], $transaction->store_id, $qty, $old_qty);
+                    $this->productUtil->decreaseProductQuantity($line['product_id'], $transaction->store_id, $qty, $old_qty);
                 }
                 if ($is_block_qty && !$product->is_service) {
                     $block_qty = $transaction_sell_line->quantity;
-                    $this->productUtil->updateBlockQuantity($line['product_id'], $line['variation_id'], $transaction->store_id, $block_qty, 'subtract');
+                    $this->productUtil->updateBlockQuantity($line['product_id'], $transaction->store_id, $block_qty, 'subtract');
                 }
             } else {
                 $transaction_sell_line = new TransactionSellLine();
                 $transaction_sell_line->transaction_id = $transaction->id;
                 $transaction_sell_line->product_id = $line['product_id'];
-                $transaction_sell_line->variation_id = $line['variation_id'];
-                $transaction_sell_line->coupon_discount = !empty($line['coupon_discount']) ? $this->num_uf($line['coupon_discount']) : 0;
-                $transaction_sell_line->coupon_discount_type = !empty($line['coupon_discount_type']) ? $line['coupon_discount_type'] : null;
-                $transaction_sell_line->coupon_discount_amount = !empty($line['coupon_discount_amount']) ? $this->num_uf($line['coupon_discount_amount']) : 0;
                 $transaction_sell_line->promotion_discount = !empty($line['promotion_discount']) ? $this->num_uf($line['promotion_discount']) : 0;
                 $transaction_sell_line->promotion_discount_type = !empty($line['promotion_discount_type']) ? $line['promotion_discount_type'] : null;
                 $transaction_sell_line->promotion_discount_amount = !empty($line['promotion_discount_amount']) ? $this->num_uf($line['promotion_discount_amount']) : 0;
@@ -1059,15 +1046,15 @@ class TransactionUtil extends Util
                 $keep_sell_lines[] = $transaction_sell_line->id;
                 $product = Product::find($line['product_id']);
                 if (!$product->is_service) {
-                    $this->productUtil->decreaseProductQuantity($line['product_id'], $line['variation_id'], $transaction->store_id, $qty);
+                    $this->productUtil->decreaseProductQuantity($line['product_id'],  $transaction->store_id, $qty);
                 }
                 if ($transaction->block_qty && !$product->is_service) {
                     $block_qty = $transaction_sell_line->quantity;
-                    $this->productUtil->updateBlockQuantity($line['product_id'], $line['variation_id'], $transaction->store_id, $block_qty, 'subtract');
+                    $this->productUtil->updateBlockQuantity($line['product_id'],$transaction->store_id, $block_qty, 'subtract');
                 }
             }
 
-            $this->updateSoldQuantityInAddStockLine($transaction_sell_line->product_id, $transaction_sell_line->variation_id, $transaction->store_id, $line['quantity'], $old_qty);
+            $this->updateSoldQuantityInAddStockLine($transaction_sell_line->product_id, $transaction->store_id, $line['quantity'], $old_qty);
         }
 
         //update stock for deleted lines
@@ -1076,7 +1063,7 @@ class TransactionUtil extends Util
             if ($transaction_status != 'draft') {
                 $product = Product::find($deleted_line->product_id);
                 if (!$product->is_service) {
-                    $this->productUtil->updateProductQuantityStore($deleted_line->product_id, $deleted_line->variation_id, $transaction->store_id, $deleted_line->quantity);
+                    $this->productUtil->updateProductQuantityStore($deleted_line->product_id, $transaction->store_id, $deleted_line->quantity);
                 }
             }
             $deleted_line->delete();

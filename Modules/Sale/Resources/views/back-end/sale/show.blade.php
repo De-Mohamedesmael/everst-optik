@@ -18,7 +18,7 @@
                 <div class="col-md-6">
                     <div class="col-md-12">
                         <h5>@lang('lang.invoice_no'): {{ $sale->invoice_no }} @if (!empty($sale->return_parent))
-                            <a data-href="{{-- action('SellReturnController@show', $sale->id) --}}"
+                            <a data-href="{{ route('admin.sale-return.show', $sale->id) }}"
                                 data-container=".view_modal" class="btn btn-modal" style="color: #007bff;">R</a>
                             @endif
                         </h5>

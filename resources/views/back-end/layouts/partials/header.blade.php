@@ -123,7 +123,7 @@
                            class="d-flex employees-menu align-items-center text-decoration-none item-list-a dropdown-toggle"
                            style="height: 100%;" data-toggle="dropdown">
                             <div style="width: 25px" class="d-flex align-items-center">
-                                <img src="{{ asset('assets/back-end/images/navbar/products.svg') }}" alt="{{ __('lang.lenses') }}">
+                                <img src="{{ asset('assets/back-end/images/navbar/lenses.svg') }}" alt="{{ __('lang.lenses') }}">
                             </div>
                             <span class="mx-2" style="font-weight: 600">{{ __('lang.lenses') }}</span>
                         </a>
@@ -262,6 +262,37 @@
                             </li>
                         @endif
 {{--                    @endif--}}
+{{--                    @if( !empty($module_settings['quotation_for_customers']) )--}}
+                    @if(auth()->user()->can('return.sell_return.create_and_edit') || auth()->user()->can('return.sell_return.view') )
+
+                        <li class="dropdown scroll mx-2 mb-0 p-0 " style="height: 40px;">
+                            <a href="javaScript:void();"
+                               class="d-flex employees-menu align-items-center text-decoration-none item-list-a dropdown-toggle"
+                               style="height: 100%;" data-toggle="dropdown">
+                                <div style="width: 25px" class="d-flex align-items-center">
+                                    <img style="width: 25px" src="{{ asset('assets/back-end/images/navbar/icons8-return-80.svg') }}" alt="{{ __('lang.sales') }}">
+
+                                </div>
+                                <span class="mx-2" style="font-weight: 600">{{__('lang.sell_return')}}</span>
+                            </a>
+                            <ul
+                                class="dropdown-menu list-style-none @if (app()->isLocale('ar')) text-end @else text-start @endif">
+                                @can('return.sell_return.view')
+                                    <li class="navbar_item">
+                                        <a style="cursor: pointer;font-weight: 600;text-decoration: none"
+                                           href="{{route('admin.sale-return.index')}}" target="_blank"
+                                           class="jobs-button d-flex item-list-a"><i
+                                                class="mdi mdi-circle"></i>{{__('lang.view_all_return_sales')}}
+                                        </a>
+                                    </li>
+                                @endcan
+
+                            </ul>
+                        </li>
+                    @endif
+{{--                    @endif--}}
+
+
 
                     {{--                    @if (!empty($module_settings['employee_module']))--}}
                         <li class="dropdown scroll mx-2 mb-0 p-0 " style="height: 40px;">

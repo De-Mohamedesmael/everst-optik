@@ -1422,4 +1422,5 @@
   'special_bases' => 'Special bases',
   'special_addition' => 'Special addition',
   'lens_transactions' => 'Lens transactions',
+  'add_new_sell_return' => 'Add new sell return',
 );
