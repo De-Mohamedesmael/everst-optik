@@ -852,6 +852,12 @@
                                                 {{translate('Base_amount')}}: <span class="price-lens"
                                                                                     id="price-Base"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
                                             </div>
+                                            <div class="lens-vu-item-per d-none" id="div-price-Special">
+                                                <input type="hidden" id="price_Special" value="0">
+
+                                                {{translate('Special_amount')}}: <span class="price-lens"
+                                                                                    id="price-Special"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                            </div>
                                             <div class="lens-vu-item-per d-none" id="div-price-Ozel">
                                                 <input type="hidden" id="price_Ozel" value="0">
                                                 {{translate('Ozel_amount')}}: <span class="price-lens"
@@ -1787,14 +1793,24 @@
                 if (result.success) {
                     var sell_price = result.data.sell_price;
                     var Base_amount = result.data.Base_amount;
+                    var Special_amount = result.data.Special_amount;
                     $("#price_lens").val(sell_price);
                     $("#price-lens").text(result.data.sell_price_format + '{{session("currency")["symbol"]}}');
                     $("#price_Base").val(Base_amount);
                     $("#price-Base").text(result.data.Base_amount_format + '{{session("currency")["symbol"]}}');
+                    $("#price_Special").val(Special_amount);
+                    $("#price-Special").text(result.data.Special_amount_format + '{{session("currency")["symbol"]}}');
+
+
                     if(Base_amount > 0){
                         $('#div-price-Base').removeClass('d-none')
                     }else {
                         $('#div-price-Base').addClass('d-none')
+                    }
+                    if(Base_amount > 0){
+                        $('#div-price-Special').removeClass('d-none')
+                    }else {
+                        $('#div-price-Special').addClass('d-none')
                     }
                     getPrices();
                 } else {
@@ -1813,7 +1829,8 @@
         let   default_TinTing = 0 ,
               default_Ozel = 0,
             price_lens = parseFloat($("#price_lens").val()) || 0,
-            price_Base = parseFloat($("#price_Base").val()) || 0;
+            price_Base = parseFloat($("#price_Base").val()) || 0,
+            price_Special = parseFloat($("#price_Special").val()) || 0;
 
 
         if ($('#VATintingCheck').prop('checked')) {
@@ -1836,7 +1853,7 @@
             $("#price_Ozel").val(0);
             $("#price-Ozel").text("0.00" + '{{session("currency")["symbol"]}}');
         }
-       let total=price_lens+price_Base+default_TinTing+default_Ozel;
+       let total=price_lens+price_Base+price_Special+default_TinTing+default_Ozel;
         $('#total-lens').text(total.toFixed(2)+ '{{session("currency")["symbol"]}}')
 
 
