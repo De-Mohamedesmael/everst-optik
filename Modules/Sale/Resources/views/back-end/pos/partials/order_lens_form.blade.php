@@ -1409,6 +1409,9 @@
 
         getPrescription();
     });
+    $(document).on("change", "#RightLens , #LeftLens", function () {
+        getPrices();
+    });
 
     function getPrescription(){
         if ($('#prescription_id').val()) {
@@ -1794,12 +1797,34 @@
                     var sell_price = result.data.sell_price;
                     var Base_amount = result.data.Base_amount;
                     var Special_amount = result.data.Special_amount;
+
+                    // sale price for lens
+
                     $("#price_lens").val(sell_price);
-                    $("#price-lens").text(result.data.sell_price_format + '{{session("currency")["symbol"]}}');
+                    let  sell_price_Text=Number(sell_price).toFixed(2);
+                    if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+                        sell_price_Text=(Number(sell_price) * 2 ).toFixed(2);
+                    }
+                    $("#price-lens").text(sell_price_Text + '{{session("currency")["symbol"]}}');
+
+
+                    // sale price for Base
+
                     $("#price_Base").val(Base_amount);
-                    $("#price-Base").text(result.data.Base_amount_format + '{{session("currency")["symbol"]}}');
+                    let  Base_amount_Text=Number(sell_price).toFixed(2);
+                    if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+                        Base_amount_Text=(Number(sell_price) * 2 ).toFixed(2);
+                    }
+                    $("#price-Base").text(Base_amount_Text + '{{session("currency")["symbol"]}}');
+
+
+                    // sale price for Special
+                    let  Special_amount_Text=Number(sell_price).toFixed(2);
+                    if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+                        Special_amount_Text=(Number(sell_price) * 2 ).toFixed(2);
+                    }
                     $("#price_Special").val(Special_amount);
-                    $("#price-Special").text(result.data.Special_amount_format + '{{session("currency")["symbol"]}}');
+                    $("#price-Special").text(Special_amount_Text + '{{session("currency")["symbol"]}}');
 
 
                     if(Base_amount > 0){
@@ -1807,7 +1832,7 @@
                     }else {
                         $('#div-price-Base').addClass('d-none')
                     }
-                    if(Base_amount > 0){
+                    if(Special_amount > 0){
                         $('#div-price-Special').removeClass('d-none')
                     }else {
                         $('#div-price-Special').addClass('d-none')
@@ -1835,9 +1860,13 @@
 
         if ($('#VATintingCheck').prop('checked')) {
             default_TinTing = {{$default_TinTing_amount}};
+           let  default_TinTing_Text=default_TinTing.toFixed(2);
+            if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+                default_TinTing_Text=(default_TinTing * 2 ).toFixed(2);
+            }
             $('#div-price-TinTing').removeClass('d-none');
             $("#price_TinTing").val(default_TinTing);
-            $("#price-TinTing").text(default_TinTing.toFixed(2) + '{{session("currency")["symbol"]}}');
+            $("#price-TinTing").text( default_TinTing_Text + '{{session("currency")["symbol"]}}');
         }else{
             $('#div-price-TinTing').addClass('d-none');
             $("#price_TinTing").val(0);
@@ -1845,16 +1874,27 @@
         }
         if ($('#specific_diameter').prop('checked')) {
             default_Ozel = {{$default_Ozel_amount}};
+
+            let  default_Ozel_Text=default_Ozel.toFixed(2);
+            if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+                default_Ozel_Text=(default_Ozel * 2 ).toFixed(2);
+            }
             $('#div-price-Ozel').removeClass('d-none');
             $("#price_Ozel").val(default_Ozel);
-            $("#price-Ozel").text(default_Ozel.toFixed(2) + '{{session("currency")["symbol"]}}');
+            $("#price-Ozel").text(default_Ozel_Text + '{{session("currency")["symbol"]}}');
         }else{
             $('#div-price-Ozel').addClass('d-none');
             $("#price_Ozel").val(0);
             $("#price-Ozel").text("0.00" + '{{session("currency")["symbol"]}}');
         }
        let total=price_lens+price_Base+price_Special+default_TinTing+default_Ozel;
-        $('#total-lens').text(total.toFixed(2)+ '{{session("currency")["symbol"]}}')
+
+        let  total_Text=total.toFixed(2);
+        if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+            total_Text=(total * 2 ).toFixed(2);
+        }
+
+        $('#total-lens').text(total_Text + '{{session("currency")["symbol"]}}')
 
 
     }

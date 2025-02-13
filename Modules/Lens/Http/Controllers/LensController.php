@@ -1071,7 +1071,7 @@ class LensController extends Controller
             ->latest()
             ->first();
 
-        $default["sell_price"]= $stockLines ? $stockLines->sell_price : $lens->sell_price;
+        $default["sell_price"]= (float)($stockLines ? $stockLines->sell_price : $lens->sell_price);
         $default["purchase_price"] = $stockLines
             ? $stockLines->purchase_price
             : $lens->purchase_price;

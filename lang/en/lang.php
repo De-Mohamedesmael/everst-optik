@@ -1423,4 +1423,5 @@
   'special_addition' => 'Special addition',
   'lens_transactions' => 'Lens transactions',
   'add_new_sell_return' => 'Add new sell return',
+  'Special_amount' => 'Special amount',
 );
