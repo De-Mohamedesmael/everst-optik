@@ -1059,7 +1059,6 @@ class LensController extends Controller
     public function getPriceLenses(Request $request): array
     {
        $lens= Product::where('id', $request->lens_id)->Lens()->first();
-//       dd($request->all());
         $default["sell_price"]=0;
         $default["purchase_price"] =0;
         if($lens){
@@ -1087,9 +1086,9 @@ class LensController extends Controller
 
         $default['Special_amount']=0;
         if ($request->check_special && $request->special_addition) {
-            $Special=SpecialAddition::whereId($request->special_addition)->first();
-            if($Special){
-                $default['Special_amount']= $Special->price;
+            $Special_amount=SpecialAddition::wherein('id',$request->special_addition)->sum('price');
+            if($Special_amount){
+                $default['Special_amount']= $Special_amount;
             }
         }
 

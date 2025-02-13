@@ -633,13 +633,13 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-none VASpecialCheck_class">
-                                                                    {!! Form::select('product[VA][Special][value]', $special_additions ,null, [
+                                                                    {!! Form::select('product[VA][Special][value][]', $special_additions ,null, [
                                                                            'class' => ' selectpicker form-control',
                                                                            'data-live-search' => 'true',
                                                                            'style' => 'width: 80%',
                                                                           'data-actions-box' => 'true',
+                                                                           'multiple',
                                                                            'id' => 'special_addition',
-                                                                           'placeholder' => __('lang.please_select'),
                                                                        ]) !!}
                                                                 </div>
                                                             </div>
@@ -1516,6 +1516,7 @@
                                 $("#VABaseCheck").prop('checked', true);
                                 $('#special_base').val(prescription.VA.Base.value).change();
                             }
+                            //edit
                             if(prescription.VA.Special){
                                 $('.VASpecialCheck_class').removeClass('d-none')
                                 $("#VASpecialCheck").prop('checked', true);

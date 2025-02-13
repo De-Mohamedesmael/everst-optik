@@ -387,10 +387,12 @@
                     @endif
                 </div>
                 <div  class="lens-vu" >
-                    @if(isset($data_len->VA->Special->isCheck) && $data_len->VA->Special->isCheck && $data_len->VA->Special->text && $data_len->VA_amount->Ozel_amount >0)
-                        <div class="lens-vu-item">
-                            {{$data_len->VA->Special->text}}
-                        </div>
+                    @if(isset($data_len->VA->Special->isCheck) && $data_len->VA->Special->isCheck && $data_len->VA_amount->Ozel_amount >0 && isset($data_len->VA->Special->TV))
+                        @foreach($data_len->VA->Special->TV as $item_sp)
+                            <div class="lens-vu-item">
+                                {{$item_sp->text}}
+                            </div>
+                        @endforeach
                     @endif
                 </div>
             </td>
@@ -403,10 +405,12 @@
                     @endif
                 </div>
                 <div  class="lens-vu" >
-                    @if(isset($data_len->VA->Special->isCheck) && $data_len->VA->Special->isCheck && $data_len->VA->Special->text && $data_len->VA_amount->Special_amount >0)
-                        <div class="lens-vu-item">
-                            {{$data_len->VA_amount->Special_amount}}
-                        </div>
+                    @if(isset($data_len->VA->Special->isCheck) && $data_len->VA->Special->isCheck && $data_len->VA_amount->Special_amount >0 && isset($data_len->VA->Special->TV))
+                        @foreach($data_len->VA->Special->TV as $item_sp)
+                            <div class="lens-vu-item">
+                                {{$item_sp->price}}
+                            </div>
+                        @endforeach
                     @endif
                 </div>
             </td>
@@ -481,10 +485,14 @@
                     @endif
                 </div>
                 <div  class="lens-vu" >
-                    @if(isset($cach_lens['VA']['Special']['isCheck']) && $cach_lens['VA']['Special']['isCheck'])
-                        <div class="lens-vu-item">
-                            {{$cach_lens['VA']['Special']['text']}}
-                        </div>
+                    @if(isset($cach_lens['VA']['Special']['isCheck']) && $cach_lens['VA']['Special']['isCheck'] && isset($cach_lens['VA']['Special']['TV']))
+
+                        @foreach($cach_lens['VA']['Special']['TV'] as $item_sp)
+                            <div class="lens-vu-item">
+                                {{$item_sp['text']}}
+                            </div>
+                        @endforeach
+
                     @endif
                 </div>
             </td>
@@ -497,10 +505,13 @@
                     @endif
                 </div>
                 <div  class="lens-vu" >
-                    @if(isset($cach_lens['VA']['Special']['isCheck']) && $cach_lens['VA']['Special']['isCheck'] && $cach_lens['VA']['Special']['text'])
-                        <div class="lens-vu-item">
-                            {{$cach_lens['VA_amount']['Special_amount']}}
-                        </div>
+                    @if(isset($cach_lens['VA']['Special']['isCheck']) && $cach_lens['VA']['Special']['isCheck']  && isset($cach_lens['VA']['Special']['TV']))
+
+                        @foreach($cach_lens['VA']['Special']['TV'] as $item_sp)
+                            <div class="lens-vu-item">
+                                {{$item_sp['price']}}
+                            </div>
+                        @endforeach
                     @endif
                 </div>
             </td>
