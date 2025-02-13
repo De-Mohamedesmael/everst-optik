@@ -33,15 +33,15 @@
                 ]) !!}
             </div>
             <input type="hidden" name="quick_add" value="{{ $quick_add }}">
-{{--            <div class="col-sm-6 mb-2">--}}
-{{--                {!! Form::label('price', __('lang.price') . '*', [--}}
-{{--                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',--}}
-{{--                ]) !!}--}}
-{{--                {!! Form::number('price', null, [--}}
-{{--                    'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',--}}
-{{--                    'placeholder' => __('lang.price'),--}}
-{{--                ]) !!}--}}
-{{--            </div>--}}
+            <div class="col-sm-6 mb-2">
+                {!! Form::label('price', __('lang.price') . '*', [
+                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                {!! Form::number('price', null, [
+                    'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                    'placeholder' => __('lang.price'),
+                ]) !!}
+            </div>
         </div>
 
         <div class="modal-footer d-flex justify-content-center align-content-center gap-3">

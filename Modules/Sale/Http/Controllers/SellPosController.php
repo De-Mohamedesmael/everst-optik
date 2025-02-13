@@ -1658,6 +1658,8 @@ class SellPosController extends Controller
             $VA['Ozel']=$request->product['VA']['Ozel'];
             $VA['Ozel']['text']=$request->product['VA']['Ozel']['value'];
         }
+
+
         if(isset($request->product['VA']['Special']['isCheck']) && $request->product['VA']['Special']['isCheck'] != null){
             $Special=SpecialAddition::whereId($request->product['VA']['Special']['value'])->first();
             $VA_amount['Special_amount']=0;

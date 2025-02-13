@@ -1410,7 +1410,7 @@
         getPrescription();
     });
     $(document).on("change", "#RightLens , #LeftLens", function () {
-        getPrices();
+        changePrice();
     });
 
     function getPrescription(){
@@ -1705,7 +1705,7 @@
     //         this.value = max;
     //     }
     // });
-    $(document).on("change", "#lens_id ,#special_base ,#VABaseCheck", function () {
+    $(document).on("change", "#lens_id ,#special_addition ,#special_base ,#VABaseCheck", function () {
         changePrice();
     });
 
@@ -1779,7 +1779,13 @@
     function changePrice() {
         let   lens_id = $('#lens_id').val(),
             special_base = $('#special_base').val(),
-            check_base =0;
+            special_addition = $('#special_addition').val(),
+            check_base =0,
+            check_special =0;
+        if ($('#VASpecialCheck').prop('checked')) {
+            check_special = 1;
+        }
+
         if ($('#VABaseCheck').prop('checked')) {
             check_base = 1;
         }
@@ -1789,7 +1795,9 @@
             data: {
                 lens_id: lens_id,
                 special_base: special_base,
+                special_addition: special_addition,
                 check_base: check_base,
+                check_special: check_special,
             },
             // contactType: "html",
             success: function (result) {
@@ -1819,9 +1827,9 @@
 
 
                     // sale price for Special
-                    let  Special_amount_Text=Number(sell_price).toFixed(2);
+                    let  Special_amount_Text=Number(Special_amount).toFixed(2);
                     if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
-                        Special_amount_Text=(Number(sell_price) * 2 ).toFixed(2);
+                        Special_amount_Text=(Number(Special_amount) * 2 ).toFixed(2);
                     }
                     $("#price_Special").val(Special_amount);
                     $("#price-Special").text(Special_amount_Text + '{{session("currency")["symbol"]}}');

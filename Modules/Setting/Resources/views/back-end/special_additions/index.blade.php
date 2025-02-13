@@ -38,7 +38,7 @@
                                 <thead>
                                     <tr>
                                         <th>@lang('lang.name')</th>
-{{--                                        <th>@lang('lang.price')</th>--}}
+                                        <th>@lang('lang.price')</th>
                                         <th class="notexport">@lang('lang.action')</th>
                                     </tr>
                                 </thead>
@@ -46,7 +46,7 @@
                                     @foreach ($special_additions as $special_addition)
                                         <tr>
                                             <td>{{ $special_addition->name }}</td>
-{{--                                            <td>{{ $special_addition->price }}</td>--}}
+                                            <td>{{ $special_addition->price }}</td>
 
                                             <td>
 

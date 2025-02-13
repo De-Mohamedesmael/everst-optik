@@ -1059,22 +1059,22 @@ class LensController extends Controller
     public function getPriceLenses(Request $request): array
     {
        $lens= Product::where('id', $request->lens_id)->Lens()->first();
+//       dd($request->all());
+        $default["sell_price"]=0;
+        $default["purchase_price"] =0;
+        if($lens){
+            $stockLines = \Modules\AddStock\Entities\AddStockLine::where('sell_price', '>', 0)
+                ->where('product_id', $lens->id)
+                ->latest()
+                ->first();
 
-        if(!$lens){
-            return [
-                'success' => false,
-                'msg' => translate('lens_not_found'),
-            ];
+            $default["sell_price"]= (float)($stockLines ? $stockLines->sell_price : $lens->sell_price);
+            $default["purchase_price"] = $stockLines
+                ? $stockLines->purchase_price
+                : $lens->purchase_price;
+
         }
-        $stockLines = \Modules\AddStock\Entities\AddStockLine::where('sell_price', '>', 0)
-            ->where('product_id', $lens->id)
-            ->latest()
-            ->first();
 
-        $default["sell_price"]= (float)($stockLines ? $stockLines->sell_price : $lens->sell_price);
-        $default["purchase_price"] = $stockLines
-            ? $stockLines->purchase_price
-            : $lens->purchase_price;
 
         $default['Base_amount']=0;
         if ($request->check_base && $request->special_base) {

@@ -75,7 +75,7 @@ class SpecialAdditionController extends Controller
         $this->validate(
             $request,
             ['name' => ['required', 'max:255']],
-//            ['price' => ['required']],
+            ['price' => ['required']],
         );
 
         try {
@@ -146,7 +146,7 @@ class SpecialAdditionController extends Controller
         $this->validate(
             $request,
             ['name' => ['required', 'max:255']],
-//            ['price' => ['required']],
+            ['price' => ['required']],
         );
 
         try {
