@@ -624,16 +624,12 @@ class ProductUtil extends Util
      *
      * @return object
      */
-    public function getDetailsFromVariation($variation_id,  $store_id = null, $check_qty = true)
+    public function getDetails($prodeuct_id,  $store_id = null, $check_qty = true)
     {
-        $query = Variation::join('products_ AS p', 'variations.product_id', '=', 'p.id')
-            ->leftjoin('product_stores AS ps', 'variations.id', '=', 'ps.variation_id')
-            ->leftjoin('units', 'variations.unit_id', '=', 'units.id')
-            ->leftjoin('grades', 'variations.grade_id', '=', 'grades.id')
-            ->leftjoin('sizes', 'variations.size_id', '=', 'sizes.id')
-            ->leftjoin('colors', 'variations.color_id', '=', 'colors.id')
-
-            ->where('variations.id', $variation_id);
+        $query = Product::leftjoin('product_stores AS ps', 'products.id', '=', 'ps.product_id')
+            ->leftjoin('sizes', 'products.size_id', '=', 'sizes.id')
+            ->leftjoin('colors', 'products.color_id', '=', 'colors.id')
+            ->where('products.id', $prodeuct_id);
 
 
         if (!empty($store_id) && $check_qty) {
@@ -644,24 +640,14 @@ class ProductUtil extends Util
         }
 
         $product = $query->select(
-            DB::raw("IF(variations.is_dummy = 0, CONCAT(p.name,
-                    ' (', variations.name, ':',variations.name, ')'), p.name) AS product_name"),
-            'p.id as product_id',
-            'p.sell_price',
-            'p.type as product_type',
-            'p.name as product_actual_name',
-            'variations.name as product_variation_name',
-            'variations.is_dummy as is_dummy',
-            'variations.name as variation_name',
-            'variations.sub_sku',
-            'p.barcode_type',
+            DB::raw("products.name AS product_name"),
+            'products.id as product_id',
+            'products.sell_price',
+            'products.sku',
+            'products.barcode_type',
             'ps.qty_available',
-            'units.name as unit_name',
-            'grades.name as grade_name',
             'sizes.name as size_name',
-            'colors.name as color_name',
-            'variations.default_sell_price',
-            'variations.id as variation_id'
+            'colors.name as color_name'
         )
             ->first();
 
