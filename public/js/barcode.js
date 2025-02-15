@@ -3,7 +3,7 @@ $(document).ready(function () {
     if ($("#search_product_for_label").length > 0) {
         $("#search_product_for_label")
             .autocomplete({
-                source: "/dashboard/products/get-products_",
+                source: "/dashboard/products/get-products",
                 minLength: 2,
                 response: function (event, ui) {
                     if (ui.content.length == 1) {
@@ -19,8 +19,7 @@ $(document).ready(function () {
                 select: function (event, ui) {
                     $(this).val(null);
                     get_label_product_row(
-                        ui.item.product_id,
-                        ui.item.variation_id
+                        ui.item.product_id
                     );
                 },
             })
@@ -54,7 +53,7 @@ $(document).ready(function () {
             if ($("#preview_setting_form").valid()) {
                 var url =
                     base_path +
-                    "/barcode/print-barcode?" +
+                    "/dashboard/barcode/print-barcode?" +
                     $("form#preview_setting_form").serialize();
 
                 window.open(url, "newwindow");
@@ -71,18 +70,17 @@ $(document).ready(function () {
     });
 });
 
-function get_label_product_row(product_id, variation_id) {
+function get_label_product_row(product_id) {
     if (product_id) {
         var row_count = parseInt($("#row_count").val());
         $("#row_count").val(row_count + 1);
         $.ajax({
             method: "GET",
-            url: "/barcode/add-products-row",
+            url: "/dashboard/barcode/add-products-row",
             dataType: "html",
             data: {
                 product_id: product_id,
-                row_count: row_count,
-                variation_id: variation_id,
+                row_count: row_count
             },
             success: function (result) {
                 $("table#product_table tbody").append(result);

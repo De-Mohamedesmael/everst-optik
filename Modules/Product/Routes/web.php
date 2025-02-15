@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Product\Http\Controllers\BarcodeController;
 use Modules\Product\Http\Controllers\ProductController;
 use Modules\Product\Http\Controllers\CategoryController;
 use Modules\Product\Http\Controllers\BrandController;
@@ -58,6 +59,11 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::post('/update-column-visibility', [ProductController::class,'updateColumnVisibility'])->name('products.updateColumnVisibility');
     Route::resource('products', ProductController::class);
 
+
+    Route::get('barcode/add-products-row', [BarcodeController::class,'addProductRow'])->name('barcode.addProductRow');
+    Route::get('barcode/print-barcode', [BarcodeController::class,'printBarcode'])->name('barcode.printBarcode');
+    Route::get('barcode/create', [BarcodeController::class,'create'])->name('barcode.create');
+    Route::post('barcode/store', [BarcodeController::class,'store'])->name('barcode.store');
 
 
 });

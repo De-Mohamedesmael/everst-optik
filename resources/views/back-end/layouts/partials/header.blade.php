@@ -114,6 +114,15 @@
                                         class="mdi mdi-circle"></i>@lang('lang.brands')</a>
                             </li>
 
+
+                            @can('product_module.barcode.create_and_edit')
+                                <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
+                                                           href="{{ route('admin.barcode.create') }}" target="_blank"
+                                                           class="wages-button d-flex item-list-a"><i
+                                            class="mdi mdi-circle"></i>{{translate('print_barcode')}}</a>
+                                </li>
+                            @endcan
+
                         </ul>
                     </li>
 
