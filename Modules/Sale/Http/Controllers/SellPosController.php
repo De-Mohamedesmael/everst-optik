@@ -594,7 +594,6 @@ class SellPosController extends Controller
                             $transaction_payment =  $this->transactionUtil->createOrUpdateTransactionPayment($transaction, $payment_data);
                         }
                         $this->transactionUtil->updateTransactionPaymentStatus($transaction->id);
-
                         if (!empty($transaction_payment)) {
                             $this->moneysafeUtil->updatePayment($transaction, $payment_data, 'credit', $transaction_payment->id, $old_tp);
                             $payment_data['transaction_payment_id'] =  $transaction_payment->id;
@@ -612,18 +611,8 @@ class SellPosController extends Controller
                 }
 
 
-                if (!empty($transaction->coupon_id)) {
-                    Coupon::where('id', $transaction->coupon_id)->update(['used' => 1]);
-                }
 
-                if (!empty($transaction->gift_card_id)) {
-                    $remaining_balance = $this->commonUtil->num_uf($request->remaining_balance);
-                    $used = 0;
-                    if ($remaining_balance == 0) {
-                        $used = 1;
-                    }
-                    GiftCard::where('id', $transaction->gift_card_id)->update(['balance' => $remaining_balance, 'used' => $used]);
-                }
+
                 $transaction = $this->transactionUtil->updateTransactionPaymentStatus($transaction->id);
             }
 
@@ -663,6 +652,7 @@ class SellPosController extends Controller
             ];
         } catch (\Exception $e) {
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
+            dd($e);
             $output = [
                 'success' => false,
                 'msg' => __('lang.something_went_wrong')
@@ -1668,10 +1658,19 @@ class SellPosController extends Controller
             $VA['Ozel']=$request->product['VA']['Ozel'];
             $VA['Ozel']['text']=$request->product['VA']['Ozel']['value'];
         }
+
+
         if(isset($request->product['VA']['Special']['isCheck']) && $request->product['VA']['Special']['isCheck'] != null){
-            $Special=SpecialAddition::whereId($request->product['VA']['Special']['value'])->first();
+            $Specials=SpecialAddition::wherein('id',$request->product['VA']['Special']['value'])->get();
+            $VA_amount['Special_amount']=$Specials->sum('price');
             $VA['Special']=$request->product['VA']['Special'];
-            $VA['Special']['text']=$Special?->name;
+            foreach ($Specials as $key => $Special){
+                $VA['Special']['TV'][$key]=[
+                    'text'=> $Special->name,
+                    'price'=> $Special->price,
+                ];
+            }
+            $total=$total+$VA_amount['Special_amount'];
         }
         $VA['code']=$request->product['VA']['code'];
         $VA['code']['text']=$request->product['VA']['code']['value'];

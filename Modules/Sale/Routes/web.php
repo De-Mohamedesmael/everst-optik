@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\AddStock\Http\Controllers\TransactionPaymentController;
 use Modules\Sale\Http\Controllers\SellController;
 use Modules\Sale\Http\Controllers\SellPosController;
+use Modules\Sale\Http\Controllers\SellReturnController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,4 +68,10 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('transaction-payment/{id}/edit', [TransactionPaymentController::class, 'edit'])->name('transaction-payment.edit');
     Route::put('transaction-payment/{id}', [TransactionPaymentController::class, 'update'])->name('transaction-payment.update');
     Route::delete('transaction-payment/{id}', [TransactionPaymentController::class, 'destroy'])->name('transaction-payment.destroy');
+
+
+
+    Route::get('sale-return/add/{id}', [SellReturnController::class, 'add'])->name('saleReturn.add');
+    Route::get('sale-return/print/{id}', [SellReturnController::class, 'print'])->name('saleReturn.print');
+    Route::resource('sale-return', SellReturnController::class);
 });

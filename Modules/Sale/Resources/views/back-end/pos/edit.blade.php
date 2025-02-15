@@ -96,13 +96,8 @@
                 <input type="hidden" id="old_prescription_id" value="{{$prescription_id}}">
 
                 <div class="col-md-9">
-                    {!! Form::open([
-                    'url' =>route('admin.pos.store'),
-                    'method' => 'post',
-                    'files' => true,
-                    'class' => 'pos-form',
-                    'id' => 'add_pos_form',
-                    ]) !!}
+                    {!! Form::open(['url' =>route('admin.pos.update', $transaction->id), 'method' => 'PUT', 'files' => true, 'class' => 'pos-form', 'id' => 'edit_pos_form']) !!}
+
                     <div class="card">
                         <div class="card-body" style="padding: 0px 10px; !important; margin-bottom: 50px !important;">
 
@@ -208,7 +203,7 @@
                                     </div>
 
 
-                                    <input type="hidden" name="tax_id_hidden" id="tax_id_hidden" value="">
+                                    <input type="hidden" name="tax_id_hidden" id="tax_id_hidden" value="{{$transaction->tax_id}}">
                                     <input type="hidden" name="tax_method" id="tax_method" value="">
                                     <input type="hidden" name="tax_rate" id="tax_rate" value="0">
                                     <input type="hidden" name="tax_type" id="tax_type" value="">
@@ -528,18 +523,9 @@
 
 
                                                 <div class="col-6 font-responsive" style="padding: 0">
-                                                    @php
-                                                        $default_invoice_toc = Modules\Setting\Entities\System::getProperty(
-                                                        'invoice_terms_and_conditions',
-                                                        );
-                                                        if (!empty($default_invoice_toc)) {
-                                                        $toc_hidden = $default_invoice_toc;
-                                                        } else {
-                                                        $toc_hidden = array_key_first($tac);
-                                                        }
-                                                    @endphp
+
                                                     <input type="hidden" name="terms_and_condition_hidden"
-                                                           id="terms_and_condition_hidden" value="{{ $toc_hidden }}">
+                                                           id="terms_and_condition_hidden" value="{{ $transaction->terms_and_condition_id }}">
 
                                                     {!! Form::label('terms_and_condition_id',
                                                     __('lang.terms_and_conditions'), [
@@ -558,7 +544,7 @@
                                                                 data-live-search="true">
                                                             <option value="">@lang('lang.please_select')</option>
                                                             @foreach ($tac as $key => $item)
-                                                                <option value="{{ $key }}">{{ $item }}
+                                                                <option @if ($transaction->terms_and_condition_id == $key) selected @endif  value="{{ $key }}">{{ $item }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -578,7 +564,7 @@
 
                                             width: 100%;
                                             height: 30px;">
-                                                        {!! Form::select('commissioned_employees[]', $employees, false, [
+                                                        {!! Form::select('commissioned_employees[]', $employees,  $transaction->commissioned_employees, [
                                                         'class' => ' selectpicker terms',
                                                         'style' => 'width:100%',
                                                         'data-live-search' => 'true',
@@ -588,10 +574,10 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-4 hide shared_commission_div">
+                                                <div class="col-lg-4  @if ($transaction->shared_commission != 1) hide @endif shared_commission_div">
                                                     <div class="i-checks" style="margin-top: 37px;">
                                                         <input id="shared_commission" name="shared_commission"
-                                                               type="checkbox" value="1" class="form-control-custom">
+                                                               type="checkbox" value="1" class="form-control-custom"  @if ($transaction->shared_commission == 1) checked @endif>
                                                         <label for="shared_commission"><strong>
                                                                 @lang('lang.shared_commission')
                                                             </strong></label>

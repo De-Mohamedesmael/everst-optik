@@ -220,14 +220,15 @@ class SellController extends Controller
                 ->editColumn('transaction_date', '{{@format_datetime($created_at)}}')
                 ->editColumn('invoice_no', function ($row) {
                     $string = $row->invoice_no . ' ';
+
                     if (!empty($row->return_parent)) {
                         $string .= '<a
-                        data-href="' . '##' . '" data-container=".view_modal"
+                        data-href="' . route('admin.sale-return.show', $row->id) . '" data-container=".view_modal"
                         class="btn btn-modal" style="color: #007bff;">R</a>';
                     }
                     if ($row->payment_status == 'pending') {
                         $string .= '<a
-                            data-href="' . '##' .  '" data-container=".view_modal"
+                            data-href="' . route('admin.sale.show', $row->id) .  '" data-container=".view_modal"
                             class="btn btn-modal" style="color: #007bff;">P</a>';
                     }
 
@@ -407,18 +408,16 @@ class SellController extends Controller
                                         class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a>
                             </li>';
                         }
-//                        $html .= '<li class="divider"></li>';
-//                        if (auth()->user()->can('return.sell_return.create_and_edit')) {
-//                            //                            if (empty($row->return_parent)) {
-//                            $html .=
-//                                '<li>
-//                                    <a href="' . action('SellReturnController@add', $row->id) . '" class="btn"><i
-//                                        class="fa fa-undo"></i> ' . __('lang.sale_return') . '</a>
-//                                    </li>';
-//                            //                            }
-//                        }
-//                        $html .= '<li class="divider"></li>';
-//                        if (auth()->user()->can('sale.pay.create_and_edit')) {
+                        if (auth()->user()->can('return.sell_return.create_and_edit')) {
+                            //                            if (empty($row->return_parent)) {
+                            $html .=
+                                '<li>
+                                    <a href="' . route('admin.saleReturn.add', $row->id) . '" class="btn"><i
+                                        class="fa fa-undo"></i> ' . __('lang.sale_return') . '</a>
+                                    </li>';
+                            //                            }
+                        }
+                        if (auth()->user()->can('sale.pay.create_and_edit')) {
                             if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
                                 $final_total = $row->final_total;
                                 if (!empty($row->return_parent)) {
@@ -433,6 +432,7 @@ class SellController extends Controller
                                     </li>';
                                 }
                             }
+                        }
 
                         if (auth()->user()->can('sale.pay.view')) {
                             $html .=

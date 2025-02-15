@@ -34,6 +34,7 @@ use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductDiscount;
 use Modules\Product\Entities\ProductStore;
 use Modules\Setting\Entities\Color;
+use Modules\Setting\Entities\SpecialAddition;
 use Modules\Setting\Entities\SpecialBase;
 use Modules\Setting\Entities\Store;
 use Modules\Setting\Entities\System;
@@ -1058,22 +1059,21 @@ class LensController extends Controller
     public function getPriceLenses(Request $request): array
     {
        $lens= Product::where('id', $request->lens_id)->Lens()->first();
+        $default["sell_price"]=0;
+        $default["purchase_price"] =0;
+        if($lens){
+            $stockLines = \Modules\AddStock\Entities\AddStockLine::where('sell_price', '>', 0)
+                ->where('product_id', $lens->id)
+                ->latest()
+                ->first();
 
-        if(!$lens){
-            return [
-                'success' => false,
-                'msg' => translate('lens_not_found'),
-            ];
+            $default["sell_price"]= (float)($stockLines ? $stockLines->sell_price : $lens->sell_price);
+            $default["purchase_price"] = $stockLines
+                ? $stockLines->purchase_price
+                : $lens->purchase_price;
+
         }
-        $stockLines = \Modules\AddStock\Entities\AddStockLine::where('sell_price', '>', 0)
-            ->where('product_id', $lens->id)
-            ->latest()
-            ->first();
 
-        $default["sell_price"]= $stockLines ? $stockLines->sell_price : $lens->sell_price;
-        $default["purchase_price"] = $stockLines
-            ? $stockLines->purchase_price
-            : $lens->purchase_price;
 
         $default['Base_amount']=0;
         if ($request->check_base && $request->special_base) {
@@ -1084,9 +1084,19 @@ class LensController extends Controller
         }
 
 
+        $default['Special_amount']=0;
+        if ($request->check_special && $request->special_addition) {
+            $Special_amount=SpecialAddition::wherein('id',$request->special_addition)->sum('price');
+            if($Special_amount){
+                $default['Special_amount']= $Special_amount;
+            }
+        }
+
+
         $default['sell_price_format']=num_format($default['sell_price']);
         $default['purchase_price_format']=num_format($default['purchase_price']);
         $default['Base_amount_format']=num_format($default['Base_amount']);
+        $default['Special_amount_format']=num_format($default['Special_amount']);
         return [
             'success' => true,
             'data' => $default

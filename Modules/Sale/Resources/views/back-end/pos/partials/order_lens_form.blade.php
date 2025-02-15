@@ -633,13 +633,13 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-none VASpecialCheck_class">
-                                                                    {!! Form::select('product[VA][Special][value]', $special_additions ,null, [
+                                                                    {!! Form::select('product[VA][Special][value][]', $special_additions ,null, [
                                                                            'class' => ' selectpicker form-control',
                                                                            'data-live-search' => 'true',
                                                                            'style' => 'width: 80%',
                                                                           'data-actions-box' => 'true',
+                                                                           'multiple',
                                                                            'id' => 'special_addition',
-                                                                           'placeholder' => __('lang.please_select'),
                                                                        ]) !!}
                                                                 </div>
                                                             </div>
@@ -851,6 +851,12 @@
 
                                                 {{translate('Base_amount')}}: <span class="price-lens"
                                                                                     id="price-Base"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                            </div>
+                                            <div class="lens-vu-item-per d-none" id="div-price-Special">
+                                                <input type="hidden" id="price_Special" value="0">
+
+                                                {{translate('Special_amount')}}: <span class="price-lens"
+                                                                                    id="price-Special"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
                                             </div>
                                             <div class="lens-vu-item-per d-none" id="div-price-Ozel">
                                                 <input type="hidden" id="price_Ozel" value="0">
@@ -1403,6 +1409,9 @@
 
         getPrescription();
     });
+    $(document).on("change", "#RightLens , #LeftLens", function () {
+        changePrice();
+    });
 
     function getPrescription(){
         if ($('#prescription_id').val()) {
@@ -1507,6 +1516,7 @@
                                 $("#VABaseCheck").prop('checked', true);
                                 $('#special_base').val(prescription.VA.Base.value).change();
                             }
+                            //edit
                             if(prescription.VA.Special){
                                 $('.VASpecialCheck_class').removeClass('d-none')
                                 $("#VASpecialCheck").prop('checked', true);
@@ -1696,7 +1706,7 @@
     //         this.value = max;
     //     }
     // });
-    $(document).on("change", "#lens_id ,#special_base ,#VABaseCheck", function () {
+    $(document).on("change", "#lens_id ,#special_addition ,#special_base ,#VABaseCheck", function () {
         changePrice();
     });
 
@@ -1770,7 +1780,13 @@
     function changePrice() {
         let   lens_id = $('#lens_id').val(),
             special_base = $('#special_base').val(),
-            check_base =0;
+            special_addition = $('#special_addition').val(),
+            check_base =0,
+            check_special =0;
+        if ($('#VASpecialCheck').prop('checked')) {
+            check_special = 1;
+        }
+
         if ($('#VABaseCheck').prop('checked')) {
             check_base = 1;
         }
@@ -1780,21 +1796,55 @@
             data: {
                 lens_id: lens_id,
                 special_base: special_base,
+                special_addition: special_addition,
                 check_base: check_base,
+                check_special: check_special,
             },
             // contactType: "html",
             success: function (result) {
                 if (result.success) {
                     var sell_price = result.data.sell_price;
                     var Base_amount = result.data.Base_amount;
+                    var Special_amount = result.data.Special_amount;
+
+                    // sale price for lens
+
                     $("#price_lens").val(sell_price);
-                    $("#price-lens").text(result.data.sell_price_format + '{{session("currency")["symbol"]}}');
+                    let  sell_price_Text=Number(sell_price).toFixed(2);
+                    if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+                        sell_price_Text=(Number(sell_price) * 2 ).toFixed(2);
+                    }
+                    $("#price-lens").text(sell_price_Text + '{{session("currency")["symbol"]}}');
+
+
+                    // sale price for Base
+
                     $("#price_Base").val(Base_amount);
-                    $("#price-Base").text(result.data.Base_amount_format + '{{session("currency")["symbol"]}}');
+                    let  Base_amount_Text=Number(sell_price).toFixed(2);
+                    if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+                        Base_amount_Text=(Number(sell_price) * 2 ).toFixed(2);
+                    }
+                    $("#price-Base").text(Base_amount_Text + '{{session("currency")["symbol"]}}');
+
+
+                    // sale price for Special
+                    let  Special_amount_Text=Number(Special_amount).toFixed(2);
+                    if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+                        Special_amount_Text=(Number(Special_amount) * 2 ).toFixed(2);
+                    }
+                    $("#price_Special").val(Special_amount);
+                    $("#price-Special").text(Special_amount_Text + '{{session("currency")["symbol"]}}');
+
+
                     if(Base_amount > 0){
                         $('#div-price-Base').removeClass('d-none')
                     }else {
                         $('#div-price-Base').addClass('d-none')
+                    }
+                    if(Special_amount > 0){
+                        $('#div-price-Special').removeClass('d-none')
+                    }else {
+                        $('#div-price-Special').addClass('d-none')
                     }
                     getPrices();
                 } else {
@@ -1813,14 +1863,19 @@
         let   default_TinTing = 0 ,
               default_Ozel = 0,
             price_lens = parseFloat($("#price_lens").val()) || 0,
-            price_Base = parseFloat($("#price_Base").val()) || 0;
+            price_Base = parseFloat($("#price_Base").val()) || 0,
+            price_Special = parseFloat($("#price_Special").val()) || 0;
 
 
         if ($('#VATintingCheck').prop('checked')) {
             default_TinTing = {{$default_TinTing_amount}};
+           let  default_TinTing_Text=default_TinTing.toFixed(2);
+            if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+                default_TinTing_Text=(default_TinTing * 2 ).toFixed(2);
+            }
             $('#div-price-TinTing').removeClass('d-none');
             $("#price_TinTing").val(default_TinTing);
-            $("#price-TinTing").text(default_TinTing.toFixed(2) + '{{session("currency")["symbol"]}}');
+            $("#price-TinTing").text( default_TinTing_Text + '{{session("currency")["symbol"]}}');
         }else{
             $('#div-price-TinTing').addClass('d-none');
             $("#price_TinTing").val(0);
@@ -1828,16 +1883,27 @@
         }
         if ($('#specific_diameter').prop('checked')) {
             default_Ozel = {{$default_Ozel_amount}};
+
+            let  default_Ozel_Text=default_Ozel.toFixed(2);
+            if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+                default_Ozel_Text=(default_Ozel * 2 ).toFixed(2);
+            }
             $('#div-price-Ozel').removeClass('d-none');
             $("#price_Ozel").val(default_Ozel);
-            $("#price-Ozel").text(default_Ozel.toFixed(2) + '{{session("currency")["symbol"]}}');
+            $("#price-Ozel").text(default_Ozel_Text + '{{session("currency")["symbol"]}}');
         }else{
             $('#div-price-Ozel').addClass('d-none');
             $("#price_Ozel").val(0);
             $("#price-Ozel").text("0.00" + '{{session("currency")["symbol"]}}');
         }
-       let total=price_lens+price_Base+default_TinTing+default_Ozel;
-        $('#total-lens').text(total.toFixed(2)+ '{{session("currency")["symbol"]}}')
+       let total=price_lens+price_Base+price_Special+default_TinTing+default_Ozel;
+
+        let  total_Text=total.toFixed(2);
+        if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+            total_Text=(total * 2 ).toFixed(2);
+        }
+
+        $('#total-lens').text(total_Text + '{{session("currency")["symbol"]}}')
 
 
     }

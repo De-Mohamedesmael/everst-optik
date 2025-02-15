@@ -18,7 +18,7 @@
                 <div class="col-md-6">
                     <div class="col-md-12">
                         <h5>@lang('lang.invoice_no'): {{ $sale->invoice_no }} @if (!empty($sale->return_parent))
-                            <a data-href="{{-- action('SellReturnController@show', $sale->id) --}}"
+                            <a data-href="{{ route('admin.sale-return.show', $sale->id) }}"
                                 data-container=".view_modal" class="btn btn-modal" style="color: #007bff;">R</a>
                             @endif
                         </h5>
@@ -191,6 +191,15 @@
                                                         </div>
                                                     @endif
                                                 </div>
+                                                <div  class="lens-vu" >
+                                                    @if(isset($data_len->VA->Special->isCheck) && $data_len->VA->Special->isCheck &&  isset($data_len->VA->Special->TV))
+                                                        @foreach($data_len->VA->Special->TV as $item_sp)
+                                                            <div class="lens-vu-item">
+                                                                {{$item_sp->text}}
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
                                             </td>
                                             <td>
                                                 <div  class="lens-vu" >
@@ -198,6 +207,15 @@
                                                         <div class="lens-vu-item">
                                                             {{$data_len->VA->code->text}}
                                                         </div>
+                                                    @endif
+                                                </div>
+                                                <div  class="lens-vu" >
+                                                    @if(isset($data_len->VA->Special->isCheck) && $data_len->VA->Special->isCheck && $data_len->VA_amount->Special_amount >0 && isset($data_len->VA->Special->TV))
+                                                        @foreach($data_len->VA->Special->TV as $item_sp)
+                                                            <div class="lens-vu-item">
+                                                                {{$item_sp->price}}
+                                                            </div>
+                                                        @endforeach
                                                     @endif
                                                 </div>
                                             </td>

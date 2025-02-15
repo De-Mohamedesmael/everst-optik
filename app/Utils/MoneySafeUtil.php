@@ -2,17 +2,16 @@
 
 namespace App\Utils;
 
-use Modules\Customer\Entities\CashRegister;
-use Modules\Customer\Entities\CashRegisterTransaction;
+use Modules\CashRegister\Entities\CashRegister;
+use Modules\CashRegister\Entities\CashRegisterTransaction;
 use Modules\Setting\Entities\ExchangeRate;
-use Modules\Customer\Entities\MoneySafe;
-use Modules\Customer\Entities\MoneySafeTransaction;
-use Modules\Customer\Entities\Supplier;
+use Modules\Setting\Entities\MoneySafe;
+use Modules\Setting\Entities\MoneySafeTransaction;
 use Illuminate\Support\Facades\DB;
 use Modules\Hr\Entities\Employee;
 use Modules\Setting\Entities\Currency;
 use Modules\Setting\Entities\System;
-use Notification;
+use Modules\Hr\Entities\Notification;
 
 class MoneySafeUtil extends Util
 {
