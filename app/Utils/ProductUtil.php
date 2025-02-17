@@ -339,15 +339,13 @@ class ProductUtil extends Util
      * Gives list of products_ based on products_ id and variation id
      *
      * @param int $product_id
-     * @param int $variation_id = null
-     * @param int $store_id = null
-     *
-     * @return Obj
+     * @param null $store_id = null
+     * @return mixed
      */
-    public function getDetailsFromProduct($product_id, $store_id = null)
+    public function getDetailsFromProduct(int $product_id, $store_id = null): mixed
     {
         $product = Product::leftjoin('product_stores', 'products.id', '=', 'product_stores.product_id')
-            ->whereNull('products.deleted_at');
+                             ->whereNull('products.deleted_at');
 
 
         if (!is_null($store_id) && $store_id !== '0') {
@@ -357,7 +355,6 @@ class ProductUtil extends Util
 
         $products = $product->select(
             'products.*',
-            'products.id as product_id',
             'products.name as product_name',
             'product_stores.qty_available',
         )

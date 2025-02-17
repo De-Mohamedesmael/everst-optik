@@ -18,12 +18,12 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('website.index');
-//    if (Auth::guard('admin')->user()) {
-//        return redirect('/home');
-//    } else {
-//        return redirect('/login');
-//    }
+//    return view('website.index');
+    if (Auth::guard('admin')->user()) {
+        return redirect()->route('admin.home');
+    } else {
+        return redirect('/login');
+    }
 });
 Route::group(['middleware' => ['language']], function () {
     Auth::routes(['register' => false]);
