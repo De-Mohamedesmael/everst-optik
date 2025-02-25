@@ -4,7 +4,7 @@
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/stock.css') }}">
     <style>
-        utton.btn.select_product_button.d-flex.justify-content-center.align-items-center {
+        button.btn.select_product_button.d-flex.justify-content-center.align-items-center {
             padding: 5px !important;
         }
     </style>
@@ -85,7 +85,6 @@
                                                 'data-live-search' => 'true',
                                                 'required',
                                                 'style' => 'width: 80%',
-                                                'placeholder' => __('lang.please_select'),
                                             ],
                                         ) !!}
                                     </div>
