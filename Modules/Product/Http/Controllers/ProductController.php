@@ -559,6 +559,15 @@ class ProductController extends Controller
             if ($request->has('category_id')){
                 $product->categories()->attach($request->category_id);
             }
+            if ($request->store_ids){
+                foreach ($request->store_ids as $store_id) {
+                    ProductStore::create([
+                        'product_id' => $product->id,
+                        'store_id' => $store_id,
+                        'qty_available' => 0
+                    ]);
+                }
+            }
 
 
             DB::commit();
@@ -568,7 +577,6 @@ class ProductController extends Controller
             ];
         } catch (\Exception $e) {
             DB::rollBack();
-//            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -759,6 +767,21 @@ class ProductController extends Controller
 
              if ($request->has('category_id')) {
                  $product->categories()->sync($request->category_id);
+             }
+
+
+             if ($request->store_ids){
+                 foreach ($request->store_ids as $store_id) {
+                     ProductStore::firstOrCreate(
+                         [
+                             'product_id' => $product->id,
+                             'store_id' => $store_id
+                         ],
+                         [
+                             'qty_available' => 0
+                         ]
+                     );
+                 }
              }
 
             DB::commit();
