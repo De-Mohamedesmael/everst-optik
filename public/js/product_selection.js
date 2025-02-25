@@ -40,6 +40,9 @@ $(document).ready(function () {
                 if ($("#sender_store_id").length) {
                     //in add transfer page
                     d.store_id = $("#sender_store_id").val();
+                }else if($("#store_id").length){
+                    d.store_id = $("#store_id").val();
+
                 } else {
                     d.store_id = $("#filter_store_id").val();
                 }
