@@ -170,7 +170,7 @@ class SellPosController extends Controller
                 'msg' => __('lang.kindly_assign_pos_for_that_user_to_able_to_use_it')
             ];
 
-            return redirect()->to('/home')->with('status', $output);
+            return redirect()->route('home')->with('status', $output);
         }
 
         return view('sale::back-end.pos.pos')->with(compact(
@@ -1119,6 +1119,10 @@ class SellPosController extends Controller
             if (strtolower(session('user.job_title')) == 'cashier') {
                 $query->where('transactions.created_by', Auth::user()->id);
             }
+            $store_admin_ids=Employee::where('admin_id',Auth::user()->id)->first()?->store_id;
+            if (!empty($store_admin_ids)) {
+                $query->wherein('transactions.store_id', $store_admin_ids);
+            }
             if (!empty($store_id)) {
                 $query->where('transactions.store_id', $store_id);
             }
@@ -1332,6 +1336,10 @@ class SellPosController extends Controller
 
             if (!empty($store_id)) {
                 $query->where('transactions.store_id', $store_id);
+            }
+            $store_admin_ids=Employee::where('admin_id',Auth::user()->id)->first()?->store_id;
+            if (!empty($store_admin_ids)) {
+                $query->wherein('transactions.store_id', $store_admin_ids);
             }
             if (!empty(request()->start_date)) {
                 $query->whereDate('transaction_date', '>=', request()->start_date);

@@ -119,7 +119,10 @@ class SellReturnController extends Controller
             if (!empty($pos_id)) {
                 $query->where('transactions.store_pos_id', $pos_id);
             }
-
+            $store_admin_ids=Employee::where('admin_id',Auth::user()->id)->first()?->store_id;
+            if (!empty($store_admin_ids)) {
+                $query->wherein('transactions.store_id', $store_admin_ids);
+            }
 
             $sale_returns = $query->select(
                 'transactions.*',

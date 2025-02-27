@@ -80,6 +80,7 @@ class SellController extends Controller
         $default_currency_id = System::getProperty('currency');
 
         if (request()->ajax()) {
+            $store_admin_ids=Employee::where('admin_id',Auth::user()->id)->first()?->store_id;
             $store_id = request()->store_id;
             $query = Transaction::leftjoin('transaction_payments', 'transactions.id', 'transaction_payments.transaction_id')
                 ->leftjoin('stores', 'transactions.store_id', 'stores.id')
@@ -139,7 +140,10 @@ class SellController extends Controller
                 $query->where('status', request()->status);
             }
             if (!empty($store_id)) {
-                $query->where('store_id', $store_id);
+                $query->where('transactions.store_id', $store_id);
+            }
+            if (!empty($store_admin_ids)) {
+                $query->wherein('transactions.store_id', $store_admin_ids);
             }
 
             if (!empty(request()->payment_status)) {
@@ -179,6 +183,7 @@ class SellController extends Controller
             if (strtolower(Session::get('user.job_title')) == 'cashier') {
                 $query->where('transactions.created_by', Auth::user()->id);
             }
+
             $sales = $query->select(
                 'transactions.final_total',
                 'transactions.payment_status',
@@ -540,7 +545,7 @@ class SellController extends Controller
                 $query->where('status', request()->status_);
             }
             if (!empty($store_id)) {
-                $query->where('store_id', $store_id);
+                $query->where('transactions.store_id', $store_id);
             }
 
             if (!empty(request()->payment_status)) {
@@ -579,7 +584,10 @@ class SellController extends Controller
             if (strtolower($request->session()->get('user.job_title')) == 'cashier') {
                 $query->where('transactions.created_by', \auth()->id());
             }
-
+            $store_admin_ids=Employee::where('admin_id',Auth::user()->id)->first()?->store_id;
+            if (!empty($store_admin_ids)) {
+                $query->wherein('transactions.store_id', $store_admin_ids);
+            }
             $query->select(
                 DB::raw('COUNT(DISTINCT(transactions.customer_id)) as customer_count'),
                 DB::raw('COUNT(DISTINCT(transactions.id)) as sales_count'),
