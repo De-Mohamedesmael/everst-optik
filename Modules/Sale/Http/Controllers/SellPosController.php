@@ -170,7 +170,7 @@ class SellPosController extends Controller
                 'msg' => __('lang.kindly_assign_pos_for_that_user_to_able_to_use_it')
             ];
 
-            return redirect()->route('home')->with('status', $output);
+            return redirect()->route('admin.home')->with('status', $output);
         }
 
         return view('sale::back-end.pos.pos')->with(compact(
