@@ -889,10 +889,12 @@
                                                             <div class="check-line"
                                                                  style="width: 100%;text-align: left;">
                                                                 <div
-                                                                    class="icheckbox_square-orange icheck-item  checked">
-                                                                    <input type="checkbox" id="RightLens"
+                                                                    class="icheckbox_square-orange icheck-item  icheck[ho025]  checked">
+                                                                    <div class="icheckbox_square-orange icheck-item  icheck[ho025]  checked">
+
+                                                                        <input type="checkbox" id="RightLens"
                                                                            class="icheck-me checkForLens icheck-input icheck[ho025]"
-                                                                           checked
+                                                                               checked=""
                                                                            name="product[Lens][Right][isCheck]"
                                                                            value="1"
                                                                            data-skin="square"
@@ -1395,6 +1397,10 @@
 <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
 
 <script>
+    $(document).ready(function() {
+        $("#RightLens").prop('checked', true);
+    });
+
     @if(isset($prescription_id))
     document.addEventListener("DOMContentLoaded", function() {
         getPrescription();
