@@ -109,8 +109,8 @@ class ProductController extends Controller
             }
 
             $products= $products->leftjoin('add_stock_lines', function ($join) {
-                    $join->on('products.id', 'add_stock_lines.product_id');
-                })
+                $join->on('products.id', 'add_stock_lines.product_id');
+            })
                 ->leftjoin('colors', 'products.color_id', 'colors.id')
                 ->leftjoin('sizes', 'products.size_id', 'sizes.id')
                 ->leftjoin('brands', 'products.brand_id', 'brands.id')
@@ -201,15 +201,13 @@ class ProductController extends Controller
                         return '<img src="' . asset('/uploads/' . \Modules\Setting\Entities\System::getProperty('logo')) . '" height="50px" width="50px">';
                     }
                 })
-                ->editColumn('is_service',function ($row) {
-                    return $row->is_service=='1'?'<span class="badge badge-danger">'.Lang::get('lang.is_have_service').'</span>':'';
-                })
+
                 ->addColumn('categories_names', function ($row){
                     $html='';
                     foreach ($row->categories as $key => $category) {
                         $html.= '<span class="category_name">'.( $key > 0 ?' - ':'').$category->name.'</span>';
                     }
-                   return $html;
+                    return $html;
                 })
                 ->addColumn('purchase_history', function ($row) {
                     $html = '<a data-href="' .  route('admin.products.getPurchaseHistory', $row->id) . '"
@@ -218,20 +216,14 @@ class ProductController extends Controller
                 })
                 ->editColumn('batch_number', '{{$batch_number}}')
                 ->editColumn('sell_price', function ($row) {
-                    $price= AddStockLine::where('product_id',$row->product_id)
-                    ->whereHas('transaction', function ($query) {
-                        $query->where('type', '!=', 'supplier_service');
-                    })
-                    ->latest()->first();
+                    $price= AddStockLine::where('product_id',$row->id)
+                        ->latest()->first();
                     $price= $price? $price->sell_price:$row->sell_price;
                     return number_format($price,2);
                 })//, '{{@num_format($default_sell_price)}}')
                 ->editColumn('default_purchase_price', function ($row) {
-                    $price= AddStockLine::where('product_id',$row->product_id)
-                    ->whereHas('transaction', function ($query) {
-                        $query->where('type', '!=', 'supplier_service');
-                    })
-                    ->latest()->first();
+                    $price= AddStockLine::where('product_id',$row->id)
+                        ->latest()->first();
                     $price= $price? ($price->purchase_price > 0 ? $price->purchase_price : $row->default_purchase_price):$row->default_purchase_price;
 
                     return number_format($price,2);
@@ -251,11 +243,9 @@ class ProductController extends Controller
                     return 0;
                 })
                 ->addColumn('current_stock_value', function ($row) {
-                    $price= AddStockLine::where('product_id',$row->product_id)
-                    ->whereHas('transaction', function ($query) {
-                        $query->where('type', '!=', 'supplier_service');
-                    })
-                    ->latest()->first();
+                    $price= AddStockLine::where('product_id',$row->id)
+
+                        ->latest()->first();
                     $price= $price? ($price->purchase_price > 0 ? $price->purchase_price : $row->default_purchase_price):$row->default_purchase_price;
                     return $this->productUtil->num_f($row->current_stock * $price);
                 })
@@ -287,32 +277,28 @@ class ProductController extends Controller
                 ->editColumn('updated_at', '{{@format_datetime($updated_at)}}')
                 ->addColumn('selection_checkbox', function ($row) use ($is_add_stock) {
                     if ($is_add_stock == 1 && $row->is_service == 1) {
-                        $html = '<input type="checkbox" name="product_selected" disabled class="product_selected" value="' . $row->product_id . '" data-product_id="' . $row->id . '" />';
+                        $html = '<input type="checkbox" name="product_selected" disabled class="product_selected" value="' . $row->id . '" data-product_id="' . $row->id . '" />';
 
                     } else {
                         if ($row->current_stock >= 0 ) {
-                            $html = '<input type="checkbox" name="product_selected" class="product_selected" value="' . $row->product_id . '" data-product_id="' . $row->id . '" />';
+                            $html = '<input type="checkbox" name="product_selected" class="product_selected" value="' . $row->id . '" data-product_id="' . $row->id . '" />';
                         } else {
-                            $html = '<input type="checkbox" name="product_selected" disabled class="product_selected" value="' . $row->product_id . '" data-product_id="' . $row->id . '" />';
+                            $html = '<input type="checkbox" name="product_selected" disabled class="product_selected" value="' . $row->id . '" data-product_id="' . $row->id . '" />';
                         }
                     }
                     return $html;
 
                 })->addColumn('selection_checkbox_send', function ($row)  {
-                    $html = '<input type="checkbox" name="product_selected_send" class="product_selected_send" value="' . $row->product_id . '" data-product_id="' . $row->id . '" />';
-
+                    $html = '<input type="checkbox" name="product_selected_send" class="product_selected_send" value="' . $row->id . '" data-product_id="' . $row->id . '" />';
                     return $html;
                 })
                 ->addColumn('selection_checkbox_delete', function ($row)  {
-                    $html = '<input type="checkbox" name="product_selected_delete" class="product_selected_delete" value="' . $row->product_id . '" data-product_id="' . $row->id . '" />';
-
-
+                    $html = '<input type="checkbox" name="product_selected_delete" class="product_selected_delete" value="' . $row->id . '" data-product_id="' . $row->id . '" />';
                     return $html;
                 })
                 ->addColumn(
                     'action',
                     function ($row) {
-
                         $html =
                             '<div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
