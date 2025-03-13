@@ -261,7 +261,7 @@
                                         {{$line->product->name }}
                                     </div>
                                 </div>
-                                @if(isset($data_prescription->Lens->Right->isCheck) && $data_prescription->Lens->Right->isCheck ==1)
+                                @if((isset($data_prescription->Lens->Right->isCheck) && $data_prescription->Lens->Right->isCheck ==1) || isset($data_prescription->Lens->Right->Far->SPH))
                                 <div class="col-md-6">
                                     <div class="form-group h-100">
                                         <table class="table table-bordered text-center" id="Right_Lens_Table"
@@ -488,7 +488,7 @@
                                                                                data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left"
                                                                                name="product[Lens][Left][sameToRight]"
                                                                                value="1"
-                                                                               {{$data_prescription->Lens->Left->sameToRight?'checked':''}}
+                                                                               {{isset($data_prescription->Lens->Left->sameToRight) && $data_prescription->Lens->Left->sameToRight?'checked':''}}
                                                                                data-skin="square"
                                                                                data-color="orange"
                                                                                data-original-title="" title=""
