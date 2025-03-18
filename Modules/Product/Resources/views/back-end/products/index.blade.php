@@ -47,7 +47,7 @@
     </div>
 @endsection
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
         <div class="container-fluid">
             @if (request()->segment(1) == 'products')
                 <div
@@ -70,7 +70,7 @@
 
             @include('product::back-end.products.partial.filter')
 
-            <div class="card my-3">
+            <div class="card my-2">
 
                 <div class="table-responsive" style="height: 60vh">
                     <table id="product_table" class="table table-hover">

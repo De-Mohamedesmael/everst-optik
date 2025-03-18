@@ -16,7 +16,7 @@
 
         <div
             class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse justify-content-end @else justify-content-start flex-row @endif align-items-center">
-            <div class="col-sm-6 mb-2">
+            <div class="col-sm-12 mb-2">
                 {!! Form::label('name', __('lang.name') . '*', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -40,7 +40,7 @@
 
             <input type="hidden" name="quick_add" value="{{ $quick_add }}">
             {{--            @include('back-end.layouts.partials.image_crop') --}}
-            <div class="col-md-6 d-flex flex-column mb-2">
+            <div class="col-md-12 d-flex flex-column mb-2">
 
                 <label
                     class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"

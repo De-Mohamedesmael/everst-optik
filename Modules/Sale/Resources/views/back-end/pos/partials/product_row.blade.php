@@ -8,7 +8,7 @@
         <td
             style="font-size: 12px;padding:3px;margin:2px;width:  17%; height:40px">
             <div
-                style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;    vertical-align: middle;align-items: center;display: flex;flex-direction: column;font-size: 14px">
+                style=" border-radius:5px;width: 100%;height: 100%;    vertical-align: middle;align-items: center;display: flex;flex-direction: column;font-size: 14px;justify-content: center">
                 @php
                         $stockLines = \Modules\AddStock\Entities\AddStockLine::where('sell_price', '>', 0)
                             ->where('product_id', $product->product_id)
@@ -121,7 +121,7 @@
         <td
             style="font-size: 12px;padding:3px;margin:2px;width:  12%; height:40px">
             <div
-                style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%; padding-top: 4px;padding-bottom: 4px;">
+                style=" border-radius:5px;width: 100%;height: 100%; padding-top: 4px;padding-bottom: 4px;">
                 <div class="input-group justify-content-between align-items-center flex-column flex-lg-row"
                     style="height: 100%">
                     <span class="input-group-btn">
@@ -149,8 +149,8 @@
                     @endphp
 
 
-                    <input type="number" class="form-control quantity  qty numkey input-number" step="any"
-                        autocomplete="off" style="width: 50px;font-size: 14px;font-weight: 600"
+                    <input type="number" class="form-control quantity qty numkey input-number" step="any"
+                        autocomplete="off" style="width: 50px;font-size: 14px;font-weight: 600;border:none !important"
                         @isset($check_unit) @if ($check_unit->name == 'قطعه' || $check_unit->name == 'Piece') oninput="this.value = Math.round(this.value);" @endif @endisset
                         id="quantity" @if (!$product->is_lens) max="{{ $product->qty_available }}" @endif
                         name="transaction_sell_line[{{  $index }}][quantity]" required
@@ -171,9 +171,9 @@
 
         <td
             style="font-size: 12px;padding:3px;margin:2px;width: 12%; height:40px">
-            <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
+            <div style=" border-radius:5px;width: 100%;height: 100%;">
 
-                <input type="text" class="form-control sell_price text-center d-flex justify-content-center align-items-center"
+                <input type="text"  class="form-control sell_price text-center d-flex justify-content-center align-items-center"
                     style="outline: none;border: none;padding: 0 !important;width: 100%;height: 100%;font-size: 14px;font-weight: 600"
                        data-product_id="{{$product->product_id}}"
                     name="transaction_sell_line[{{  $index }}][sell_price]" required
@@ -185,7 +185,7 @@
 
         <td
             style="font-size: 12px;padding:3px;margin:2px;width:11%; height:40px">
-            <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
+            <div style=" border-radius:5px;width: 100%;height: 100%;">
 
                 @php
                     $discountType = !empty($product_discount_details->discount_type)
@@ -234,7 +234,7 @@
 
         <td
             style="font-size: 12px;padding:3px;margin:2px;width:  11% ; height:40px; ">
-            <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
+            <div style=" border-radius:5px;width: 100%;height: 100%;">
 
                 <input type="hidden" value="{{ $product->product_id }}" class="p-id" />
                 @if (auth()->user()->can('sp_module.sales_promotion.view') ||
@@ -273,7 +273,7 @@
 
         <td
             style="font-size: 12px;padding:3px;margin:2px;width:9%; height:40px">
-            <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
+            <div style=" border-radius:5px;width: 100%;height: 100%;">
 
 
                 <span class="sub_total_span d-flex justify-content-center align-items-center"
@@ -284,23 +284,23 @@
         </td>
 
 
-            <td
-                style="font-size: 12px;padding:3px;margin:2px;width:9%;height:40px">
-                <div style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
+        <td
+            style="font-size: 12px;padding:3px;margin:2px;width:9%;height:40px">
+            <div style=" border-radius:5px;width: 100%;height: 100%;">
 
-                    <div class="d-flex justify-content-center align-items-center"
-                        style="width: 100%;height: 100%;font-size: 14px;font-weight: 600">
+                <div class="d-flex justify-content-center align-items-center"
+                    style="width: 100%;height: 100%;font-size: 14px;font-weight: 600">
 
-                        @if ($product->is_lens)
-                            {{ '-' }}
-                        @else
-                            @if (isset($product->qty_available))
-                                {{ preg_match('/\.\d*[1-9]+/', (string) $product->qty_available) ? $product->qty_available : @num_format($product->qty_available) }}@else{{ 0 }}
-                            @endif
+                    @if ($product->is_lens)
+                        {{ '-' }}
+                    @else
+                        @if (isset($product->qty_available))
+                            {{ preg_match('/\.\d*[1-9]+/', (string) $product->qty_available) ? $product->qty_available : @num_format($product->qty_available) }}@else{{ 0 }}
                         @endif
-                    </div>
+                    @endif
                 </div>
-            </td>
+            </div>
+        </td>
         <td
             style="font-size: 12px;padding:3px;margin:2px;width:9%; padding: 0px;height:40px;border:none;">
 
@@ -318,8 +318,8 @@
         </td>
     </tr>
     @if($old_len && $data_len && $total_vu > 0)
-        <tr class="lens-row-{{  $index }}">
-            <td>
+        <tr class="lens-row-{{  $index }}" style="font-weight: bold">
+            <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($data_len->VA_amount->TinTing_amount) && $data_len->VA_amount->TinTing_amount > 0)
                         <div class="lens-vu-item">
@@ -338,7 +338,7 @@
                     @endif
                 </div>
             </td>
-            <td>
+            <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($data_len->VA_amount->TinTing_amount) && $data_len->VA_amount->TinTing_amount > 0)
                         <div class="lens-vu-item">
@@ -358,8 +358,8 @@
                 </div>
             </td>
             <td
-                style="font-size: 12px;padding:3px;margin:2px;width:12%; height:40px">
-                <div class="lens-vu-price" style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
+                style="font-size: 12px;padding:3px;margin:2px;width:12%; height:40px;background-color:#f0f0f0">
+                <div class="lens-vu-price" style=" border-radius:5px;width: 100%;height: 100%;">
                     @if(isset($data_len->VA_amount->TinTing_amount) && $data_len->VA_amount->TinTing_amount > 0)
                         <div class="lens-vu-item">
                             <span class="lens-vu-price">{{$data_len->VA_amount->TinTing_amount}}</span>
@@ -378,7 +378,7 @@
                 </div>
             </td>
 
-            <td>
+            <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($data_len->VA->code->isCheck) && $data_len->VA->code->isCheck)
                         <div class="lens-vu-item">
@@ -396,7 +396,7 @@
                     @endif
                 </div>
             </td>
-            <td>
+            <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($data_len->VA->code->isCheck) && $data_len->VA->code->isCheck)
                         <div class="lens-vu-item">
@@ -416,8 +416,8 @@
             </td>
         </tr>
     @elseif($product->is_lens && $total_vu > 0)
-        <tr class="lens-row-{{  $index }}">
-            <td>
+        <tr class="lens-row-{{  $index }}" style="font-weight: bold">
+            <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)
                         <div class="lens-vu-item">
@@ -436,7 +436,7 @@
                     @endif
                 </div>
             </td>
-            <td>
+            <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)
                         <div class="lens-vu-item">
@@ -457,7 +457,7 @@
             </td>
             <td
                 style="font-size: 12px;padding:3px;margin:2px;width:12%; height:40px">
-                <div class="lens-vu-price" style=" border:2px solid #dcdcdc;border-radius:5px;width: 100%;height: 100%;">
+                <div class="lens-vu-price" style=" border-radius:5px;width: 100%;height: 100%;">
                     @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)
                         <div class="lens-vu-item">
                             <span class="lens-vu-price">{{$cach_lens['VA_amount']['TinTing_amount']}}</span>
@@ -476,7 +476,7 @@
                 </div>
             </td>
 
-            <td>
+            <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($cach_lens['VA']['code']['isCheck']) && $cach_lens['VA']['code']['isCheck'])
                         <div class="lens-vu-item">
@@ -496,7 +496,7 @@
                     @endif
                 </div>
             </td>
-            <td>
+            <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($cach_lens['VA']['code']['isCheck']) && $cach_lens['VA']['code']['isCheck']&& $cach_lens['VA']['code']['text'])
                         <div class="lens-vu-item">
@@ -518,4 +518,8 @@
         </tr>
     @endif
 @endif
+
+
+
+
 

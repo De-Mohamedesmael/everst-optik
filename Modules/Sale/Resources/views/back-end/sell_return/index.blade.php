@@ -9,7 +9,7 @@
         {{translate('sell_return')}}</li>
 @endsection
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
 
         <div class="container-fluid no-print">
             <div class="col-md-12 px-1">
@@ -19,7 +19,7 @@
                         <span class="header-pill"></span>
                     </h5>
                 </div>
-                <div class="card my-3">
+                <div class="card my-2">
                     <div class="card-body p-2">
                         <form action="">
                             <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card my-3">
+            <div class="card my-2">
                 <div class="card-body p-2">
                     <div class="table-responsive no-print">
                         <table id="sell_return_table" class="table">

@@ -1,4 +1,4 @@
-<div class="card my-3">
+<div class="card my-2">
     <div class="card-body p-2">
         <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
             <div class="col-md-3 px-5">
@@ -44,7 +44,7 @@
         <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
 
             <div
-                class="d-flex my-2  col-md-3 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
+                class="d-flex my-2 px-5 col-md-3 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                 <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
                         data-bs-target="#lensesFilterCollapse" aria-expanded="false"
                         aria-controls="lensesFilterCollapse">

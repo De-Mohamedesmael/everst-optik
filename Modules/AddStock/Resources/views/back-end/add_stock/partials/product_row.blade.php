@@ -100,8 +100,11 @@
             </h6>
         </td>
         <td>
-            <div class="i-checks"><input name="add_stock_lines[{{ $i }}][stock_pricechange]" id="active"
+            <div class="i-checks toggle-pill-color flex-col-centered">
+
+                <input name="add_stock_lines[{{ $i }}][stock_pricechange]" id="active"
                                          type="checkbox" class="stock_pricechange stockId{{ $i }}" checked value="1">
+                                         <label for="active"></label>
             </div>
         </td>
         <td>

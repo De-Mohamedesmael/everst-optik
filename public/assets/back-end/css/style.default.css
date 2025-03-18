@@ -128,7 +128,7 @@ h2 {
 .card {
     margin-bottom: 30px;
     -webkit-box-shadow: none;
-    box-shadow: none;
+    box-shadow: none !important;
 }
 
 .card-header h1,

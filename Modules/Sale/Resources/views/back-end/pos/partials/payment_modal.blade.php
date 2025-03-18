@@ -10,7 +10,7 @@ class="modal fade">
                 class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                 <h5 id="exampleModalLabel" class="modal-title position-relative d-flex align-items-center"
                     style="gap: 5px;">@lang('lang.finalize_sale')
-                    <span class=" header-pill"></span>
+
                 </h5>
                 <button id="submit-btn" type="button" class="btn btn-main mt-3 "  data-dismiss="modal">@lang('lang.submit')</button>
                 <button type="button" data-dismiss="modal" aria-label="Close"
@@ -19,7 +19,7 @@ class="modal fade">
                         <i class="dripicons-cross"></i>
                     </span>
                 </button>
-                <span class="position-absolute modal-border"></span>
+
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -305,14 +305,19 @@ class="modal fade">
                         </div>
 
                         <div class="col-md-12 mb-3 position-relative">
-                            <div class="i-checks">
+                            <div class="i-checks toggle-pill-color flex-col-centered">
                                 <input id="print_the_transaction" name="print_the_transaction" type="checkbox"
                                     class="form-control-custom" @if (!empty($show_the_window_printing_prompt) &&
                                     $show_the_window_printing_prompt=='1' ) checked @endif value="1">
                                 <label
-                                    for="print_the_transaction"><strong>@lang('lang.print_the_transaction')</strong></label>
+                                    for="print_the_transaction">
+                                </label>
+                                <span>
+                                    <strong>@lang('lang.print_the_transaction')</strong>
+
+                                </span>
                             </div>
-                            <span class="position-absolute modal-border"></span>
+
                         </div>
                         {{-- <div class="col-md-12 d-flex">
 

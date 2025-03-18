@@ -10,7 +10,7 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-                style="text-decoration: none;color: #476762" href="{{ route('admin.lenses.index') }}">/
+                style="text-decoration: none;color: #476762" href="{{ route('admin.lenses.index') }}">
             @lang('lang.lenses')</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
@@ -18,7 +18,7 @@
 @endsection
 
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 px-1">

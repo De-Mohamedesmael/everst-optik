@@ -2,7 +2,7 @@
     $index = $index ?? '';
 @endphp
 
-<button type="button" class="btn select_product_button d-flex justify-content-center align-items-center"
+<button type="button" class="btn select_product_button d-flex justify-content-center align-items-center w-100 h-100"
     data-toggle="modal" data-target="#select_products_modal{{ $index ?? '' }}">
     @lang('lang.select_products')
 </button>
@@ -16,13 +16,13 @@
 
                 <h5 class=" modal-title position-relative  d-flex align-items-center" style="gap: 5px;">
                     @lang('lang.select_products')
-                    <span class=" header-pill"></span>
+
                 </h5>
                 <button type="button"
                     class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
                     data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
                             class="dripicons-cross"></i></span></button>
-                <span class="position-absolute modal-border"></span>
+
             </div>
 
             <div class="modal-body">

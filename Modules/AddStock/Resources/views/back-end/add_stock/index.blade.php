@@ -10,10 +10,10 @@
 @endsection
 @section('content')
 
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
         <div class="container-fluid">
 
-            <div class="card my-3">
+            <div class="card my-2">
                 <div class="card-body p-2">
                     <form action="">
                         <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
@@ -107,7 +107,7 @@
                 </div>
             </div>
 
-            <div class="card my-3">
+            <div class="card my-2">
                 <div class="card-body p-2">
                     <div class="table-responsive">
                         <table class="table" id="add_stock_table">

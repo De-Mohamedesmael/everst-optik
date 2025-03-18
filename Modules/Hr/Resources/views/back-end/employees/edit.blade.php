@@ -4,7 +4,7 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #476762" href="{{ route('admin.hr.employees.index') }}">/
+            style="text-decoration: none;color: #476762" href="{{ route('admin.hr.employees.index') }}">
             @lang('lang.employees')</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">

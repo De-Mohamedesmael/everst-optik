@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/stock.css') }}">
 @endsection
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-22 px-1">
@@ -58,53 +58,81 @@
 
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="i-checks">
+                                    <div class="i-checks toggle-pill-color flex-col-centered">
                                         <input id="product_name" name="product_name" type="checkbox" checked value="1"
                                             class="form-control-custom">
-                                        <label for="product_name"><strong>@lang('lang.product_name')</strong></label>
+                                        <label for="product_name">
+                                        </label>
+                                        <span>
+
+                                            <strong>@lang('lang.product_name')</strong>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="i-checks">
+                                    <div class="i-checks toggle-pill-color flex-col-centered">
                                         <input id="price" name="price" type="checkbox" checked value="1"
                                             class="form-control-custom">
-                                        <label for="price"><strong>@lang('lang.price')</strong></label>
+                                        <label for="price">
+                                        </label>
+                                        <span>
+
+                                            <strong>@lang('lang.price')</strong>
+                                        </span>
                                     </div>
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-2 toggle-pill-color flex-col-centered">
                                     <div class="i-checks">
                                         <input id="size" name="size" type="checkbox" checked value="1"
                                             class="form-control-custom">
-                                        <label for="size"><strong>@lang('lang.size')</strong></label>
+                                        <label for="size">
+                                        </label>
+                                        <span>
+                                            <strong>@lang('lang.size')</strong>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="i-checks">
+                                    <div class="i-checks toggle-pill-color flex-col-centered">
                                         <input id="color" name="color" type="checkbox" checked value="1"
                                             class="form-control-custom">
-                                        <label for="color"><strong>@lang('lang.color')</strong></label>
+                                        <label for="color">
+                                        </label>
+                                        <span>
+                                            <strong>@lang('lang.color')</strong>
+
+                                        </span>
                                     </div>
                                 </div>
 
                                 @foreach ($stores as $key => $store)
                                     <div class="col-md-2">
-                                        <div class="i-checks">
+                                        <div class="i-checks toggle-pill-color flex-col-centered">
                                             <input id="store{{ $key }}" name="store[{{ $key }}]"
                                                 type="checkbox" value="{{ $key }}"
                                                 @if ($loop->index == 0) checked @endif
                                                 class="form-control-custom">
                                             <label
-                                                for="store{{ $key }}"><strong>{{ $store }}</strong></label>
+                                                for="store{{ $key }}">
+                                            </label>
+                                            <span>
+                                                <strong>{{ $store }}</strong>
+                                            </span>
                                         </div>
                                     </div>
                                 @endforeach
                                 <div class="col-md-3">
-                                    <div class="i-checks">
+                                    <div class="i-checks toggle-pill-color flex-col-centered">
                                         <input id="site_title" name="site_title" type="checkbox" checked value="1"
                                             class="form-control-custom">
                                         <label
-                                            for="site_title"><strong>{{ \Modules\Setting\Entities\System::getProperty('site_title') }}</strong></label>
+                                            for="site_title">
+                                        </label>
+                                        <span>
+                                            <strong>{{ \Modules\Setting\Entities\System::getProperty('site_title') }}</strong>
+
+                                        </span>
                                     </div>
                                 </div>
                             </div>
