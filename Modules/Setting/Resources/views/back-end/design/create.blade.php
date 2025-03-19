@@ -11,7 +11,7 @@
             <button type="button"
                     class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
                     data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span class="position-absolute modal-border"></span>
+
         </div>
 
         <div

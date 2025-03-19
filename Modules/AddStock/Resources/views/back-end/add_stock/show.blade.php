@@ -3,7 +3,7 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #476762" href="{{ route('admin.add-stock.index') }}">/
+            style="text-decoration: none;color: #476762" href="{{ route('admin.add-stock.index') }}">
             {{translate('view_all_added_stocks')}}</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">

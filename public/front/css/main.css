@@ -80,7 +80,8 @@
 
 .toggle-button:hover {
     color: black !important;
-    background-color: rgba(69, 147, 134, 0.38);;
+    background-color: rgba(69, 147, 134, 0.38);
+    ;
 }
 
 .select-button {
@@ -98,7 +99,7 @@
 }
 
 #submit-btn,
-.submit-btn  {
+.submit-btn {
     background-color: var(--secondary-color);
     color: white;
     width: 100%;
@@ -140,7 +141,7 @@
 }
 
 .card {
-    box-shadow: 0 6px 8px -6px #999 !important;
+    box-shadow: none !important;
 }
 
 .btn-light {
@@ -168,7 +169,7 @@ th {
     min-width: 85px;
     text-align: center;
     color: #111;
-    background-color: #ececec ;
+    background-color: #ececec;
 }
 
 td {

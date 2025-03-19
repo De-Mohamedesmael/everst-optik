@@ -15,7 +15,7 @@
         ]) !!}
         <div
             class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse justify-content-end @else justify-content-start flex-row @endif align-items-center">
-            <div class="col-sm-6 mb-2">
+            <div class="col-sm-12 mb-2">
                 {!! Form::label('name', __('lang.name') . '*', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -37,7 +37,7 @@
                 'type' => 'category',
             ])
 
-            <div class="col-md-6 d-flex flex-column mb-2">
+            <div class="col-md-12 d-flex flex-column mb-2">
 
 
                 <label

@@ -15,22 +15,28 @@
 
     <div class="col-12 d-flex  flex-row justify-content-between align-items-center">
         <div class="col-md-1 px-0 d-flex justify-content-center">
-            <div class="i-checks">
+            <div class="i-checks toggle-pill-color flex-col-centered">
                 <input id="active" name="active" type="checkbox" checked value="1" class="form-control-custom">
-                <label for="active"><strong>
+                <label for="active">
+                </label>
+                <span>
+                    <strong>
                         @lang('lang.active')
-                    </strong></label>
+                    </strong>
+                </span>
             </div>
         </div>
         <div class="col-md-3 px-0 d-flex justify-content-center">
-            <div class="i-checks">
+            <div class="i-checks toggle-pill-color flex-col-centered">
                 <input id="clear_all_input_form" name="clear_all_input_form" type="checkbox"
                     @if ($clear_all_input_form == null || $clear_all_input_form == '1') checked @endif value="1" class="form-control-custom">
                 <label for="clear_all_input_form">
+                </label>
+                <span>
                     <strong>
                         @lang('lang.clear_all_input_form')
                     </strong>
-                </label>
+                </span>
             </div>
         </div>
     </div>
@@ -39,13 +45,13 @@
     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
     <h6 class="mb-0">
         {{translate('add_lens_information')}}
-        <span class=" section-header-pill"></span>
+
     </h6>
 </div>
 <div class="card mb-3">
     <div class="card-body p-2">
         <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-            <div class="col-md-2 px-2">
+            <div class="col-md-3 px-5">
                 <div class="form-group">
                     {!! Form::label('store_ids', __('lang.store'), [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -60,7 +66,7 @@
                     ]) !!}
                 </div>
             </div>
-            <div class="col-md-3 px-2">
+            <div class="col-md-3 px-5">
                 <div class="form-group">
                     {!! Form::label('name', __('lang.name') . ' *', [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -83,7 +89,7 @@
                     'type' => 'lenses',
                 ])
             </div>
-            <div class="col-md-2 px-2">
+            <div class="col-md-3 px-5">
                 <div class="form-group">
                     {!! Form::label('sku', __('lang.sku'), [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -95,7 +101,7 @@
                     ]) !!}
                 </div>
             </div>
-            <div class="col-md-2 px-2">
+            <div class="col-md-3 px-5">
                 <div class="form-group">
                     {!! Form::label('alert_quantity', __('lang.alert_quantity'), [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -106,7 +112,8 @@
                     ]) !!}
                 </div>
             </div>
-            <div class="col-md-2 px-2">
+            <div class="col-md-3 px-5">
+                <div class="form-group">
                 {!! Form::label('color_id', __('lang.color'), [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -131,7 +138,9 @@
                             </span>
                 </div>
             </div>
-            <div class="col-md-3 px-2">
+            </div>
+            <div class="col-md-3 px-5">
+                <div class="form-group">
                 {!! Form::label('brand_id', __('lang.brands') . ' *', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -150,8 +159,10 @@
                 </div>
                 <div class="error-msg text-red"></div>
             </div>
+            </div>
 
-            <div class="col-md-2 px-5">
+            <div class="col-md-3 px-5">
+                <div class="form-group">
                 {!! Form::label('focus_id', __('lang.foci') . ' *', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -170,7 +181,9 @@
                 </div>
                 <div class="error-msg text-red"></div>
             </div>
-            <div class="col-md-2 px-5">
+            </div>
+            <div class="col-md-3 px-5">
+                <div class="form-group">
                 {!! Form::label('index_lens_id', __('lang.index_lenses') . ' *', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -189,9 +202,11 @@
                 </div>
                 <div class="error-msg text-red"></div>
             </div>
+            </div>
 
 
-            <div class="col-md-2 px-5">
+            <div class="col-md-3 px-5">
+                <div class="form-group">
                 {!! Form::label('focus_id', __('lang.purchase_price') . ' *', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -207,7 +222,9 @@
                 </div>
                 <div class="error-msg text-red"></div>
             </div>
-            <div class="col-md-2 px-5">
+            </div>
+            <div class="col-md-3 px-5">
+                <div class="form-group">
                 {!! Form::label('index_lens_id', __('lang.sell_price') . ' *', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -223,6 +240,7 @@
                 </div>
                 <div class="error-msg text-red"></div>
             </div>
+            </div>
 
         </div>
     </div>
@@ -232,7 +250,7 @@
     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
     <h6 class="mb-0">
         {{translate('add_lens_image')}}
-        <span class=" section-header-pill"></span>
+
     </h6>
 </div>
 

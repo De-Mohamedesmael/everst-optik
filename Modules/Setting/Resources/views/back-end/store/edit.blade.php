@@ -11,7 +11,7 @@
             <button type="button"
                     class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
                     data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span class="position-absolute modal-border"></span>
+
         </div>
 
         <div
@@ -91,7 +91,7 @@
                 <label class="modal-label-width" for="details">@lang('lang.details') </label>
                 <div
                     class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                    {!! Form::textarea('details',$store->details, ['class' => 'form-control' , 'placeholder' => __('lang.details') , 'rows' => '2']);  !!}
+                    {!! Form::textarea('details',$store->details, ['class' => 'form-control' , 'placeholder' => __('lang.details') , 'rows' => '2'])  !!}
 
                     @error('details')
                     <span class="text-danger">{{ $message }}</span>

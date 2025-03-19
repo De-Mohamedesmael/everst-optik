@@ -3,10 +3,7 @@
 @section('styles')
     <style>
         .preview-edit-product-container {
-            /* display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        flex-wrap: wrap;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        gap: 10px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 20px; */
+
             display: grid;
             grid-template-columns: repeat(auto-fill, 170px);
         }
@@ -203,14 +200,14 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #476762" href="{{ route('admin.products.index') }}">/
+            style="text-decoration: none;color: #476762" href="{{ route('admin.products.index') }}">
             @lang('lang.products')</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
         @lang('lang.edit_product')</li>
 @endsection
 @section('content')
-<section class="forms py-0">
+<section class="forms px-3 py-1">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 px-1">
@@ -236,45 +233,63 @@
                     <div class="col-12 d-flex  flex-row justify-content-between align-items-center">
 
                         <div class="col-md-1 px-0 d-flex justify-content-center">
-                            <div class="i-checks">
+                            <div class="i-checks toggle-pill-color flex-col-centered">
                                 <input id="active" name="active" type="checkbox"
                                     @if (!empty($product->active)) checked @endif value="1"
                                     class="form-control-custom">
-                                <label for="active"><strong>
+                                <label for="active">
+                                </label>
+                                <span>
+                                    <strong>
                                         @lang('lang.active')
-                                    </strong></label>
+                                    </strong>
+                                </span>
                             </div>
                         </div>
                         <div class="col-md-2 px-0 d-flex justify-content-center">
-                            <div class="i-checks">
+                            <div class="i-checks toggle-pill-color flex-col-centered">
                                 <input id="have_weight" name="have_weight" type="checkbox"
                                     @if (!empty($product->have_weight)) checked @endif value="1"
                                     class="form-control-custom">
-                                <label for="have_weight"><strong>
+                                <label for="have_weight">
+                                </label>
+                                <span>
+                                    <strong>
                                         @lang('lang.have_weight')
-                                    </strong></label>
+                                    </strong>
+
+                                </span>
                             </div>
                         </div>
                         <div class="col-md-2 px-0 d-flex justify-content-center">
-                            <div class="i-checks">
+                            <div class="i-checks toggle-pill-color flex-col-centered">
                                 <input id="weighing_scale_barcode" name="weighing_scale_barcode" type="checkbox"
                                     @if (!empty($product->weighing_scale_barcode)) checked @endif value="1"
                                     class="form-control-custom">
-                                <label for="weighing_scale_barcode"><strong>
+                                <label for="weighing_scale_barcode">
+                                </label>
+                                <span>
+                                    <strong>
                                         @lang('lang.weighing_scale_barcode')
-                                    </strong></label>
+                                    </strong>
+                                </span>
                             </div>
                         </div>
                         @php
                             $products_count = Modules\Product\Entities\Product::where('show_at_the_main_pos_page', 'yes')->count();
                         @endphp
                         <div class="col-md-3 px-0 d-flex justify-content-center">
-                            <div class="i-checks">
+                            <div class="i-checks toggle-pill-color flex-col-centered">
                                 <input id="show_at_the_main_pos_page" name="show_at_the_main_pos_page" type="checkbox"
                                     @if (isset($products_count) && $products_count < 40) @if (!empty($product->show_at_the_main_pos_page) && $product->show_at_the_main_pos_page == 'yes') checked @endif
                                 @elseif(isset($products_count) && $products_count == 40) disabled @endif
                                 value="1" class="form-control-custom">
-                                <label for="show_at_the_main_pos_page"><strong>@lang('lang.show_at_the_main_pos_page')</strong></label>
+                                <label for="show_at_the_main_pos_page">
+                                </label>
+                                <span>
+                                    <strong>@lang('lang.show_at_the_main_pos_page')</strong>
+
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -283,14 +298,14 @@
                     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                     <h6 class="mb-0">
                         @lang('lang.product_information')
-                        <span class=" section-header-pill"></span>
+
                     </h6>
                 </div>
                 <div class="card mb-3">
                     <div class="card-body p-2">
                         <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
 
-                            <div class="col-md-4 px-5">
+                            <div class="col-md-3 px-5">
                                 <div class="form-group">
                                     {!! Form::label('store_ids', __('lang.store'), [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -307,7 +322,7 @@
                             </div>
 
 
-                            <div class="col-md-4 px-5">
+                            <div class="col-md-3 px-5">
                                 {!! Form::label('category_id', __('lang.category') . ' *', [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
@@ -333,7 +348,7 @@
                                 <div class="error-msg text-red"></div>
                             </div>
 
-                            <div class="col-md-4 px-5">
+                            <div class="col-md-3 px-5">
                                 <div class="form-group">
                                     {!! Form::label('name', __('lang.name') . ' *', [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -379,7 +394,7 @@
                                     ]) !!}
                                 </div>
                             </div>
-                            <div class="col-md-2 px-5">
+                            <div class="col-md-3 px-5">
                                 {!! Form::label('color_id', __('lang.color'), [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
@@ -404,7 +419,7 @@
                             </span>
                                 </div>
                             </div>
-                            <div class="col-md-2 px-5">
+                            <div class="col-md-3 px-5">
                                 {!! Form::label('size_id', __('lang.size'), [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
@@ -424,7 +439,7 @@
                         </span>
                                 </div>
                             </div>
-                            <div class="col-md-2 px-5">
+                            <div class="col-md-3 px-5">
                                 {!! Form::label('brand_id', __('lang.brand'), [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
@@ -455,7 +470,7 @@
                     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                     <h6 class="mb-0">
                         @lang('lang.product_image')
-                        <span class=" section-header-pill"></span>
+
                     </h6>
                 </div>
 
@@ -651,11 +666,15 @@
 
                                 <div
                                     class="col-md-4 d-flex @if (app()->isLocale('ar')) justify-content-end @else  justify-content-start @endif">
-                                    <div class="i-checks">
+                                    <div class="i-checks toggle-pill-color flex-col-centered">
                                         <input id="show_to_customer" name="show_to_customer" type="checkbox"
                                             @if ($product->show_to_customer) checked @endif value="1"
                                             class="form-control-custom">
-                                        <label for="show_to_customer"><strong>@lang('lang.show_to_customer')</strong></label>
+                                        <label for="show_to_customer">
+                                        </label>
+                                        <span>
+                                            <strong>@lang('lang.show_to_customer')</strong>
+                                        </span>
                                     </div>
                                 </div>
 

@@ -51,7 +51,7 @@
     </div>
 @endsection
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
         <div class="container-fluid">
             @if (request()->segment(1) == 'lenses')
                 <div
@@ -74,7 +74,7 @@
 
             @include('lens::back-end.lenses.partial.filter')
 
-            <div class="card my-3">
+            <div class="card my-2">
 
                 <div class="table-responsive" style="height: 60vh">
                     <table id="lens_table" class="table table-hover">

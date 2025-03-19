@@ -3,10 +3,6 @@
 @section('styles')
     <style>
         .preview-edit-lens-container {
-            /* display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        flex-wrap: wrap;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        gap: 10px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 20px; */
             display: grid;
             grid-template-columns: repeat(auto-fill, 170px);
         }
@@ -203,14 +199,14 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #476762" href="{{ route('admin.lenses.index') }}">/
+            style="text-decoration: none;color: #476762" href="{{ route('admin.lenses.index') }}">
             {{translate('lenses')}} </a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
         {{translate('edit_lens')}}</li>
 @endsection
 @section('content')
-<section class="forms py-0">
+<section class="forms px-3 py-1">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 px-1">
@@ -236,13 +232,18 @@
                     <div class="col-12 d-flex  flex-row justify-content-between align-items-center">
 
                         <div class="col-md-1 px-0 d-flex justify-content-center">
-                            <div class="i-checks">
+                            <div class="i-checks toggle-pill-color flex-col-centered">
                                 <input id="active" name="active" type="checkbox"
                                     @if (!empty($lens->active)) checked @endif value="1"
                                     class="form-control-custom">
-                                <label for="active"><strong>
+                                <label for="active">
+                                </label>
+                                <span>
+
+                                    <strong>
                                         @lang('lang.active')
-                                    </strong></label>
+                                    </strong>
+                                </span>
                             </div>
                         </div>
 
@@ -254,7 +255,7 @@
                     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                     <h6 class="mb-0">
                         {{translate('lens_information')}}
-                        <span class=" section-header-pill"></span>
+
                     </h6>
                 </div>
                 <div class="card mb-3">
@@ -323,7 +324,8 @@
                                     ]) !!}
                                 </div>
                             </div>
-                            <div class="col-md-2 px-5">
+                            <div class="col-md-3 px-5">
+                                <div class="form-group">
                                 {!! Form::label('color_id', __('lang.color'), [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
@@ -348,7 +350,9 @@
                             </span>
                                 </div>
                             </div>
-                            <div class="col-md-3 px-2">
+                            </div>
+                            <div class="col-md-3 px-5">
+                                <div class="form-group">
                                 {!! Form::label('brand_id', __('lang.brands') . ' *', [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
@@ -367,8 +371,10 @@
                                 </div>
                                 <div class="error-msg text-red"></div>
                             </div>
+                            </div>
 
-                            <div class="col-md-2 px-5">
+                            <div class="col-md-3 px-5">
+                                <div class="form-group">
                                 {!! Form::label('focus_id', __('lang.foci') . ' *', [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
@@ -387,7 +393,9 @@
                                 </div>
                                 <div class="error-msg text-red"></div>
                             </div>
-                            <div class="col-md-2 px-5">
+                            </div>
+                            <div class="col-md-3 px-5">
+                                <div class="form-group">
                                 {!! Form::label('index_lens_id', __('lang.index_lenses') . ' *', [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
@@ -406,9 +414,11 @@
                                 </div>
                                 <div class="error-msg text-red"></div>
                             </div>
+                            </div>
 
 
-                            <div class="col-md-2 px-5">
+                            <div class="col-md-3 px-5">
+                                <div class="form-group">
                                 {!! Form::label('focus_id', __('lang.purchase_price') . ' *', [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
@@ -424,7 +434,9 @@
                                 </div>
                                 <div class="error-msg text-red"></div>
                             </div>
-                            <div class="col-md-2 px-5">
+                            </div>
+                            <div class="col-md-3 px-5">
+                                <div class="form-group">
                                 {!! Form::label('sell_price', __('lang.sell_price') . ' *', [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
@@ -440,6 +452,7 @@
                                 </div>
                                 <div class="error-msg text-red"></div>
                             </div>
+                            </div>
 
                         </div>
                     </div>
@@ -450,7 +463,7 @@
                     class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                     <h6 class="mb-0">
                         {{translate('lens_image')}}
-                        <span class=" section-header-pill"></span>
+
                     </h6>
                 </div>
 

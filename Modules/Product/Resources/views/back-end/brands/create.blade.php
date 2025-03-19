@@ -16,7 +16,7 @@
 
         <div
             class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif align-items-center">
-            <div class="form-group col-md-6 px-5">
+            <div class="form-group col-md-12 px-5">
                 {!! Form::label('name', __('lang.name') . '*', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -27,7 +27,7 @@
                 ]) !!}
             </div>
             <input type="hidden" name="quick_add" value="{{ $quick_add }}">
-            <div class="form-group px-5 col-md-6 d-flex flex-column mb-2">
+            <div class="form-group px-5 col-md-12 d-flex flex-column mb-2">
                 <label
                     class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"
                     for="projectinput2"> {{ __('lang.image') }}</label>

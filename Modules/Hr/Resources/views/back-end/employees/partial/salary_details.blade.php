@@ -13,7 +13,7 @@
                 <button type="button"
                     class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
                     data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <span class="position-absolute modal-border"></span>
+
             </div>
             <div class="modal-body">
                 <div
@@ -21,13 +21,17 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <div class="i-checks">
+                            <div class="i-checks toggle-pill-color flex-col-centered">
                                 <input id="fixed_wage" name="fixed_wage" type="checkbox" value="1"
                                     @if (!empty($employee->fixed_wage)) checked @endif
                                     class="form-control-custom salary_checkbox">
                                 <label
                                     class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"
-                                    for="fixed_wage"><strong>@lang('lang.enter_the_fixed_wage')</strong></label>
+                                    for="fixed_wage">
+                                </label>
+                                <span>
+                                    <strong>@lang('lang.enter_the_fixed_wage')</strong>
+                                </span>
                                 {!! Form::text('fixed_wage_value', !empty($employee->fixed_wage_value) ? $employee->fixed_wage_value : null, [
                                     'class' => 'form-control salary_fields  modal-input app()->isLocale("ar") ? text-end : text-start',
                                     'placeholder' => __('lang.enter_the_fixed_wage'),
@@ -47,13 +51,19 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <div class="i-checks">
+                            <div class="i-checks toggle-pill-color flex-col-centered">
                                 <input id="commission" name="commission" type="checkbox" value="1"
                                     @if (!empty($employee->commission)) checked @endif
                                     class="form-control-custom salary_checkbox">
                                 <label
                                     class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"
-                                    for="commission"><strong>@lang('lang.enter_the_commission_%')</strong></label>
+                                    for="commission">
+                                </label>
+
+                                <span>
+
+                                    <strong>@lang('lang.enter_the_commission_%')</strong>
+                                    </span>
                                 {!! Form::text('commission_value', !empty($employee->commission_value) ? $employee->commission_value : null, [
                                     'class' => 'form-control salary_fields  modal-input app()->isLocale("ar") ? text-end : text-start',
                                     'placeholder' => __('lang.enter_the_commission_%'),

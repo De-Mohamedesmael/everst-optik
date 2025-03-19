@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
 @endsection
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
 
         <div class="container-fluid">
             <div class="col-md-12 px-1  no-print">
@@ -32,11 +32,15 @@
                                     @endif
                                 @endif
                                 <div class="col-md-3 mb-2">
-                                    <div class="i-checks">
+                                    <div class="i-checks toggle-pill-color flex-col-centered">
                                         <input id="{{ $loop->index }}" name="module_settings[{{ $key }}]"
                                             type="checkbox" @if (!empty($module_settings[$key])) checked @endif value="1"
                                             class="form-control-custom">
-                                        <label for="{{ $loop->index }}"><strong>{{ __('lang.' . $key) }}</strong></label>
+                                        <label for="{{ $loop->index }}">
+                                        </label>
+                                        <span>
+                                            <strong>{{ __('lang.' . $key) }}</strong>
+                                        </span>
                                     </div>
 
                                 </div>

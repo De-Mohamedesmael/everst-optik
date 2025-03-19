@@ -7,7 +7,7 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #476762" href="{{ route('admin.hr.employees.index') }}">/
+            style="text-decoration: none;color: #476762" href="{{ route('admin.hr.employees.index') }}">
             @lang('lang.employees')</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
@@ -145,13 +145,17 @@
                                         @foreach ($leave_types as $leave_type)
                                             <div class="col-md-4 px-5">
                                                 <div class="form-group">
-                                                    <div class="i-checks">
+                                                    <div class="i-checks toggle-pill-color flex-col-centered">
                                                         <input id="number_of_leaves{{ $leave_type->id }}"
                                                             name="number_of_leaves[{{ $leave_type->id }}][enabled]"
                                                             type="checkbox" value="1" class="form-control-custom">
                                                         <label
                                                             class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"
-                                                            for="number_of_leaves{{ $leave_type->id }}"><strong>{{ $leave_type->name }}</strong></label>
+                                                            for="number_of_leaves{{ $leave_type->id }}">
+                                                        </label>
+                                                        <span>
+                                                            <strong>{{ $leave_type->name }}</strong>
+                                                        </span>
                                                         <input type="number"
                                                             class="form-control  modal-input m-auto @if (app()->isLocale('ar')) text-end @else  text-start @endif"
                                                             name="number_of_leaves[{{ $leave_type->id }}][number_of_days]"
@@ -206,14 +210,20 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="form-group">
-                                                                            <div class="i-checks">
+                                                                            <div class="i-checks toggle-pill-color flex-col-centered">
                                                                                 <input
                                                                                     id="working_day_per_week{{ $key }}"
                                                                                     name="working_day_per_week[{{ $key }}]"
                                                                                     type="checkbox" value="1"
                                                                                     class="form-control-custom">
                                                                                 <label
-                                                                                    for="working_day_per_week{{ $key }}"><strong>{{ $week_day }}</strong></label>
+                                                                                    for="working_day_per_week{{ $key }}">
+
+                                                                                </label>
+                                                                                <span>
+                                                                                        <strong>{{ $week_day }}</strong>
+
+                                                                                    </span>
                                                                             </div>
                                                                         </div>
                                                                     </td>

@@ -232,7 +232,7 @@
         @lang('lang.general_settings')</li>
 @endsection
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
 
         <div class="container-fluid">
             <div class="col-md-12 px-1 no-print">
@@ -364,15 +364,20 @@
                                 ) !!}
                             </div>
                             <div class="col-md-3 px-5">
-                                <div class="i-checks">
+                                <div class="i-checks toggle-pill-color flex-col-centered">
                                     <input id="show_the_window_printing_prompt" name="show_the_window_printing_prompt"
                                         type="checkbox" @if (!empty($settings['show_the_window_printing_prompt']) && $settings['show_the_window_printing_prompt'] == '1') checked @endif value="1"
                                         class="form-control-custom">
                                     <label
                                         class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"
-                                        for="show_the_window_printing_prompt"><strong>
+                                        for="show_the_window_printing_prompt">
+                                    </label>
+                                    <span>
+
+                                        <strong>
                                             @lang('lang.show_the_window_printing_prompt')
-                                        </strong></label>
+                                        </strong>
+                                    </span>
                                 </div>
                             </div>
 

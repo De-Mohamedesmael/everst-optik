@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
 @endsection
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
 
         <div class="container-fluid">
             <div
@@ -13,7 +13,7 @@
                     <span class="header-pill"></span>
                 </h5>
             </div>
-            <div class="card my-3">
+            <div class="card my-2">
                 <div class="card-body p-2">
                     <div id="sales">
                         <form action="">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card my-3">
+            <div class="card my-2">
                 <div class="card-body p-2">
 
                     <table class="table dataTable">
