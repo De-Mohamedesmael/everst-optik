@@ -1008,6 +1008,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 @endsection
 
 @section('javascript')
+
 <script src="{{ asset('js/onscan.min.js') }}"></script>
 <script src="{{ asset('js/pos.js') }}"></script>
 <script>
