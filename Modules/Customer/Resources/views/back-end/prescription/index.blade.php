@@ -4,7 +4,7 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #476762" href="{{ route('admin.products.index') }}">/
+            style="text-decoration: none;color: #476762" href="{{ route('admin.products.index') }}">
             @lang('lang.products')</a>
     </li>
     <li class="breadcrumb-item  @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
@@ -25,7 +25,7 @@
     @endcan
 @endsection
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
 
         <div class="container-fluid">
 

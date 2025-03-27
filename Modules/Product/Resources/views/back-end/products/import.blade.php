@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.import_products'))
 
 @section('content')

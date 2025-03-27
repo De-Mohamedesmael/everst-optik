@@ -133,7 +133,7 @@ class SellPosController extends Controller
 
         //Check if there is a open register, if no then redirect to Create Register screen.
         if ($this->cashRegisterUtil->countOpenedRegister() == 0) {
-            return redirect()->route('admin.cash-register.create',['is_pos'=>1]);
+            return redirect()->route('admin.cash-register.create', ['is_pos' => 1]);
         }
 
         $categories = Category::groupBy('categories.id')->get();
@@ -153,15 +153,15 @@ class SellPosController extends Controller
         $employees = Employee::getCommissionEmployeeDropdown();
 
         $brand_lens = BrandLens::with('features')->get();
-        $special_bases=SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
-        $special_additions=SpecialAddition::orderBy('name', 'asc')->pluck('name', 'id');
+        $special_bases = SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
+        $special_additions = SpecialAddition::orderBy('name', 'asc')->pluck('name', 'id');
 
-        $brand_lenses=BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
-        $design_lenses=Design::orderBy('name', 'asc')->pluck('name', 'id');
-        $foci=Focus::orderBy('name', 'asc')->pluck('name', 'id');
-        $index_lenses=IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
-        $colors=Color::orderBy('name', 'asc')->pluck('name', 'id');
-        $lenses=Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
+        $brand_lenses = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $design_lenses = Design::orderBy('name', 'asc')->pluck('name', 'id');
+        $foci = Focus::orderBy('name', 'asc')->pluck('name', 'id');
+        $index_lenses = IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $lenses = Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
 
 
         if (empty($store_pos)) {
@@ -233,7 +233,7 @@ class SellPosController extends Controller
         $transactions = Transaction::where('customer_id', $customer_id)->where('type', 'sell')->whereIn('payment_status', ['pending', 'partial'])->orderBy('transaction_date', 'asc')->get();
 
         $remaining_due_amount = 0;
-        $new_balance =0;
+        $new_balance = 0;
         foreach ($transactions as $transaction) {
             $due_for_transaction = $this->getDueForTransaction($transaction->id);
             $paid_amount = 0;
@@ -241,7 +241,7 @@ class SellPosController extends Controller
                 if ($balance >= $due_for_transaction) {
                     $paid_amount = $due_for_transaction;
                     $balance -= $due_for_transaction;
-                    $transaction->payment_status="paid";
+                    $transaction->payment_status = "paid";
                     $transaction->save();
                 } else if ($balance < $due_for_transaction) {
                     $paid_amount = $balance;
@@ -251,7 +251,7 @@ class SellPosController extends Controller
                 $remaining_due_amount += $paid_amount;
                 $customer->added_balance = $customer->added_balance - $paid_amount;
                 $customer->save();
-                $new_balance +=$paid_amount;
+                $new_balance += $paid_amount;
                 $payment_data = [
                     'transaction_payment_id' => null,
                     'transaction_id' =>  $transaction->id,
@@ -388,19 +388,13 @@ class SellPosController extends Controller
                         }
                     }
                     $transaction_payment = $this->transactionUtil->createOrUpdateTransactionPayment($transaction, $payment_data);
-                     $this->transactionUtil->updateTransactionPaymentStatus($transaction->id);
+                    $this->transactionUtil->updateTransactionPaymentStatus($transaction->id);
                     $this->cashRegisterUtil->addPayments($transaction, $payment_data, 'credit', null, $transaction_payment->id);
                     if ($payment_data['method'] == 'bank_transfer' || $payment_data['method'] == 'card') {
                         $this->moneysafeUtil->addPayment($transaction, $payment_data, 'credit', $transaction_payment->id);
                     }
                 }
-
             }
-
-
-
-
-
         }
 
 
@@ -422,15 +416,14 @@ class SellPosController extends Controller
         $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
 
         // return $transaction->customer_id;
-        if($request->payments[0]['method']=='cash'){
-            $new_balance=$this->payCustomerDue($transaction->customer_id);
+        if ($request->payments[0]['method'] == 'cash') {
+            $new_balance = $this->payCustomerDue($transaction->customer_id);
             if ($new_balance < $request->add_to_customer_balance) {
                 // return [$this->commonUtil->num_uf($request->add_to_customer_balance),$new_balance];
                 $register = CashRegister::where('store_id', $request->store_id)->where('store_pos_id', $request->store_pos_id)->where('admin_id', Auth::user()->id)->where('closed_at', null)->where('status', 'open')->first();
-                $this->cashRegisterUtil->createCashRegisterTransaction($register,$this->commonUtil->num_uf($request->add_to_customer_balance)-$new_balance, 'cash_in', 'debit', $request->customer_id, $request->notes, null, 'customer_balance');
+                $this->cashRegisterUtil->createCashRegisterTransaction($register, $this->commonUtil->num_uf($request->add_to_customer_balance) - $new_balance, 'cash_in', 'debit', $request->customer_id, $request->notes, null, 'customer_balance');
             }
-
-        }else{
+        } else {
             if ($request->add_to_customer_balance > 0) {
                 $register = CashRegister::where('store_id', $request->store_id)->where('store_pos_id', $request->store_pos_id)->where('admin_id', Auth::user()->id)->where('closed_at', null)->where('status', 'open')->first();
                 $this->cashRegisterUtil->createCashRegisterTransaction($register, $request->add_to_customer_balance, 'cash_in', 'debit', $request->customer_id, $request->notes, null, 'customer_balance');
@@ -510,15 +503,15 @@ class SellPosController extends Controller
         $employees = Employee::getCommissionEmployeeDropdown();
 
         $brand_lens = BrandLens::with('features')->get();
-        $special_bases=SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
-        $special_additions=SpecialAddition::orderBy('name', 'asc')->pluck('name', 'id');
+        $special_bases = SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
+        $special_additions = SpecialAddition::orderBy('name', 'asc')->pluck('name', 'id');
 
-        $brand_lenses=BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
-        $design_lenses=Design::orderBy('name', 'asc')->pluck('name', 'id');
-        $foci=Focus::orderBy('name', 'asc')->pluck('name', 'id');
-        $index_lenses=IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
-        $colors=Color::orderBy('name', 'asc')->pluck('name', 'id');
-        $lenses=Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
+        $brand_lenses = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $design_lenses = Design::orderBy('name', 'asc')->pluck('name', 'id');
+        $foci = Focus::orderBy('name', 'asc')->pluck('name', 'id');
+        $index_lenses = IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $lenses = Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
         return view('sale::back-end.pos.edit')->with(compact(
             'transaction',
             'brand_lens',
@@ -675,13 +668,13 @@ class SellPosController extends Controller
         $query = Product::leftjoin('product_stores', 'products.id', 'product_stores.product_id')
             ->where('products.active', 1);
 
-        if(empty($request->category_id) && empty($request->brand_id) && empty($request->sorting_filter) && empty($request->price_filter)&& empty($request->selling_filter) ){
+        if (empty($request->category_id) && empty($request->brand_id) && empty($request->sorting_filter) && empty($request->price_filter) && empty($request->selling_filter)) {
             $query->where('products.show_at_the_main_pos_page', 'yes');
         }
 
         if (!empty($request->category_id)) {
-            $query->wherehas('categories', function ($q) use ($request){
-                $q->where('categories.id',$request->category_id);
+            $query->wherehas('categories', function ($q) use ($request) {
+                $q->where('categories.id', $request->category_id);
             });
         }
         if (!empty($request->brand_id)) {
@@ -760,13 +753,13 @@ class SellPosController extends Controller
                     $query->orWhere('sku', 'like', '%' . $term . '%');
                 })
                 ->whereNull('products.deleted_at');
-                $produc=$query->select('products.id')->get();
-                $p_store=$query->select('product_stores.product_id')->get();
-                if($produc == $p_store){
-                    if (!empty(request()->store_id)  ) {
-                        $query->where('product_stores.store_id', request()->store_id);
-                    }
+            $produc = $query->select('products.id')->get();
+            $p_store = $query->select('product_stores.product_id')->get();
+            if ($produc == $p_store) {
+                if (!empty(request()->store_id)) {
+                    $query->where('product_stores.store_id', request()->store_id);
                 }
+            }
             $selectRaws = [
                 'products.id as product_id',
                 'products.name',
@@ -878,12 +871,12 @@ class SellPosController extends Controller
                 }
             }
             if (!empty($product_id)) {
-                $old_len=null;
+                $old_len = null;
 
                 $index = $request->input('row_count');
                 $product = $this->productUtil->getDetailsFromProductByStore($product_id, $store_id, $batch_number_id);
-                if($product->is_lens){
-                    $old_len=Prescription::where('sell_line_id',$sell_lines_id)->where('product_id',$product_id)->first();
+                if ($product->is_lens) {
+                    $old_len = Prescription::where('sell_line_id', $sell_lines_id)->where('product_id', $product_id)->first();
                 }
 
                 $System = System::where('key', 'weight_product' . $store_pos_id)->first();
@@ -928,8 +921,6 @@ class SellPosController extends Controller
             return  $output;
         }
         return redirect()->back();
-
-
     }
 
     public function addDiscounts(Request $request): JsonResponse|RedirectResponse
@@ -941,7 +932,6 @@ class SellPosController extends Controller
             return response()->json(['result' => $result]);
         }
         return redirect()->back();
-
     }
     public function getProductDiscount(Request $request): JsonResponse|RedirectResponse
     {
@@ -955,7 +945,6 @@ class SellPosController extends Controller
             }
         }
         return redirect()->back();
-
     }
     /**
      * get the row for non-identifiable products
@@ -1262,7 +1251,7 @@ class SellPosController extends Controller
                         if (auth()->user()->can('sale.pos.view')) {
                             $html .=
                                 ' <a data-href="' . route('admin.sale.print', $row->id) . '"
-                        class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
+                        class="btn  text-white print-invoice"><i title="' . __('lang.print') . '"
                         data-toggle="tooltip" class="dripicons-print"></i></a>';
                         }
                         if (auth()->user()->can('sale.pos.view')) {
@@ -1272,7 +1261,7 @@ class SellPosController extends Controller
                                 title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
                         }
                         $html .=
-                            '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
+                            '<a  target="_blank" href="' . route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
                         title="' . __('lang.edit') . '" data-toggle="tooltip"
                         class="dripicons-document-edit"></i></a>';
                         if (auth()->user()->can('sale.pay.create_and_edit')) {
@@ -1291,7 +1280,7 @@ class SellPosController extends Controller
                         }
                         if (auth()->user()->can('sale.pos.delete')) {
                             $html .=
-                                '<button class="btn btn-danger delete_item" data-href=' . route('admin.pos.destroy', $row->id).'
+                                '<button class="btn btn-danger delete_item" data-href=' . route('admin.pos.destroy', $row->id) . '
                                 data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
                                 title="' . __('lang.delete') . '" data-toggle="tooltip"  data-dismiss="modal"
                                 ><i class="dripicons-trash"></i></button>';
@@ -1393,7 +1382,7 @@ class SellPosController extends Controller
                         if (auth()->user()->can('sale.pos.view')) {
                             $html .=
                                 ' <a data-href="' . route('admin.sale.print', $row->id) . '"
-                        class="btn btn-danger text-white print-invoice"><i title="' . __('lang.print') . '"
+                        class="btn text-white print-invoice"><i title="' . __('lang.print') . '"
                         data-toggle="tooltip" class="dripicons-print"></i></a>';
                         }
                         if (auth()->user()->can('sale.pos.view')) {
@@ -1403,7 +1392,7 @@ class SellPosController extends Controller
                                 title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
                         }
                         $html .=
-                            '<a  target="_blank" href="' .route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
+                            '<a  target="_blank" href="' . route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
                         title="' . __('lang.edit') . '" data-toggle="tooltip"
                         class="dripicons-document-edit"></i></a>';
                         if (auth()->user()->can('sale.pay.create_and_edit')) {
@@ -1422,7 +1411,7 @@ class SellPosController extends Controller
                         }
                         if (auth()->user()->can('sale.pos.delete')) {
                             $html .=
-                                '<button class="btn btn-danger delete_item" data-href=' . route('admin.pos.destroy', $row->id).'
+                                '<button class="btn btn-danger delete_item" data-href=' . route('admin.pos.destroy', $row->id) . '
                                 data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
                                 title="' . __('lang.delete') . '" data-toggle="tooltip" data-dismiss="modal"
                                 ><i class="dripicons-trash"></i></button>';
@@ -1594,33 +1583,33 @@ class SellPosController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function SaveLens( Request $request): mixed
+    public function SaveLens(Request $request): mixed
     {
         $validator = validator($request->all(), [
             'lens_id' => 'required|integer|exists:products,id',
             'product' => 'required|array',
             'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
             'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
-//            'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-//            'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
-//            'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
-//            'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-//            'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
-//            'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-//            'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
-//            'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+            //            'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            //            'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+            //            'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+            //            'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            //            'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+            //            'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            //            'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+            //            'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
 
 
             'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
             'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
-//            'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-//            'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
-//            'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
-//            'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-//            'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
-//            'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-//            'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
-//            'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+            //            'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            //            'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+            //            'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+            //            'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            //            'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+            //            'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            //            'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+            //            'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
 
 
             'product.VA.TinTing.value' => 'required_if:product.VA.TinTing.isCheck,1',
@@ -1630,78 +1619,73 @@ class SellPosController extends Controller
         ]);
         if ($validator->fails())
             return [
-                    'success'=>false,
-                    'msg'=> $validator->errors()->first()
+                'success' => false,
+                'msg' => $validator->errors()->first()
             ];
 
-        $VA_amount=[];
-        $total=0;
-        $VA=[];
+        $VA_amount = [];
+        $total = 0;
+        $VA = [];
         if (isset($request->product['VA']['TinTing']['isCheck']) && $request->product['VA']['TinTing']['isCheck'] != null) {
 
-                $VA_amount['TinTing_amount'] = System::getProperty('TinTing_amount')?:10;
+            $VA_amount['TinTing_amount'] = System::getProperty('TinTing_amount') ?: 10;
             $color = Color::whereId($request->product['VA']['TinTing']['value'])->first();
-            $total=$total+$VA_amount['TinTing_amount'];
-            $VA['TinTing']=$request->product['VA']['TinTing'];
-            $VA['TinTing']['text']=$color?->name;
-
+            $total = $total + $VA_amount['TinTing_amount'];
+            $VA['TinTing'] = $request->product['VA']['TinTing'];
+            $VA['TinTing']['text'] = $color?->name;
         }
 
         if (isset($request->product['VA']['Base']['isCheck']) && $request->product['VA']['Base']['isCheck'] != null) {
 
-            $Base=SpecialBase::whereId($request->product['VA']['Base']['value'])->first();
-            $VA_amount['Base_amount']=0;
-            if($Base){
-                $VA_amount['Base_amount']= $Base->price;
+            $Base = SpecialBase::whereId($request->product['VA']['Base']['value'])->first();
+            $VA_amount['Base_amount'] = 0;
+            if ($Base) {
+                $VA_amount['Base_amount'] = $Base->price;
             }
-            $total=$total+$VA_amount['Base_amount'];
-            $VA['Base']=$request->product['VA']['Base'];
-            $VA['Base']['text']=$Base?->name;
+            $total = $total + $VA_amount['Base_amount'];
+            $VA['Base'] = $request->product['VA']['Base'];
+            $VA['Base']['text'] = $Base?->name;
         }
 
 
-        if(isset($request->product['VA']['Ozel']['isCheck']) && $request->product['VA']['Ozel']['isCheck'] != null){
-            $VA_amount['Ozel_amount'] = System::getProperty('Ozel_amount')?:10;
-            $total=$total+$VA_amount['Ozel_amount'];
-            $VA['Ozel']=$request->product['VA']['Ozel'];
-            $VA['Ozel']['text']=$request->product['VA']['Ozel']['value'];
+        if (isset($request->product['VA']['Ozel']['isCheck']) && $request->product['VA']['Ozel']['isCheck'] != null) {
+            $VA_amount['Ozel_amount'] = System::getProperty('Ozel_amount') ?: 10;
+            $total = $total + $VA_amount['Ozel_amount'];
+            $VA['Ozel'] = $request->product['VA']['Ozel'];
+            $VA['Ozel']['text'] = $request->product['VA']['Ozel']['value'];
         }
 
 
-        if(isset($request->product['VA']['Special']['isCheck']) && $request->product['VA']['Special']['isCheck'] != null){
-            $Specials=SpecialAddition::wherein('id',$request->product['VA']['Special']['value'])->get();
-            $VA_amount['Special_amount']=$Specials->sum('price');
-            $VA['Special']=$request->product['VA']['Special'];
-            foreach ($Specials as $key => $Special){
-                $VA['Special']['TV'][$key]=[
-                    'text'=> $Special->name,
-                    'price'=> $Special->price,
+        if (isset($request->product['VA']['Special']['isCheck']) && $request->product['VA']['Special']['isCheck'] != null) {
+            $Specials = SpecialAddition::wherein('id', $request->product['VA']['Special']['value'])->get();
+            $VA_amount['Special_amount'] = $Specials->sum('price');
+            $VA['Special'] = $request->product['VA']['Special'];
+            foreach ($Specials as $key => $Special) {
+                $VA['Special']['TV'][$key] = [
+                    'text' => $Special->name,
+                    'price' => $Special->price,
                 ];
             }
-            $total=$total+$VA_amount['Special_amount'];
+            $total = $total + $VA_amount['Special_amount'];
         }
-        $VA['code']=$request->product['VA']['code'];
-        $VA['code']['text']=$request->product['VA']['code']['value'];
-        $VA_amount['total']=$total;
-        $data=[
-            'VA'=>$VA,
-            'VA_amount'=>$VA_amount,
-            'Lens'=>$request->product['Lens'],
+        $VA['code'] = $request->product['VA']['code'];
+        $VA['code']['text'] = $request->product['VA']['code']['value'];
+        $VA_amount['total'] = $total;
+        $data = [
+            'VA' => $VA,
+            'VA_amount' => $VA_amount,
+            'Lens' => $request->product['Lens'],
         ];
         $randomNumber = mt_rand(1000, 9999);
         $timestamp = time();
 
 
         $cacheKey = "{$randomNumber}_{$timestamp}";
-        $expirationTime = 60*6;
+        $expirationTime = 60 * 6;
         Cache::put($cacheKey, $data, $expirationTime);
-        return[
-            'success'=>true,
-            'KeyLens'=>$cacheKey,
+        return [
+            'success' => true,
+            'KeyLens' => $cacheKey,
         ];
-
-
     }
-
-
 }

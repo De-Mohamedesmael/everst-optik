@@ -11,31 +11,31 @@
 @endsection
 
 @section('breadcrumbs')
-    @parent
-    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #476762" href="{{ route('admin.add-stock.index') }}">/
-            {{translate('view_all_added_stocks')}}</a>
-    </li>
-    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
-        @lang('lang.add_stock') @if(request()->type == 'lenses') {{translate('lenses')}} @endif</li>
+@parent
+<li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
+        style="text-decoration: none;color: #476762" href="{{ route('admin.add-stock.index') }}">
+        {{translate('view_all_added_stocks')}}</a>
+</li>
+<li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
+    @lang('lang.add_stock') @if(request()->type == 'lenses') {{translate('lenses')}} @endif</li>
 @endsection
 @section('content')
-    @php
-        $clear_all_input_stock_form = System::getProperty('clear_all_input_stock_form');
-        if ($clear_all_input_stock_form == 0) {
-            $transaction_payment = [];
-            $recent_stock = [];
-        } else {
-            $recent_stock = Transaction::where('type', 'add_stock')->orderBy('created_at', 'desc')->first();
-            if (!empty($recent_stock)) {
-                $transaction_payment = $recent_stock->transaction_payments->first();
-            }
-        }
-    @endphp
-    <section class="forms py-0">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 px-1">
+@php
+$clear_all_input_stock_form = System::getProperty('clear_all_input_stock_form');
+if ($clear_all_input_stock_form == 0) {
+$transaction_payment = [];
+$recent_stock = [];
+} else {
+$recent_stock = Transaction::where('type', 'add_stock')->orderBy('created_at', 'desc')->first();
+if (!empty($recent_stock)) {
+$transaction_payment = $recent_stock->transaction_payments->first();
+}
+}
+@endphp
+<section class="forms px-3 py-1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 px-1">
 
                     <div class="card mb-2 d-flex flex-row justify-content-around align-items-center ">
                         <div class=" d-flex flex-row justify-content-center align-items-center">
@@ -90,112 +90,115 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4 px-5">
-                                    <div class="form-group">
-                                        <div
-                                            class="d-flex align-items-center @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
+                            <div class="col-md-4 px-5">
+                                <div class="form-group">
+                                    <div
+                                        class="d-flex align-items-center @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
 
-                                            {!! Form::label('po_no', __('lang.po_no'), [
-                                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                            ]) !!}
-                                            <div style="width: 30px;height: 30px;">
-                                                <img class="w-100 h-100 dripicons-question"
-                                                     src="{{ asset('front/images/icons/warning.png') }}" alt="warning!"
-                                                     data-toggle="tooltip" title="@lang('lang.po_no_add_stock_info')">
-                                            </div>
-
+                                        {!! Form::label('po_no', __('lang.po_no'), [
+                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end :
+                                        text-start',
+                                        ]) !!}
+                                        <div style="width: 30px;height: 30px;">
+                                            <img class="w-100 h-100 dripicons-question"
+                                                src="{{ asset('front/images/icons/warning.png') }}" alt="warning!"
+                                                data-toggle="tooltip" title="@lang('lang.po_no_add_stock_info')">
                                         </div>
-                                        {!! Form::select(
-                                            'po_no',
-                                            $po_nos,
-                                            !empty($recent_stock) && !empty($recent_stock->purchase_order_id) ? $recent_stock->purchase_order_id : null,
-                                            [
-                                                'class' => 'selectpicker form-control',
-                                                'data-live-search' => 'true',
-                                                'style' => 'width: 80%',
-                                                'placeholder' => __('lang.please_select'),
-                                            ],
-                                        ) !!}
-                                    </div>
-                                </div>
 
-                                <div class="col-md-4 px-5">
-                                    <div class="form-group">
-                                        {!! Form::label('status', __('lang.status') . '*', [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::select(
-                                            'status',
-                                            ['received' => __('lang.received'), 'partially_received' => __('lang.partially_received')],
-                                            !empty($recent_stock) && !empty($recent_stock->status) ? $recent_stock->status : 'Please Select',
-                                            [
-                                                'class' => 'selectpicker form-control',
-                                                'data-live-search' => 'true',
-                                                'required',
-                                                'style' => 'width: 80%',
-                                                'placeholder' => __('lang.please_select'),
-                                            ],
-                                        ) !!}
                                     </div>
+                                    {!! Form::select(
+                                    'po_no',
+                                    $po_nos,
+                                    !empty($recent_stock) && !empty($recent_stock->purchase_order_id) ?
+                                    $recent_stock->purchase_order_id : null,
+                                    [
+                                    'class' => 'selectpicker form-control',
+                                    'data-live-search' => 'true',
+                                    'style' => 'width: 80%',
+                                    'placeholder' => __('lang.please_select'),
+                                    ],
+                                    ) !!}
                                 </div>
-                                <div class="col-md-4 px-5">
-                                    {!! Form::label('transaction_date', __('lang.date_and_time'), [
-                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                            </div>
+
+                            <div class="col-md-4 px-5">
+                                <div class="form-group">
+                                    {!! Form::label('status', __('lang.status') . '*', [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
-                                    <input type="datetime-local" id="transaction_date" name="transaction_date"
-                                           value="{{ date('Y-m-d\TH:i') }}"
-                                           class="form-control modal-input m-auto @if (app()->isLocale('ar')) text-end @else  text-start @endif">
+                                    {!! Form::select(
+                                    'status',
+                                    ['received' => __('lang.received'), 'partially_received' =>
+                                    __('lang.partially_received')],
+                                    !empty($recent_stock) && !empty($recent_stock->status) ? $recent_stock->status :
+                                    'Please Select',
+                                    [
+                                    'class' => 'selectpicker form-control',
+                                    'data-live-search' => 'true',
+                                    'required',
+                                    'style' => 'width: 80%',
+                                    'placeholder' => __('lang.please_select'),
+                                    ],
+                                    ) !!}
                                 </div>
-                                <div class="col-md-4 px-5">
-                                    <div class="form-group">
-                                        <input type="hidden" name="exchange_rate" id="exchange_rate" value="1">
-                                        <input type="hidden" name="default_currency_id" id="default_currency_id"
-                                               value="{{ !empty(System::getProperty('currency')) ? System::getProperty('currency') : '' }}">
-                                        {!! Form::label('paying_currency_id', __('lang.paying_currency'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::select(
-                                            'paying_currency_id',
-                                            $exchange_rate_currencies,
-                                            !empty(System::getProperty('currency')) ? System::getProperty('currency') : null,
-                                            ['class' => 'form-control selectpicker', 'data-live-search' => 'true', 'required'],
-                                        ) !!}
-                                    </div>
+                            </div>
+                            <div class="col-md-4 px-5">
+                                {!! Form::label('transaction_date', __('lang.date_and_time'), [
+                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                <input type="datetime-local" id="transaction_date" name="transaction_date"
+                                    value="{{ date('Y-m-d\TH:i') }}"
+                                    class="form-control modal-input m-auto @if (app()->isLocale('ar')) text-end @else  text-start @endif">
+                            </div>
+                            <div class="col-md-4 px-5">
+                                <div class="form-group">
+                                    <input type="hidden" name="exchange_rate" id="exchange_rate" value="1">
+                                    <input type="hidden" name="default_currency_id" id="default_currency_id"
+                                        value="{{ !empty(System::getProperty('currency')) ? System::getProperty('currency') : '' }}">
+                                    {!! Form::label('paying_currency_id', __('lang.paying_currency'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::select(
+                                    'paying_currency_id',
+                                    $exchange_rate_currencies,
+                                    !empty(System::getProperty('currency')) ? System::getProperty('currency') : null,
+                                    ['class' => 'form-control selectpicker', 'data-live-search' => 'true', 'required'],
+                                    ) !!}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-3">
-                        <div class="card-body p-2">
-                            <div class="row justify-content-center align-items-center mb-3" style="gap: 10px">
-                                <div class="col-md-8">
-                                    <div class="search-box input-group modal-input"
-                                         style="height: 30px;padding: 0 !important">
-                                        <button type="button"
-                                                class="btn h-100 d-flex justify-content-center align-items-center"
-                                                style="background-color: var(--complementary-color-1)"
-                                                id="search_button"><i
-                                                class="fa fa-search text-white"></i></button>
-                                        <input type="text" name="search_product" id="search_product"
-                                               placeholder="@lang('lang.enter_product_name_to_print_labels')"
-                                               class="form-control h-100 ui-autocomplete-input"
-                                               style="background-color: transparent" autocomplete="off">
-                                        <button type="button"
-                                                class="btn text-black d-flex justify-content-center align-items-center btn-modal h-100"
-                                                style="ackground-color: #1665c061;color: #1665c0 !important;"
-                                                data-href="{{ route('admin.products.create') }}?quick_add=1"
-                                                data-container=".view_modal"><i class="fa fa-plus "></i></button>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    @include('product::back-end.products.partial.product_selection')
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body p-2">
+                        <div class="row justify-content-center align-items-center mb-3" style="gap: 10px">
+                            <div class="col-md-8">
+                                <div class="search-box input-group modal-input"
+                                    style="height: 30px;padding: 0 !important">
+                                    <button type="button"
+                                        class="btn h-100 d-flex justify-content-center align-items-center"
+                                        style="background-color: var(--complementary-color-1)" id="search_button"><i
+                                            class="fa fa-search text-white"></i></button>
+                                    <input type="text" name="search_product" id="search_product"
+                                        placeholder="@lang('lang.enter_product_name_to_print_labels')"
+                                        class="form-control h-100 ui-autocomplete-input"
+                                        style="background-color: transparent" autocomplete="off">
+                                    <button type="button"
+                                        class="btn text-black d-flex justify-content-center align-items-center btn-modal h-100"
+                                        style="ackground-color: #1665c061;color: #1665c0 !important;"
+                                        data-href="{{ route('admin.products.create') }}?quick_add=1"
+                                        data-container=".view_modal"><i class="fa fa-plus "></i></button>
                                 </div>
                             </div>
+                            <div class="col-md-2" style="height: 30px">
+                                @include('product::back-end.products.partial.product_selection')
+                            </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table table-bordered table-condensed" id="product_table">
-                                        <thead>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-condensed" id="product_table">
+                                    <thead>
                                         <tr>
                                             <th>#</th>
                                             <th style="width: 7%">@lang('lang.image')</th>
@@ -209,268 +212,278 @@
                                             <th style="width: 10%">@lang('lang.change_current_stock')</th>
                                             <th style="width: 10%">@lang('lang.action')</th>
                                         </tr>
-                                        </thead>
-                                        <tbody>
+                                    </thead>
+                                    <tbody>
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 d-flex justify-content-between">
-                        <h4 class="col-md-3">@lang('lang.items_count'): <span class="items_count_span"
-                                                                              style="margin-right: 15px;">0</span>
-                        </h4>
-                        <h4 class="col-md-3">
-                            @lang('lang.items_quantity'): <span class="items_quantity_span" style="margin-right: 15px;">0</span>
-                        </h4>
-
-                        <div class="col-md-3">
-                            <h3> @lang('lang.total'): <span class="final_total_span"></span></h3>
-                            <input type="hidden" name="grand_total" id="grand_total" value="0">
-                            <input type="hidden" name="final_total" id="final_total" value="0">
-                        </div>
-                    </div>
-                    <div
-                        class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                        <h6 class="mb-0">
-                            @lang('lang.more_info')
-                            <span class="header-pill"></span>
-                        </h6>
-                    </div>
-
-                    <div class="card mb-3">
-                        <div class="card-body p-2">
-                            <div class="row  @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('files', __('lang.files'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        <input
-                                            class="form-control modal-input m-auto @if (app()->isLocale('ar')) text-end @else  text-start @endif"
-                                            type="file" name="files[]" id="files" multiple>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('invoice_no', __('lang.invoice_no'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::text(
-                                            'invoice_no',
-                                            !empty($recent_stock) && !empty($recent_stock->invoice_no) ? $recent_stock->invoice_no : null,
-                                            [
-                                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                                'placeholder' => __('lang.invoice_no'),
-                                            ],
-                                        ) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('other_expenses', __('lang.other_expenses'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::text(
-                                            'other_expenses',
-                                            !empty($recent_stock) && !empty($recent_stock->other_expenses) ? @num_format($recent_stock->other_expenses) : null,
-                                            [
-                                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                                'placeholder' => __('lang.other_expenses'),
-                                                'id' => 'other_expenses',
-                                            ],
-                                        ) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('discount_amount', __('lang.discount'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::text(
-                                            'discount_amount',
-                                            !empty($recent_stock) && !empty($recent_stock->discount_amount)
-                                                ? @num_format($recent_stock->discount_amount)
-                                                : null,
-                                            [
-                                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                                'placeholder' => __('lang.discount'),
-                                                'id' => 'discount_amount',
-                                            ],
-                                        ) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('other_payments', __('lang.other_payments'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::text(
-                                            'other_payments',
-                                            !empty($recent_stock) && !empty($recent_stock->other_payments) ? @num_format($recent_stock->other_payments) : null,
-                                            [
-                                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                                'placeholder' => __('lang.other_payments'),
-                                                'id' => 'other_payments',
-                                            ],
-                                        ) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('source_type', __('lang.source_type') . '*', [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::select(
-                                            'source_type',
-                                            ['admin' => __('lang.admin'), 'pos' => __('lang.pos'), 'store' => __('lang.store'), 'safe' => __('lang.safe')],
-                                            !empty($recent_stock) && !empty($recent_stock->source_type) ? $recent_stock->source_type : 'Please Select',
-                                            [
-                                                'class' => 'selectpicker form-control',
-                                                'data-live-search' => 'true',
-                                                'style' => 'width: 80%',
-                                                'placeholder' => __('lang.please_select'),
-                                                'required',
-                                            ],
-                                        ) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('source_of_payment', __('lang.source_of_payment') . '*', [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::select(
-                                            'source_id',
-                                            $admins,
-                                            !empty($recent_stock) && !empty($recent_stock->source_id) ? $recent_stock->source_id : null,
-                                            [
-                                                'class' => 'selectpicker form-control',
-                                                'data-live-search' => 'true',
-                                                'style' => 'width: 80%',
-                                                'placeholder' => __('lang.please_select'),
-                                                'id' => 'source_id',
-                                                'required',
-                                            ],
-                                        ) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('payment_status', __('lang.payment_status') . '*', [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::select(
-                                            'payment_status',
-                                            $payment_status_array,
-                                            !empty($recent_stock) && !empty($recent_stock->payment_status) ? $recent_stock->payment_status : 'Please Select',
-                                            [
-                                                'class' => 'selectpicker form-control',
-                                                'data-live-search' => 'true',
-                                                'required',
-                                                'style' => 'width: 80%',
-                                                'placeholder' => __('lang.please_select'),
-                                            ],
-                                        ) !!}
-                                    </div>
-                                </div>
-
-                                @include('addstock::back-end.add_stock.partials.payment_form')
-
-                                <div class="col-md-3 due_amount_div hide">
-                                    <label
-                                        class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"
-                                        for="due_amount">@lang('lang.due') <span
-                                            class="due_amount_span">{{ @num_format(0) }}</span></label>
-                                </div>
-
-                                <div class="col-md-3 due_fields hide">
-                                    <div class="form-group">
-                                        {!! Form::label('due_date', __('lang.due_date'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::text(
-                                            'due_date',
-                                            !empty($transaction_payment) && !empty($transaction_payment->due_date)
-                                                ? @format_date($transaction_payment->due_date)
-                                                : (!empty($payment)
-                                                    ? @format_date($payment->due_date)
-                                                    : null),
-                                            [
-                                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start datepicker',
-                                                'placeholder' => __('lang.due_date'),
-                                            ],
-                                        ) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3 due_fields hide">
-                                    <div class="form-group">
-                                        {!! Form::label('notify_before_days', __('lang.notify_before_days'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-
-                                        {!! Form::text(
-                                            'notify_before_days',
-                                            !empty($transaction_payment) && !empty($transaction_payment->notify_before_days)
-                                                ? $transaction_payment->notify_before_days
-                                                : (!empty($payment)
-                                                    ? $payment->notify_before_days
-                                                    : null),
-                                            [
-                                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                                'placeholder' => __('lang.notify_before_days'),
-                                            ],
-                                        ) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        {!! Form::label('notes', __('lang.notes'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::textarea(
-                                            'notes',
-                                            !empty($recent_stock) && !empty($recent_stock->notes) ? $recent_stock->notes : null,
-                                            ['class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start', 'rows' => 3],
-                                        ) !!}
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row my-2 justify-content-center align-items-center">
-
-                                <div class="col-md-4 w-25">
-                                    <button type="submit" id="submit-save"
-                                            class="btn btn-primary py-1 w-100 pull-right btn-flat">@lang('lang.save')</button>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {!! Form::close() !!}
+                <div class="col-md-12 d-flex justify-content-between">
+                    <h4 class="col-md-3">@lang('lang.items_count'): <span class="items_count_span"
+                            style="margin-right: 15px;">0</span>
+                    </h4>
+                    <h4 class="col-md-3">
+                        @lang('lang.items_quantity'): <span class="items_quantity_span"
+                            style="margin-right: 15px;">0</span>
+                    </h4>
 
+                    <div class="col-md-3">
+                        <h3> @lang('lang.total'): <span class="final_total_span"></span></h3>
+                        <input type="hidden" name="grand_total" id="grand_total" value="0">
+                        <input type="hidden" name="final_total" id="final_total" value="0">
+                    </div>
+                </div>
+                <div
+                    class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
+                    <h6 class="mb-0">
+                        @lang('lang.more_info')
+                        <span class="header-pill"></span>
+                    </h6>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-body p-2">
+                        <div class="row  @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('files', __('lang.files'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    <input
+                                        class="form-control modal-input m-auto @if (app()->isLocale('ar')) text-end @else  text-start @endif"
+                                        type="file" name="files[]" id="files" multiple>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('invoice_no', __('lang.invoice_no'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::text(
+                                    'invoice_no',
+                                    !empty($recent_stock) && !empty($recent_stock->invoice_no) ?
+                                    $recent_stock->invoice_no : null,
+                                    [
+                                    'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                    'placeholder' => __('lang.invoice_no'),
+                                    ],
+                                    ) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('other_expenses', __('lang.other_expenses'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::text(
+                                    'other_expenses',
+                                    !empty($recent_stock) && !empty($recent_stock->other_expenses) ?
+                                    @num_format($recent_stock->other_expenses) : null,
+                                    [
+                                    'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                    'placeholder' => __('lang.other_expenses'),
+                                    'id' => 'other_expenses',
+                                    ],
+                                    ) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('discount_amount', __('lang.discount'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::text(
+                                    'discount_amount',
+                                    !empty($recent_stock) && !empty($recent_stock->discount_amount)
+                                    ? @num_format($recent_stock->discount_amount)
+                                    : null,
+                                    [
+                                    'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                    'placeholder' => __('lang.discount'),
+                                    'id' => 'discount_amount',
+                                    ],
+                                    ) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('other_payments', __('lang.other_payments'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::text(
+                                    'other_payments',
+                                    !empty($recent_stock) && !empty($recent_stock->other_payments) ?
+                                    @num_format($recent_stock->other_payments) : null,
+                                    [
+                                    'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                    'placeholder' => __('lang.other_payments'),
+                                    'id' => 'other_payments',
+                                    ],
+                                    ) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('source_type', __('lang.source_type') . '*', [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::select(
+                                    'source_type',
+                                    ['admin' => __('lang.admin'), 'pos' => __('lang.pos'), 'store' => __('lang.store'),
+                                    'safe' => __('lang.safe')],
+                                    !empty($recent_stock) && !empty($recent_stock->source_type) ?
+                                    $recent_stock->source_type : 'Please Select',
+                                    [
+                                    'class' => 'selectpicker form-control',
+                                    'data-live-search' => 'true',
+                                    'style' => 'width: 80%',
+                                    'placeholder' => __('lang.please_select'),
+                                    'required',
+                                    ],
+                                    ) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('source_of_payment', __('lang.source_of_payment') . '*', [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::select(
+                                    'source_id',
+                                    $admins,
+                                    !empty($recent_stock) && !empty($recent_stock->source_id) ? $recent_stock->source_id
+                                    : null,
+                                    [
+                                    'class' => 'selectpicker form-control',
+                                    'data-live-search' => 'true',
+                                    'style' => 'width: 80%',
+                                    'placeholder' => __('lang.please_select'),
+                                    'id' => 'source_id',
+                                    'required',
+                                    ],
+                                    ) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('payment_status', __('lang.payment_status') . '*', [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::select(
+                                    'payment_status',
+                                    $payment_status_array,
+                                    !empty($recent_stock) && !empty($recent_stock->payment_status) ?
+                                    $recent_stock->payment_status : 'Please Select',
+                                    [
+                                    'class' => 'selectpicker form-control',
+                                    'data-live-search' => 'true',
+                                    'required',
+                                    'style' => 'width: 80%',
+                                    'placeholder' => __('lang.please_select'),
+                                    ],
+                                    ) !!}
+                                </div>
+                            </div>
+
+                            @include('addstock::back-end.add_stock.partials.payment_form')
+
+                            <div class="col-md-3 due_amount_div hide">
+                                <label
+                                    class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"
+                                    for="due_amount">@lang('lang.due') <span class="due_amount_span">{{ @num_format(0)
+                                        }}</span></label>
+                            </div>
+
+                            <div class="col-md-3 due_fields hide">
+                                <div class="form-group">
+                                    {!! Form::label('due_date', __('lang.due_date'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::text(
+                                    'due_date',
+                                    !empty($transaction_payment) && !empty($transaction_payment->due_date)
+                                    ? @format_date($transaction_payment->due_date)
+                                    : (!empty($payment)
+                                    ? @format_date($payment->due_date)
+                                    : null),
+                                    [
+                                    'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start
+                                    datepicker',
+                                    'placeholder' => __('lang.due_date'),
+                                    ],
+                                    ) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 due_fields hide">
+                                <div class="form-group">
+                                    {!! Form::label('notify_before_days', __('lang.notify_before_days'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+
+                                    {!! Form::text(
+                                    'notify_before_days',
+                                    !empty($transaction_payment) && !empty($transaction_payment->notify_before_days)
+                                    ? $transaction_payment->notify_before_days
+                                    : (!empty($payment)
+                                    ? $payment->notify_before_days
+                                    : null),
+                                    [
+                                    'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                    'placeholder' => __('lang.notify_before_days'),
+                                    ],
+                                    ) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {!! Form::label('notes', __('lang.notes'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::textarea(
+                                    'notes',
+                                    !empty($recent_stock) && !empty($recent_stock->notes) ? $recent_stock->notes : null,
+                                    ['class' => 'form-control modal-input app()->isLocale("ar") ? text-end :
+                                    text-start', 'rows' => 3],
+                                    ) !!}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row my-2 justify-content-center align-items-center">
+
+                            <div class="col-md-4 w-25">
+                                <button type="submit" id="submit-save"
+                                    class="btn btn-primary py-1 w-100 pull-right btn-flat">@lang('lang.save')</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <input type="hidden" id="typeRequest" name="type" value="{{request()->type}}">
 
-    </section>
+            {!! Form::close() !!}
+
+        </div>
+    </div>
+    <input type="hidden" id="typeRequest" name="type" value="{{request()->type}}">
+
+</section>
 @endsection
 
 @section('javascript')
-    {{-- <script src="{{ asset('front/js/bootstrap.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('front/js/bootstrap.min.js') }}"></script> --}}
 
 
-    <script src="{{ asset('js/add_stock.js') }}"></script>
-    <script src="{{ asset('js/product_selection.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
+<script src="{{ asset('js/add_stock.js') }}"></script>
+<script src="{{ asset('js/product_selection.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
 
 
             var hiddenColumnArray = JSON.parse('{!! addslashes(json_encode(Cache::get('key_' . auth()->id(), []))) !!}');
@@ -634,9 +647,9 @@
         });
 
 
-    </script>
-    <script>
-        function showDetails(i) {
+</script>
+<script>
+    function showDetails(i) {
             if ($(`#row_details_${i}`).is(":visible")) {
                 $(`#row_details_${i}`).hide()
             } else {
@@ -654,12 +667,12 @@
             }
             $(`#arrow${i}`).toggleClass("fa-arrow-down fa-arrow-up")
         }
-    </script>
-    @if (!empty($product_id))
-        <script type="text/javascript">
-            $(document).ready(function () {
+</script>
+@if (!empty($product_id))
+<script type="text/javascript">
+    $(document).ready(function () {
                 get_label_product_row({{ $product_id }});
             })
-        </script>
-    @endif
+</script>
+@endif
 @endsection

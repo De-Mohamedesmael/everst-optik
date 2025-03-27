@@ -17,7 +17,7 @@
             <button type="button"
                 class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
                 data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span class="position-absolute modal-border"></span>
+
         </div>
 
         <div
@@ -72,14 +72,17 @@
                     ) !!}
                 </div>
                 <div class="col-md-4">
-                    <div class="i-checks">
+                    <div class="i-checks toggle-pill-color flex-col-centered">
                         <input id="status" name="status" type="checkbox" checked value="1"
                             class="form-control-custom">
                         <label for="status">
+                        </label>
+                        <span>
+
                             <strong>
                                 @lang('lang.active')
                             </strong>
-                        </label>
+                        </span>
                     </div>
                 </div>
             @endif

@@ -328,13 +328,18 @@
                                 </div>
                                 <div
                                     class="col-md-4  @if (!auth()->user()->can('hr_management.employee_commission.create_and_edit')) hide @endif @if ($sale->shared_commission != 1) hide @endif shared_commission_div">
-                                    <div class="i-checks" style="margin-top: 37px;">
+                                    <div class="i-checks toggle-pill-color flex-col-centered" style="margin-top: 37px;">
                                         <input id="shared_commission" name="shared_commission" type="checkbox" value="1"
                                             @if ($sale->shared_commission) checked @endif
                                         class="form-control-custom">
-                                        <label for="shared_commission"><strong>
+                                        <label for="shared_commission">
+                                        </label>
+                                        <span>
+
+                                            <strong>
                                                 @lang('lang.shared_commission')
-                                            </strong></label>
+                                            </strong>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

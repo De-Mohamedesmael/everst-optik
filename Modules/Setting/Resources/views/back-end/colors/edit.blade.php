@@ -16,7 +16,7 @@
             <button type="button"
                 class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
                 data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span class="position-absolute modal-border"></span>
+
         </div>
         <div
             class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse justify-content-end @else justify-content-start flex-row @endif align-items-center">

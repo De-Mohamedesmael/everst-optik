@@ -5,13 +5,13 @@
             <div
                 class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                 <h5 class="modal-title position-relative  d-flex align-items-center" style="gap: 5px;">{{ trans('sale') }}
-                    <span class=" header-pill"></span>
+
                 </h5>
 
                 <button type="button" data-dismiss="modal" aria-label="Close"
                         class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
                         aria-hidden="true" style="border-radius: 10px !important;"><i class="dripicons-cross"></i></span></button>
-                <span class="position-absolute modal-border"></span>
+
             </div>
             <div class="modal-body">
             <div class="row">
@@ -258,7 +258,7 @@
                                 <hr class="hr-lens-show">
                                 <div class="col-md-12 dataLens" >
                                     <div class="lens-name">
-                                        {{$line->product->name }}
+                                        {{$line->product?->name }}
                                     </div>
                                 </div>
                                 @if((isset($data_prescription->Lens->Right->isCheck) && $data_prescription->Lens->Right->isCheck ==1) || isset($data_prescription->Lens->Right->Far->SPH))
@@ -482,7 +482,7 @@
                                                                 <div class="check-line"
                                                                      style="width: 100%;text-align: left;">
                                                                     <div
-                                                                        class="icheckbox_square-orange icheck-item ">
+                                                                        class="icheckbox_square-orange icheck-item toggle-pill-color flex-col-centered">
                                                                         <input type="checkbox" id="sameToRight"
                                                                                class="icheck-me popover2 icheck-input icheck[veqwi]"
                                                                                data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left"
@@ -493,12 +493,14 @@
                                                                                data-color="orange"
                                                                                data-original-title="" title=""
                                                                                disabled>
-                                                                    </div>
-                                                                    <label class="inline icheck-label "
-                                                                           for="sameToRight">
-                                                                        {{translate('Left glass is the same as right glass')}}
-                                                                    </label>
+                                                                               <label class="inline icheck-label "
+                                                                               for="sameToRight">
+                                                                            </label>
+                                                                            <span>
+                                                                                {{translate('Left glass is the same as right glass')}}
 
+                                                                            </span>
+                                                                        </div>
 
                                                                 </div>
 

@@ -53,7 +53,7 @@
 @endsection
 
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
 
         <div class="container-fluid">
 

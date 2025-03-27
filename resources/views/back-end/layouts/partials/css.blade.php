@@ -7,8 +7,10 @@
 <link href="{{ asset('assets/back-end/plugins/switchery/switchery.min.css') }}" rel="stylesheet">
 
 
-<link href="{{ asset('assets/back-end/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/back-end/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/back-end/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+    type="text/css" />
+<link href="{{ asset('assets/back-end/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet"
+    type="text/css" />
 <!---->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
@@ -21,9 +23,11 @@
 <link href="{{ asset('assets/back-end/css/style.css') }}" rel="stylesheet" type="text/css">
 
 <!-- Responsive Datatable css -->
-<link href="{{ asset('assets/back-end/plugins/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/back-end/plugins/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet"
+    type="text/css" />
 <link rel="stylesheet" href="{{ asset('assets/back-end/css/sweetalert2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/back-end/css/style.default.css') }}" id="theme-stylesheet" type="text/css">
+<link rel="stylesheet" href="{{ asset('assets/back-end/css/style.default.css') }}" id="theme-stylesheet"
+    type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/back-end/css/dropzone.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/back-end/js/cropperjs/cropper.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/back-end/css/style2.css') }}">
@@ -44,11 +48,12 @@
 
 <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}"
-      type="text/css">
+    type="text/css">
 
 <link rel="stylesheet" href="{{ asset('vendor/jquery-timepicker/jquery.timepicker.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/awesome-bootstrap-checkbox.css') }}" type="text/css">
-{{--<link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap-select.min.css') }}" type="text/css">--}}
+{{--
+<link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap-select.min.css') }}" type="text/css">--}}
 <!-- Font Awesome CSS-->
 <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" type="text/css">
 <!-- Drip icon font-->
@@ -59,7 +64,7 @@
 <link rel="stylesheet" href="{{ asset('css/grasp_mobile_progress_circle-1.0.0.min.css') }}" type="text/css">
 <!-- Custom Scrollbar-->
 <link rel="stylesheet" href="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css') }}"
-      type="text/css">
+    type="text/css">
 <!-- virtual keybord stylesheet-->
 <link rel="stylesheet" href="{{ asset('vendor/keyboard/css/keyboard.css') }}" type="text/css">
 <!-- date range stylesheet-->
@@ -67,9 +72,9 @@
 <!-- table sorter stylesheet-->
 <link rel="stylesheet" href="{{ asset('vendor/datatable/dataTables.bootstrap4.min.css') }}" type="text/css">
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.bootstrap.min.css"
-      type="text/css">
+    type="text/css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css"
-      type="text/css">
+    type="text/css">
 <link rel="stylesheet" href="{{ asset('vendor/toastr/toastr.min.css') }}" id="theme-stylesheet" type="text/css">
 <link rel="stylesheet" href="{{ asset('css/dropzone.css') }}">
 <link rel="stylesheet" href="{{ asset('vendor/cropperjs/cropper.min.css') }}">
@@ -120,57 +125,59 @@
     }
 
 
-    .wrapper1{
-        display: none ;
+    .wrapper1 {
+        display: none;
     }
+
     .card-header h6 {
         padding-top: 5px;
         padding-bottom: 5px;
     }
+
     .table-top-head {
         top: 0;
         left: 5% !important;
         right: 5% !important;
     }
+
     select.form-control {
 
         height: 80% !important;
     }
-
-
-
 </style>
 
 
 @if(app()->getLocale() =="ar")
-    <style>
-        a.item-list-a {
+<style>
+    a.item-list-a {
         direction: rtl;
-        }
-        a.d-flex.flex-row.text-start {
-            width: 100%;
-            border-right: 1px solid #00000036;
-        }
-    </style>
-@else
-    <style>
-        .navbar_item::after {
-            content: "";
-            position: absolute;
-            width: 3px;
-            height: 0;
-            background-color: #476762;
-            top: 0;
-            left: 0px;
-            transition: 0.5s;
-        }
+    }
 
-        a.d-flex.flex-row.text-start {
-            width: 100%;
-        }
-        a.d-flex.flex-row.text-start {
-            width: 100%;
-            border-left: 1px solid #00000036;
-        }
-    </style>
+    a.d-flex.flex-row.text-start {
+        width: 100%;
+
+    }
+</style>
+@else
+<style>
+    .navbar_item::after {
+        content: "";
+        position: absolute;
+        width: 3px;
+        height: 0;
+        background-color: #476762;
+        top: 0;
+        left: 0px;
+        transition: 0.5s;
+    }
+
+    a.d-flex.flex-row.text-start {
+        width: 100%;
+    }
+
+    a.d-flex.flex-row.text-start {
+        width: 100%;
+
+    }
+</style>
 @endif

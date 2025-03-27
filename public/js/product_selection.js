@@ -71,7 +71,7 @@ $(document).ready(function () {
             { data: "image", name: "image" },
             { data: "name", name: "products.name" },
             { data: "sku", name: "products.sku" },
-            { data: "categories_names", name: "categories_name" },
+            { data: "categories_names", name: "categories_names" },
             { data: "purchase_history", name: "purchase_history" },
             { data: "batch_number", name: "add_stock_lines.batch_number" },
             {
@@ -88,7 +88,7 @@ $(document).ready(function () {
                 data: "manufacturing_date",
                 name: "add_stock_lines.manufacturing_date",
             },
-            { data: "discount", name: "discount" },
+            { data: "discount", name: "discount" ,searchable: false},
             {
                 data: "default_purchase_price",
                 name: "default_purchase_price",

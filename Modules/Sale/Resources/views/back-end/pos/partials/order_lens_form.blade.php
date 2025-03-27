@@ -540,16 +540,21 @@
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[qepho]">
+                                                                            class="icheckbox_square-orange icheck-item icheck[qepho] toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox" id="VATintingCheck"
                                                                                    data-subs="tintingList"
                                                                                    class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
                                                                                    name="product[VA][TinTing][isCheck]"
                                                                                    value="1" data-skin="square"
                                                                                    data-color="orange"
-                                                                                   aria-invalid="false"></div>
-                                                                        <label class="inline icheck-label icheck[qepho]"
-                                                                               for="VATintingCheck">{{translate("Boyama")}}</label>
+                                                                                   aria-invalid="false">
+                                                                                   <label class="inline icheck-label icheck[qepho]"
+                                                                                   for="VATintingCheck">
+                                                                                </label>
+                                                                                <span>
+                                                                                    {{translate("Boyama")}}
+                                                                                </span>
+                                                                            </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-none color_class">
@@ -568,16 +573,21 @@
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0]">
+                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox" id="VABaseCheck"
                                                                                    data-subs="vaBaseList"
                                                                                    class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
                                                                                    name="product[VA][Base][isCheck]"
                                                                                    value="1" data-skin="square"
-                                                                                   data-color="orange"></div>
-                                                                        <label class="inline icheck-label icheck[wzqw0]"
-                                                                               for="VABaseCheck">{{translate("Özel Baz")}}</label>
-                                                                    </div>
+                                                                                   data-color="orange">
+                                                                                   <label class="inline icheck-label icheck[wzqw0]"
+                                                                                   for="VABaseCheck">
+                                                                                </label>
+                                                                                <span>
+                                                                                    {{translate("Özel Baz")}}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
                                                                 </div>
                                                                 <div class="d-none VABaseCheck_class">
                                                                     {!! Form::select('product[VA][Base][value]', $special_bases ,null, [
@@ -595,16 +605,21 @@
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0]">
+                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox"
                                                                                    id="specific_diameter"
                                                                                    data-subs="vaBaseList"
                                                                                    class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
                                                                                    name="product[VA][Ozel][isCheck]"
                                                                                    value="1" data-skin="square"
-                                                                                   data-color="orange"></div>
-                                                                        <label class="inline icheck-label icheck[wzqw0]"
-                                                                               for="specific_diameter">{{translate("Özel Çap")}}</label>
+                                                                                   data-color="orange">
+                                                                                   <label class="inline icheck-label icheck[wzqw0]"
+                                                                                   for="specific_diameter">
+                                                                                </label>
+                                                                                <span>
+                                                                                    {{translate("Özel Çap")}}
+                                                                                </span>
+                                                                            </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-none specific_diameter_class">
@@ -621,15 +636,20 @@
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0]">
+                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox" id="VASpecialCheck"
                                                                                    data-subs="vaBaseList"
                                                                                    class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
                                                                                    name="product[VA][Special][isCheck]"
                                                                                    value="1" data-skin="square"
-                                                                                   data-color="orange"></div>
-                                                                        <label class="inline icheck-label icheck[wzqw0]"
-                                                                               for="VASpecialCheck">{{translate("Özel eklemeler")}}</label>
+                                                                                   data-color="orange">
+                                                                                   <label class="inline icheck-label icheck[wzqw0]"
+                                                                                   for="VASpecialCheck">
+                                                                                </label>
+                                                                                <span>
+                                                                                    {{translate("Özel eklemeler")}}
+                                                                                </span>
+                                                                            </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-none VASpecialCheck_class">
@@ -643,21 +663,27 @@
                                                                        ]) !!}
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12 px-5">
+                                                            <div class="col-md-12">
                                                                 <div class="noBorderRight">
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[qepho]">
+                                                                            class="icheckbox_square-orange icheck-item icheck[qepho] toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox" id="codeCheck"
                                                                                    data-subs="tintingList"
                                                                                    class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
                                                                                    name="product[VA][code][isCheck]"
                                                                                    value="1" data-skin="square"
                                                                                    data-color="orange"
-                                                                                   aria-invalid="false"></div>
-                                                                        <label class="inline icheck-label icheck[qepho]"
-                                                                               for="codeCheck">{{translate("Çerçeve Tipi")}}</label>
+                                                                                   aria-invalid="false">
+                                                                                   <label class="inline icheck-label icheck[qepho]"
+                                                                                   for="codeCheck">
+                                                                                </label>
+                                                                                <span>
+
+                                                                                    {{translate("Çerçeve Tipi")}}
+                                                                                </span>
+                                                                            </div>
                                                                     </div>
                                                                 </div>
                                                                 <div
@@ -889,21 +915,22 @@
                                                             <div class="check-line"
                                                                  style="width: 100%;text-align: left;">
                                                                 <div
-                                                                    class="icheckbox_square-orange icheck-item  icheck[ho025]  checked">
-                                                                    <div class="icheckbox_square-orange icheck-item  icheck[ho025]  checked">
-
-                                                                        <input type="checkbox" id="RightLens"
+                                                                    class="icheckbox_square-orange icheck-item  checked toggle-pill-color flex-col-centered">
+                                                                    <input type="checkbox" id="RightLens"
                                                                            class="icheck-me checkForLens icheck-input icheck[ho025]"
                                                                                checked=""
                                                                            name="product[Lens][Right][isCheck]"
                                                                            value="1"
                                                                            data-skin="square"
                                                                            data-color="orange" data-rl="Right" >
-                                                                </div>
-                                                                <label class="inline icheck-label " for="RightLens">
-                                                                    {{translate('I Want  Right Glass')}}
-                                                                </label>
 
+                                                                <label class="inline icheck-label " for="RightLens">
+
+                                                                </label>
+                                                                <span>
+                                                                    {{translate('I Want Right Glass')}}
+                                                                </span>
+</div>
                                                             </div>
 
                                                         </td>
@@ -1143,27 +1170,29 @@
                                                         </td>
                                                          <td colspan="5">
                                                              <div class="row" style="padding-left: 0;">
-                                                                <div class="col-xs-12">
+                                                                <div class="col-xs-12 d-flex">
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item ">
+                                                                            class="icheckbox_square-orange icheck-item toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox" id="LeftLens"
                                                                                    class="icheck-me checkForLens icheck-input "
                                                                                    name="product[Lens][Left][isCheck]"
                                                                                    value="1" data-skin="square"
                                                                                    data-color="orange" data-rl="Left">
+                                                                                   <label class="inline icheck-label "
+                                                                                          for="LeftLens">
+                                                                                       </label>
+                                                                                       <span>
+                                                                                       {{translate('I Want Left Glass')}}
+                                                                                   </span>
                                                                         </div>
-                                                                        <label class="inline icheck-label "
-                                                                               for="LeftLens">
-                                                                            {{translate('I Want Left Glass')}}
-                                                                        </label>
 
                                                                     </div>
                                                                     <div class="check-line"
                                                                          style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item ">
+                                                                            class="icheckbox_square-orange icheck-item toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox" id="sameToRight"
                                                                                    class="icheck-me popover2 icheck-input icheck[veqwi]"
                                                                                    data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left"
@@ -1172,11 +1201,13 @@
                                                                                    data-color="orange"
                                                                                    data-original-title="" title=""
                                                                                    disabled="">
+                                                                                   <label class="inline icheck-label "
+                                                                                          for="sameToRight">
+                                                                                       </label>
+                                                                                       <span>
+                                                                                       {{translate('Left glass is the same as right glass')}}
+                                                                                   </span>
                                                                         </div>
-                                                                        <label class="inline icheck-label "
-                                                                               for="sameToRight">
-                                                                            {{translate('Left glass is the same as right glass')}}
-                                                                        </label>
 
 
                                                                     </div>

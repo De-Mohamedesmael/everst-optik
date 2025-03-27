@@ -11,7 +11,7 @@
                 <button type="button" data-dismiss="modal" aria-label="Close"
                     class="close  btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
                         aria-hidden="true"><i class="dripicons-cross"></i></span></button>
-                <span class="position-absolute modal-border"></span>
+
             </div>
             <div class="modal-body">
                 <div class="d-flex justify-content-between align-items-end  flex-column">

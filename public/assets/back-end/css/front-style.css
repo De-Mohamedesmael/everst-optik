@@ -10,6 +10,11 @@
     font-family: inherit;
 } */
 
+section.forms {
+    background-color: #efefef;
+
+}
+
 label {
     color: #333 !important;
     font-weight: 500 !important;
@@ -738,6 +743,7 @@ body {
 .card-deck .card {
     transition: 0.3s;
     cursor: pointer;
+    box-shadow: none;
 }
 
 .card-deck .card:hover {
@@ -933,7 +939,7 @@ thead tr {
     background: #476762;
     outline: #476762;
     border-color: #476762;
-    box-shadow: 2px 2px 3px 1px #7489e8 !important;
+    box-shadow: 2px 2px 3px 1px #476762 !important;
 }
 
 .navbar_item {
@@ -946,6 +952,10 @@ thead tr {
     position: relative;
     padding-left: 15px;
     border-radius: 0;
+}
+
+.navbar_item a {
+    width: 100%;
 }
 
 .navbar_item:hover {
@@ -1028,6 +1038,7 @@ thead tr {
 button.btn.table-btns.dropdown-toggle::after {
     color: #fff;
 }
+
 .dropdown-menu .dropdown-item {
     padding: 0.5rem 1.5rem;
     color: #476762;
@@ -1055,29 +1066,11 @@ button.btn.table-btns.dropdown-toggle::after {
     /* border-bottom: 1px solid #282828; */
 }
 
-.dropdown-menu .dropdown-item::after {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 0;
-    background-color: #476762;
-    top: 0;
-    left: 0px;
-    transition: 0.5s;
-}
 
 .dropdown-menu .dropdown-item:hover::after {
     height: 100%;
 }
 
-.dropdown-menu .dropdown-item.active::before {
-    content: url('/assets/back-end/images/check.svg');
-    position: absolute;
-    top: 25%;
-    left: 8%;
-    width: 10px;
-    height: 10px;
-}
 
 .dropdown-menu .dropdown-item.active:hover {
     background-color: #7575753c;
@@ -1114,7 +1107,7 @@ button.btn.table-btns.dropdown-toggle::after {
 }
 
 #toTopBtn:hover {
-    background-color: #7489e8;
+    background-color: #476762;
 }
 
 .file-input__label:hover i {
@@ -1123,4 +1116,18 @@ button.btn.table-btns.dropdown-toggle::after {
 
 .file-input__label i {
     transition: 0.4s;
+}
+
+.dropdown-menu a.btn.btn-modal {
+    background: transparent !important;
+    border: none !important;
+}
+
+.dropdown-menu a.btn.btn-modal:hover {
+    background-color: #f8f8f8 !important;
+    color: var(--secondary-color) !important;
+}
+
+.fa-pencil-square-o {
+    color: white !important;
 }
