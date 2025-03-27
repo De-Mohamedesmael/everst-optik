@@ -184,7 +184,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                 <div
                                     class="col-6 col-lg-2 d-flex justify-content-center align-items-center customer-div">
 
-                                    <div class="col-12  input-group my-group d-flex flex-row justify-content-center"
+                                    <div class="col-12  input-group my-group p-0 d-flex flex-row justify-content-center"
                                         style="background-color: #e6e6e6 ; border: none;
                                         border-radius: 6px;
                                         color: #373737;
