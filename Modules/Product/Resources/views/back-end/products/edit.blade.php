@@ -560,7 +560,7 @@
                                             ])
                                         @endif --}}
                                         @foreach ($discounts as $discount)
-                                            @include('product::back-end.partial.raw_discount', [
+                                            @include('product::back-end.products.partial.raw_discount', [
                                                 'row_id' => $loop->index + $index_old,
                                                 'discount' => $discount,
                                             ])

@@ -43,7 +43,7 @@ return [
     'orders_refresh_interval' => 600, //Auto refresh interval on Kitchen and Orders page in seconds,
 
     //Default date format to be used if session is not set. All valid formats can be found on https://www.php.net/manual/en/function.date.php
-    'default_date_format' => 'm/d/Y',
+    'default_date_format' => 'd/m/Y',
 
     'administrator_emails' => env('ADMINISTRATOR_EMAIL'),
     'allow_registration' => env('ALLOW_REGISTRATION', true),

@@ -1285,4 +1285,6 @@
   'Yük' => 'Yük',
   'I Want Left Glass' => 'I Want Left Glass',
   'Left glass is the same as right glass' => 'Left glass is the same as right glass',
+  'Filter' => 'Filter',
+  'I Want Right Glass' => 'I Want Right Glass',
 );

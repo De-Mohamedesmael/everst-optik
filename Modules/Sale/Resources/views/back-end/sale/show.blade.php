@@ -258,7 +258,7 @@
                                 <hr class="hr-lens-show">
                                 <div class="col-md-12 dataLens" >
                                     <div class="lens-name">
-                                        {{$line->product->name }}
+                                        {{$line->product?->name }}
                                     </div>
                                 </div>
                                 @if((isset($data_prescription->Lens->Right->isCheck) && $data_prescription->Lens->Right->isCheck ==1) || isset($data_prescription->Lens->Right->Far->SPH))

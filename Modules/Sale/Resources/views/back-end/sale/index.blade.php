@@ -561,7 +561,7 @@
                         {!! Form::label('payment_end_date', __('lang.payment_end_date'), ['class' =>
                         app()->isLocale('ar') ? 'mb-1 label-ar' : 'mb-1 label-en'
                         ]) !!}
-                        {!! Form::text('end_date', request()->end_date, ['class' => 'form-control
+                        {!! Form::text('end_date', request()->payment_end_date, ['class' => 'form-control
                         sale_filter', 'id' => 'payment_end_date']) !!}
                     </div>
                 </div>
