@@ -184,6 +184,10 @@
         --owf-form-widget-dropdown-placeholder-color: #cbcbcb
     }
 
+    .breadcrumbbar {
+        display: none
+    }
+
     .check-line {
         display: flex;
     }
@@ -201,7 +205,7 @@
     }
 
     .icheckbox_square-orange {
-        padding: 0 10px;
+        padding: 0;
     }
 
     .tab-pane .table-bordered> :not(caption)>* {
@@ -669,6 +673,7 @@
 
 <script>
     $(document).ready(function() {
+
             get_total_details();
             sales_table = $("#sales_table").DataTable({
                 lengthChange: true,
@@ -973,5 +978,7 @@
                 },
             });
         }
+
+
 </script>
 @endsection

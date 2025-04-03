@@ -1428,4 +1428,13 @@
   'view
                                     prescriptions' => 'View
                                     prescriptions',
+  'Önceki
+                                                                    reçeteler' => 'Önceki
+                                                                    reçeteler',
+  'Önceden Tanımlanmış
+                                                                            Şekiller' => 'Önceden Tanımlanmış
+                                                                            Şekiller',
+  'Left glass is the same
+                                                                                    as right glass' => 'Left glass is the same
+                                                                                    as right glass',
 );

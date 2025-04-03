@@ -4,7 +4,7 @@ $i = 0;
 @endphp
 <tr class="batchRow">
     <td><img src="@if(!empty($product->getFirstMediaUrl('products'))){{$product->getFirstMediaUrl('products')}}@else{{asset('/uploads/'.session('logo'))}}@endif"
-        alt="photo" width="50" height="50"></td>
+            alt="photo" width="50" height="50"></td>
     <td>
         @if($product->variation_name != "Default")
         <b>{{$product->variation_name}} {{$product->sub_sku}}</b>
@@ -23,20 +23,27 @@ $i = 0;
 
     </td>
     <td>
-        <input type="text" class="form-control batchquantity quantity_{{$i}}" min=1 name="add_stock_lines[{{$i}}][quantity]" required
-            value="@if(isset($product->quantity)){{preg_match('/\.\d*[1-9]+/', (string)$product->quantity) ? $product->quantity : @num_format($product->quantity) }}@else{{1}}@endif"  index_id="{{$i}}">
+        <input type="text" class="form-control batchquantity quantity_{{$i}}" min=1
+            name="add_stock_lines[{{$i}}][quantity]" required
+            value="@if(isset($product->quantity)){{preg_match('/\.\d*[1-9]+/', (string)$product->quantity) ? $product->quantity : @num_format($product->quantity) }}@else{{1}}@endif"
+            index_id="{{$i}}">
     </td>
     <td>
         <span class="text-secondary font-weight-bold">*</span>
-        <input type="text" class="form-control purchase_price purchase_price_{{$i}}" name="add_stock_lines[{{$i}}][purchase_price]" required
-            value="@if($product->purchase_price_depends == null) {{@num_format($product->default_purchase_price / $exchange_rate)}} @else {{@num_format($product->purchase_price_depends / $exchange_rate)}} @endif" index_id="{{$i}}">
-            <input class="final_cost" type="hidden" name="add_stock_lines[{{$i}}][final_cost]" value="@if(isset($product->default_purchase_price)){{@num_format($product->default_purchase_price / $exchange_rate)}}@else{{0}}@endif"  >
+        <input type="text" class="form-control purchase_price purchase_price_{{$i}}"
+            name="add_stock_lines[{{$i}}][purchase_price]" required
+            value="@if($product->purchase_price_depends == null) {{@num_format($product->default_purchase_price / $exchange_rate)}} @else {{@num_format($product->purchase_price_depends / $exchange_rate)}} @endif"
+            index_id="{{$i}}">
+        <input class="final_cost" type="hidden" name="add_stock_lines[{{$i}}][final_cost]"
+            value="@if(isset($product->default_purchase_price)){{@num_format($product->default_purchase_price / $exchange_rate)}}@else{{0}}@endif">
     </td>
     <td>
         <span class="text-secondary font-weight-bold">*</span>
-        <input type="text" class="form-control selling_price selling_price_{{$i}}" name="add_stock_lines[{{$i}}][selling_price]" required index_id="{{$i}}"
-               value="@if($product->selling_price_depends == null) {{@num_format($product->sell_price)}} @else {{@num_format($product->selling_price_depends)}} @endif"  >
-{{--        <input class="final_cost" type="hidden" name="add_stock_lines[{{$i}}][final_cost]" value="@if(isset($products->default_purchase_price)){{@num_format($products->default_purchase_price / $exchange_rate)}}@else{{0}}@endif">--}}
+        <input type="text" class="form-control selling_price selling_price_{{$i}}"
+            name="add_stock_lines[{{$i}}][selling_price]" required index_id="{{$i}}"
+            value="@if($product->selling_price_depends == null) {{@num_format($product->sell_price)}} @else {{@num_format($product->selling_price_depends)}} @endif">
+        {{-- <input class="final_cost" type="hidden" name="add_stock_lines[{{$i}}][final_cost]"
+            value="@if(isset($products->default_purchase_price)){{@num_format($products->default_purchase_price / $exchange_rate)}}@else{{0}}@endif">--}}
     </td>
     <td>
         <span class="sub_total_span"></span>
@@ -45,8 +52,8 @@ $i = 0;
     <td>
         <input type="hidden" name="current_stock" class="current_stock"
             value="@if($product->is_service) {{0}} @else @if(isset($product->qty_available)){{$product->qty_available}}@else{{0}}@endif @endif">
-        <span
-            class="current_stock_text">@if($product->is_service) {{'-'}} @else @if(isset($product->qty_available)){{@num_format($product->qty_available)}}@else{{0}}@endif @endif</span>
+        <span class="current_stock_text">@if($product->is_service) {{'-'}} @else
+            @if(isset($product->qty_available)){{@num_format($product->qty_available)}}@else{{0}}@endif @endif</span>
     </td>
 </tr>
 @empty
@@ -57,5 +64,6 @@ $i = 0;
     $('.datepicker').datepicker({
         language: "{{session('language')}}",
         todayHighlight: true,
+
     })
 </script>
