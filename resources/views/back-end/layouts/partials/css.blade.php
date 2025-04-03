@@ -179,5 +179,10 @@
         width: 100%;
 
     }
+
+    .form-control.hasDatepicker,
+    .form-control.time_picker {
+        background: #e6e6e6
+    }
 </style>
 @endif

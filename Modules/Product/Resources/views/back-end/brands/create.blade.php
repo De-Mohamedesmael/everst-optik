@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="modal-header d-flex justify-content-between py-2 flex-row ">
             <h5 class="modal-title" id="edit">@lang('lang.add_brand')</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -65,7 +65,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="brandModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>

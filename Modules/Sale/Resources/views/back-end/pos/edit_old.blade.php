@@ -536,7 +536,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">@lang( 'lang.recent_transactions' )</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
                                         aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
@@ -590,7 +590,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">@lang( 'lang.lens_transactions' )</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
                                         aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
