@@ -21,25 +21,38 @@ $(document).ready(function () {
         },
     });
 
-    $("input[name='start_date']").datepicker({
-        language: __language,
-        format: "yyyy-mm-dd",
-        todayHighlight: true,
-    });
-    $("input[name='end_date']").datepicker({
-        language: __language,
-        format: "yyyy-mm-dd",
-        todayHighlight: true,
-    });
-    $("input[name='start_date']").attr("autocomplete", "off");
-    $("input[name='end_date']").attr("autocomplete", "off");
 
-    $(".datepicker").datepicker({
-        language: __language,
-        todayHighlight: true,
+
+    $(document).ready(function () {
+
+        $("input[name='start_date']").datepicker({
+            language: __language,
+            format: "dd-mm-yyyy",
+
+        });
+
+        $("input[name='end_date']").datepicker({
+            language: __language,
+            format: "dd-mm-yyyy",
+
+        });
+
+        $("input[name='start_date']").attr("autocomplete", "off");
+        $("input[name='end_date']").attr("autocomplete", "off");
+
+        $("input[name='start_date']").on('change', function () {
+            var date = $(this).datepicker('getDate');
+            $(this).val(moment(date).format("DD-MM-YYYY")); // Custom format
+        });
+
+        $("input[name='end_date']").on('change', function () {
+            var date = $(this).datepicker('getDate');
+            $(this).val(moment(date).format("DD-MM-YYYY")); // Custom format
+        });
 
     });
 });
+
 
 function __currency_trans_from_en(
     input,

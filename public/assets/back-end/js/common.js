@@ -12,7 +12,7 @@ __quantity_precision = $("input#__quantity_precision").val();
 
 $(document).ready(function () {
     $(".time_picker").datetimepicker({
-        format: moment_time_format,
+        format: 'dd-mm-yyyy',
         icons: {
             up: "fa fa-angle-up",
             down: "fa fa-angle-down",
@@ -23,12 +23,12 @@ $(document).ready(function () {
 
     $("input[name='start_date']").datepicker({
         language: __language,
-        format: "yyyy-mm-dd",
+        format: 'dd-mm-yyyy',
         todayHighlight: true,
     });
     $("input[name='end_date']").datepicker({
         language: __language,
-        format: "yyyy-mm-dd",
+        format: 'dd-mm-yyyy',
         todayHighlight: true,
     });
     $("input[name='start_date']").attr("autocomplete", "off");
@@ -37,6 +37,7 @@ $(document).ready(function () {
     $(".datepicker").datepicker({
         language: __language,
         todayHighlight: true,
+        format: 'dd-mm-yyyy',
 
     });
 });

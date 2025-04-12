@@ -15,11 +15,12 @@ $moment_time_format = \Modules\Setting\Entities\System::getProperty('time_format
 {{--<script type="text/javascript" src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>--}}
 <script type="text/javascript" src="{{ asset('vendor/daterange/js/moment.min.js') }}"></script>
 
-<script type="text/javascript" src="{{ asset('vendor/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-<script type="text/javascript"
-    src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.' . session('language') . '.min.js') }}">
-</script>
 <script type="text/javascript" src="{{ asset('vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js') }}">
+</script>
+{{-- <script type="text/javascript"
+    src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.' . session('language') . '.min.js') }}">
+</script>--}}
+<script type="text/javascript" src="{{ asset('vendor/bootstrap-datepicker/bootstrap-datepicker.min.js') }}">
 </script>
 
 <script type="text/javascript" src="{{ asset('vendor/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>
@@ -586,5 +587,6 @@ $moment_time_format = \Modules\Setting\Entities\System::getProperty('time_format
         $('.dt-button-collection').toggle()
     })
 </script>
+
 
 @stack('javascripts')
