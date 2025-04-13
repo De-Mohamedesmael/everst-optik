@@ -86,20 +86,21 @@
     @foreach ($product_details as $details)
     @while ($details['qty'] > 0)
     <div class="sticker-border text-center" style="display: flex;width:fit-content">
-        <div style="width:200px !important;text-align: left;padding: 5px;display: flex;justify-content: space-between">
+        <div
+            style="width:200px !important;text-align: left;padding: 5px;display: flex;justify-content: space-between;border-right: 1px solid gray;">
 
             <div>
                 <span style="margin: 4px;display: block;font-size: 12px">
-                    Lorem, ipsum dolor.
+                    (01) 889845646865456
                 </span>
                 <span style="margin: 4px;display: block;font-size: 12px">
-                    Lorem, ipsum dolor.
+                    (01) 889845
                 </span>
                 <span style="margin: 4px;display: block;font-size: 12px">
-                    Lorem, ipsum dolor.
+                    (01) 8898
                 </span>
                 <span style="margin: 4px;display: block;font-size: 12px">
-                    Lorem, ipsum dolor.
+                    (01) 88
                 </span>
             </div>
 
@@ -111,10 +112,10 @@
             <h6 style="margin: 0;text-transform: uppercase;font-weight: 700">
                 Lorem ipsum dolor sit amet consectetur
             </h6>
-            <p style="margin:4px">
+            <p style="margin:0 4px">
                 Lorem, ipsum dolor.
             </p>
-            <span style="margin:4px;display: block">
+            <span style="margin:0 4px;display: block">
                 Lorem, ipsum dolor.
             </span>
         </div>

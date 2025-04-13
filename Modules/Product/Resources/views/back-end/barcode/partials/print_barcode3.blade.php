@@ -79,13 +79,14 @@
 
 <title>{{ __('lang.print_labels') }}</title>
 <button class="btn btn-success" onclick="window.print()">@lang('lang.print') </button>
-<div id="preview_body">
+<div id="preview_body" style="display: flex;flex-direction: column">
     @php
     $loop_count = 0;
     @endphp
     @foreach ($product_details as $details)
     @while ($details['qty'] > 0)
-    <div style="height:fit-content !important;padding: 4px; line-height: {{ $page_height }}in;  display: inline-block;width: 1.2in;" class="sticker-border text-center">
+    <div style="height:fit-content !important;padding: 4px; line-height: {{ $page_height }}in;  display: inline-block;width: 1.2in;"
+        class="sticker-border text-center">
         <div
             style="display:inline-block;vertical-align:middle;line-height:14px !important; font-size: 14px;width: 100%;">
             <div style="display: flex;justify-content: center;gap: 10px;">

@@ -89,14 +89,14 @@
             <h3 style="margin: 0;text-transform: uppercase">
                 test
             </h3>
-            <p style="margin: 5px">
+            <p style="margin:0 5px">
                 Lorem, ipsum dolor.
             </p>
-            <span style="margin: 5px;display: block">
+            <span style="margin:0 5px;display: block">
                 Lorem, ipsum dolor.
             </span>
         </div>
-        <div style="width:200px !important;text-align: center;font-size: 14px">
+        <div style="width:200px !important;text-align: center;font-size: 14px;margin:0 5px">
             <div style="font-size: 22px">
                 1650 TL
             </div>
