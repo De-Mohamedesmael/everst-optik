@@ -23,11 +23,14 @@ $(document).ready(function () {
 
     $("input[name='start_date']").datepicker({
         language: __language,
+
         format: 'dd-mm-yyyy',
+
         todayHighlight: true,
     });
     $("input[name='end_date']").datepicker({
         language: __language,
+
         format: 'dd-mm-yyyy',
         todayHighlight: true,
     });
@@ -36,6 +39,7 @@ $(document).ready(function () {
 
     $(".datepicker").datepicker({
         language: __language,
+        format: "DD/MM/YYYY",
         todayHighlight: true,
         format: 'dd-mm-yyyy',
 

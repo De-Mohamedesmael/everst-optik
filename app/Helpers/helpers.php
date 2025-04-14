@@ -40,7 +40,7 @@ function translate($key)
  */
  function format_date($date, $show_time = false, $business_details = null)
 {
-    $format = 'm/d/Y';
+    $format = 'd/m/Y';
     if (!empty($show_time)) {
         $time_format = '';
         if ($time_format == 12) {
@@ -83,7 +83,7 @@ function getCroppedImages($cropImages){
 function num_format($expression): string
 {
     $currency_precision = 2;
-    return number_format($expression,  $currency_precision, '.', ',');
+    return number_format($expression,  $currency_precision, '.', '');
 }
 
 
@@ -111,7 +111,7 @@ function format_datetime($date): ?string
             $time_format = 'H:i';
         }
 
-        return \Carbon\Carbon::createFromTimestamp(strtotime($date))->format('m/d/Y ' . $time_format);
+        return \Carbon\Carbon::createFromTimestamp(strtotime($date))->format('d/m/Y ' . $time_format);
     } else {
         return null;
     }

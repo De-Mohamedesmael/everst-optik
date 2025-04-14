@@ -8,46 +8,46 @@ $(document).ready(function() {
     /* --- Form - Datepicker -- */
     $('#default-date').datepicker({
 	    language: 'en',
-	    dateFormat: 'dd/mm/yyyy',
+	    dateFormat: 'DD/MM/YYYY',
 	});
     $('#autoclose-date').datepicker({
 	    language: 'en',
 	    autoClose: true,
-	    dateFormat: 'dd/mm/yyyy',
+	    dateFormat: 'DD/MM/YYYY',
 	});
     $('#month-view-date').datepicker({
 	    language: 'en',
 	    minView: 'months',
-	    view: 'months',	    
+	    view: 'months',
 	    dateFormat: 'MM yyyy'
 	});
     $('#time-format').datepicker({
-    	language: 'en',	    
+    	language: 'en',
 	    timeFormat: 'hh:ii aa',
 	    timepicker: true,
 	    dateTimeSeparator: ' - '
 	});
     $('#multi-date').datepicker({
 	    language: 'en',
-	    dateFormat: 'dd/mm/yyyy',
-	    multipleDates: 3,  
+	    dateFormat: 'DD/MM/YYYY',
+	    multipleDates: 3,
 	});
     $('#range-date').datepicker({
 	    language: 'en',
-	    dateFormat: 'dd/mm/yyyy',
+	    dateFormat: 'DD/MM/YYYY',
 	    range: true,
 	    multipleDatesSeparator: ' - ',
 	});
     $('#min-max-date').datepicker({
 	    language: 'en',
-	    dateFormat: 'dd/mm/yyyy',
+	    dateFormat: 'DD/MM/YYYY',
 	    minDate: new Date(),
 	    position: 'top left',
 	});
     var disabledDays = [0, 6];
 	$('#disable-day-date').datepicker({
 	    language: 'en',
-	    dateFormat: 'dd/mm/yyyy',
+	    dateFormat: 'DD/MM/YYYY',
 	    position: 'top left',
 	    onRenderCell: function (date, cellType) {
 	        if (cellType == 'day') {
@@ -59,5 +59,5 @@ $(document).ready(function() {
 	            }
 	        }
 	    }
-	});	
+	});
 });

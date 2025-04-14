@@ -21,6 +21,7 @@ $(document).ready(function () {
         },
     });
 
+ new-design
 
 
     $(document).ready(function () {
@@ -49,6 +50,7 @@ $(document).ready(function () {
             var date = $(this).datepicker('getDate');
             $(this).val(moment(date).format("DD-MM-YYYY")); // Custom format
         });
+
 
     });
 });
