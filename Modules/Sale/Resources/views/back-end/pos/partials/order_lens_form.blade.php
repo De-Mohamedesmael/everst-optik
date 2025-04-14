@@ -1,6 +1,4 @@
 <style>
-
-
     :root {
         --owf-color-primary: #0057bc;
         --owf-color-primary-gradient-from: #0057bc;
@@ -187,7 +185,8 @@
         display: flex;
     }
 
-    table#Right_Lens_Table, table#Left_Lens_Table {
+    table#Right_Lens_Table,
+    table#Left_Lens_Table {
         height: 100%;
     }
 
@@ -199,10 +198,10 @@
     }
 
     .icheckbox_square-orange {
-        padding: 0 10px;
+        padding: 0;
     }
 
-    .tab-pane .table-bordered > :not(caption) > * {
+    .tab-pane .table-bordered> :not(caption)>* {
         border-width: 0 !important;
     }
 
@@ -213,13 +212,19 @@
     }
 
 
-    .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+    .table-bordered>tbody>tr>td,
+    .table-bordered>tbody>tr>th,
+    .table-bordered>tfoot>tr>td,
+    .table-bordered>tfoot>tr>th,
+    .table-bordered>thead>tr>td,
+    .table-bordered>thead>tr>th {
         border: 1px solid #ddd;
     }
 
     .owf-page-shapeDefinition-manual-shape {
         column-gap: 6rem;
-        /*display: grid*/;
+        /*display: grid*/
+        ;
         grid-template-columns: 1fr 34rem;
         grid-template-rows: 1fr;
     }
@@ -369,9 +374,9 @@
     }
 </style>
 @php
-    use Modules\Setting\Entities\System;
-    $default_TinTing_amount = System::getProperty('TinTing_amount')?:10;
-    $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
+use Modules\Setting\Entities\System;
+$default_TinTing_amount = System::getProperty('TinTing_amount')?:10;
+$default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
 
 
 @endphp
@@ -385,15 +390,14 @@
                             <div class="box-content">
 
                                 <form id="orderLensFormCreate" class="form-horizontal form-validate" method="POST"
-                                      enctype="multipart/form-data">
+                                    enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-9">
                                             <div
                                                 class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                                                 <button class="text-decoration-none toggle-button mb-0" type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#moreInfoCollapseFiltter" aria-expanded="false"
-                                                        aria-controls="moreInfoCollapseFiltter">
+                                                    data-bs-toggle="collapse" data-bs-target="#moreInfoCollapseFiltter"
+                                                    aria-expanded="false" aria-controls="moreInfoCollapseFiltter">
                                                     <i class="fas fa-arrow-down"></i>
                                                     {{translate('Giriş kısayolları')}}
                                                     <span class="section-header-pill"></span>
@@ -406,95 +410,96 @@
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group ">
-                                                                    {!! Form::label('prescription_id', translate('Önceki reçeteler'), [
-                                                                       'class' => 'form-label d-block mb-1 ',
-                                                                   ]) !!}
+                                                                    {!! Form::label('prescription_id', translate('Önceki
+                                                                    reçeteler'), [
+                                                                    'class' => 'form-label d-block mb-1 ',
+                                                                    ]) !!}
                                                                     {!! Form::select('prescription_id', [] ,null, [
-                                                                        'class' => ' selectpicker form-control',
-                                                                        'data-live-search' => 'true',
-                                                                        'style' => 'width: 80%',
-                                                                       'data-actions-box' => 'true',
-                                                                        'id' => 'prescription_id',
-                                                                        'placeholder' => __('lang.please_select'),
+                                                                    'class' => ' selectpicker form-control',
+                                                                    'data-live-search' => 'true',
+                                                                    'style' => 'width: 80%',
+                                                                    'data-actions-box' => 'true',
+                                                                    'id' => 'prescription_id',
+                                                                    'placeholder' => __('lang.please_select'),
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     {!! Form::label('brand_id', translate('Marka'), [
-                                                                        'class' => 'form-label d-block mb-1 ',
+                                                                    'class' => 'form-label d-block mb-1 ',
                                                                     ]) !!}
                                                                     {!! Form::select('brand_id', $brand_lenses,null, [
-                                                                        'class' => ' selectpicker form-control',
-                                                                        'data-live-search' => 'true',
-                                                                        'style' => 'width: 80%',
-                                                                       'data-actions-box' => 'true',
-                                                                        'id' => 'brand_id',
-                                                                        'placeholder' => __('lang.please_select'),
+                                                                    'class' => ' selectpicker form-control',
+                                                                    'data-live-search' => 'true',
+                                                                    'style' => 'width: 80%',
+                                                                    'data-actions-box' => 'true',
+                                                                    'id' => 'brand_id',
+                                                                    'placeholder' => __('lang.please_select'),
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     {!! Form::label('focus_id', translate('focus'), [
-                                                                       'class' => 'form-label d-block mb-1 ',
-                                                                   ]) !!}
+                                                                    'class' => 'form-label d-block mb-1 ',
+                                                                    ]) !!}
                                                                     {!! Form::select('focus_id', $foci,null, [
-                                                                        'class' => ' selectpicker form-control',
-                                                                        'data-live-search' => 'true',
-                                                                        'style' => 'width: 80%',
-                                                                       'data-actions-box' => 'true',
-                                                                        'id' => 'focus_id',
-                                                                        'placeholder' => __('lang.please_select'),
+                                                                    'class' => ' selectpicker form-control',
+                                                                    'data-live-search' => 'true',
+                                                                    'style' => 'width: 80%',
+                                                                    'data-actions-box' => 'true',
+                                                                    'id' => 'focus_id',
+                                                                    'placeholder' => __('lang.please_select'),
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group ">
                                                                     {!! Form::label('design_id', translate('design'), [
-                                                                       'class' => 'form-label d-block mb-1 ',
-                                                                   ]) !!}
+                                                                    'class' => 'form-label d-block mb-1 ',
+                                                                    ]) !!}
                                                                     {!! Form::select('design_id', $design_lenses,null, [
-                                                                        'class' => ' selectpicker form-control',
-                                                                        'data-live-search' => 'true',
-                                                                        'style' => 'width: 80%',
-                                                                       'data-actions-box' => 'true',
-                                                                        'id' => 'design_id',
-                                                                        'placeholder' => __('lang.please_select'),
+                                                                    'class' => ' selectpicker form-control',
+                                                                    'data-live-search' => 'true',
+                                                                    'style' => 'width: 80%',
+                                                                    'data-actions-box' => 'true',
+                                                                    'id' => 'design_id',
+                                                                    'placeholder' => __('lang.please_select'),
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group ">
                                                                     {!! Form::label('index_id', translate('index'), [
-                                                                        'class' => 'form-label d-block mb-1 ',
+                                                                    'class' => 'form-label d-block mb-1 ',
                                                                     ]) !!}
                                                                     {!! Form::select('index_id', $index_lenses,null, [
-                                                                        'class' => ' selectpicker form-control',
-                                                                        'data-live-search' => 'true',
-                                                                        'style' => 'width: 80%',
-                                                                       'data-actions-box' => 'true',
-                                                                        'id' => 'index_id',
-                                                                        'placeholder' => __('lang.please_select'),
+                                                                    'class' => ' selectpicker form-control',
+                                                                    'data-live-search' => 'true',
+                                                                    'style' => 'width: 80%',
+                                                                    'data-actions-box' => 'true',
+                                                                    'id' => 'index_id',
+                                                                    'placeholder' => __('lang.please_select'),
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     {!! Form::label('color_id', translate('color'), [
-                                                                        'class' => 'form-label d-block mb-1 ',
+                                                                    'class' => 'form-label d-block mb-1 ',
                                                                     ]) !!}
                                                                     {!! Form::select('color_id', $colors,null, [
-                                                                        'class' => ' selectpicker form-control',
-                                                                        'data-live-search' => 'true',
-                                                                        'style' => 'width: 80%',
-                                                                       'data-actions-box' => 'true',
-                                                                        'id' => 'color_id',
-                                                                        'placeholder' => __('lang.please_select'),
+                                                                    'class' => ' selectpicker form-control',
+                                                                    'data-live-search' => 'true',
+                                                                    'style' => 'width: 80%',
+                                                                    'data-actions-box' => 'true',
+                                                                    'id' => 'color_id',
+                                                                    'placeholder' => __('lang.please_select'),
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
-                                                            {{--                                        lenses--}}
+                                                            {{-- lenses--}}
 
                                                         </div>
                                                     </div>
@@ -504,15 +509,15 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group ">
                                                         {!! Form::label('lens_id', translate('lens'), [
-                                                           'class' => 'form-label d-block mb-1 ',
-                                                       ]) !!}
+                                                        'class' => 'form-label d-block mb-1 ',
+                                                        ]) !!}
                                                         {!! Form::select('lens_id', $lenses,null, [
-                                                            'class' => ' selectpicker form-control',
-                                                            'data-live-search' => 'true',
-                                                            'style' => 'width: 80%',
-                                                           'data-actions-box' => 'true',
-                                                            'id' => 'lens_id',
-                                                            'placeholder' => __('lang.please_select'),
+                                                        'class' => ' selectpicker form-control',
+                                                        'data-live-search' => 'true',
+                                                        'style' => 'width: 80%',
+                                                        'data-actions-box' => 'true',
+                                                        'id' => 'lens_id',
+                                                        'placeholder' => __('lang.please_select'),
                                                         ]) !!}
                                                     </div>
                                                 </div>
@@ -522,9 +527,8 @@
                                             <div
                                                 class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                                                 <button class="text-decoration-none toggle-button mb-0" type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#moreInfoCollapse" aria-expanded="false"
-                                                        aria-controls="moreInfoCollapse">
+                                                    data-bs-toggle="collapse" data-bs-target="#moreInfoCollapse"
+                                                    aria-expanded="false" aria-controls="moreInfoCollapse">
                                                     <i class="fas fa-arrow-down"></i>
                                                     {{translate('Ek işlemler')}}
                                                     <span class="section-header-pill"></span>
@@ -538,152 +542,160 @@
                                                             <div class="col-md-3 ">
                                                                 <div class="noBorderRight">
                                                                     <div class="check-line"
-                                                                         style="width: 100%;text-align: left;">
+                                                                        style="width: 100%;text-align: left;">
                                                                         <div
                                                                             class="icheckbox_square-orange icheck-item icheck[qepho] toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox" id="VATintingCheck"
-                                                                                   data-subs="tintingList"
-                                                                                   class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
-                                                                                   name="product[VA][TinTing][isCheck]"
-                                                                                   value="1" data-skin="square"
-                                                                                   data-color="orange"
-                                                                                   aria-invalid="false">
-                                                                                   <label class="inline icheck-label icheck[qepho]"
-                                                                                   for="VATintingCheck">
-                                                                                </label>
-                                                                                <span>
-                                                                                    {{translate("Boyama")}}
-                                                                                </span>
-                                                                            </div>
+                                                                                data-subs="tintingList"
+                                                                                class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
+                                                                                name="product[VA][TinTing][isCheck]"
+                                                                                value="1" data-skin="square"
+                                                                                data-color="orange"
+                                                                                aria-invalid="false">
+                                                                            <label
+                                                                                class="inline icheck-label icheck[qepho]"
+                                                                                for="VATintingCheck">
+                                                                            </label>
+                                                                            <span>
+                                                                                {{translate("Boyama")}}
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-none color_class">
-                                                                    {!! Form::select('product[VA][TinTing][value]', $colors ,null, [
-                                                                           'class' => ' selectpicker form-control',
-                                                                           'data-live-search' => 'true',
-                                                                           'style' => 'width: 80%',
-                                                                          'data-actions-box' => 'true',
-                                                                           'id' => 'color_product',
-                                                                           'placeholder' => __('lang.please_select'),
-                                                                       ]) !!}
+                                                                    {!! Form::select('product[VA][TinTing][value]',
+                                                                    $colors ,null, [
+                                                                    'class' => ' selectpicker form-control',
+                                                                    'data-live-search' => 'true',
+                                                                    'style' => 'width: 80%',
+                                                                    'data-actions-box' => 'true',
+                                                                    'id' => 'color_product',
+                                                                    'placeholder' => __('lang.please_select'),
+                                                                    ]) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 ">
                                                                 <div class="noBorderRight">
                                                                     <div class="check-line"
-                                                                         style="width: 100%;text-align: left;">
+                                                                        style="width: 100%;text-align: left;">
                                                                         <div
                                                                             class="icheckbox_square-orange icheck-item icheck[wzqw0] toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox" id="VABaseCheck"
-                                                                                   data-subs="vaBaseList"
-                                                                                   class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
-                                                                                   name="product[VA][Base][isCheck]"
-                                                                                   value="1" data-skin="square"
-                                                                                   data-color="orange">
-                                                                                   <label class="inline icheck-label icheck[wzqw0]"
-                                                                                   for="VABaseCheck">
-                                                                                </label>
-                                                                                <span>
-                                                                                    {{translate("Özel Baz")}}
-                                                                                </span>
-                                                                            </div>
+                                                                                data-subs="vaBaseList"
+                                                                                class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
+                                                                                name="product[VA][Base][isCheck]"
+                                                                                value="1" data-skin="square"
+                                                                                data-color="orange">
+                                                                            <label
+                                                                                class="inline icheck-label icheck[wzqw0]"
+                                                                                for="VABaseCheck">
+                                                                            </label>
+                                                                            <span>
+                                                                                {{translate("Özel Baz")}}
+                                                                            </span>
                                                                         </div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="d-none VABaseCheck_class">
-                                                                    {!! Form::select('product[VA][Base][value]', $special_bases ,null, [
-                                                                           'class' => ' selectpicker form-control',
-                                                                           'data-live-search' => 'true',
-                                                                           'style' => 'width: 80%',
-                                                                          'data-actions-box' => 'true',
-                                                                           'id' => 'special_base',
-                                                                           'placeholder' => __('lang.please_select'),
-                                                                       ]) !!}
+                                                                    {!! Form::select('product[VA][Base][value]',
+                                                                    $special_bases ,null, [
+                                                                    'class' => ' selectpicker form-control',
+                                                                    'data-live-search' => 'true',
+                                                                    'style' => 'width: 80%',
+                                                                    'data-actions-box' => 'true',
+                                                                    'id' => 'special_base',
+                                                                    'placeholder' => __('lang.please_select'),
+                                                                    ]) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 ">
                                                                 <div class="noBorderRight">
                                                                     <div class="check-line"
-                                                                         style="width: 100%;text-align: left;">
+                                                                        style="width: 100%;text-align: left;">
                                                                         <div
                                                                             class="icheckbox_square-orange icheck-item icheck[wzqw0] toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox"
-                                                                                   id="specific_diameter"
-                                                                                   data-subs="vaBaseList"
-                                                                                   class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
-                                                                                   name="product[VA][Ozel][isCheck]"
-                                                                                   value="1" data-skin="square"
-                                                                                   data-color="orange">
-                                                                                   <label class="inline icheck-label icheck[wzqw0]"
-                                                                                   for="specific_diameter">
-                                                                                </label>
-                                                                                <span>
-                                                                                    {{translate("Özel Çap")}}
-                                                                                </span>
-                                                                            </div>
+                                                                                id="specific_diameter"
+                                                                                data-subs="vaBaseList"
+                                                                                class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
+                                                                                name="product[VA][Ozel][isCheck]"
+                                                                                value="1" data-skin="square"
+                                                                                data-color="orange">
+                                                                            <label
+                                                                                class="inline icheck-label icheck[wzqw0]"
+                                                                                for="specific_diameter">
+                                                                            </label>
+                                                                            <span>
+                                                                                {{translate("Özel Çap")}}
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-none specific_diameter_class">
                                                                     {!! Form::number('product[VA][Ozel][value]' ,null, [
-                                                                           'class' => ' selectpicker form-control',
-                                                                           'style' => 'width: 80%',
-                                                                          'data-actions-box' => 'true',
-                                                                           'id' => 'specific_diameter_input',
-                                                                       ]) !!}
+                                                                    'class' => ' selectpicker form-control',
+                                                                    'style' => 'width: 80%',
+                                                                    'data-actions-box' => 'true',
+                                                                    'id' => 'specific_diameter_input',
+                                                                    ]) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 ">
                                                                 <div class="noBorderRight">
                                                                     <div class="check-line"
-                                                                         style="width: 100%;text-align: left;">
+                                                                        style="width: 100%;text-align: left;">
                                                                         <div
                                                                             class="icheckbox_square-orange icheck-item icheck[wzqw0] toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox" id="VASpecialCheck"
-                                                                                   data-subs="vaBaseList"
-                                                                                   class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
-                                                                                   name="product[VA][Special][isCheck]"
-                                                                                   value="1" data-skin="square"
-                                                                                   data-color="orange">
-                                                                                   <label class="inline icheck-label icheck[wzqw0]"
-                                                                                   for="VASpecialCheck">
-                                                                                </label>
-                                                                                <span>
-                                                                                    {{translate("Özel eklemeler")}}
-                                                                                </span>
-                                                                            </div>
+                                                                                data-subs="vaBaseList"
+                                                                                class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
+                                                                                name="product[VA][Special][isCheck]"
+                                                                                value="1" data-skin="square"
+                                                                                data-color="orange">
+                                                                            <label
+                                                                                class="inline icheck-label icheck[wzqw0]"
+                                                                                for="VASpecialCheck">
+                                                                            </label>
+                                                                            <span>
+                                                                                {{translate("Özel eklemeler")}}
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-none VASpecialCheck_class">
-                                                                    {!! Form::select('product[VA][Special][value][]', $special_additions ,null, [
-                                                                           'class' => ' selectpicker form-control',
-                                                                           'data-live-search' => 'true',
-                                                                           'style' => 'width: 80%',
-                                                                          'data-actions-box' => 'true',
-                                                                           'multiple',
-                                                                           'id' => 'special_addition',
-                                                                       ]) !!}
+                                                                    {!! Form::select('product[VA][Special][value][]',
+                                                                    $special_additions ,null, [
+                                                                    'class' => ' selectpicker form-control',
+                                                                    'data-live-search' => 'true',
+                                                                    'style' => 'width: 80%',
+                                                                    'data-actions-box' => 'true',
+                                                                    'multiple',
+                                                                    'id' => 'special_addition',
+                                                                    ]) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="noBorderRight">
                                                                     <div class="check-line"
-                                                                         style="width: 100%;text-align: left;">
+                                                                        style="width: 100%;text-align: left;">
                                                                         <div
                                                                             class="icheckbox_square-orange icheck-item icheck[qepho] toggle-pill-color flex-col-centered">
                                                                             <input type="checkbox" id="codeCheck"
-                                                                                   data-subs="tintingList"
-                                                                                   class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
-                                                                                   name="product[VA][code][isCheck]"
-                                                                                   value="1" data-skin="square"
-                                                                                   data-color="orange"
-                                                                                   aria-invalid="false">
-                                                                                   <label class="inline icheck-label icheck[qepho]"
-                                                                                   for="codeCheck">
-                                                                                </label>
-                                                                                <span>
+                                                                                data-subs="tintingList"
+                                                                                class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
+                                                                                name="product[VA][code][isCheck]"
+                                                                                value="1" data-skin="square"
+                                                                                data-color="orange"
+                                                                                aria-invalid="false">
+                                                                            <label
+                                                                                class="inline icheck-label icheck[qepho]"
+                                                                                for="codeCheck">
+                                                                            </label>
+                                                                            <span>
 
-                                                                                    {{translate("Çerçeve Tipi")}}
-                                                                                </span>
-                                                                            </div>
+                                                                                {{translate("Çerçeve Tipi")}}
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div
@@ -692,156 +704,168 @@
                                                                     <svg width="0" height="0" class="abc">
                                                                         <defs>
                                                                             <marker id="abc_arrowhead" markerWidth="15"
-                                                                                    markerHeight="5" refX="0" refY="2.5"
-                                                                                    orient="auto">
+                                                                                markerHeight="5" refX="0" refY="2.5"
+                                                                                orient="auto">
                                                                                 <polygon class="abc-indicator"
-                                                                                         points="0 0, 15 2.5, 0 5"></polygon>
+                                                                                    points="0 0, 15 2.5, 0 5"></polygon>
                                                                             </marker>
                                                                             <linearGradient id="abc_lensGradient"
-                                                                                            gradientTransform="rotate(90)">
-                                                                                <stop offset="10%"
-                                                                                      stop-color="#c4e4fa"></stop>
-                                                                                <stop offset="50%"
-                                                                                      stop-color="#90bff1"></stop>
-                                                                                <stop offset="50%"
-                                                                                      stop-color="#84b7ed"></stop>
-                                                                                <stop offset="90%"
-                                                                                      stop-color="#bfe3fe"></stop>
+                                                                                gradientTransform="rotate(90)">
+                                                                                <stop offset="10%" stop-color="#c4e4fa">
+                                                                                </stop>
+                                                                                <stop offset="50%" stop-color="#90bff1">
+                                                                                </stop>
+                                                                                <stop offset="50%" stop-color="#84b7ed">
+                                                                                </stop>
+                                                                                <stop offset="90%" stop-color="#bfe3fe">
+                                                                                </stop>
                                                                             </linearGradient>
                                                                         </defs>
                                                                     </svg>
                                                                     <input type="hidden" value=""
-                                                                           name="product[VA][code][value]"
-                                                                           id="input_predefined_shape">
+                                                                        name="product[VA][code][value]"
+                                                                        id="input_predefined_shape">
                                                                     <div id="predefined_shape"
-                                                                         class="owf-page-shapeDefinition-manual-predefinedShape">
+                                                                        class="owf-page-shapeDefinition-manual-predefinedShape">
                                                                         <div
                                                                             class="owf-page-shapeDefinition-title owf-headline">
-                                                                            {{translate('Önceden Tanımlanmış Şekiller')}}    </div>
+                                                                            {{translate('Önceden Tanımlanmış
+                                                                            Şekiller')}} </div>
 
-                                                                        <div
-                                                                            class="owf-page-shapeDefinition-manual-predefinedShape-container"
+                                                                        <div class="owf-page-shapeDefinition-manual-predefinedShape-container"
                                                                             tabindex="0">
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="2223"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="2223"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                                    d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077">
+                                                                                </path>
                                                                                 <text class="abc-cCode">2223</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="1112"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="1112"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h55.8 q124.2,0 124.2,-76.43076923076924 v-34.33846153846154"></path>
+                                                                                    d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h55.8 q124.2,0 124.2,-76.43076923076924 v-34.33846153846154">
+                                                                                </path>
                                                                                 <text class="abc-cCode">1112</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="3333"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="3333"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                                    d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077">
+                                                                                </path>
                                                                                 <text class="abc-cCode">3333</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="2144"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="2144"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                                    d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0">
+                                                                                </path>
                                                                                 <text class="abc-cCode">2144</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="1224"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="1224"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                                    d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0">
+                                                                                </path>
                                                                                 <text class="abc-cCode">1224</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="2233"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="2233"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                                    d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v11.076923076923077 q0,99.6923076923077 162,99.6923076923077 h18 h18 q162,0 162,-99.6923076923077 v-11.076923076923077">
+                                                                                </path>
                                                                                 <text class="abc-cCode">2233</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc "
-                                                                                 data-ccode="3344"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="3344"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                                    d="M180,0 v-11.076923076923077 q0,-99.6923076923077 -162,-99.6923076923077 h-18 h-18 q-162,0 -162,99.6923076923077 v11.076923076923077 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0">
+                                                                                </path>
                                                                                 <text class="abc-cCode">3344</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="1223"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="1223"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                                    d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077">
+                                                                                </path>
                                                                                 <text class="abc-cCode">1223</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="1244"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="1244"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                                    d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0">
+                                                                                </path>
                                                                                 <text class="abc-cCode">1244</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="1123"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="1123"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077"></path>
+                                                                                    d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v34.33846153846154 q0,76.43076923076924 124.2,76.43076923076924 h55.8 h18 q162,0 162,-99.6923076923077 v-11.076923076923077">
+                                                                                </path>
                                                                                 <text class="abc-cCode">1123</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="1111"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="1111"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h97.2 q82.8,0 82.8,-50.95384615384616 v-59.815384615384616"></path>
+                                                                                    d="M180,0 v-59.815384615384616 q0,-50.95384615384616 -82.8,-50.95384615384616 h-97.2 h-97.2 q-82.8,0 -82.8,50.95384615384616 v59.815384615384616 v59.815384615384616 q0,50.95384615384616 82.8,50.95384615384616 h97.2 h97.2 q82.8,0 82.8,-50.95384615384616 v-59.815384615384616">
+                                                                                </path>
                                                                                 <text class="abc-cCode">1111</text>
                                                                             </svg>
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="2244"
-                                                                                 viewBox="-200 -150 400 300"
-                                                                                 width="110px" height="80px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="2244"
+                                                                                viewBox="-200 -150 400 300"
+                                                                                width="110px" height="80px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens"
-                                                                                      d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0"></path>
+                                                                                    d="M180,0 v-34.33846153846154 q0,-76.43076923076924 -124.2,-76.43076923076924 h-55.8 h-55.8 q-124.2,0 -124.2,76.43076923076924 v34.33846153846154 v0 a180,110.76923076923077 0 0 0 180,110.76923076923077 h0 h0 a180,-110.76923076923077 0 0 0 180,-110.76923076923077 v-0">
+                                                                                </path>
                                                                                 <text class="abc-cCode">2244</text>
                                                                             </svg>
 
                                                                             <svg class="predefinedShape abc"
-                                                                                 data-ccode="4444"
-                                                                                 viewBox="-200 -180 400 360"
-                                                                                 width="110px" height="90px"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                data-ccode="4444"
+                                                                                viewBox="-200 -180 400 360"
+                                                                                width="110px" height="90px"
+                                                                                xmlns="http://www.w3.org/2000/svg">
                                                                                 <path class="abc-lens" d="
                                                                                     M-180,0
                                                                                     a180,120 0 1,0 360,0
                                                                                     a180,120 0 1,0 -360,0
                                                                                     " fill="#d6e9f8" stroke="#578981"
-                                                                                      stroke-width="2"></path>
+                                                                                    stroke-width="2"></path>
                                                                                 <text class="abc-cCode">4444</text>
                                                                             </svg>
 
@@ -863,37 +887,39 @@
                                         <div class="col-3 lens-vu-per">
                                             <div class="lens-vu-item-per ">
                                                 <input type="hidden" id="price_lens" value="0">
-                                                {{translate('lenses_price')}}: <span class="price-lens"
-                                                                                     id="price-lens"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                                {{translate('lenses_price')}}: <span class="price-lens" id="price-lens">
+                                                    {!! num_format(0) !!}{{session("currency")["symbol"]}}</span>
                                             </div>
-                                            <div class="lens-vu-item-per d-none"  id="div-price-TinTing">
+                                            <div class="lens-vu-item-per d-none" id="div-price-TinTing">
                                                 <input type="hidden" id="price_TinTing" value="0">
 
                                                 {{translate('TinTing_amount')}}: <span class="price-lens"
-                                                                                       id="price-TinTing"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                                    id="price-TinTing"> {!! num_format(0)
+                                                    !!}{{session("currency")["symbol"]}}</span>
                                             </div>
                                             <div class="lens-vu-item-per d-none" id="div-price-Base">
                                                 <input type="hidden" id="price_Base" value="0">
 
-                                                {{translate('Base_amount')}}: <span class="price-lens"
-                                                                                    id="price-Base"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                                {{translate('Base_amount')}}: <span class="price-lens" id="price-Base">
+                                                    {!! num_format(0) !!}{{session("currency")["symbol"]}}</span>
                                             </div>
                                             <div class="lens-vu-item-per d-none" id="div-price-Special">
                                                 <input type="hidden" id="price_Special" value="0">
 
                                                 {{translate('Special_amount')}}: <span class="price-lens"
-                                                                                    id="price-Special"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                                    id="price-Special"> {!! num_format(0)
+                                                    !!}{{session("currency")["symbol"]}}</span>
                                             </div>
                                             <div class="lens-vu-item-per d-none" id="div-price-Ozel">
                                                 <input type="hidden" id="price_Ozel" value="0">
-                                                {{translate('Ozel_amount')}}: <span class="price-lens"
-                                                                                    id="price-Ozel"> {!!   num_format(0) !!}{{session("currency")["symbol"]}}</span>
+                                                {{translate('Ozel_amount')}}: <span class="price-lens" id="price-Ozel">
+                                                    {!! num_format(0) !!}{{session("currency")["symbol"]}}</span>
                                             </div>
 
                                             <hr>
                                             <div class="lens-vu-item-per total-lens ">
-                                                {{translate('total_price')}}: <span class="price-lens "
-                                                                                    id="total-lens"> {!!   num_format(0) !!} {{session("currency")["symbol"]}}</span>
+                                                {{translate('total_price')}}: <span class="price-lens " id="total-lens">
+                                                    {!! num_format(0) !!} {{session("currency")["symbol"]}}</span>
                                             </div>
                                         </div>
                                         <!--product filter END-->
@@ -903,254 +929,199 @@
                                         <div class="col-md-6">
                                             <div class="form-group h-100">
                                                 <table class="table table-bordered text-center" id="Right_Lens_Table"
-                                                       style="border: 5px solid red;">
+                                                    style="border: 5px solid red;">
                                                     <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <span class="bigLatter">R</span>
-                                                        </td>
-                                                        <td colspan="6">
+                                                        <tr>
+                                                            <td>
+                                                                <span class="bigLatter">R</span>
+                                                            </td>
+                                                            <td colspan="6">
 
 
-                                                            <div class="check-line"
-                                                                 style="width: 100%;text-align: left;">
-                                                                <div
-                                                                    class="icheckbox_square-orange icheck-item  checked toggle-pill-color flex-col-centered">
-                                                                    <input type="checkbox" id="RightLens"
-                                                                           class="icheck-me checkForLens icheck-input icheck[ho025]"
-                                                                               checked=""
-                                                                           name="product[Lens][Right][isCheck]"
-                                                                           value="1"
-                                                                           data-skin="square"
-                                                                           data-color="orange" data-rl="Right" >
+                                                                <div class="check-line"
+                                                                    style="width: 100%;text-align: left;">
+                                                                    <div
+                                                                        class="icheckbox_square-orange icheck-item  checked ">
+                                                                        <input type="checkbox" id="RightLens"
+                                                                            class="icheck-me checkForLens icheck-input icheck[ho025]"
+                                                                            checked=""
+                                                                            name="product[Lens][Right][isCheck]"
+                                                                            value="1" data-skin="square"
+                                                                            data-color="orange" data-rl="Right">
 
-                                                                <label class="inline icheck-label " for="RightLens">
+                                                                        <label class="inline icheck-label "
+                                                                            for="RightLens">
+                                                                            {{translate('I Want Right Glass')}}
 
-                                                                </label>
-                                                                <span>
-                                                                    {{translate('I Want Right Glass')}}
-                                                                </span>
-</div>
-                                                            </div>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
 
-                                                        </td>
+                                                            </td>
 
-                                                    </tr>
+                                                        </tr>
 
-                                                    <tr>
-                                                        <td rowspan="2"
-                                                            class="verticalMiddle">{{translate('UZAK')}}</td>
-                                                        <td>+/-</td>
-                                                        <td>{{translate('SPH')}}</td>
-                                                        <td>+/-</td>
-                                                        <td>{{translate('CYL')}}</td>
-                                                        <td>{{translate('AXIS')}}</td>
-                                                    </tr>
-                                                    <tr>
+                                                        <tr>
+                                                            <td rowspan="2" class="verticalMiddle">{{translate('UZAK')}}
+                                                            </td>
+                                                            <td>+/-</td>
+                                                            <td>{{translate('SPH')}}</td>
+                                                            <td>+/-</td>
+                                                            <td>{{translate('CYL')}}</td>
+                                                            <td>{{translate('AXIS')}}</td>
+                                                        </tr>
+                                                        <tr>
 
-                                                        <td>
-                                                            <select name="product[Lens][Right][Far][SPHDeg]"
+                                                            <td>
+                                                                <select name="product[Lens][Right][Far][SPHDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                     data-rl="Right" data-signfor="Right_Far_SPH"
                                                                     id="Right_Far_SPHDeg">
-                                                                <option value="+">+</option>
-                                                                <option value="-">-</option>
-                                                            </select>
+                                                                    <option value="+">+</option>
+                                                                    <option value="-">-</option>
+                                                                </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <input type="number"
-                                                                   name="product[Lens][Right][Far][SPH]"
-                                                                   value=""
-                                                                   id="Right_Far_SPH"
-                                                                   data-reqval="farSPH"
-                                                                   placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensSPH farSPH number-input"
-                                                                   data-rl="Right"
-                                                                   required
-                                                                   aria-required="true"
-                                                                   step="0.25"
-                                                                   min="-30"
-                                                                   max="30">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Right][Far][SPH]" value=""
+                                                                    id="Right_Far_SPH" data-reqval="farSPH"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensVal lensSPH farSPH number-input"
+                                                                    data-rl="Right" required aria-required="true"
+                                                                    step="0.25" min="-30" max="30">
 
-                                                        </td>
-                                                        <td>
-                                                            <select name="product[Lens][Right][Far][CYLDeg]"
+                                                            </td>
+                                                            <td>
+                                                                <select name="product[Lens][Right][Far][CYLDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                                     data-signfor="Right_Far_CYL" data-rl="Right"
                                                                     id="Right_Far_CYLDeg">
-                                                                <option value="+">+</option>
-                                                                <option value="-" selected="selected">-</option>
-                                                            </select>
+                                                                    <option value="+">+</option>
+                                                                    <option value="-" selected="selected">-</option>
+                                                                </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <input type="number"
-                                                                   name="product[Lens][Right][Far][CYL]"
-                                                                   value=""
-                                                                   id="Right_Far_CYL"
-                                                                   data-reqval="farCYL"
-                                                                   placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensCYL farCYL number-input"
-                                                                   data-rl="Right"
-                                                                   required
-                                                                   aria-required="true"
-                                                                   step="0.25"
-                                                                   min="-15"
-                                                                   max="15">
-                                                        </td>
-                                                        <td>
-                                                            <input
-                                                                type="number"
-                                                                name="product[Lens][Right][Far][Axis]"
-                                                                data-reqval="farAX" value=""
-                                                                id="Right_Far_Axis"
-                                                                placeholder=" "
-                                                                class="form-control input-block-level input-sm lensAxis farAX  number-input"
-                                                                data-rl="Right"
-                                                                step="1"
-                                                                min="0"
-                                                                max="180">
-                                                        </td>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Right][Far][CYL]" value=""
+                                                                    id="Right_Far_CYL" data-reqval="farCYL"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensVal lensCYL farCYL number-input"
+                                                                    data-rl="Right" required aria-required="true"
+                                                                    step="0.25" min="-15" max="15">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Right][Far][Axis]"
+                                                                    data-reqval="farAX" value="" id="Right_Far_Axis"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level input-sm lensAxis farAX  number-input"
+                                                                    data-rl="Right" step="1" min="0" max="180">
+                                                            </td>
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2"
-                                                            class="verticalMiddle">{{translate('YAKIN')}}</td>
-                                                        <td>+/-</td>
-                                                        <td>{{translate('SPH')}}</td>
-                                                        <td>+/-</td>
-                                                        <td>{{translate('CYL')}}</td>
-                                                        <td>{{translate('AXIS')}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td rowspan="2" class="verticalMiddle">
+                                                                {{translate('YAKIN')}}</td>
+                                                            <td>+/-</td>
+                                                            <td>{{translate('SPH')}}</td>
+                                                            <td>+/-</td>
+                                                            <td>{{translate('CYL')}}</td>
+                                                            <td>{{translate('AXIS')}}</td>
 
-                                                    </tr>
-                                                    <tr class="nearTableRow">
-                                                        <td>
-                                                            <select name="product[Lens][Right][Near][SPHDeg]"
+                                                        </tr>
+                                                        <tr class="nearTableRow">
+                                                            <td>
+                                                                <select name="product[Lens][Right][Near][SPHDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
-                                                                    data-signfor="Right_Near_SPH"
-                                                                    data-rl="Right"
+                                                                    data-signfor="Right_Near_SPH" data-rl="Right"
                                                                     id="Right_Near_SPHDeg">
-                                                                <option value="+">+</option>
-                                                                <option value="-">-</option>
-                                                            </select>
-                                                        </td>
-                                                        <td>
+                                                                    <option value="+">+</option>
+                                                                    <option value="-">-</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
 
 
-                                                            <input type="number"
-                                                                   name="product[Lens][Right][Near][SPH]"
-                                                                   value=""
-                                                                   id="Right_Near_SPH"
-                                                                   data-reqval="nearSPH"
-                                                                   placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensSPH  number-input"
-                                                                   data-rl="Right"
-                                                                   required
-                                                                   aria-required="true"
-                                                                   step="0.25"
-                                                                   min="-30"
-                                                                   max="30">
-                                                        </td>
-                                                        <td>
-                                                            <select name="product[Lens][Right][Near][CYLDeg]"
+                                                                <input type="number"
+                                                                    name="product[Lens][Right][Near][SPH]" value=""
+                                                                    id="Right_Near_SPH" data-reqval="nearSPH"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensVal lensSPH  number-input"
+                                                                    data-rl="Right" required aria-required="true"
+                                                                    step="0.25" min="-30" max="30">
+                                                            </td>
+                                                            <td>
+                                                                <select name="product[Lens][Right][Near][CYLDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                                     data-rl="Right" data-signfor="Right_Near_CYL"
                                                                     id="Right_Near_CYLDeg">
-                                                                <option value="+">+</option>
-                                                                <option value="-" selected="selected">-</option>
+                                                                    <option value="+">+</option>
+                                                                    <option value="-" selected="selected">-</option>
 
-                                                            </select>
+                                                                </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <input
-                                                                type="number"
-                                                                name="product[Lens][Right][Near][CYL]"
-                                                                data-reqval="nearCYL"
-                                                                value=""
-                                                                id="Right_Near_CYL"
-                                                                placeholder=" "
-                                                                class="form-control input-block-level lensVal lensCYL  number-input"
-                                                                data-rl="Right"
-                                                                step="0.25"
-                                                                min="-15"
-                                                                max="15">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Right][Near][CYL]"
+                                                                    data-reqval="nearCYL" value="" id="Right_Near_CYL"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensVal lensCYL  number-input"
+                                                                    data-rl="Right" step="0.25" min="-15" max="15">
 
-                                                        </td>
-                                                        <td>
-                                                            <input
-                                                                type="number"
-                                                                name="product[Lens][Right][Near][Axis]"
-                                                                data-reqval="nearAX"
-                                                                value=""
-                                                                id="Right_Near_Axis"
-                                                                placeholder=" "
-                                                                class="form-control input-block-level lensAxis nearAX  number-input"
-                                                                data-rl="Right"
-                                                                step="1"
-                                                                min="0"
-                                                                max="180">
-                                                        </td>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Right][Near][Axis]"
+                                                                    data-reqval="nearAX" value="" id="Right_Near_Axis"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensAxis nearAX  number-input"
+                                                                    data-rl="Right" step="1" min="0" max="180">
+                                                            </td>
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2"
-                                                            class="verticalMiddle"></td>
-                                                        <td> </td>
-                                                        <td>{{translate('Adisyon')}}</td>
-                                                        <td></td>
-                                                        <td>{{translate('MF')}}</td>
-                                                        <td>{{translate('Yük')}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td rowspan="2" class="verticalMiddle"></td>
+                                                            <td> </td>
+                                                            <td>{{translate('Adisyon')}}</td>
+                                                            <td></td>
+                                                            <td>{{translate('MF')}}</td>
+                                                            <td>{{translate('Yük')}}</td>
 
-                                                    </tr>
-                                                    <tr class="nearTableRow">
-                                                        <td></td>
-                                                        <td>
-                                                            <input type="number"
-                                                                   name="product[Lens][Right][Addition]"
-                                                                   data-reqval="addVal" value=""
-                                                                   id="Right_Addition"
-                                                                   placeholder=""
-                                                                   class="form-control input-block-level lensAddition lensVal"
-                                                                   data-rl="Right"
-                                                                   required=""
-                                                                   aria-required="true"
-                                                                   disabled>
-                                                        </td>
-                                                        <td></td>
+                                                        </tr>
+                                                        <tr class="nearTableRow">
+                                                            <td></td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Right][Addition]"
+                                                                    data-reqval="addVal" value="" id="Right_Addition"
+                                                                    placeholder=""
+                                                                    class="form-control input-block-level lensAddition lensVal"
+                                                                    data-rl="Right" required="" aria-required="true"
+                                                                    disabled>
+                                                            </td>
+                                                            <td></td>
 
-                                                        <td>
-                                                            <input
-                                                                type="number"
-                                                                name="product[Lens][Right][Distance]"
-                                                                data-reqval="Distance"
-                                                                value=""
-                                                                id="Right_Distance"
-                                                                placeholder=" "
-                                                                class="form-control input-block-level lensAxis nearAX  number-input"
-                                                                data-rl="Right"
-                                                                step="o.50"
-                                                                min="o.50"
-                                                                max="45">
-                                                        </td>
-                                                        <td>
-                                                            <input
-                                                                type="number"
-                                                                name="product[Lens][Right][Height]"
-                                                                data-reqval="Height"
-                                                                value=""
-                                                                id="Right_Height"
-                                                                placeholder=" "
-                                                                class="form-control input-block-level lensAxis nearAX  number-input"
-                                                                data-rl="Right"
-                                                                step="o.25"
-                                                                min="o.25"
-                                                                max="45">
-                                                        </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Right][Distance]"
+                                                                    data-reqval="Distance" value="" id="Right_Distance"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensAxis nearAX  number-input"
+                                                                    data-rl="Right" step="o.50" min="o.50" max="45">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" name="product[Lens][Right][Height]"
+                                                                    data-reqval="Height" value="" id="Right_Height"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensAxis nearAX  number-input"
+                                                                    data-rl="Right" step="o.25" min="o.25" max="45">
+                                                            </td>
 
 
-                                                    </tr>
+                                                        </tr>
 
                                                     </tbody>
                                                 </table>
@@ -1160,251 +1131,230 @@
 
                                             <div class="form-group h-100">
                                                 <table class="table table-bordered text-center" id="Left_Lens_Table"
-                                                       style="border: 5px solid red;">
+                                                    style="border: 5px solid red;">
                                                     <tbody>
-                                                    <tr>
-                                                        <td class="lensLatterCell">
-                                                            <span class="bigLatter">L</span>
+                                                        <tr>
+                                                            <td class="lensLatterCell">
+                                                                <span class="bigLatter">L</span>
 
 
-                                                        </td>
-                                                         <td colspan="5">
-                                                             <div class="row" style="padding-left: 0;">
-                                                                <div class="col-xs-12 d-flex">
-                                                                    <div class="check-line"
-                                                                         style="width: 100%;text-align: left;">
-                                                                        <div
-                                                                            class="icheckbox_square-orange icheck-item toggle-pill-color flex-col-centered">
-                                                                            <input type="checkbox" id="LeftLens"
-                                                                                   class="icheck-me checkForLens icheck-input "
-                                                                                   name="product[Lens][Left][isCheck]"
-                                                                                   value="1" data-skin="square"
-                                                                                   data-color="orange" data-rl="Left">
-                                                                                   <label class="inline icheck-label "
-                                                                                          for="LeftLens">
-                                                                                       </label>
-                                                                                       <span>
-                                                                                       {{translate('I Want Left Glass')}}
-                                                                                   </span>
+                                                            </td>
+                                                            <td colspan="5">
+                                                                <div class="row" style="padding-left: 0;">
+                                                                    <div class="col-xs-12 d-flex">
+                                                                        <div class="check-line"
+                                                                            style="width: 100%;text-align: left;">
+                                                                            <div
+                                                                                class="icheckbox_square-orange icheck-item ">
+                                                                                <input type="checkbox" id="LeftLens"
+                                                                                    class="icheck-me checkForLens icheck-input "
+                                                                                    name="product[Lens][Left][isCheck]"
+                                                                                    value="1" data-skin="square"
+                                                                                    data-color="orange" data-rl="Left">
+                                                                                <label class="inline icheck-label "
+                                                                                    for="LeftLens">
+                                                                                    {{translate('I Want Left Glass')}}
+                                                                                </label>
+
+                                                                            </div>
+
                                                                         </div>
+                                                                        <div class="check-line"
+                                                                            style="width: 100%;text-align: left;">
+                                                                            <div
+                                                                                class="icheckbox_square-orange icheck-item ">
+                                                                                <input type="checkbox" id="sameToRight"
+                                                                                    class="icheck-me popover2 icheck-input icheck[veqwi]"
+                                                                                    data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left"
+                                                                                    name="product[Lens][Left][sameToRight]"
+                                                                                    value="1" data-skin="square"
+                                                                                    data-color="orange"
+                                                                                    data-original-title="" title=""
+                                                                                    disabled="">
+                                                                                <label class="inline icheck-label "
+                                                                                    for="sameToRight">
+                                                                                    {{translate('Left glass is the same
+                                                                                    as right glass')}}
+                                                                                </label>
+                                                                            </div>
 
-                                                                    </div>
-                                                                    <div class="check-line"
-                                                                         style="width: 100%;text-align: left;">
-                                                                        <div
-                                                                            class="icheckbox_square-orange icheck-item toggle-pill-color flex-col-centered">
-                                                                            <input type="checkbox" id="sameToRight"
-                                                                                   class="icheck-me popover2 icheck-input icheck[veqwi]"
-                                                                                   data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left"
-                                                                                   name="product[Lens][Left][sameToRight]"
-                                                                                   value="1" data-skin="square"
-                                                                                   data-color="orange"
-                                                                                   data-original-title="" title=""
-                                                                                   disabled="">
-                                                                                   <label class="inline icheck-label "
-                                                                                          for="sameToRight">
-                                                                                       </label>
-                                                                                       <span>
-                                                                                       {{translate('Left glass is the same as right glass')}}
-                                                                                   </span>
+
                                                                         </div>
-
 
                                                                     </div>
 
                                                                 </div>
 
-                                                            </div>
+                                                            </td>
 
-                                                        </td>
+                                                        </tr>
 
-                                                    </tr>
+                                                        <tr>
+                                                            <td rowspan="2" class="verticalMiddle">{{translate('UZAK')}}
+                                                            </td>
+                                                            <td>+/-</td>
+                                                            <td>{{translate('SPH')}}</td>
+                                                            <td>+/-</td>
+                                                            <td>{{translate('CYL')}}</td>
+                                                            <td>{{translate('AXIS')}}</td>
 
-                                                    <tr>
-                                                        <td rowspan="2"
-                                                            class="verticalMiddle">{{translate('UZAK')}}</td>
-                                                        <td>+/-</td>
-                                                        <td>{{translate('SPH')}}</td>
-                                                        <td>+/-</td>
-                                                        <td>{{translate('CYL')}}</td>
-                                                        <td>{{translate('AXIS')}}</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <select name="product[Lens][Left][Far][SPHDeg]"
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <select name="product[Lens][Left][Far][SPHDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                     id="Left_Far_SPHDeg" data-rl="Left"
                                                                     data-signfor="Left_Far_SPH" disabled="">
-                                                                <option value="+">+</option>
-                                                                <option value="-">-</option>
+                                                                    <option value="+">+</option>
+                                                                    <option value="-">-</option>
 
-                                                            </select>
+                                                                </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <input type="number" name="product[Lens][Left][Far][SPH]"
-                                                                   data-reqval="farSPH" value="" id="Left_Far_SPH"
-                                                                   placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensSPH farSPH number-input"
-                                                                   data-rl="Left" required="" aria-required="true"
-                                                                   disabled=""
-                                                                   step="0.25"
-                                                                   min="-30"
-                                                                   max="30">
-                                                        </td>
-                                                        <td>
-                                                            <select name="product[Lens][Left][Far][CYLDeg]"
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Left][Far][SPH]"
+                                                                    data-reqval="farSPH" value="" id="Left_Far_SPH"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensVal lensSPH farSPH number-input"
+                                                                    data-rl="Left" required="" aria-required="true"
+                                                                    disabled="" step="0.25" min="-30" max="30">
+                                                            </td>
+                                                            <td>
+                                                                <select name="product[Lens][Left][Far][CYLDeg]"
                                                                     class="form-control lensPlusMinusSelect CYLPlusMinusSelect input-block-level"
                                                                     style="width: 100%" data-rl="Left"
                                                                     id="Left_Far_CYLDeg" disabled="">
-                                                                <option value="+">+</option>
-                                                                <option value="-" selected="selected">-</option>
+                                                                    <option value="+">+</option>
+                                                                    <option value="-" selected="selected">-</option>
 
-                                                            </select>
+                                                                </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <input type="number" name="product[Lens][Left][Far][CYL]"
-                                                                   data-reqval="farCYL" value="" id="Left_Far_CYL"
-                                                                   placeholder=" "
-                                                                   class="form-control input-block-level input-sm lensVal lensCYL farCYL number-input"
-                                                                   data-rl="Left" disabled=""
-                                                                   step="0.25"
-                                                                   min="-15"
-                                                                   max="15">
-                                                        </td>
-                                                        <td>
-                                                            <input type="number" name="product[Lens][Left][Far][Axis]"
-                                                                   data-reqval="farAX" value="" id="Left_Far_Axis"
-                                                                   placeholder=" "
-                                                                   class="form-control input-block-level input-sm lensAxis farAX number-input"
-                                                                   data-rl="Left" disabled=""
-                                                                   step="1"
-                                                                   min="0"
-                                                                   max="180">
-                                                        </td>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Left][Far][CYL]"
+                                                                    data-reqval="farCYL" value="" id="Left_Far_CYL"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level input-sm lensVal lensCYL farCYL number-input"
+                                                                    data-rl="Left" disabled="" step="0.25" min="-15"
+                                                                    max="15">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Left][Far][Axis]"
+                                                                    data-reqval="farAX" value="" id="Left_Far_Axis"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level input-sm lensAxis farAX number-input"
+                                                                    data-rl="Left" disabled="" step="1" min="0"
+                                                                    max="180">
+                                                            </td>
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2"
-                                                            class="verticalMiddle">{{translate('YAKIN')}}</td>
-                                                        <td>+/-</td>
-                                                        <td>{{translate('SPH')}}</td>
-                                                        <td>+/-</td>
-                                                        <td>{{translate('CYL')}}</td>
-                                                        <td>{{translate('AXIS')}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td rowspan="2" class="verticalMiddle">
+                                                                {{translate('YAKIN')}}</td>
+                                                            <td>+/-</td>
+                                                            <td>{{translate('SPH')}}</td>
+                                                            <td>+/-</td>
+                                                            <td>{{translate('CYL')}}</td>
+                                                            <td>{{translate('AXIS')}}</td>
 
-                                                    </tr>
-                                                    <tr class="nearTableRow">
-                                                        <td>
-                                                            <select name="product[Lens][Left][Near][SPHDeg]"
+                                                        </tr>
+                                                        <tr class="nearTableRow">
+                                                            <td>
+                                                                <select name="product[Lens][Left][Near][SPHDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                     id="Left_Near_SPHDeg" data-rl="Left"
                                                                     data-signfor="Left_Near_SPH" disabled="">
-                                                                <option value="+">+</option>
-                                                                <option value="-">-</option>
+                                                                    <option value="+">+</option>
+                                                                    <option value="-">-</option>
 
-                                                            </select>
+                                                                </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <input type="number" name="product[Lens][Left][Near][SPH]"
-                                                                   data-reqval="nearSPH" value="" id="Left_Near_SPH"
-                                                                   placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensSPH  number-input"
-                                                                   data-rl="Left" disabled=""
-                                                                   step="0.25"
-                                                                   min="-30"
-                                                                   max="30">
-                                                        </td>
-                                                        <td>
-                                                            <select name="product[Lens][Left][Near][CYLDeg]"
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Left][Near][SPH]"
+                                                                    data-reqval="nearSPH" value="" id="Left_Near_SPH"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensVal lensSPH  number-input"
+                                                                    data-rl="Left" disabled="" step="0.25" min="-30"
+                                                                    max="30">
+                                                            </td>
+                                                            <td>
+                                                                <select name="product[Lens][Left][Near][CYLDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                                     data-rl="Left" data-signfor="Left_Near_CYL"
                                                                     id="Left_Near_CYLDeg" disabled="">
-                                                                <option value="+">+</option>
-                                                                <option value="-" selected="selected">-</option>
+                                                                    <option value="+">+</option>
+                                                                    <option value="-" selected="selected">-</option>
 
-                                                            </select>
+                                                                </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <input type="number" name="product[Lens][Left][Near][CYL]"
-                                                                   data-reqval="nearCYL" value="" id="Left_Near_CYL"
-                                                                   placeholder=" "
-                                                                   class="form-control input-block-level lensVal lensCYL number-input"
-                                                                   data-rl="Left"
-                                                                   disabled=""
-                                                                   step="0.25"
-                                                                   min="-15"
-                                                                   max="15">
-                                                        </td>
-                                                        <td>
-                                                            <input type="number" name="product[Lens][Left][Near][Axis]"
-                                                                   data-reqval="nearAX" value="" id="Left_Near_Axis"
-                                                                   placeholder=" "
-                                                                   class="form-control input-block-level lensAxis nearAX number-input"
-                                                                   data-rl="Left" disabled=""
-                                                                   step="1"
-                                                                   min="0"
-                                                                   max="180">
-                                                        </td>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Left][Near][CYL]"
+                                                                    data-reqval="nearCYL" value="" id="Left_Near_CYL"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensVal lensCYL number-input"
+                                                                    data-rl="Left" disabled="" step="0.25" min="-15"
+                                                                    max="15">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Left][Near][Axis]"
+                                                                    data-reqval="nearAX" value="" id="Left_Near_Axis"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensAxis nearAX number-input"
+                                                                    data-rl="Left" disabled="" step="1" min="0"
+                                                                    max="180">
+                                                            </td>
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2"
-                                                            class="verticalMiddle"></td>
-                                                        <td> </td>
-                                                        <td>{{translate('Adisyon')}}</td>
-                                                        <td></td>
-                                                        <td>{{translate('MF')}}</td>
-                                                        <td>{{translate('Yük')}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td rowspan="2" class="verticalMiddle"></td>
+                                                            <td> </td>
+                                                            <td>{{translate('Adisyon')}}</td>
+                                                            <td></td>
+                                                            <td>{{translate('MF')}}</td>
+                                                            <td>{{translate('Yük')}}</td>
 
-                                                    </tr>
-                                                    <tr class="nearTableRow">
-                                                        <td></td>
-                                                        <td>
-                                                            <input type="number" name="product[Lens][Left][Addition]"
-                                                                   data-reqval="addVal" value="" id="Left_Addition"
-                                                                   placeholder=""
-                                                                   class="form-control input-block-level lensAddition lensVal number-input"
-                                                                   data-rl="Left" required="" aria-required="true"
-                                                                   disabled="">
-                                                        </td>
-                                                        <td></td>
+                                                        </tr>
+                                                        <tr class="nearTableRow">
+                                                            <td></td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Left][Addition]"
+                                                                    data-reqval="addVal" value="" id="Left_Addition"
+                                                                    placeholder=""
+                                                                    class="form-control input-block-level lensAddition lensVal number-input"
+                                                                    data-rl="Left" required="" aria-required="true"
+                                                                    disabled="">
+                                                            </td>
+                                                            <td></td>
 
-                                                        <td>
-                                                            <input
-                                                                type="number"
-                                                                name="product[Lens][Left][Distance]"
-                                                                data-reqval="Distance"
-                                                                value=""
-                                                                id="Left_Distance"
-                                                                placeholder=" "
-                                                                class="form-control input-block-level lensAxis nearAX  number-input"
-                                                                data-rl="Left"
-                                                                step="o.50"
-                                                                min="o.50"
-                                                                max="45"disabled="">
-                                                        </td>
-                                                        <td>
-                                                            <input
-                                                                type="number"
-                                                                name="product[Lens][Left][Height]"
-                                                                data-reqval="Height"
-                                                                value=""
-                                                                id="Left_Height"
-                                                                placeholder=" "
-                                                                class="form-control input-block-level lensAxis nearAX  number-input"
-                                                                data-rl="Left"
-                                                                step="o.25"
-                                                                min="o.25"
-                                                                max="45" disabled="">
-                                                        </td>
+                                                            <td>
+                                                                <input type="number"
+                                                                    name="product[Lens][Left][Distance]"
+                                                                    data-reqval="Distance" value="" id="Left_Distance"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensAxis nearAX  number-input"
+                                                                    data-rl="Left" step="o.50" min="o.50" max="45"
+                                                                    disabled="">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" name="product[Lens][Left][Height]"
+                                                                    data-reqval="Height" value="" id="Left_Height"
+                                                                    placeholder=" "
+                                                                    class="form-control input-block-level lensAxis nearAX  number-input"
+                                                                    data-rl="Left" step="o.25" min="o.25" max="45"
+                                                                    disabled="">
+                                                            </td>
 
 
-                                                    </tr>
+                                                        </tr>
 
 
                                                     </tbody>

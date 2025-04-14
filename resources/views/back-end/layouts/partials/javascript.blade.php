@@ -1,7 +1,7 @@
 <script src="{{ asset('assets/back-end/js/jquery.min.js') }}"></script>
 
 @php
-    $moment_time_format = \Modules\Setting\Entities\System::getProperty('time_format') == '12' ? 'hh:mm A' : 'HH:mm';
+$moment_time_format = \Modules\Setting\Entities\System::getProperty('time_format') == '12' ? 'hh:mm A' : 'HH:mm';
 @endphp
 <script>
     var moment_time_format = "{{ $moment_time_format }}";
@@ -15,11 +15,12 @@
 {{--<script type="text/javascript" src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>--}}
 <script type="text/javascript" src="{{ asset('vendor/daterange/js/moment.min.js') }}"></script>
 
-<script type="text/javascript" src="{{ asset('vendor/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.' . session('language') . '.min.js') }}">
-</script>
 <script type="text/javascript" src="{{ asset('vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js') }}">
+</script>
+{{-- <script type="text/javascript"
+    src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.' . session('language') . '.min.js') }}">
+</script>--}}
+<script type="text/javascript" src="{{ asset('vendor/bootstrap-datepicker/bootstrap-datepicker.min.js') }}">
 </script>
 
 <script type="text/javascript" src="{{ asset('vendor/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>
@@ -32,7 +33,7 @@
 <script type="text/javascript" src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
 <script type="text/javascript"
-        src="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    src="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/charts-custom.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/front.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/daterange/js/knockout-3.4.2.js') }}"></script>
@@ -323,10 +324,11 @@
 {{--<script src="{{ asset('assets/back-end/js/custom/custom-table-datatable.js') }}"></script>--}}
 
 
+<script type="text/javascript" src="{{ asset('assets/back-end/js/jquery-validation/jquery.validate.min.js') }}">
+</script>
 <script type="text/javascript"
-        src="{{ asset('assets/back-end/js/jquery-validation/jquery.validate.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ asset('assets/back-end/js/jquery-validation/localization/messages_' . app()->getLocale() . '.js') }}"></script>
+    src="{{ asset('assets/back-end/js/jquery-validation/localization/messages_' . app()->getLocale() . '.js') }}">
+</script>
 <script type="text/javascript" src="{{ asset('assets/back-end/js/cropperjs/cropper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/back-end/js/dropzone.js') }}"></script>
 
@@ -517,7 +519,9 @@
                 $(container).html(result);
                 $('#editModal').modal('show');
                 $('.select2').select2();
-                $('.datepicker').datepicker();
+                $('.datepicker').datepicker({
+
+                });
             },
         });
     });
@@ -544,7 +548,9 @@
 
 
     $('.select2').select2();
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({
+
+    });
 
 
 </script>
@@ -581,5 +587,6 @@
         $('.dt-button-collection').toggle()
     })
 </script>
+
 
 @stack('javascripts')

@@ -11,7 +11,9 @@ $(document).on('click', '.add_date', function () {
         },
         success: function (result) {
             $('#important_date_table tbody').prepend(result);
-            $(".datepicker").datepicker({});
+            $(".datepicker").datepicker({
+
+            });
         },
     });
 });

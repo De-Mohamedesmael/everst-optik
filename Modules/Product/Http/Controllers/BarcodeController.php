@@ -110,41 +110,59 @@ class BarcodeController extends Controller
 
     public function printBarcode(Request $request): array|string|Translator|Application|null
     {
-         try {
-                $products = $request->get('products');
+
+        try {
+            $products = $request->get('products');
 
 
-                $product_details = [];
-                foreach ($products as $value) {
-                    $details = $this->productUtil->getDetails($value['product_id'],  null, false);
-                    $product_details[] = ['details' => $details, 'qty' => $this->commonUtil->num_uf($value['quantity'])];
+            $product_details = [];
+            foreach ($products as $value) {
+                $details = $this->productUtil->getDetails($value['product_id'],  null, false);
+                $product_details[] = ['details' => $details, 'qty' => $this->commonUtil->num_uf($value['quantity'])];
+            }
+
+            $page_height = $request->paper_size;
+
+
+            $print['name'] = !empty($request->product_name) ? 1 : 0;
+            $print['price'] = !empty($request->price) ? 1 : 0;
+            $print['size'] = !empty($request->size) ? 1 : 0;
+            $print['color'] = !empty($request->color) ? 1 : 0;
+            $print['site_title'] = !empty($request->site_title) ? System::getProperty('site_title') : null;
+            $store = [];
+            if (!empty($request->store)) {
+                foreach ($request->store as $store_id) {
+                    $store[] = !empty($store_id) ? Store::where('id', $store_id)->first()->name . ' ' : null;
                 }
+            }
+            $print['store'] = !empty($store) ? implode(',', $store) : null;
+            $print['free_text'] = !empty($request->free_text) ? $request->free_text : null;
 
-                $page_height = $request->paper_size;
+            $currency = Currency::find(System::getProperty('currency'));
 
 
-                $print['name'] = !empty($request->product_name) ? 1 : 0;
-                $print['price'] = !empty($request->price) ? 1 : 0;
-                $print['size'] = !empty($request->size) ? 1 : 0;
-                $print['color'] = !empty($request->color) ? 1 : 0;
-                $print['site_title'] = !empty($request->site_title) ? System::getProperty('site_title') : null;
-                $store = [];
-                if (!empty($request->store)) {
-                    foreach ($request->store as $store_id) {
-                        $store[] = !empty($store_id) ? Store::where('id', $store_id)->first()->name . ' ' : null;
-                    }
-                }
-                $print['store'] = !empty($store) ? implode(',', $store) : null;
-                $print['free_text'] = !empty($request->free_text) ? $request->free_text : null;
 
-                $currency=Currency::find(System::getProperty('currency'));
-                $output = view('product::back-end.barcode.partials.print_barcode')
-                    ->with(compact('print', 'product_details',  'page_height','currency'))->render();
-         } catch (\Exception $e) {
-             Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
 
-             $output = translate('something_went_wrong');
-         }
+            if ($request->paper_size === "one") {
+
+                $output = view('product::back-end.barcode.partials.print_barcode1')
+                    ->with(compact('print', 'product_details',  'page_height', 'currency'))->render();
+            }
+            if ($request->paper_size === "two") {
+
+                $output = view('product::back-end.barcode.partials.print_barcode2')
+                    ->with(compact('print', 'product_details',  'page_height', 'currency'))->render();
+            }
+            if ($request->paper_size === "three") {
+
+                $output = view('product::back-end.barcode.partials.print_barcode3')
+                    ->with(compact('print', 'product_details',  'page_height', 'currency'))->render();
+            }
+        } catch (\Exception $e) {
+            Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
+
+            $output = translate('something_went_wrong');
+        }
 
         return $output;
     }

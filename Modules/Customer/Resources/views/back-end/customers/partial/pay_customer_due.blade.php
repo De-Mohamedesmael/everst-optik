@@ -1,14 +1,16 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content">
 
-        {!! Form::open(['url' => route('admin.customers.postPayContactDue', $customer_details->customer_id), 'method' => 'post', 'id' =>
+        {!! Form::open(['url' => route('admin.customers.postPayContactDue', $customer_details->customer_id), 'method' =>
+        'post', 'id' =>
         'add_payment_form', 'enctype' => 'multipart/form-data' ])
         !!}
 
         <div class="modal-header">
 
             <h4 class="modal-title">@lang( 'lang.add_payment' )</h4>
-            <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
+            <button type="button" data-dismiss="modal" aria-label="Close"
+                class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
                     aria-hidden="true">&times;</span></button>
         </div>
 
@@ -16,19 +18,19 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="well">
-                    <input type="hidden" value="{{$extract_due}}" name="extract_due"/>
-                      <strong>@lang('lang.customer_name'): </strong>{{ $customer_details->name }}<br>
-                      <strong>@lang('lang.mobile'): </strong>{{ $customer_details->mobile_number }}<br><br>
+                        <input type="hidden" value="{{$extract_due}}" name="extract_due" />
+                        <strong>@lang('lang.customer_name'): </strong>{{ $customer_details->name }}<br>
+                        <strong>@lang('lang.mobile'): </strong>{{ $customer_details->mobile_number }}<br><br>
                     </div>
-                  </div>
+                </div>
                 <div class="col-md-6">
                     <div class="well">
-                        <strong>@lang('lang.total_purchase'): </strong><span class=""
-                            data-currency_symbol="true">{{ @num_format($customer_details->total_invoice) }}</span><br>
-                        <strong>@lang('lang.total_paid'): </strong><span class=""
-                            data-currency_symbol="true">{{ @num_format($customer_details->total_paid) }}</span><br>
-                        <strong>@lang('lang.due'): </strong><span class=""
-                            data-currency_symbol="true">{{ @num_format($customer_details->total_invoice - $customer_details->total_paid) }}</span><br>
+                        <strong>@lang('lang.total_purchase'): </strong><span class="" data-currency_symbol="true">{{
+                            @num_format($customer_details->total_invoice) }}</span><br>
+                        <strong>@lang('lang.total_paid'): </strong><span class="" data-currency_symbol="true">{{
+                            @num_format($customer_details->total_paid) }}</span><br>
+                        <strong>@lang('lang.due'): </strong><span class="" data-currency_symbol="true">{{
+                            @num_format($customer_details->total_invoice - $customer_details->total_paid) }}</span><br>
                     </div>
                 </div>
             </div>
@@ -38,9 +40,12 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         {!! Form::label('amount', __('lang.amount'). ':*', []) !!} <br>
-                        {!! Form::text('amount', @num_format($customer_details->total_invoice - $customer_details->total_paid), ['class' => 'form-control', 'placeholder'
+                        {!! Form::text('amount', @num_format($customer_details->total_invoice -
+                        $customer_details->total_paid), ['class' => 'form-control', 'placeholder'
                         => __('lang.amount')]) !!}
-                        <input type="hidden" value="@num_format($customer_details->total_invoice - $customer_details->total_paid)" name="balance"/>
+                        <input type="hidden"
+                            value="@num_format($customer_details->total_invoice - $customer_details->total_paid)"
+                            name="balance" />
                     </div>
                 </div>
 
@@ -125,6 +130,7 @@
     $('.datepicker').datepicker({
         language: '{{session('language')}}',
         todayHighlight: true,
+
     });
     $('#add_payment_form #method').change(function(){
         var method = $(this).val();

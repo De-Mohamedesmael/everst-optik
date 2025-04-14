@@ -984,6 +984,8 @@ $site_title =\Modules\Setting\Entities\System::getProperty('site_title');
                 });
             });
     </script>
+
+
     @endpush
     </body>
 
