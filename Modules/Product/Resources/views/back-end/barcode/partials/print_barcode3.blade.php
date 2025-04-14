@@ -79,7 +79,7 @@
 
 <title>{{ __('lang.print_labels') }}</title>
 <button class="btn btn-success" onclick="window.print()">@lang('lang.print') </button>
-<div id="preview_body">
+<div id="preview_body" style="display: flex;flex-direction: column">
     @php
     $loop_count = 0;
     @endphp
@@ -106,7 +106,8 @@
                 </p>
                 @if (!empty($print['size']) && !empty($details['details']->size_name))
                 <p style="margin: 0">
-                    {{ $details['details']->size_name }}&nbsp;&nbsp;</p>
+                    {{ $details['details']->size_name }}&nbsp;&nbsp;
+                </p>
                 @endif
             </div>
 

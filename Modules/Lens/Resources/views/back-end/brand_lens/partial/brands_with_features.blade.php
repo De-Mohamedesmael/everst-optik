@@ -1,8 +1,8 @@
-
 <style>
     div.hide {
         display: none;
     }
+
     :root {
         --primary: #1a89ca;
 
@@ -151,21 +151,24 @@
         display: block;
         width: 45px;
         height: 65px;
-        background: #d2d7dc url({{asset('assets/default/baRightArrow.png')}}) no-repeat center;
-        content: "";
-        -webkit-border-top-right-radius: 5px;
-        -webkit-border-bottom-right-radius: 5px;
-        -moz-border-radius-topleft: 5px;
-        -moz-border-radius-bottomright: 5px;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-        float: right;
-        position: absolute;
-        top: 0;
-        right: 0;
+        background: #d2d7dc url({{asset('assets/default/baRightArrow.png')
+    }
+    }) no-repeat center;
+    content: "";
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
     }
 
-    #next-btn img , #previous-btn img{
+    #next-btn img,
+    #previous-btn img {
         display: block;
         width: 65%;
         position: absolute;
@@ -176,12 +179,14 @@
         -webkit-transform: translate(-50%, -50%);
         -moz-transform: translate(-50%, -50%);
     }
+
     #previous-btn img {
         left: 62% !important;
         /* right: 15% !important; */
     }
 
     .technicalLeftMenu {
+        overflow: scroll;
         width: 80px;
         height: 100%;
         position: fixed;
@@ -195,18 +200,34 @@
 
     .technicalLeftMenu.pixarMenu a {
         height: auto;
-        padding: {{240/$brand_lens->count()?:1}}px 0;
+
+        padding: {
+                {
+                240/$brand_lens->count()?: 1
+            }
+        }
+
+        px 0;
         display: block;
         width: 100%;
         border-bottom: 1px solid #dcdcdc;
     }
+
     .technicalLeftMenu_.pixarMenu a {
         height: auto;
-        padding: {{132/$brand_lens->count()?:1}}px 0;
+
+        padding: {
+                {
+                132/$brand_lens->count()?: 1
+            }
+        }
+
+        px 0;
         display: block;
         width: 100%;
         border-bottom: 1px solid #dcdcdc;
     }
+
     .technicalLeftMenu a:hover,
     .technicalLeftMenu a.active {
         background: #ebebeb;
@@ -263,6 +284,7 @@
     span.effect {
         border: 1px solid #1a89ca;
     }
+
     .technicalLeftMenu.technicalLeftMenu_.pixarMenu {
         left: 70px;
         width: 40px !important;
@@ -270,86 +292,90 @@
 </style>
 <main>
     @php
-        $first_after='';
-        $first_before='';
-        $previous_icons=[];
-        $html_links_='';
-        $html_links='';
-        foreach ($brand_lens as $key=>$brand_len){
-            $previous_icons[$key]=$brand_len;
-        }
+    $first_after='';
+    $first_before='';
+    $previous_icons=[];
+    $html_links_='';
+    $html_links='';
+    foreach ($brand_lens as $key=>$brand_len){
+    $previous_icons[$key]=$brand_len;
+    }
     @endphp
     @foreach($brand_lens as $key=> $brand)
-        <div class="div-tab-brand  {{$loop->first?:"hide"}}" id="dev-tap-brand{{$brand->id}}">
-            <div class="controls beforeAfterMenu" id="beforeAfterMenu{{$brand->id}}">
-                @foreach($brand->features as  $feature)
-                    <a href="#" data-pair="{{$feature->id}}"  data-brand="{{$brand->id}}"  data-after="{{$feature->after_effect}}" data-before="{{$feature->before_effect}}" >
-                        <span class="effect {{$loop->first ?'active':''}} span-f-brand-{{$brand->id}}" data-default="{{$feature->icon}}" data-active="{{$feature->icon_active}}"
-                              style=" background: {{$loop->first?'#1a89ca':'#ffffff'}} url('{{$loop->first?$feature->icon_active :$feature->icon }}') no-repeat center;">
-                        </span>
-                        {{$feature->name}}
-                    </a>
-                        @if($loop->first)
-                            @php
-                                $first_after=$feature->after_effect;
-                                $first_before=$feature->before_effect;
-                            @endphp
-                        @endif
+    <div class="div-tab-brand  {{$loop->first?:" hide"}}" id="dev-tap-brand{{$brand->id}}">
+        <div class="controls beforeAfterMenu" id="beforeAfterMenu{{$brand->id}}">
+            @foreach($brand->features as $feature)
+            <a href="#" data-pair="{{$feature->id}}" data-brand="{{$brand->id}}" data-after="{{$feature->after_effect}}"
+                data-before="{{$feature->before_effect}}">
+                <span class="effect {{$loop->first ?'active':''}} span-f-brand-{{$brand->id}}"
+                    data-default="{{$feature->icon}}" data-active="{{$feature->icon_active}}"
+                    style=" background: {{$loop->first?'#1a89ca':'#ffffff'}} url('{{$loop->first?$feature->icon_active :$feature->icon }}') no-repeat center;">
+                </span>
+                {{$feature->name}}
+            </a>
+            @if($loop->first)
+            @php
+            $first_after=$feature->after_effect;
+            $first_before=$feature->before_effect;
+            @endphp
+            @endif
 
-                @endforeach
-
-
-            </div>
-            <div class="controls">
-                @php
-                    $previous= $key == 0 ? $previous_icons[$brand_lens->count() -1] : $previous_icons[$key-1];
-
-                    $next= $key == $brand_lens->count()-1 ? $previous_icons[0] : $previous_icons[$key+1];
-                @endphp
-                <a href="#" class="btn-next-previous" data-id="{{$previous->id}}" id="previous-btn">
-                    <img class="icon-previous" src="{{$previous->icon}}" alt="">
-                </a>
-
-                <div class="container_sp container_sp_{{$brand->id}}">
-                    <div class="image-container_sp">
-                        <img class="image-before slider-image image-before-{{$brand->id}}" src="{{$first_before}}" alt="before" />
-                        <img class="image-after slider-image image-after-{{$brand->id}}" src="{{$first_after}}" alt="after" />
-                    </div>
-                    <input type="range" min="0" max="100" value="50" aria-label="Percentage of before photo shown"
-                           class="slider" data-in data-id="{{$brand->id}}" />
-                    <div class="slider-line" aria-hidden="true"></div>
-                    <div class="slider-button" aria-hidden="true">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                             viewBox="0 0 256 256">
-                            <rect width="256" height="256" fill="none"></rect>
-                            <line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor"
-                                  stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
-                            <line x1="96" y1="128" x2="16" y2="128" fill="none" stroke="currentColor" stroke-linecap="round"
-                                  stroke-linejoin="round" stroke-width="16"></line>
-                            <polyline points="48 160 16 128 48 96" fill="none" stroke="currentColor" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="16"></polyline>
-                            <line x1="160" y1="128" x2="240" y2="128" fill="none" stroke="currentColor"
-                                  stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
-                            <polyline points="208 96 240 128 208 160" fill="none" stroke="currentColor"
-                                      stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
-                        </svg>
-                    </div>
-                </div>
-
-                <a href="#" class="btn-next-previous" data-id="{{$next->id}}" id="next-btn">
-                    <img class="icon-next"  src="{{$next->icon}}" alt="">
-                </a>
+            @endforeach
 
 
-
-
-            </div>
         </div>
+        <div class="controls">
+            @php
+            $previous= $key == 0 ? $previous_icons[$brand_lens->count() -1] : $previous_icons[$key-1];
+
+            $next= $key == $brand_lens->count()-1 ? $previous_icons[0] : $previous_icons[$key+1];
+            @endphp
+            <a href="#" class="btn-next-previous" data-id="{{$previous->id}}" id="previous-btn">
+                <img class="icon-previous" src="{{$previous->icon}}" alt="">
+            </a>
+
+            <div class="container_sp container_sp_{{$brand->id}}">
+                <div class="image-container_sp">
+                    <img class="image-before slider-image image-before-{{$brand->id}}" src="{{$first_before}}"
+                        alt="before" />
+                    <img class="image-after slider-image image-after-{{$brand->id}}" src="{{$first_after}}"
+                        alt="after" />
+                </div>
+                <input type="range" min="0" max="100" value="50" aria-label="Percentage of before photo shown"
+                    class="slider" data-in data-id="{{$brand->id}}" />
+                <div class="slider-line" aria-hidden="true"></div>
+                <div class="slider-button" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                        viewBox="0 0 256 256">
+                        <rect width="256" height="256" fill="none"></rect>
+                        <line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                        <line x1="96" y1="128" x2="16" y2="128" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="16"></line>
+                        <polyline points="48 160 16 128 48 96" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="16"></polyline>
+                        <line x1="160" y1="128" x2="240" y2="128" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                        <polyline points="208 96 240 128 208 160" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
+                    </svg>
+                </div>
+            </div>
+
+            <a href="#" class="btn-next-previous" data-id="{{$next->id}}" id="next-btn">
+                <img class="icon-next" src="{{$next->icon}}" alt="">
+            </a>
 
 
 
-        @php
-          $html_links .=  '<a data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
+
+        </div>
+    </div>
+
+
+
+    @php
+    $html_links .= '<a data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
 
           if($key==0){
               $html_links .= 'active';
@@ -357,20 +383,22 @@
           $html_links .= '">';
 
 
-         $html_links .=' <img style="    transform: rotate(-90deg);height: 30px;" src="'.$brand->icon.'">';
-         $html_links .='</a>';
+        $html_links .=' <img style="    transform: rotate(-90deg);height: 30px;" src="'.$brand->icon.'">';
+        $html_links .='</a>';
 
 
-         $html_links_ .=  '<a class="div-price" data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
+    $html_links_ .= '<a class="div-price" data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
 
           if($key==0){
               $html_links_ .= 'active';
           }
           $html_links_ .= '">';
 
-         $html_links_ .=' <span  style="writing-mode: vertical-rl; transform: rotate(180deg); height: 55px;color: #dd8888;" > '.$brand->price.' '.session("currency")["symbol"].' </span>';
-         $html_links_ .='</a>';
-        @endphp
+        $html_links_ .=' <span
+            style="writing-mode: vertical-rl; transform: rotate(180deg); height: 55px;color: #dd8888;">
+            '.$brand->price.' '.session("currency")["symbol"].' </span>';
+        $html_links_ .='</a>';
+    @endphp
 
 
     @endforeach
@@ -385,8 +413,6 @@
 </main>
 
 <script>
-
-
     const sliders = document.querySelectorAll('.slider');
     const startBtn = document.getElementById('start-btn');
     const endBtn = document.getElementById('end-btn');

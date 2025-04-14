@@ -86,32 +86,38 @@
     @foreach ($product_details as $details)
     @while ($details['qty'] > 0)
     <div class="sticker-border text-center" style="display: flex;width:fit-content">
-        <div style="width:200px !important;text-align: left;padding: 5px;">
-            <h3 style="margin: 0;text-transform: uppercase">
-                test
-            </h3>
-            <p style="margin: 5px">
+        <div
+            style="width:200px !important;text-align: left;padding: 5px;display: flex;justify-content: space-between;border-right: 1px solid gray;">
+
+            <div>
+                <span style="margin: 4px;display: block;font-size: 12px">
+                    (01) 889845646865456
+                </span>
+                <span style="margin: 4px;display: block;font-size: 12px">
+                    (01) 889845
+                </span>
+                <span style="margin: 4px;display: block;font-size: 12px">
+                    (01) 8898
+                </span>
+                <span style="margin: 4px;display: block;font-size: 12px">
+                    (01) 88
+                </span>
+            </div>
+
+            <div style="height:0.7in">
+                <img style="height: 100%" src="{{ asset('assets/back-end/images/QR_code.svg') }}">
+            </div>
+        </div>
+        <div style="width:200px !important;text-align: center;padding: 10px;">
+            <h6 style="margin: 0;text-transform: uppercase;font-weight: 700">
+                Lorem ipsum dolor sit amet consectetur
+            </h6>
+            <p style="margin:0 4px">
                 Lorem, ipsum dolor.
             </p>
-            <span style="margin: 5px;display: block">
+            <span style="margin:0 4px;display: block">
                 Lorem, ipsum dolor.
             </span>
-        </div>
-        <div style="width:200px !important;text-align: center;font-size: 14px">
-            <div style="font-size: 22px">
-                1650 TL
-            </div>
-            <div>
-                KDV Dahil
-            </div>
-            <div style="display: flex;gap: 10px">
-                <div>
-                    ewdwedwewedewdwe
-                </div>
-                <div>
-                    27,01,2025
-                </div>
-            </div>
         </div>
     </div>
 
