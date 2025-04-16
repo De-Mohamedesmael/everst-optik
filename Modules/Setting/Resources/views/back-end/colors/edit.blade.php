@@ -30,15 +30,15 @@
                     'required',
                 ]) !!}
             </div>
-            <div class="col-sm-6 mb-2">
-                {!! Form::label('color_hex', __('lang.color_hex') . '*', [
-                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                ]) !!}
-                {!! Form::text('color_hex', $color->color_hex, [
-                    'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',
-                    'placeholder' => __('lang.color_hex'),
-                ]) !!}
-            </div>
+{{--            <div class="col-sm-6 mb-2">--}}
+{{--                {!! Form::label('color_hex', __('lang.color_hex') . '*', [--}}
+{{--                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',--}}
+{{--                ]) !!}--}}
+{{--                {!! Form::text('color_hex', $color->color_hex, [--}}
+{{--                    'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',--}}
+{{--                    'placeholder' => __('lang.color_hex'),--}}
+{{--                ]) !!}--}}
+{{--            </div>--}}
         </div>
 
         <div class="modal-footer d-flex justify-content-center align-content-center gap-3">

@@ -36,7 +36,7 @@
                             <thead>
                                 <tr>
                                     <th>@lang('lang.name')</th>
-                                    <th>@lang('lang.color_hex')</th>
+{{--                                    <th>@lang('lang.color_hex')</th>--}}
                                     <th class="notexport">@lang('lang.action')</th>
                                 </tr>
                             </thead>
@@ -44,7 +44,7 @@
                                 @foreach ($colors as $color)
                                 <tr>
                                     <td>{{ $color->name }}</td>
-                                    <td>{{ $color->color_hex }}</td>
+{{--                                    <td>{{ $color->color_hex }}</td>--}}
 
                                     <td>
 

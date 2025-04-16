@@ -173,6 +173,21 @@
             </div>
             <div class="col-md-3 px-5">
                 <div class="form-group">
+                    {!! Form::label('country_of_origin', __('lang.country_of_origin') . ' *', [
+                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                    ]) !!}
+                    <div class="input-group my-group select-button-group">
+                        {!! Form::text('country_of_origin', null, [
+                            'class' => 'form-control clear_input_form modal-input app()->isLocale("ar") ? text-end : text-start',
+                            'required',
+                            'placeholder' => __('lang.country_of_origin'),
+                        ]) !!}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3 px-5">
+                <div class="form-group">
                     {!! Form::label('alert_quantity', __('lang.alert_quantity'), [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                     ]) !!}

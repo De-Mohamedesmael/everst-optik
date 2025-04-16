@@ -432,33 +432,33 @@ $(document).on("change", "#sku", function () {
     }
 
 });
-$(document).on("change", "#name", function () {
-    checkName();
-});
-
-function checkName() {
-    let name = $("#name").val();
-    let system_mode = $("#system_mode").val();
-    if (system_mode != "garments") {
-        $.ajax({
-            method: "get",
-            url: "/dashboard/products/check-name",
-            data: {
-                name: name,
-            },
-            success: function (result) {
-                if (!result.success) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: result.msg,
-                        icon: 'error',
-                    })
-                    $("#name").val("");
-                }
-            },
-        });
-    }
-}
+// $(document).on("change", "#name", function () {
+//     checkName();
+// });
+//
+// function checkName() {
+//     let name = $("#name").val();
+//     let system_mode = $("#system_mode").val();
+//     if (system_mode != "garments") {
+//         $.ajax({
+//             method: "get",
+//             url: "/dashboard/products/check-name",
+//             data: {
+//                 name: name,
+//             },
+//             success: function (result) {
+//                 if (!result.success) {
+//                     Swal.fire({
+//                         title: 'Error',
+//                         text: result.msg,
+//                         icon: 'error',
+//                     })
+//                     $("#name").val("");
+//                 }
+//             },
+//         });
+//     }
+// }
 
 $(document).on("click", ".add_discount_row", function () {
     let row_id = parseInt($("#raw_discount_index").val());

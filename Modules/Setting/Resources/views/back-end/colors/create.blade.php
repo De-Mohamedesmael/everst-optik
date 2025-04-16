@@ -33,15 +33,15 @@
                 ]) !!}
             </div>
             <input type="hidden" name="quick_add" value="{{ $quick_add }}">
-            <div class="col-sm-6 mb-2">
-                {!! Form::label('color_hex', __('lang.color_hex') . '*', [
-                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                ]) !!}
-                {!! Form::text('color_hex', null, [
-                    'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                    'placeholder' => __('lang.color_hex'),
-                ]) !!}
-            </div>
+{{--            <div class="col-sm-6 mb-2">--}}
+{{--                {!! Form::label('color_hex', __('lang.color_hex') . '*', [--}}
+{{--                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',--}}
+{{--                ]) !!}--}}
+{{--                {!! Form::text('color_hex', null, [--}}
+{{--                    'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',--}}
+{{--                    'placeholder' => __('lang.color_hex'),--}}
+{{--                ]) !!}--}}
+{{--            </div>--}}
         </div>
 
         <div class="modal-footer d-flex justify-content-center align-content-center gap-3">

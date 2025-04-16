@@ -9,12 +9,13 @@ use App\Utils\NotificationUtil;
 use App\Utils\ProductUtil;
 use App\Utils\TransactionUtil;
 use App\Utils\Util;
-use Carbon\Carbon;
+//use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -156,11 +157,11 @@ class SellController extends Controller
                 $query->where('transaction_payments.method', request()->get('method'));
             }
             if (!empty(request()->start_date)) {
-                $start_date = Carbon::createFromFormat('m/d/Y', request()->start_date)->format('Y-m-d');
+                $start_date =Carbon::parse( request()->start_date)->format('Y-m-d');
                 $query->whereDate('transaction_date', '>=', $start_date);
             }
             if (!empty(request()->end_date)) {
-                $end_date = Carbon::createFromFormat('m/d/Y', request()->end_date)->format('Y-m-d');
+                $end_date =Carbon::parse( request()->end_date)->format('Y-m-d');
 
                 $query->whereDate('transaction_date', '<=',$end_date);
             }
@@ -171,12 +172,12 @@ class SellController extends Controller
                 $query->where('transaction_date', '<=', request()->end_date . ' ' . Carbon::parse(request()->end_time)->format('H:i:s'));
             }
             if (!empty(request()->payment_start_date)) {
-                $payment_start_date = Carbon::createFromFormat('m/d/Y', request()->payment_start_date)->format('Y-m-d');
+                $payment_start_date =Carbon::parse( request()->payment_start_date)->format('Y-m-d');
 
                 $query->whereDate('paid_on', '>=', $payment_start_date);
             }
             if (!empty(request()->payment_end_date)) {
-                $payment_end_date = Carbon::createFromFormat('m/d/Y', request()->payment_end_date)->format('Y-m-d');
+                $payment_end_date =Carbon::parse( request()->payment_end_date)->format('Y-m-d');
 
                 $query->whereDate('paid_on', '<=', $payment_end_date);
             }

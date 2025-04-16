@@ -480,6 +480,7 @@ class ProductController extends Controller
         try {
             $product_data = [
                 'name' => $request->name,
+                'country_of_origin' => $request->country_of_origin,
                 'translations' => !empty($request->translations) ? $request->translations : [],
                 'brand_id' => $request->brand_id,
                 'sku' => !empty($request->sku) ? $request->sku : $this->productUtil->generateSku($request->name),
@@ -679,6 +680,7 @@ class ProductController extends Controller
          try {
             $product_data = [
                 'name' => $request->name,
+                'country_of_origin' => $request->country_of_origin,
                 'translations' => !empty($request->translations) ? $request->translations : [],
                 'brand_id' => $request->brand_id,
                 'sku' => $request->sku,

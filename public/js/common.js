@@ -21,9 +21,6 @@ $(document).ready(function () {
         },
     });
 
- new-design
-
-
     $(document).ready(function () {
 
         $("input[name='start_date']").datepicker({

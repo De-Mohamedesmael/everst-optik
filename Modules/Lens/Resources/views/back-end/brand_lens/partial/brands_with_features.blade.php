@@ -151,7 +151,7 @@
         display: block;
         width: 45px;
         height: 65px;
-        background: #d2d7dc url({{asset('assets/default/baRightArrow.png')
+        background: #d2d7dc url({{asset('assets/default/baRightArrow.png')}}
     }
     }) no-repeat center;
     content: "";
