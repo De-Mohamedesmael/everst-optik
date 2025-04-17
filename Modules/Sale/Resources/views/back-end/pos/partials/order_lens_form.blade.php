@@ -544,7 +544,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[qepho] toggle-pill-color flex-col-centered">
+                                                                            class="icheckbox_square-orange icheck-item icheck[qepho] ">
                                                                             <input type="checkbox" id="VATintingCheck"
                                                                                 data-subs="tintingList"
                                                                                 class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
@@ -579,7 +579,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] toggle-pill-color flex-col-centered">
+                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] ">
                                                                             <input type="checkbox" id="VABaseCheck"
                                                                                 data-subs="vaBaseList"
                                                                                 class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
@@ -613,7 +613,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] toggle-pill-color flex-col-centered">
+                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] ">
                                                                             <input type="checkbox"
                                                                                 id="specific_diameter"
                                                                                 data-subs="vaBaseList"
@@ -645,7 +645,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] toggle-pill-color flex-col-centered">
+                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] ">
                                                                             <input type="checkbox" id="VASpecialCheck"
                                                                                 data-subs="vaBaseList"
                                                                                 class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
@@ -679,7 +679,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[qepho] toggle-pill-color flex-col-centered">
+                                                                            class="icheckbox_square-orange icheck-item icheck[qepho] ">
                                                                             <input type="checkbox" id="codeCheck"
                                                                                 data-subs="tintingList"
                                                                                 class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"

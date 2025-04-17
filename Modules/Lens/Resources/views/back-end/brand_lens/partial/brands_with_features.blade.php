@@ -151,7 +151,7 @@
         display: block;
         width: 45px;
         height: 65px;
-        background: #d2d7dc url({{asset('assets/default/baRightArrow.png')
+
     }
     }) no-repeat center;
     content: "";
@@ -186,7 +186,7 @@
     }
 
     .technicalLeftMenu {
-        overflow: scroll;
+        overflow: auto;
         width: 80px;
         height: 100%;
         position: fixed;
@@ -200,32 +200,25 @@
 
     .technicalLeftMenu.pixarMenu a {
         height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-        padding: {
-                {
-                240/$brand_lens->count()?: 1
-            }
-        }
-
-        px 0;
-        display: block;
+        min-height: 150px;
         width: 100%;
-        border-bottom: 1px solid #dcdcdc;
+
     }
 
     .technicalLeftMenu_.pixarMenu a {
         height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-        padding: {
-                {
-                132/$brand_lens->count()?: 1
-            }
-        }
+        min-height: 150px;
 
-        px 0;
-        display: block;
         width: 100%;
-        border-bottom: 1px solid #dcdcdc;
+
     }
 
     .technicalLeftMenu a:hover,
@@ -286,7 +279,7 @@
     }
 
     .technicalLeftMenu.technicalLeftMenu_.pixarMenu {
-        left: 70px;
+        left: 69px;
         width: 40px !important;
     }
 </style>
@@ -402,12 +395,13 @@
 
 
     @endforeach
-
-    <div class="technicalLeftMenu pixarMenu">
-        {!! $html_links !!}
-    </div>
-    <div class="technicalLeftMenu technicalLeftMenu_ pixarMenu">
-        {!! $html_links_ !!}
+    <div class="pixar-menu-container">
+        <div id="technicalLeftMenu" class="technicalLeftMenu pixarMenu">
+            {!! $html_links !!}
+        </div>
+        <div id="technicalLeftMenu_" class="technicalLeftMenu technicalLeftMenu_ pixarMenu">
+            {!! $html_links_ !!}
+        </div>
     </div>
 
 </main>
@@ -515,4 +509,56 @@
             });
         });
     });
+</script>
+
+<script>
+    // Get references to both divs
+const div1 = document.getElementById('technicalLeftMenu');
+const div2 = document.getElementById('technicalLeftMenu_');
+
+// Use requestAnimationFrame for smoother performance
+let isScrolling = false;
+let scrollTimeout;
+let lastKnownScrollPosition = 0;
+let ticking = false;
+
+// Function to handle the scroll synchronization
+function syncScroll(sourceDiv, targetDiv) {
+if (isScrolling) return;
+
+isScrolling = true;
+targetDiv.scrollTop = sourceDiv.scrollTop;
+
+// Clear any existing timeout
+clearTimeout(scrollTimeout);
+
+// Set a timeout to release the lock
+scrollTimeout = setTimeout(() => {
+isScrolling = false;
+}, 5); // Reduced from 10ms to 5ms for faster response
+}
+
+// Use passive event listeners for better performance
+div1.addEventListener('scroll', () => {
+if (!ticking) {
+window.requestAnimationFrame(() => {
+syncScroll(div1, div2);
+ticking = false;
+});
+ticking = true;
+}
+}, { passive: true });
+
+div2.addEventListener('scroll', () => {
+if (!ticking) {
+window.requestAnimationFrame(() => {
+syncScroll(div2, div1);
+ticking = false;
+});
+ticking = true;
+}
+}, { passive: true });
+
+
+
 </script>
