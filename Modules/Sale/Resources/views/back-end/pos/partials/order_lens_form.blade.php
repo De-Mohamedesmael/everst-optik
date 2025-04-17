@@ -276,7 +276,7 @@
         display: grid;
         grid-template-columns: repeat(6, auto);
         grid-template-rows: repeat(6, auto);
-        row-gap: .5rem;
+
     }
 
     svg.abc {
@@ -404,11 +404,11 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                 </button>
                                             </div>
                                             <div class="collapse" id="moreInfoCollapseFiltter">
-                                                <div class="card mb-3">
+                                                <div class="card mb-0">
                                                     <div class="card-body p-2">
                                                         <div class="row">
 
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <div class="form-group ">
                                                                     {!! Form::label('prescription_id', translate('Önceki
                                                                     reçeteler'), [
@@ -424,7 +424,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     {!! Form::label('brand_id', translate('Marka'), [
                                                                     'class' => 'form-label d-block mb-1 ',
@@ -439,7 +439,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     {!! Form::label('focus_id', translate('focus'), [
                                                                     'class' => 'form-label d-block mb-1 ',
@@ -454,7 +454,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <div class="form-group ">
                                                                     {!! Form::label('design_id', translate('design'), [
                                                                     'class' => 'form-label d-block mb-1 ',
@@ -469,7 +469,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <div class="form-group ">
                                                                     {!! Form::label('index_id', translate('index'), [
                                                                     'class' => 'form-label d-block mb-1 ',
@@ -484,7 +484,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     {!! Form::label('color_id', translate('color'), [
                                                                     'class' => 'form-label d-block mb-1 ',
@@ -535,7 +535,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                 </button>
                                             </div>
                                             <div class="collapse" id="moreInfoCollapse">
-                                                <div class="card mb-3">
+                                                <div class="card mb-0">
                                                     <div class="card-body p-2">
                                                         <div
                                                             class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
