@@ -3,6 +3,7 @@
 namespace Modules\Lens\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Imports\LensImport;
 use App\Models\Admin;
 use App\Utils\ProductUtil;
 use App\Utils\TransactionUtil;
@@ -843,28 +844,19 @@ class LensController extends Controller
      */
     public function saveImport(Request $request)
     {
-
-
-
         $this->validate($request, [
             'file' => 'required|mimes:csv,txt,xlsx'
         ]);
         try {
             DB::beginTransaction();
-            Excel::import(new ProductImport($this->productUtil, $request), $request->file);
+
+            Excel::import(new LensImport($this->productUtil, $request), $request->file);
             DB::commit();
             $output = [
                 'success' => true,
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
-/*            $failures = $e->failures();
-            foreach ($failures as $failure) {
-                $failure->row(); // row that went wrong
-                $failure->attribute(); // either heading key (if using heading row concern) or column index
-              return  $failure->errors(); // Actual error messages from Laravel validator
-                $failure->values(); // The values of the row that has failed.
-            }*/
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
