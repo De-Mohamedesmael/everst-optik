@@ -6,13 +6,13 @@
             <div
                 class="modal-header position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                 <h5 class="modal-title position-relative  d-flex align-items-center" style="gap: 5px;">{{ __('lang.customer_details') }}
-                    <span class=" header-pill"></span>
+
                 </h5>
 
                 <button type="button" data-dismiss="modal" aria-label="Close"
                     class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
                         aria-hidden="true" style="border-radius: 10px !important;"><i class="dripicons-cross"></i></span></button>
-                <span class="position-absolute modal-border"></span>
+
             </div>
             <div class="modal-body">
                 <div class="row">

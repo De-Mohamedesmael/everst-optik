@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{app()->getLocale()  }}">
 @php
-    $logo = \Modules\Setting\Entities\System::getProperty('logo');
-    $site_title =\Modules\Setting\Entities\System::getProperty('site_title');
+$logo = \Modules\Setting\Entities\System::getProperty('logo');
+$site_title =\Modules\Setting\Entities\System::getProperty('site_title');
 @endphp
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="robots" content="noindex, nofollow"/>
-    <link rel="icon" type="image/png" href="{{ asset('assets/back-end/system/' . $logo) }}"/>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/png" href="{{ asset('assets/back-end/system/' . $logo) }}" />
     <meta name="author" content="Themesbox17">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>{{ $site_title .' | '}}@yield('title')</title>
@@ -21,7 +22,10 @@
     <link rel="stylesheet" href="{{ url('assets/back-end/css/animation.css') }}">
     <!-- End css -->
     <style>
-        button.btn.table-btns.buttons-collection.dropdown-toggle.buttons-colvis, .btn-group > .btn-group:not(:last-child) > .btn, .btn-group > .btn.dropdown-toggle-split:first-child, .btn-group > .btn:not(:last-child):not(.dropdown-toggle) {
+        button.btn.table-btns.buttons-collection.dropdown-toggle.buttons-colvis,
+        .btn-group>.btn-group:not(:last-child)>.btn,
+        .btn-group>.btn.dropdown-toggle-split:first-child,
+        .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
             background: #3e5d58;
         }
 
@@ -29,17 +33,22 @@
             direction: ltr;
         }
 
-        .dataTables_filter, .dataTables_length, .dt-buttons {
+        .dataTables_filter,
+        .dataTables_length,
+        .dt-buttons {
             padding: 0 10px;
         }
 
-        .dt-button-collection.dropdown-menu, .dropdown-menu.show {
+        .dt-button-collection.dropdown-menu,
+        .dropdown-menu.show {
             z-index: 10000;
             background: #ffffff;
         }
+
         nav.navbar .dropdown-menu {
             min-width: 200px !important;
         }
+
         .navbar_item {
             justify-content: start !important;
         }
@@ -76,7 +85,9 @@
             opacity: 1 !important;
         }
 
-        .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+        .ui-state-disabled,
+        .ui-widget-content .ui-state-disabled,
+        .ui-widget-header .ui-state-disabled {
             opacity: 1 !important;
         }
 
@@ -97,7 +108,7 @@
             border-radius: 5px;
             border: none;
             background-color: #ffffff;
-            box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
+            box-shadow: none !important;
         }
 
         .btn.btn-main {
@@ -193,7 +204,8 @@
 
         .toggle-button:hover {
             color: black !important;
-            background-color: rgba(69, 147, 134, 0.38);;
+            background-color: rgba(69, 147, 134, 0.38);
+            ;
         }
 
         .select-button {
@@ -252,7 +264,7 @@
         }
 
         .card {
-            box-shadow: 0 6px 8px -6px #999 !important;
+            box-shadow: none !important;
         }
 
         .btn-light {
@@ -285,15 +297,16 @@
         }
 
 
-        input.form-control-custom[checked] + label::before, input.form-control-custom[checked] + label::after {
+        input.form-control-custom[checked]+label::before,
+        input.form-control-custom[checked]+label::after {
             border: none;
         }
 
-        input.form-control-custom:checked + label::after {
+        input.form-control-custom:checked+label::after {
             opacity: 1 !important;
         }
 
-        input.form-control-custom + label::after {
+        input.form-control-custom+label::after {
             content: "\f00c";
             display: block;
             font-size: 8px;
@@ -307,15 +320,16 @@
             cursor: pointer;
         }
 
-        input.form-control-custom:checked + label::before {
+        input.form-control-custom:checked+label::before {
             background: var(--complementary-color-1) !important;
         }
 
-        input.form-control-custom[checked] + label::before, input.form-control-custom[checked] + label::after {
+        input.form-control-custom[checked]+label::before,
+        input.form-control-custom[checked]+label::after {
             border: none;
         }
 
-        input.form-control-custom + label::before {
+        input.form-control-custom+label::before {
             content: "";
             display: block;
             width: 16px;
@@ -332,7 +346,7 @@
             cursor: pointer;
         }
 
-        input.form-control-custom + label {
+        input.form-control-custom+label {
             font-size: 0.75em !important;
             margin-bottom: 0;
             margin-left: 0;
@@ -347,6 +361,7 @@
                 font-size: 0.9rem;
             }
         }
+
 
         .table-responsive .table a.btn.btn-modal {
             color: #3e5d58;
@@ -378,11 +393,11 @@
             align-items: center;
         }
 
-        .variants > div {
+        .variants>div {
             margin-right: 5px;
         }
 
-        .variants > div:last-of-type {
+        .variants>div:last-of-type {
             margin-right: 0;
         }
 
@@ -393,11 +408,11 @@
             align-items: center;
         }
 
-        .file > input[type='file'] {
+        .file>input[type='file'] {
             display: none
         }
 
-        .file > label {
+        .file>label {
             font-size: 1rem;
             font-weight: 300;
             cursor: pointer;
@@ -418,76 +433,76 @@
             align-items: center;
         }
 
-        .file > label:hover {
+        .file>label:hover {
             border-color: hsl(0, 0%, 21%);
         }
 
-        .file > label:active {
+        .file>label:active {
             background-color: hsl(0, 0%, 96%);
         }
 
-        .file > label > i {
+        .file>label>i {
             padding-right: 5px;
         }
 
-        .file--upload > label {
+        .file--upload>label {
             color: var(--secondary-color);
             border-color: var(--secondary-color);
         }
 
-        .file--upload > label:hover {
+        .file--upload>label:hover {
             border-color: var(--secondary-color);
             background-color: #145d1a
         }
 
-        .file--upload > label:active {
+        .file--upload>label:active {
             background-color: hsl(204, 86%, 91%);
         }
 
-        .file--uploading > label {
+        .file--uploading>label {
             color: hsl(48, 100%, 67%);
             border-color: hsl(48, 100%, 67%);
         }
 
         /*  */
-        .file--uploading > label > i {
+        .file--uploading>label>i {
             animation: pulse 5s infinite;
         }
 
-        .file--uploading > label:hover {
+        .file--uploading>label:hover {
             border-color: hsl(48, 100%, 67%);
             background-color: hsl(48, 100%, 96%);
         }
 
-        .file--uploading > label:active {
+        .file--uploading>label:active {
             background-color: hsl(48, 100%, 91%);
         }
 
-        .file--success > label {
+        .file--success>label {
             color: hsl(141, 71%, 48%);
             border-color: hsl(141, 71%, 48%);
         }
 
-        .file--success > label:hover {
+        .file--success>label:hover {
             border-color: hsl(141, 71%, 48%);
             background-color: hsl(141, 71%, 96%);
         }
 
-        .file--success > label:active {
+        .file--success>label:active {
             background-color: hsl(141, 71%, 91%);
         }
 
-        .file--danger > label {
+        .file--danger>label {
             color: hsl(348, 100%, 61%);
             border-color: hsl(348, 100%, 61%);
         }
 
-        .file--danger > label:hover {
+        .file--danger>label:hover {
             border-color: hsl(348, 100%, 61%);
             background-color: hsl(348, 100%, 96%);
         }
 
-        .file--danger > label:active {
+        .file--danger>label:active {
             background-color: hsl(348, 100%, 91%);
         }
 
@@ -495,7 +510,7 @@
             cursor: not-allowed;
         }
 
-        .file--disabled > label {
+        .file--disabled>label {
             border-color: #e6e7ef;
             color: #e6e7ef;
             pointer-events: none;
@@ -535,8 +550,7 @@
     <div class="overlay">
         <div style="width: 55%;overflow: hidden;position: relative;">
             <img style="width: 100%;z-index: 10;position: relative;"
-                 src="{{ asset('assets/back-end/images/logo3.png') }}"
-                 alt="logo">
+                src="{{ asset('assets/back-end/images/logo3.png') }}" alt="logo">
             <span class="box"></span>
         </div>
 
@@ -546,7 +560,7 @@
         <div id="infobar-notifications-sidebar" class="infobar-notifications-sidebar">
             <div class="infobar-notifications-sidebar-head d-flex w-100 justify-content-between">
                 <h4>Notifications</h4><a href="javascript:void(0)" id="infobar-notifications-close"
-                                         class="infobar-notifications-close"><img
+                    class="infobar-notifications-close"><img
                         src="{{ asset('assets/back-end/images/svg-icon/close.svg') }}"
                         class="img-fluid menu-hamburger-close" alt="close"></a>
             </div>
@@ -554,25 +568,25 @@
                 <ul class="nav nav-pills nav-justified" id="infobar-pills-tab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="pills-messages-tab" data-toggle="pill" href="#pills-messages"
-                           role="tab" aria-controls="pills-messages" aria-selected="true">Messages</a>
+                            role="tab" aria-controls="pills-messages" aria-selected="true">Messages</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="pills-emails-tab" data-toggle="pill" href="#pills-emails" role="tab"
-                           aria-controls="pills-emails" aria-selected="false">Emails</a>
+                            aria-controls="pills-emails" aria-selected="false">Emails</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="pills-actions-tab" data-toggle="pill" href="#pills-actions" role="tab"
-                           aria-controls="pills-actions" aria-selected="false">Actions</a>
+                            aria-controls="pills-actions" aria-selected="false">Actions</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="infobar-pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-messages" role="tabpanel"
-                         aria-labelledby="pills-messages-tab">
+                        aria-labelledby="pills-messages-tab">
                         <ul class="list-unstyled">
                             <li class="media">
                                 <img class="mr-3 align-self-center rounded-circle"
-                                     src="{{ asset('assets/back-end/images/users/girl.svg') }}"
-                                     alt="Generic placeholder image">
+                                    src="{{ asset('assets/back-end/images/users/girl.svg') }}"
+                                    alt="Generic placeholder image">
                                 <div class="media-body">
                                     <h5>Amy Adams<span class="badge badge-success">1</span><span class="timing">Jan
                                             22</span></h5>
@@ -581,8 +595,8 @@
                             </li>
                             <li class="media">
                                 <img class="mr-3 align-self-center rounded-circle"
-                                     src="{{ asset('assets/back-end/images/users/boy.svg') }}"
-                                     alt="Generic placeholder image">
+                                    src="{{ asset('assets/back-end/images/users/boy.svg') }}"
+                                    alt="Generic placeholder image">
                                 <div class="media-body">
                                     <h5>James Simpsons<span class="badge badge-success">2</span><span class="timing">Feb
                                             15</span></h5>
@@ -591,20 +605,22 @@
                             </li>
                             <li class="media">
                                 <img class="mr-3 align-self-center rounded-circle"
-                                     src="{{ asset('assets/back-end/images/users/men.svg') }}"
-                                     alt="Generic placeholder image">
+                                    src="{{ asset('assets/back-end/images/users/men.svg') }}"
+                                    alt="Generic placeholder image">
                                 <div class="media-body">
-                                    <h5>Mark Witherspoon<span class="badge badge-success">3</span><span class="timing">Mar
+                                    <h5>Mark Witherspoon<span class="badge badge-success">3</span><span
+                                            class="timing">Mar
                                             03</span></h5>
                                     <p>I will be late today in office.</p>
                                 </div>
                             </li>
                             <li class="media">
                                 <img class="mr-3 align-self-center rounded-circle"
-                                     src="{{ asset('assets/back-end/images/users/women.svg') }}"
-                                     alt="Generic placeholder image">
+                                    src="{{ asset('assets/back-end/images/users/women.svg') }}"
+                                    alt="Generic placeholder image">
                                 <div class="media-body">
-                                    <h5>Jenniffer Wills<span class="badge badge-success">4</span><span class="timing">Apr
+                                    <h5>Jenniffer Wills<span class="badge badge-success">4</span><span
+                                            class="timing">Apr
                                             05</span></h5>
                                     <p>Venture presentation is ready.</p>
                                 </div>
@@ -683,7 +699,7 @@
                                     <p class="my-3">There has been new Log in fron your account at Melbourne. Mark it
                                         safe or report.</p>
                                     <p><i class="feather icon-check text-success mr-3"></i><a href="#"
-                                                                                              class="text-muted">Report
+                                            class="text-muted">Report
                                             Now</a><span class="timing">5 Jan 2019, 02:13
                                             PM</span></p>
                                 </div>
@@ -711,7 +727,7 @@
 
             @include('back-end.layouts.partials.header')
             <div id="closing_cash_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                 class="modal">
+                class="modal">
             </div>
 
 
@@ -725,7 +741,7 @@
                 <div class="animate-in-page  no-print">
                     <div class="breadcrumbbar m-0 px-3 py-0">
                         <div
-                            class="d-flex align-items-center justify-content-between @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                            class="d-flex align-items-center justify-content-between py-1 @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                             <div>
                                 <h4 class="page-title @if (app()->isLocale('ar')) text-end @else text-start @endif">
                                     @yield('page_title')
@@ -734,11 +750,11 @@
                                     <ul
                                         class="breadcrumb m-0 p-0  d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                                         @section('breadcrumbs')
-                                            <li
-                                                class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif ">
-                                                <a style="text-decoration: none;color: #3e5d58" href="{{ url('/') }}">/
-                                                    @lang('lang.dashboard')</a>
-                                            </li>
+                                        <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif ">
+                                            <a style="text-decoration: none;color: #3e5d58" href="{{ url('/') }}">
+                                                @lang('lang.dashboard') </a>
+                                        </li>
+
                                         @show
                                     </ul>
                                 </div>
@@ -750,17 +766,14 @@
                     </div>
                 </div>
                 <div id="content">
-                   @yield('content')
+                    @yield('content')
                 </div>
-                <div class="modal modal-jobs-edit animate__animated  no-print" data-animate-in="animate__rollIn"
-                     data-animate-out="animate__rollOut"
-                     id="editModal" tabindex="-1" role="dialog" aria-labelledby="editBrandModalLabel"
-                     style="display: none;"
-                     aria-hidden="true">
-                    <div class="view_modal no-print">
+            </div>
+            <div class="modal modal-jobs-edit   no-print" id="editModal" tabindex="-1" role="dialog"
+                aria-labelledby="editBrandModalLabel" style="display: none;" aria-hidden="true">
+                <div class="view_modal no-print">
 
 
-                    </div>
                 </div>
             </div>
             <!-- End Rightbar -->
@@ -774,64 +787,44 @@
         </div>
     </div>
     <script>
-        $(document).ready(function () {
-            var modelEl = $('.modal-jobs-edit');
-
-            modelEl.addClass(modelEl.attr('data-animate-in'));
-
-            modelEl.on('hide.bs.modal', function (event) {
-                console.log('ddd');
-                if (!$(this).attr('is-from-animation-end')) {
-                    event.preventDefault();
-                    $(this).addClass($(this).attr('data-animate-out'))
-                    $(this).removeClass($(this).attr('data-animate-in'))
-                }
-                $(this).removeAttr('is-from-animation-end')
-            })
-                .on('animationend', function () {
-                    if ($(this).hasClass($(this).attr('data-animate-out'))) {
-                        $(this).attr('is-from-animation-end', true);
-                        $(this).modal('hide')
-                        $(this).removeClass($(this).attr('data-animate-out'))
-                        $(this).addClass($(this).attr('data-animate-in'))
-                    }
-                })
-        })
+        $(document).on("click", ".modal-jobs-edit .close", function () {
+        $(this).closest(".modal-jobs-edit").css("display", "none !important");
+        });
     </script>
     <!-- End Containerbar -->
     @if (app()->isLocale('ar'))
-        <script>
-            const element = document.querySelector('.item-list-a');
+    <script>
+        const element = document.querySelector('.item-list-a');
 
             if (element) {
                 element.classList.add('flex-row-reverse');
             } else {
                 console.error('Element with class "item-list-a" not found.');
             }
-        </script>
+    </script>
     @else
-        <script>
-            const element = document.querySelector('.item-list-a');
+    <script>
+        const element = document.querySelector('.item-list-a');
 
             if (element) {
                 element.classList.add('flex-row');
             } else {
                 console.error('Element with class "item-list-a" not found.');
             }
-        </script>
+    </script>
     @endif
 
     <input type="hidden" id="__language" value="{{ session('language') }}">
     <input type="hidden" id="__decimal" value=".">
     <input type="hidden" id="__currency_precision"
-           value="{{ !empty(\Modules\Setting\Entities\System::getProperty('numbers_length_after_dot')) ? \Modules\Setting\Entities\System::getProperty('numbers_length_after_dot') : 5 }}">
+        value="{{ !empty(\Modules\Setting\Entities\System::getProperty('numbers_length_after_dot')) ? \Modules\Setting\Entities\System::getProperty('numbers_length_after_dot') : 5 }}">
     <input type="hidden" id="__currency_symbol" value="$">
     <input type="hidden" id="__currency_thousand_separator" value=",">
     <input type="hidden" id="__currency_symbol_placement" value="before">
     <input type="hidden" id="__precision"
-           value="{{ !empty(\Modules\Setting\Entities\System::getProperty('numbers_length_after_dot')) ? \Modules\Setting\Entities\System::getProperty('numbers_length_after_dot') : 5 }}">
+        value="{{ !empty(\Modules\Setting\Entities\System::getProperty('numbers_length_after_dot')) ? \Modules\Setting\Entities\System::getProperty('numbers_length_after_dot') : 5 }}">
     <input type="hidden" id="__quantity_precision"
-           value="{{ !empty(\Modules\Setting\Entities\System::getProperty('numbers_length_after_dot')) ? \Modules\Setting\Entities\System::getProperty('numbers_length_after_dot') : 5 }}">
+        value="{{ !empty(\Modules\Setting\Entities\System::getProperty('numbers_length_after_dot')) ? \Modules\Setting\Entities\System::getProperty('numbers_length_after_dot') : 5 }}">
     <script type="text/javascript">
         base_path = "{{ url('/') }}";
         current_url = "{{ url()->current() }}";
@@ -968,8 +961,8 @@
     </script>
     @stack('js')
     @push('javascripts')
-        <script>
-            document.addEventListener('livewire:load', function () {
+    <script>
+        document.addEventListener('livewire:load', function () {
                 Livewire.on('printInvoice', function (htmlContent) {
                     // Set the generated HTML content
                     $("#receipt_section").html(htmlContent);
@@ -990,7 +983,10 @@
                     },
                 });
             });
-        </script>
-        @endpush
-        </body>
+    </script>
+
+
+    @endpush
+    </body>
+
 </html>

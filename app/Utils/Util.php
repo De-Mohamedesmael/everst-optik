@@ -128,7 +128,7 @@ class Util
      */
     public function uf_date($date, $time = false)
     {
-        $date_format = 'm/d/Y';
+        $date_format = 'd/m/Y';
         $mysql_format = 'Y-m-d';
         if ($time) {
             if (System::getProperty('time_format') == 12) {
@@ -181,7 +181,7 @@ class Util
      */
     public function format_date($date, $show_time = false, $business_details = null)
     {
-        $format = 'm/d/Y';
+        $format = 'd/m/Y';
         if (!empty($show_time)) {
             $time_format = '';
             if ($time_format == 12) {

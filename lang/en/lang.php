@@ -1424,4 +1424,17 @@
   'lens_transactions' => 'Lens transactions',
   'add_new_sell_return' => 'Add new sell return',
   'Special_amount' => 'Special amount',
+  'site.Are you sure?' => 'Site.Are you sure ',
+  'view
+                                    prescriptions' => 'View
+                                    prescriptions',
+  'Önceki
+                                                                    reçeteler' => 'Önceki
+                                                                    reçeteler',
+  'Önceden Tanımlanmış
+                                                                            Şekiller' => 'Önceden Tanımlanmış
+                                                                            Şekiller',
+  'Left glass is the same
+                                                                                    as right glass' => 'Left glass is the same
+                                                                                    as right glass',
 );

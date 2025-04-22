@@ -133,7 +133,7 @@
 }
 
 .card {
-    box-shadow: 0 6px 8px -6px #999 !important;
+    box-shadow:none !important;
 }
 
 .btn-light {
@@ -165,3 +165,4 @@
     background-color: var(--secondary-color);
     color: white;
 }
+

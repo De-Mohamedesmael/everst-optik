@@ -9,9 +9,9 @@
                 <span class=" header-modal-pill"></span>
             </h4>
             <button type="button"
-                    class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
-                    data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span class="position-absolute modal-border"></span>
+                class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
+                data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
         </div>
 
         <div
@@ -22,8 +22,8 @@
                 <div
                     class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                     <input type="text" required style="width: 100%"
-                           class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
-                           placeholder="@lang('lang.name')" name="name" value="{{ old('name') }}" required>
+                        class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
+                        placeholder="@lang('lang.name')" name="name" value="{{ old('name') }}" required>
                     @error('name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -35,10 +35,11 @@
                 <div
                     class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                     {!! Form::select('store_id', $stores, null, [
-                        'class' => ' select category p-0 initial-balance-input my-0 app()->isLocale("ar")? text-end : text-start',
-                        'style' => 'width:100%;border-radius:16px;border:2px solid #cececf',
-                        'placeholder' => __('lang.please_select'),
-                        'required',
+                    'class' => ' select category p-0 initial-balance-input my-0 app()->isLocale("ar")? text-end :
+                    text-start',
+                    'style' => 'width:100%;border-radius:16px;border:2px solid #cececf',
+                    'placeholder' => __('lang.please_select'),
+                    'required',
                     ]) !!}
                 </div>
                 @error('store_id')
@@ -51,10 +52,11 @@
                 <div
                     class="select_body input-wrapper d-flex justify-content-between align-items-center mb-2 form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                     {!! Form::select('admin_id', $admins, null, [
-                        'class' => ' select category p-0 initial-balance-input my-0 app()->isLocale("ar")? text-end : text-start',
-                        'style' => 'width:100%;border-radius:16px;border:2px solid #cececf',
-                        'placeholder' => __('lang.please_select'),
-                        'required',
+                    'class' => ' select category p-0 initial-balance-input my-0 app()->isLocale("ar")? text-end :
+                    text-start',
+                    'style' => 'width:100%;border-radius:16px;border:2px solid #cececf',
+                    'placeholder' => __('lang.please_select'),
+                    'required',
                     ]) !!}
                 </div>
                 @error('store_id')
@@ -74,4 +76,4 @@
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 
-{!! JsValidator::formRequest('Modules\Setting\Http\Requests\StorePosRequest','#form-store-pos'); !!}
+{!! JsValidator::formRequest('Modules\Setting\Http\Requests\StorePosRequest','#form-store-pos') !!}

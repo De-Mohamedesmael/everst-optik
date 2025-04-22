@@ -3,7 +3,7 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-                style="text-decoration: none;color: #476762" href="{{ route('admin.products.index') }}">/
+                style="text-decoration: none;color: #476762" href="{{ route('admin.products.index') }}">
             @lang('lang.products')</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 px-1">
@@ -42,7 +42,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">@lang('lang.crop_image_before_upload')</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -74,7 +74,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>

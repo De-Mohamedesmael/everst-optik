@@ -384,12 +384,16 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4 hide shared_commission_div">
-                                        <div class="i-checks" style="margin-top: 37px;">
+                                        <div class="i-checks toggle-pill-color flex-col-centered" style="margin-top: 37px;">
                                             <input id="shared_commission" name="shared_commission" type="checkbox" value="1"
                                                 class="form-control-custom">
-                                            <label for="shared_commission"><strong>
+                                            <label for="shared_commission">
+                                            </label>
+                                            <span>
+                                                <strong>
                                                     @lang('lang.shared_commission')
-                                                </strong></label>
+                                                </strong>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -629,7 +633,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">@lang('lang.recent_transactions')</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
                                         aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
@@ -693,7 +697,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">@lang('lang.draft_transactions')</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
                                         aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
@@ -739,7 +743,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">@lang('lang.online_order_transactions')</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
                                         aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">

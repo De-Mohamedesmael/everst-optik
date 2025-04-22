@@ -3,68 +3,81 @@
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{ url('front/css/pos.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url('front/css/pos-modals.css') }}">
-    <style>
-        :root {
-            --secondary-color: #578981;
-        }
-        .payment-options button {
-            color: #fff;
-        }
-        .input-group-btn button.btn {
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-        .nav-tabs .nav-item .nav-link.active {
-            border-color: transparent;
-            border-bottom: 2px solid var(--secondary-color);
-            background: var(--secondary-color);
-            color: #fff;
-        }
+<style>
+    :root {
+        --secondary-color: #578981;
+    }
 
-         .lens-vu-price {
-             text-align: center;
-             color: #06312a;
-             padding: 5px;
-         }
-        .lens-vu {
-            padding: 5px 0;
-        }
-        .lens-vu-item {
-            font-size: 11px;
-            color: #034137;
-            padding: 1px 0;
-        }
-        .card {
-            box-shadow: none !important;
-        }
-        button#submit-btn-pay {
-            border-radius: 6px !important;
-        }
-        .toast {
-            background-color: #030303;
-        }
-        .toast-info {
-            background-color: #3276b1;
-        }
-        .toast-info2 {
-            background-color: #2f96b4;
-        }
-        .toast-error {
-            background-color: #bd362f;
-        }
-        .toast-success {
-            background-color: #51a351;
-        }
-        .toast-warning {
-            background-color: #f89406;
-        }
+    .payment-options button {
+        color: #fff;
+    }
+
+    .input-group-btn button.btn {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .nav-tabs .nav-item .nav-link.active {
+        border-color: transparent;
+        border-bottom: 2px solid var(--secondary-color);
+        background: var(--secondary-color);
+        color: #fff;
+    }
+
+    .lens-vu-price {
+        text-align: center;
+        color: #06312a;
+        padding: 5px;
+    }
+
+    .lens-vu {
+        padding: 5px 0;
+    }
+
+    .lens-vu-item {
+        font-size: 11px;
+        color: #034137;
+        padding: 1px 0;
+    }
+
+    .card {
+        box-shadow: none !important;
+    }
+
+    button#submit-btn-pay {
+        border-radius: 6px !important;
+    }
+
+    .toast {
+        background-color: #030303;
+    }
+
+    .toast-info {
+        background-color: #3276b1;
+    }
+
+    .toast-info2 {
+        background-color: #2f96b4;
+    }
+
+    .toast-error {
+        background-color: #bd362f;
+    }
+
+    .toast-success {
+        background-color: #51a351;
+    }
+
+    .toast-warning {
+        background-color: #f89406;
+    }
 
 
-        label#customer_id-error {
-            position: absolute;
-            bottom: -35px;
-        }
-    </style>
+    label#customer_id-error {
+        position: absolute;
+        bottom: -35px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -106,18 +119,11 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                             value="{{ Modules\Setting\Entities\System::getProperty('enable_the_table_reservation') }}">
                         <div class="row">
 
-                            <div class="card mb-0 pb-2 py-2 flex-row d-flex flex-wrap justify-content-between align-items-center"
-                                style="border-radius: 8px;width: 100%">
+                            <div class="card px-0 mb-0 pb-2 py-2 flex-row d-flex flex-wrap justify-content-between align-items-center"
+                                style="border-radius: 8px;width: 100%;background-color: transparent">
 
                                 <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">
-                                    <div class="mb-2 mb-lg-0  height-responsive d-flex justify-content-center align-items-center"
-                                        style="background-color: #e6e6e6 ; border: none;
-                                    border-radius: 6px;
-                                    color: #373737;
-                                    box-shadow: 0 8px 6px -5px #bbb;
-
-                                    width: 100%;
-                                    ">
+                                    <div>
                                         {{-- {!! Form::label('store_id', __('lang.store') . ':*', []) !!} --}}
                                         {!! Form::select('store_id', $stores, $store_pos->store_id, [
                                         'class' => 'selectpicker ',
@@ -130,14 +136,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                 </div>
 
                                 <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">
-                                    <div class="form-group mb-2 mb-lg-0 height-responsive d-flex justify-content-center align-items-center"
-                                        style="background-color: #e6e6e6 ; border: none;
-                                    border-radius: 6px;
-                                    color: #373737;
-                                    box-shadow: 0 8px 6px -5px #bbb;
-
-                                    width: 100%;
-                                    ">
+                                    <div>
                                         {{-- {!! Form::label('store_pos_id', __('lang.pos') . ':*', []) !!} --}}
                                         {!! Form::select('store_pos_id', $store_poses, $store_pos->id, [
                                         'class' => 'selectpicker ',
@@ -150,14 +149,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
 
                                 <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">
-                                    <div class="form-group mb-2 mb-lg-0 height-responsive d-flex justify-content-center align-items-center"
-                                        style="background-color: #e6e6e6 ; border: none;
-                                    border-radius: 6px;
-                                    color: #373737;
-                                    box-shadow: 0 8px 6px -5px #bbb;
-
-                                    width: 100%;
-                                    ">
+                                    <div>
                                         <input type="hidden" name="setting_invoice_lang" id="setting_invoice_lang"
                                             value="{{ !empty(Modules\Setting\Entities\System::getProperty('invoice_lang')) ? Modules\Setting\Entities\System::getProperty('invoice_lang') : 'en' }}">
                                         {{-- {!! Form::label('invoice_lang', __('lang.invoice_lang') . ':', []) !!} --}}
@@ -173,14 +165,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
 
                                 <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">
-                                    <div class="form-group mb-2 mb-lg-0 height-responsive d-flex justify-content-center align-items-center"
-                                        style="background-color: #e6e6e6 ; border: none;
-                                    border-radius: 6px;
-                                    color: #373737;
-                                                box-shadow: 0 8px 6px -5px #bbb;
-
-                                    width: 100%;
-                                   ">
+                                    <div>
                                         <input type="hidden" name="exchange_rate" id="exchange_rate" value="1">
                                         <input type="hidden" name="default_currency_id" id="default_currency_id"
                                             value="{{ !empty(Modules\Setting\Entities\System::getProperty('currency')) ? Modules\Setting\Entities\System::getProperty('currency') : '' }}">
@@ -196,11 +181,71 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                     </div>
                                 </div>
 
+                                <div
+                                    class="col-6 col-lg-2 d-flex justify-content-center align-items-center customer-div">
 
-                                        <input type="hidden" name="tax_id_hidden" id="tax_id_hidden" value="">
-                                        <input type="hidden" name="tax_method" id="tax_method" value="">
-                                        <input type="hidden" name="tax_rate" id="tax_rate" value="0">
-                                        <input type="hidden" name="tax_type" id="tax_type" value="">
+                                    <div class="col-12  input-group my-group p-0 d-flex flex-row justify-content-center"
+                                        style="background-color: #e6e6e6 ; border: none;
+                                        border-radius: 6px;
+                                        color: #373737;
+                                        box-shadow: 0 8px 6px -5px #bbb;
+
+                                        flex-wrap: nowrap;">
+                                        {!! Form::select('customer_id', $customers, null, [
+                                        'class' => 'selectpicker ',
+                                        'data-live-search' => 'true',
+                                        'style' => 'width: 80%',
+                                        'id' => 'customer_id',
+                                        'placeholder' => translate('select_customer'),
+                                        'required',
+                                        ]) !!}
+                                        <span class=" input-group-btn">
+                                            @can('customer_module.customer.create_and_edit')
+                                            <a style="background-color: var(--complementary-color-1);
+                                        width: 100%;
+                                        height: 100%;
+                                        border-radius: 16px;
+                                        padding: 6px 6px;
+                                    cursor: pointer;
+                                        " class="d-flex btn-modal justify-content-center align-items-center top-0 right-0"
+                                                data-href="{{ route('admin.customers.create') }}?quick_add=1"
+                                                data-container=".view_modal">
+                                                <svg class="plus p-0" xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                    viewBox="0 0 448 512">
+                                                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                    <style>
+                                                        .plus {
+                                                            fill: #ffffff
+                                                        }
+                                                    </style>
+                                                    <path
+                                                        d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+                                                </svg>
+                                            </a>
+                                            @endcan
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="px-3 d-flex justify-content-center align-items-center">
+                                    <div class="p-0 input-group my-group d-flex flex-row justify-content-center">
+                                        <button type="button" style="background-color: #e6e6e6 ;
+                                                border: none;
+                                                    border-radius: 16px;
+                                                    color: #373737;
+                                                    box-shadow: 0 8px 6px -5px #bbb;
+                                                    padding: 6px;
+                                                    width: 100%;"
+                                            class=" d-flex justify-content-center align-items-center"
+                                            data-toggle="modal"
+                                            data-target="#contact_details_modal">@lang('lang.details')
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="tax_id_hidden" id="tax_id_hidden" value="">
+                                <input type="hidden" name="tax_method" id="tax_method" value="">
+                                <input type="hidden" name="tax_rate" id="tax_rate" value="0">
+                                <input type="hidden" name="tax_type" id="tax_type" value="">
 
 
 
@@ -208,88 +253,14 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                             </div>
 
 
-                            <div style="border-radius: 8px;width: 100%"
-                                class="py-2 d-flex card mb-0 flex-row justify-content-between align-items-start">
+                            <div class="py-2 px-0 d-flex card mb-0 flex-row justify-content-between align-items-start"
+                                style="border-radius: 8px;width: 100%;background-color: transparent">
                                 <div class="col-12 d-flex flex-column flex-lg-row">
-
-                                    <div class="col-lg-4 mb-2 mb-lg-0 customer-div">
-
-                                        <div class="col-12 form-group input-group my-group d-flex flex-row justify-content-center height-responsive"
-                                            style="background-color: #e6e6e6 ; border: none;
-                                        border-radius: 16px;
-                                        color: #373737;
-                                        box-shadow: 0 8px 6px -5px #bbb;
-                                        width: 100%;
-                                        margin: auto;
-                                        flex-wrap: nowrap;
-                                        padding-right:25px">
-                                            {!! Form::select('customer_id', $customers,  null, [
-                                            'class' => 'selectpicker ',
-                                            'data-live-search' => 'true',
-                                            'style' => 'width: 80%',
-                                            'id' => 'customer_id',
-                                            'placeholder' => translate('select_customer'),
-                                            'required',
-                                            ]) !!}
-                                            <span class="input-group-btn">
-                                                @can('customer_module.customer.create_and_edit')
-                                                <a style="background-color: var(--complementary-color-1);
-                                        width: 100%;
-                                        height: 100%;
-                                        border-radius: 16px;
-                                        padding: 6px 6px;
-                                    cursor: pointer;
-                                        " class="d-flex btn-modal justify-content-center align-items-center top-0 right-0"
-                                                    data-href="{{ route('admin.customers.create') }}?quick_add=1"
-                                                    data-container=".view_modal">
-                                                    <svg class="plus" xmlns="http://www.w3.org/2000/svg" height="2em"
-                                                        viewBox="0 0 448 512">
-                                                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                        <style>
-                                                            .plus {
-                                                                fill: #ffffff
-                                                            }
-                                                        </style>
-                                                        <path
-                                                            d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
-                                                    </svg>
-                                                </a>
-                                                @endcan
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-2 mb-2 mb-lg-0">
-                                        <div style="width: 100%"
-                                             class="col-12  p-0 input-group my-group d-flex flex-row justify-content-center height-responsive">
-                                            <button type="button" style="background-color: #e6e6e6 ;
-                                    border: none;
-                                        border-radius: 16px;
-                                        color: #373737;
-                                        box-shadow: 0 8px 6px -5px #bbb;
-                                        padding: 10px 6px;
-                                        width: 100%;"
-                                                    class="height-responsive d-flex justify-content-center align-items-center"
-                                                    data-toggle="modal"
-                                                    data-target="#contact_details_modal">@lang('lang.details')
-                                            </button>
-                                        </div>
-                                    </div>
-
-
-
-
-
 
                                     <div class="col-lg-2 mb-2 mb-lg-0 " style="display: none">
 
-                                        <div class="col-lg-12 mb-0 ml-1 input-group my-group d-flex justify-content-between                     height-responsive text-center"
-                                            style="background-color: white; border: none;
-                                      border: 1px solid #bbb;
-                                    border-radius: 16px;
-                                    color: white;
-                                    box-shadow: 0 8px 6px -5px #bbb;
-                                    width: 100%;
+                                        <div class="col-lg-12 mb-0 ml-1 input-group my-group d-flex justify-content-between height-responsive text-center"
+                                            style="background-color: white; border: none;border: 1px solid #bbb;border-radius: 16px;color: white;box-shadow: 0 8px 6px -5px #bbb;width: 100%;
                                             flex-wrap: nowrap;font-size: 10px;padding:0">
 
 
@@ -313,7 +284,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-3 mb-2 mb-lg-0">
+                                    <div class="col-lg-2 mb-2 mb-lg-0">
                                         <div class="col-12 p-0 ml-1 input-group my-group d-flex flex-row justify-content-between height-responsive text-center"
                                             style="background-color: white; border: none;
                                  border: 1px solid #bbb;
@@ -342,7 +313,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                     </div>
                                     <div class="col-lg-2 mb-2 mb-lg-0">
                                         <div style="width: 100%"
-                                             class="col-12  p-0 input-group my-group d-flex flex-row justify-content-center height-responsive">
+                                            class="col-12  p-0 input-group my-group d-flex flex-row justify-content-center height-responsive">
                                             <button type="button" style="background-color: rgba(31,103,92,0.35) ;
                                         border: none;
                                         border-radius: 16px;
@@ -352,11 +323,59 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         width: 100%;
                                         font-size: 18px;
                                         font-weight: 700;"
-                                                    class="height-responsive d-flex justify-content-center align-items-center"
-                                                    data-toggle="modal"
-                                                    data-target="#order_lens_modal">{{translate('order_lens')}}
+                                                class="height-responsive d-flex justify-content-center align-items-center"
+                                                data-toggle="modal"
+                                                data-target="#order_lens_modal">{{translate('order_lens')}}
                                             </button>
                                         </div>
+                                    </div>
+
+
+
+                                    <div class="search-box input-group form-group input-group my-group d-flex justify-content-between"
+                                        style="background-color: #e6e6e6 ; border: none;
+                                                                                                            border-radius: 16px;
+                                                                                                            color: white;
+                                                                                                            box-shadow: 0 8px 6px -5px #bbb ;
+                                                                                                            width: 90%;
+                                                                                                            margin: auto;
+                                                                                                            width: 100%">
+                                        <button type="button" style="background-color: var(--complementary-color-1);
+                                                                                                                    width: fit-content;
+                                                                                                                    height: 100%;
+                                                                                                                    border: none;
+                                                                                                                    border-radius: 16px;
+                                                                                                                    padding: 10px 20px;
+                                                                                                                    margin-bottom: 0;
+                                                                                                                    font-weight: 600;
+                                                                                                                    color: white
+                                                                                                                    "
+                                            id="search_button">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+
+
+                                        <input type="text" name="search_product" id="search_product"
+                                            placeholder="@lang('lang.enter_product_name_to_print_labels')"
+                                            class="form-control ui-autocomplete-input"
+                                            style="border: none; background-color: transparent" autocomplete="off">
+                                        @if (isset($weighing_scale_setting['enable']) &&
+                                        $weighing_scale_setting['enable'])
+                                        <button type="button" class="btn btn-default bg-white btn-flat"
+                                            id="weighing_scale_btn" data-toggle="modal"
+                                            data-target="#weighing_scale_modal" title="@lang('lang.weighing_scale')"><i
+                                                class="fa fa-balance-scale fa-lg"></i></button>
+                                        @endif
+
+
+                                        <button type="button" class="text-black btn-modal pr-3"
+                                            style="
+                                                                                                                         background-color: transparent;
+                                                                                                                   border:none;
+                                                                                                           outline: none;
+                                                                                                                             "
+                                            data-href="{{route('admin.products.create') }}?quick_add=1"
+                                            data-container=".view_modal"><i class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
 
@@ -378,85 +397,37 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                 <input type="hidden" name="service_fee_value" id="service_fee_value" value="0">
                             </div>
 
-                            <div class="card rounded mb-0 mt-2 p-2 d-flex flex-column justify-content-between align-items-center"
-                                style="border-radius: 8px;width: 100%">
 
-                                <div class="search-box input-group form-group input-group my-group d-flex justify-content-between"
-                                    style="background-color: #e6e6e6 ; border: none;
-                                                                        border-radius: 16px;
-                                                                        color: white;
-                                                                        box-shadow: 0 8px 6px -5px #bbb ;
-                                                                        width: 90%;
-                                                                        margin: auto;
-                                                                        width: 100%">
-                                    <button type="button" style="background-color: var(--complementary-color-1);
-                                                                                width: fit-content;
-                                                                                height: 100%;
-                                                                                border: none;
-                                                                                border-radius: 16px;
-                                                                                padding: 10px 20px;
-                                                                                margin-bottom: 0;
-                                                                                font-weight: 600;
-                                                                                color: white
-                                                                                " id="search_button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-
-
-                                    <input type="text" name="search_product" id="search_product"
-                                        placeholder="@lang('lang.enter_product_name_to_print_labels')"
-                                        class="form-control ui-autocomplete-input"
-                                        style="border: none; background-color: transparent" autocomplete="off">
-                                    @if (isset($weighing_scale_setting['enable']) && $weighing_scale_setting['enable'])
-                                    <button type="button" class="btn btn-default bg-white btn-flat"
-                                        id="weighing_scale_btn" data-toggle="modal" data-target="#weighing_scale_modal"
-                                        title="@lang('lang.weighing_scale')"><i
-                                            class="fa fa-balance-scale fa-lg"></i></button>
-                                    @endif
-
-
-                                    <button type="button" class="text-black btn-modal pr-3" style="
-                                                                                     background-color: transparent;
-                                                                               border:none;
-                                                                       outline: none;
-                                                                                         "
-                                        data-href="{{route('admin.products.create') }}?quick_add=1"
-                                        data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                </div>
-
-
-                            </div>
-
-                            <div class="card mb-1 py-2 d-flex flex-column flex-lg-row justify-content-between align-items-start"
+                            <div class="card mb-1 px-0 py-2 d-flex flex-column flex-lg-row justify-content-between align-items-start"
                                 style="border-radius: 8px;width: 100%;min-height: 450px">
                                 <div class="table-responsive transaction-list">
                                     <table class="table table-borderless" id="product_table" style="width: 100%;"
                                         class="table table-hover table-striped order-list table-fixed">
                                         <thead>
                                             <tr style="width: 100%">
-                                                <th class="text-center text-black"
+                                                <th class="text-center text-white"
                                                     style="width:  17%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.products')</th>
-                                                <th class="text-center text-black"
+                                                <th class="text-center text-white"
                                                     style="width:  12%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.quantity')</th>
-                                                <th class="text-center text-black"
+                                                <th class="text-center text-white"
                                                     style="width:  12%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.price')</th>
-                                                <th class="text-center text-black"
+                                                <th class="text-center text-white"
                                                     style="width:  11%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.discount')</th>
-                                                <th class="text-center text-black"
+                                                <th class="text-center text-white"
                                                     style="width:  10%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.category_discount')</th>
-                                                <th class="text-center text-black"
+                                                <th class="text-center text-white"
                                                     style="width:  9%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.sub_total')</th>
 
-                                                <th class="text-center text-black"
+                                                <th class="text-center text-white"
                                                     style="width:  9%;  font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.current_stock')</th>
-                                                <th class="text-center text-black"
+                                                <th class="text-center text-white"
                                                     style="width:  9%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.action')</th>
                                             </tr>
@@ -470,202 +441,150 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                 </div>
                             </div>
 
-                            <div class=" py-2 col-12 pos-conditions" style="border-radius: 8px;">
-                                <div class="card mb-2">
-                                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mx-auto"
-                                        style="width: 80%;">
+                            <div class="pos-conditions" style="">
 
-                                        <div
-                                            class="col-md-6 d-flex align-items-center justify-content-between p-0 text-center font-responsive mb-2 mb-lg-0">
-                                            <div
-                                                class="col-2 flex-column d-flex align-items-center text-center mb-2 mb-lg-0">
-                                                <span class="totals-title mr-2" style="color: #000;font-weight: 600;">{{
-                                                    __('lang.items') }}</span>
-                                                <span id="item" class="border border-5 px-2 py-2 rounded">0</span>
-                                            </div>
+                                <div class="d-flex flex-wrap">
 
-                                            <div
-                                                class="col-2 flex-column d-flex align-items-center text-center  mb-2 mb-lg-0">
-                                                <span class="totals-title mr-2 "
-                                                    style="color: #000;font-weight: 600;">{{ __('lang.quantity')
-                                                    }}</span>
-                                                <span id="item-quantity"
-                                                    class="border border-5 px-2 py-2 rounded">0</span>
-                                            </div>
-
-                                            <div
-                                                class="col-2 flex-column d-flex align-items-center text-center  mb-2 mb-lg-0">
-                                                <span class="totals-title mr-2" style="color: #000;font-weight: 600;">{{
-                                                    __('lang.total') }}</span>
-                                                <span id="subtotal"
-                                                    class="border border-5 px-1 py-2 rounded">0.00</span>
-                                            </div>
-
-                                            <div
-                                                class="col-2 flex-column d-flex align-items-center text-center  mb-2 mb-lg-0">
-                                                <span class="totals-title mr-2" style="color: #000;font-weight: 600;">{{
-                                                    __('lang.tax') }}
-                                                </span>
-                                                <span id="tax" class="border border-5 px-1 py-2 rounded">0.00</span>
-                                            </div>
-
-
-
+                                    <div class="col-md-6 d-flex justify-content-between">
+                                        <div class="d-flex flex-column align-items-center"
+                                            style="background: #578981;color: white;padding: 5px;border-radius: 6px;font-weight: 500;">
+                                            <span class="totals-title ">{{
+                                                __('lang.items') }}</span>
+                                            <span id="item">0</span>
                                         </div>
 
-                                        <div
-                                            class="col-md-6 d-flex align-items-center text-center  mb-2 mb-lg-0 table_room_hide">
-
-
-                                            <div class="col-6 font-responsive" style="padding: 0">
-                                                @php
-                                                $default_invoice_toc = Modules\Setting\Entities\System::getProperty(
-                                                'invoice_terms_and_conditions',
-                                                );
-                                                if (!empty($default_invoice_toc)) {
-                                                $toc_hidden = $default_invoice_toc;
-                                                } else {
-                                                $toc_hidden = array_key_first($tac);
-                                                }
-                                                @endphp
-                                                <input type="hidden" name="terms_and_condition_hidden"
-                                                    id="terms_and_condition_hidden" value="{{ $toc_hidden }}">
-
-                                                {!! Form::label('terms_and_condition_id',
-                                                __('lang.terms_and_conditions'), [
-                                                'class' => 'label mb-0',
-                                                ]) !!}
-                                                <div style="background-color: #e6e6e6 ; border: none;
-                                            border-radius: 6px;
-                                            color: #373737;
-                                            box-shadow: 0 8px 6px -5px #bbb ;
-
-                                            width: 100%;
-                                            height: 30px;">
-
-                                                    <select name="terms_and_condition_id" id="terms_and_condition_id"
-                                                        style="width: 100%" class=" selectpicker terms"
-                                                        data-live-search="true">
-                                                        <option value="">@lang('lang.please_select')</option>
-                                                        @foreach ($tac as $key => $item)
-                                                        <option value="{{ $key }}">{{ $item }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class="tac_description_div mt-2"><span></span></div>
-                                            </div>
-
-
-                                            <div class="col-6 font-responsive mb-4" style="padding: 0;padding-left:2px">
-                                                {!! Form::label('commissioned_employees',
-                                                __('lang.commissioned_employees'), ['class' => 'label mb-0']) !!}
-                                                <div class="" style="background-color: #e6e6e6 ; border: none;
-                                            border-radius: 6px;
-                                            color: #373737;
-                                            box-shadow: 0 8px 6px -5px #bbb ;
-
-                                            width: 100%;
-                                            height: 30px;">
-                                                    {!! Form::select('commissioned_employees[]', $employees, false, [
-                                                    'class' => ' selectpicker terms',
-                                                    'style' => 'width:100%',
-                                                    'data-live-search' => 'true',
-                                                    'multiple',
-                                                    'id' => 'commissioned_employees',
-                                                    ]) !!}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 hide shared_commission_div">
-                                                <div class="i-checks" style="margin-top: 37px;">
-                                                    <input id="shared_commission" name="shared_commission"
-                                                        type="checkbox" value="1" class="form-control-custom">
-                                                    <label for="shared_commission"><strong>
-                                                            @lang('lang.shared_commission')
-                                                        </strong></label>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card">
-
-                                    <div class="d-flex flex-column flex-lg-row mx-auto py-2 mb-1" style="width: 80%">
-
-                                        <div
-                                            class="col-lg-6 d-flex justify-content-between align-items-center mb-1 mb-lg-0">
-                                            <div class="col-8 table_room_hide d-flex justify-content-between pl-0 height-responsive"
-                                                style="background-color: white; border: none;
-                                                     border: 1px solid #bbb;
-                                                        border-radius: 16px;
-                                                        color: white;
-                                                        box-shadow: 0 8px 6px -5px #bbb ;
-                                                        width: 100%;">
-                                                <span
-                                                    class="totals-title d-flex justify-content-center align-items-center height-responsive pl-2 pl-lg-2 promotion-padding"
-                                                    style="background-color: var(--secondary-color);
-                                                width: fit-content;
-                                                height: 100%;
-                                                border-radius: 16px;
-
-                                                margin-bottom: 0;
-                                                font-weight: 600;
-                                                ">{{ __('lang.sales_promotion') }}</span>
-                                                <span id="sales_promotion-cost_span"
-                                                    style="color: #000; padding-right: 30px;width: 45%"
-                                                    class="d-flex justify-content-start align-items-center  height-responsive">0.00</span>
-                                                <input type="hidden" id="sales_promotion-cost" value="0">
-
-                                            </div>
-
-                                            <div class="col-4 pl-lg-6  height-responsive" style="width: 100%; ">
-                                                @if (auth()->user()->can('sp_module.sales_promotion.view') ||
-                                                auth()->user()->can('sp_module.sales_promotion.create_and_edit') ||
-                                                auth()->user()->can('sp_module.sales_promotion.delete'))
-                                                <button type="button" style="background-color: #e6e6e6 ;
-                                                    border: none;
-                                                border-radius: 16px;
-                                                color: #373737;
-                                                box-shadow: 0 8px 6px -5px #bbb ;
-                                                width: 100%;" class="height-responsive" data-toggle="modal"
-                                                    data-target="#discount_modal">@lang('lang.random_discount')</button>
-                                                @endif
-                                                {{-- <span id="discount">0.00</span> --}}
-                                            </div>
+                                        <div class="d-flex flex-column align-items-center"
+                                            style="background: #578981;color: white;padding: 5px;border-radius: 6px;font-weight: 500;">
+                                            <span class="totals-title ">{{
+                                                __('lang.quantity')
+                                                }}</span>
+                                            <span id="item-quantity">0</span>
                                         </div>
 
+                                        <div class="d-flex flex-column align-items-center"
+                                            style="background: #578981;color: white;padding: 5px;border-radius: 6px;font-weight: 500;">
+                                            <span class="totals-title ">{{
+                                                __('lang.total') }}</span>
+                                            <span id="subtotal">0.00</span>
+                                        </div>
 
-                                        <div class="col-lg-6 pl-lg-6  height-responsive payment-amount table_room_hide d-flex justify-content-between pl-0 height-responsive"
-                                            style="background-color: white; border: none;
-                                                    border: 1px solid #bbb;
-                                                    border-radius: 16px;
-                                                    color: white;
-                                                    box-shadow: 0 8px 6px -5px #bbb ;
-                                                    width: 100%;
-                                                    margin-top: 0">
-
-                                            <span
-                                                class=" height-responsive d-flex justify-content-center align-items-center"
-                                                style="background-color: var(--secondary-color);
-                                                width: fit-content;
-                                                height: 100%;
-                                                border-radius: 16px;
-                                                padding: 10px 20px;
-                                                margin-bottom: 0;
-                                                font-weight: 600;
-                                                ">{{ __('lang.grand_total') }}
+                                        <div class="d-flex flex-column align-items-center"
+                                            style="background: #578981;color: white;padding: 5px;border-radius: 6px;font-weight: 500;">
+                                            <span class="totals-title">{{
+                                                __('lang.tax') }}
                                             </span>
-                                            <span style="color: #000; padding-right: 30px;width: 45%"
-                                                class="d-flex justify-content-start align-items-center  height-responsive final_total_span">0.00</span>
+                                            <span id="tax">0.00</span>
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="col-md-6 d-flex justify-content-between align-items-center">
+                                        <div class=" table_room_hide d-flex flex-column align-items-center"
+                                            style="background: #578981;color: white;padding: 5px;border-radius: 6px;font-weight: 500;">
+                                            <span class="totals-title">{{ __('lang.sales_promotion')
+                                                }}</span>
+                                            <span id="sales_promotion-cost_span" class="">0.00</span>
+                                            <input type="hidden" id="sales_promotion-cost" value="0">
 
                                         </div>
 
+                                        <div class="mt-0 payment-amount table_room_hide d-flex flex-column align-items-center"
+                                            style="background: #578981;color: white;padding: 5px;border-radius: 6px;font-weight: 500;">
+
+                                            <span>{{
+                                                __('lang.grand_total') }}
+                                            </span>
+                                            <span class="final_total_span">0.00</span>
+
+                                        </div>
+
+                                        <div>
+                                            @if (auth()->user()->can('sp_module.sales_promotion.view') ||
+                                            auth()->user()->can('sp_module.sales_promotion.create_and_edit') ||
+                                            auth()->user()->can('sp_module.sales_promotion.delete'))
+                                            <button type="button" data-toggle="modal" class="btn pos-button btn-custom"
+                                                style="background: var(--secondary-color);color: white"
+                                                data-target="#discount_modal">@lang('lang.random_discount')</button>
+                                            @endif
+                                            {{-- <span id="discount">0.00</span> --}}
+                                        </div>
                                     </div>
+
+                                    <div class="col-md-6 mt-4 d-flex justify-content-start table_room_hide"
+                                        style="gap: 10px">
+
+
+                                        <div>
+                                            @php
+                                            $default_invoice_toc = Modules\Setting\Entities\System::getProperty(
+                                            'invoice_terms_and_conditions',
+                                            );
+                                            if (!empty($default_invoice_toc)) {
+                                            $toc_hidden = $default_invoice_toc;
+                                            } else {
+                                            $toc_hidden = array_key_first($tac);
+                                            }
+                                            @endphp
+                                            <input type="hidden" name="terms_and_condition_hidden"
+                                                id="terms_and_condition_hidden" value="{{ $toc_hidden }}">
+
+                                            {!! Form::label('terms_and_condition_id',
+                                            __('lang.terms_and_conditions'), [
+                                            'class' => 'label mb-0',
+                                            ]) !!}
+                                            <div>
+
+                                                <select name="terms_and_condition_id" id="terms_and_condition_id"
+                                                    class=" selectpicker terms" data-live-search="true">
+                                                    <option value="">@lang('lang.please_select')</option>
+                                                    @foreach ($tac as $key => $item)
+                                                    <option value="{{ $key }}">{{ $item }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="tac_description_div"><span></span></div>
+                                        </div>
+
+
+                                        <div>
+                                            {!! Form::label('commissioned_employees',
+                                            __('lang.commissioned_employees'), ['class' => 'label mb-0']) !!}
+                                            <div class="">
+                                                {!! Form::select('commissioned_employees[]', $employees, false, [
+                                                'class' => ' selectpicker terms',
+
+                                                'data-live-search' => 'true',
+                                                'multiple',
+                                                'id' => 'commissioned_employees',
+                                                ]) !!}
+                                            </div>
+                                        </div>
+
+                                        <div class=" hide shared_commission_div">
+                                            <div class="i-checks toggle-pill-color flex-col-centered">
+                                                <input id="shared_commission" name="shared_commission" type="checkbox"
+                                                    value="1" class="form-control-custom">
+                                                <label for="shared_commission">
+                                                </label>
+                                                <span>
+                                                    <strong>
+                                                        @lang('lang.shared_commission')
+                                                    </strong>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+
                                 </div>
+
 
 
                             </div>
@@ -736,8 +655,9 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <button style="background-color: #ff0000; color:#fff !important; " type="button"
-                                                class="btn text-white" id="cancel-btn" onclick="return confirmCancel()">
+                                            <button style="background-color: #ff0000; color:#fff !important; "
+                                                type="button" class="btn text-white" id="cancel-btn"
+                                                onclick="return confirmCancel()">
                                                 @lang('lang.cancel')</button>
                                         </div>
                                     </div>
@@ -750,20 +670,20 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
 
                     <div class="payment-options row table_room_hide"
-                         style=" width: @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket') 100%; @else 50%; @endif">
+                        style=" width: @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket') 100%; @else 50%; @endif">
                         <div class="col-md-12 flex-wrap d-flex justify-content-start justify-content-lg-center align-items-center mb-3  @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"
-                             style="font-size: 16px;font-weight: 600">
+                            style="font-size: 16px;font-weight: 600">
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button data-method="cash"
-                                        style="background: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
-                                        type="button" class="btn btn-custom w-75 pos-button payment-btn" data-toggle="modal"
-                                        data-target="#add-payment" data-backdrop="static" data-keyboard="false"
-                                        id="cash-btn">
+                                    style="background: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                    type="button" class="btn btn-custom w-75 pos-button payment-btn" data-toggle="modal"
+                                    data-target="#add-payment" data-backdrop="static" data-keyboard="false"
+                                    id="cash-btn">
                                     <div style="width: 18px">
                                         <img class="w-100 h-100"
-                                             src="{{ asset('front/images/icons Png/Icon awesome-money-check-alt.png') }}"
-                                             alt="Pay">
+                                            src="{{ asset('front/images/icons Png/Icon awesome-money-check-alt.png') }}"
+                                            alt="Pay">
                                     </div>
                                     @lang('lang.pay')
                                 </button>
@@ -771,19 +691,19 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button data-method="cash" style="background: var(--secondary-color)" type="button"
-                                        class="btn w-75 pos-button btn-custom" id="quick-pay-btn"><i
+                                    class="btn w-75 pos-button btn-custom" id="quick-pay-btn"><i
                                         class="fa fa-money"></i>
                                     @lang('lang.quick_pay')</button>
                             </div>
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button data-method="pay-later"
-                                        style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
-                                        type="button" class="btn  w-75 pos-button btn-custom" id="pay-later-btn">
+                                    style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                    type="button" class="btn  w-75 pos-button btn-custom" id="pay-later-btn">
                                     <div style="width: 18px">
                                         <img class="w-100 h-100"
-                                             src="{{ asset('front/images/icons Png/Icon material-watch-later.png') }}"
-                                             alt="Pay">
+                                            src="{{ asset('front/images/icons Png/Icon material-watch-later.png') }}"
+                                            alt="Pay">
                                     </div>
                                     @lang('lang.pay_later')
                                 </button>
@@ -791,19 +711,19 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button style="background-color: #ff0000;" type="button"
-                                        class="btn  w-75 pos-button btn-custom" id="cancel-btn"
-                                        onclick="return confirmCancel()"><i class="fa fa-close"></i>
+                                    class="btn  w-75 pos-button btn-custom" id="cancel-btn"
+                                    onclick="return confirmCancel()"><i class="fa fa-close"></i>
                                     @lang('lang.cancel')</button>
                             </div>
-                           <div
+                            <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button
                                     style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
                                     type="button" class="btn  w-75 pos-button btn-custom" id="recent-transaction-btn">
                                     <div style="width: 18px">
                                         <img class="w-100 h-100"
-                                             src="{{ asset('front/images/icons Png/Icon material-timer.png') }}"
-                                             alt="Pay">
+                                            src="{{ asset('front/images/icons Png/Icon material-timer.png') }}"
+                                            alt="Pay">
                                     </div>
                                     @lang('lang.recent_transactions')
                                 </button>
@@ -812,12 +732,12 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button data-method="lens"
-                                        style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
-                                        type="button" class="btn  w-75 pos-button  btn-custom" id="view-lens-btn"
-                                        data-href="#{{-- --}}">
+                                    style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                    type="button" class="btn  w-75 pos-button  btn-custom" id="view-lens-btn"
+                                    data-href="#{{-- --}}">
                                     <div style="width: 18px">
                                         <img class="w-100 h-100"
-                                             src="{{ asset('front/images/icons Png/Icon awesome-flag.png') }}" alt="Pay">
+                                            src="{{ asset('front/images/icons Png/Icon awesome-flag.png') }}" alt="Pay">
                                     </div>
                                     {{translate('view_lenses_order')}}
                                 </button>
@@ -839,8 +759,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                 @include('sale::back-end.pos.partials.order_lens')
 
                 <!-- products list -->
-                <div
-                    class="col-md-3">
+                <div class="col-md-3">
 
                     @include('sale::back-end.pos.partials.right_side')
                 </div>
@@ -860,7 +779,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                     class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
                                     data-dismiss="modal" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
-                                <span class="position-absolute modal-border"></span>
+
                             </div>
                             <div class="modal-body ">
                                 <div class="col-md-12 modal-filter">
@@ -968,7 +887,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                     class="close  btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
                                     data-dismiss="modal" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
-                                <span class="position-absolute modal-border"></span>
+
                             </div>
                             <div class="modal-body">
                                 <div class="col-md-12 modal-filter">
@@ -1034,7 +953,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                     class="close  btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"
                                     data-dismiss="modal" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
-                                <span class="position-absolute modal-border"></span>
+
                             </div>
 
                             <div class="modal-body">
@@ -1089,6 +1008,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 @endsection
 
 @section('javascript')
+
 <script src="{{ asset('js/onscan.min.js') }}"></script>
 <script src="{{ asset('js/pos.js') }}"></script>
 <script>

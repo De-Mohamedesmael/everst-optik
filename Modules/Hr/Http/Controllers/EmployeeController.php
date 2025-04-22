@@ -348,8 +348,8 @@ class EmployeeController extends Controller
             DB::beginTransaction();
 
             $data = $request->except('_token');
-            $data['date_of_start_working'] = !empty($data['date_of_start_working']) ? Carbon::createFromFormat('m/d/Y', $data['date_of_start_working'])->format('Y-m-d') : null;
-            $data['date_of_birth'] = !empty($data['date_of_birth']) ? Carbon::createFromFormat('m/d/Y', $data['date_of_birth'])->format('Y-m-d') : null;
+            $data['date_of_start_working'] = !empty($data['date_of_start_working']) ? Carbon::createFromFormat('d/m/Y', $data['date_of_start_working'])->format('Y-m-d') : null;
+            $data['date_of_birth'] = !empty($data['date_of_birth']) ? Carbon::createFromFormat('d/m/Y', $data['date_of_birth'])->format('Y-m-d') : null;
             $data['fixed_wage'] = !empty($data['fixed_wage']) ? 1 : 0;
             $data['commission'] = !empty($data['commission']) ? 1 : 0;
 
@@ -573,8 +573,8 @@ class EmployeeController extends Controller
             DB::beginTransaction();
 
             $data = $request->except('_token');
-            $data['date_of_start_working'] = !empty($data['date_of_start_working']) ? Carbon::createFromFormat('m/d/Y', $data['date_of_start_working'])->format('Y-m-d') : null;
-            $data['date_of_birth'] = !empty($data['date_of_birth']) ? Carbon::createFromFormat('m/d/Y', $data['date_of_birth'])->format('Y-m-d') : null;
+            $data['date_of_start_working'] = !empty($data['date_of_start_working']) ? Carbon::createFromFormat('d/m/Y', $data['date_of_start_working'])->format('Y-m-d') : null;
+            $data['date_of_birth'] = !empty($data['date_of_birth']) ? Carbon::createFromFormat('d/m/Y', $data['date_of_birth'])->format('Y-m-d') : null;
             $data['fixed_wage'] = !empty($data['fixed_wage']) ? 1 : 0;
             $data['commission'] = !empty($data['commission']) ? 1 : 0;
 

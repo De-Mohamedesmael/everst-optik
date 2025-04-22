@@ -4,587 +4,605 @@
 
 @section('styles')
 
-    <style>
-        .nav-tabs .nav-item .nav-link.active {
-            border-color: transparent;
-            border-bottom: 2px solid var(--secondary-color);
-        }
-    </style>
+<style>
+    .nav-tabs .nav-item .nav-link.active {
+        border-color: transparent;
+        border-bottom: 2px solid var(--secondary-color);
+    }
+</style>
 @endsection
 @section('content')
-    <section class="forms py-0">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 px-1  no-print">
-                    <div
-                        class="  d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                        <h5 class="mb-0 position-relative print-title" style="margin-right: 30px">@lang('lang.customer_details')
-                            <span class="header-pill"></span>
-                        </h5>
-                    </div>
-                    <form action="">
-                        <div class="card mb-2">
-                            <div class="card-body p-2">
-                                <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                                    <div class="col-md-3 px-5">
-                                        <div class="form-group">
-                                            {!! Form::label('start_date', __('lang.start_date'), [
-                                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                            ]) !!}
-                                            {!! Form::text('start_date', request()->start_date, [
-                                                'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',
-                                            ]) !!}
-                                        </div>
+<section class="forms px-3 py-1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 px-1  no-print">
+                <div
+                    class="  d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
+                    <h5 class="mb-0 position-relative print-title" style="margin-right: 30px">
+                        @lang('lang.customer_details')
+                        <span class="header-pill"></span>
+                    </h5>
+                </div>
+                <form action="">
+                    <div class="card mb-2">
+                        <div class="card-body p-2">
+                            <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                                <div class="col-md-3 px-5">
+                                    <div class="form-group">
+                                        {!! Form::label('start_date', __('lang.start_date'), [
+                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end :
+                                        text-start',
+                                        ]) !!}
+                                        {!! Form::text('start_date', request()->start_date, [
+                                        'class' => 'form-control modal-input app()->isLocale("ar") ? text-end :
+                                        text-start',
+                                        ]) !!}
                                     </div>
-                                    <div class="col-md-3 px-5">
-                                        <div class="form-group">
-                                            {!! Form::label('end_date', __('lang.end_date'), [
-                                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                            ]) !!}
-                                            {!! Form::text('end_date', request()->end_date, [
-                                                'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',
-                                            ]) !!}
-                                        </div>
+                                </div>
+                                <div class="col-md-3 px-5">
+                                    <div class="form-group">
+                                        {!! Form::label('end_date', __('lang.end_date'), [
+                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end :
+                                        text-start',
+                                        ]) !!}
+                                        {!! Form::text('end_date', request()->end_date, [
+                                        'class' => 'form-control modal-input app()->isLocale("ar") ? text-end :
+                                        text-start',
+                                        ]) !!}
                                     </div>
-                                    <div class="col-md-3 px-5 d-flex justify-content-center align-items-center">
+                                </div>
+                                <div class="col-md-3 px-5 d-flex justify-content-center align-items-center">
 
-                                        <button type="submit" class="btn btn-main col-md-12">@lang('lang.filter')</button>
+                                    <button type="submit" class="btn btn-main col-md-12">@lang('lang.filter')</button>
+                                </div>
+                                <div class="col-md-3 px-5 d-flex justify-content-center align-items-center">
+                                    <a href="{{ route('admin.customers.show', $customer->id) }}"
+                                        class="btn btn-danger col-md-12 ">@lang('lang.clear_filter')</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="card mb-2">
+                    <div class="card-body p-2">
+                        <ul class="nav nav-tabs mb-2 @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"
+                            role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link @if (empty(request()->show)) active @endif" href="#info-sale"
+                                    role="tab" data-toggle="tab">@lang('lang.info')</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="view-purchases-a"
+                                    class="nav-link @if (request()->show == 'purchases') active @endif"
+                                    href="#purchases" role="tab" data-toggle="tab">@lang('lang.purchases')</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->show == 'sell_return') active @endif"
+                                    href="#sell_return" role="tab" data-toggle="tab">@lang('lang.sell_return')</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->show == 'discounts') active @endif"
+                                    href="#store-discount" role="tab" data-toggle="tab">@lang('lang.discounts')</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if (request()->show == 'view_payments') active @endif"
+                                    href="#view-payments" role="tab" data-toggle="tab">@lang('lang.view_payments')</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="view-prescriptions-a"
+                                    class="nav-link @if (request()->show == 'view_prescriptions') active @endif"
+                                    href="#view-prescriptions" role="tab" data-toggle="tab">{{translate('view
+                                    prescriptions')}}</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade @if (empty(request()->show)) show active @endif"
+                                id="info-sale">
+                                <br>
+                                @if ($balance < 0) <div class="col-md-12">
+                                    <button
+                                        data-href="{{ route('admin.transactionPayment.payCustomerDue', $customer->id) }}"
+                                        class="btn btn-primary btn-modal"
+                                        data-container=".view_modal">@lang('lang.pay')</button>
+                            </div>
+                            @endif
+                            <br>
+                            <div class="col-md-12 text-muted">
+                                <div class="row">
+                                    <div class="col-md-6 row justify-content-between" style="gap: 15px">
+                                        <div class="info-row mb-2 d-flex justify-content-start align-items-center"
+                                            style="background: #476762;border-radius: 8px;padding: 5px;color: white;width: 48%;">
+                                            <b>@lang('lang.name'):</b>
+
+                                            <span style="font-weight: 600;font-size: 20px" class="customer_name_span">
+                                                {{ $customer->name }}
+                                            </span>
+                                        </div>
+
+                                        <div class="info-row mb-2 d-flex justify-content-start align-items-center"
+                                            style="background: #476762;border-radius: 8px;padding: 5px;color: white;width: 48%;">
+                                            <b>@lang('lang.customer_type'):</b> <span
+                                                style="font-weight: 600;font-size: 20px"
+                                                class="customer_customer_type_span">{{ $customer->customer_type->name ??
+                                                '' }}</span>
+                                        </div>
+                                        <div class="info-row mb-2 d-flex justify-content-start align-items-center"
+                                            style="background: #476762;border-radius: 8px;padding: 5px;color: white;width: 48%;">
+                                            <b>@lang('lang.age'):</b> <span style="font-weight: 600;font-size: 20px"
+                                                class="customer_email_span">{{
+                                                $customer->age ?? '' }}</span>
+                                        </div>
+                                        <div class="info-row mb-2 d-flex justify-content-start align-items-center"
+                                            style="background: #476762;border-radius: 8px;padding: 5px;color: white;width: 48%;">
+                                            <b>@lang('lang.mobile'):</b> <span style="font-weight: 600;font-size: 20px"
+                                                class="customer_mobile_span">{{
+                                                $customer->mobile_number ?? '' }}</span>
+                                        </div>
+                                        <div class="info-row mb-2 d-flex justify-content-start align-items-center"
+                                            style="background: #476762;border-radius: 8px;padding: 5px;color: white;width: 48%;">
+                                            <b>@lang('lang.address'):</b> <span style="font-weight: 600;font-size: 20px"
+                                                class="customer_address_span">{{
+                                                $customer->address ?? '' }}</span>
+                                        </div>
+                                        <div class="info-row mb-2 d-flex justify-content-start align-items-center"
+                                            style="background: #476762;border-radius: 8px;padding: 5px;color: white;width: 48%;">
+                                            <b>@lang('lang.email'):</b> <span style="font-weight: 600;font-size: 20px"
+                                                class="customer_email_span">{{
+                                                $customer->email ?? '' }}</span>
+                                        </div>
+                                        <div class="info-row mb-2 d-flex justify-content-start align-items-center"
+                                            style="background: #476762;border-radius: 8px;padding: 5px;color: white;width: 48%;">
+                                            <b>@lang('lang.balance'):</b> <span style="font-weight: 600;font-size: 20px"
+                                                class="balance @if ($balance < 0) text-red @endif">{{ $balance }}</span>
+                                        </div>
+                                        <div class="info-row mb-2 d-flex justify-content-start align-items-center"
+                                            style="background: #476762;border-radius: 8px;padding: 5px;color: white;width: 48%;">
+                                            <b>@lang('lang.created_by'):</b>
+                                            <span style="font-weight: 600;font-size: 20px">
+                                                {{ $customer->created_by_admin?->name }}
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3 px-5 d-flex justify-content-center align-items-center">
-                                        <a href="{{ route('admin.customers.show', $customer->id) }}"
-                                            class="btn btn-danger col-md-12 ">@lang('lang.clear_filter')</a>
+                                    <div class="col-md-6 d-flex justify-content-end">
+                                        <div class="thumbnail">
+                                            <img style="width: 200px; height: 200px;" class="img-fluid"
+                                                src="@if ($customer->getFirstMediaUrl('customer_photo')) {{ $customer->getFirstMediaUrl('customer_photo') }} @else {{asset('/uploads/' . Modules\Setting\Entities\System::getProperty('logo'))}}@endif"
+                                                alt="Customer photo">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <div class="card mb-2">
-                        <div class="card-body p-2">
-                            <ul class="nav nav-tabs mb-2 @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"
-                                role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link @if (empty(request()->show)) active @endif" href="#info-sale"
-                                        role="tab" data-toggle="tab">@lang('lang.info')</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a  id="view-purchases-a"  class="nav-link @if (request()->show == 'purchases') active @endif" href="#purchases"
-                                        role="tab" data-toggle="tab">@lang('lang.purchases')</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if (request()->show == 'sell_return') active @endif" href="#sell_return"
-                                        role="tab" data-toggle="tab">@lang('lang.sell_return')</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if (request()->show == 'discounts') active @endif"
-                                        href="#store-discount" role="tab" data-toggle="tab">@lang('lang.discounts')</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if (request()->show == 'view_payments') active @endif"
-                                        href="#view-payments" role="tab" data-toggle="tab">@lang('lang.view_payments')</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="view-prescriptions-a" class="nav-link @if (request()->show == 'view_prescriptions') active @endif"
-                                       href="#view-prescriptions" role="tab"  data-toggle="tab">{{translate('view prescriptions')}}</a>
-                                </li>
-                            </ul>
 
-                            <div class="tab-content">
-                                <div role="tabpanel"
-                                    class="tab-pane fade @if (empty(request()->show)) show active @endif"
-                                    id="info-sale">
-                                    <br>
-                                    @if ($balance < 0)
-                                        <div class="col-md-12">
-                                            <button
-                                                data-href="{{ route('admin.transactionPayment.payCustomerDue', $customer->id) }}"
-                                                class="btn btn-primary btn-modal"
-                                                data-container=".view_modal">@lang('lang.pay')</button>
-                                        </div>
-                                    @endif
-                                    <br>
-                                    <div class="col-md-12 text-muted">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="col-md-12 ">
-                                                    <b>@lang('lang.name'):</b> <span
-                                                        class="customer_name_span">{{ $customer->name }}</span>
-                                                </div>
+                        <div role="tabpanel"
+                            class="tab-pane fade @if (request()->show == 'purchases') show active @endif"
+                            id="purchases">
+                            <div class="table-responsive">
+                                <table class="table" id="sales_table">
+                                    <thead>
+                                        <tr>
+                                            <th>@lang('lang.date')</th>
+                                            <th>@lang('lang.reference_no')</th>
+                                            <th>@lang('lang.customer')</th>
+                                            <th>@lang('lang.products')</th>
+                                            <th class="currencies">@lang('lang.received_currency')</th>
+                                            <th class="sum">@lang('lang.discount')</th>
+                                            <th class="sum">@lang('lang.grand_total')</th>
+                                            <th class="sum">@lang('lang.paid')</th>
+                                            <th class="sum">@lang('lang.due')</th>
+                                            <th>@lang('lang.payment_date')</th>
+                                            <th>@lang('lang.status')</th>
+                                            <th>@lang('lang.points_earned')</th>
+                                            <th>@lang('lang.cashier')</th>
+                                            <th>@lang('lang.files')</th>
+                                            <th>@lang('lang.action')</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <th class="table_totals" style="text-align: right">
+                                                @lang('lang.total')</th>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel"
+                            class="tab-pane fade @if (request()->show == 'sell_return') show active @endif"
+                            id="sell_return">
+                            <div class="table-responsive">
+                                <table class="table dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>@lang('lang.date')</th>
+                                            <th>@lang('lang.reference_no')</th>
+                                            <th>@lang('lang.customer')</th>
+                                            <th class="sum">@lang('lang.discount')</th>
+                                            <th class="sum">@lang('lang.grand_total')</th>
+                                            <th class="sum">@lang('lang.paid')</th>
+                                            <th class="sum">@lang('lang.due')</th>
+                                            <th>@lang('lang.payment_date')</th>
+                                            <th>@lang('lang.status')</th>
+                                            <th>@lang('lang.cashier')</th>
+                                            <th>@lang('lang.action')</th>
+                                        </tr>
+                                    </thead>
 
-                                                <div class="col-md-12">
-                                                    <b>@lang('lang.customer_type'):</b> <span
-                                                        class="customer_customer_type_span">{{ $customer->customer_type->name ?? '' }}</span>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <b>@lang('lang.age'):</b> <span
-                                                        class="customer_email_span">{{ $customer->age ?? '' }}</span>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <b>@lang('lang.mobile'):</b> <span
-                                                        class="customer_mobile_span">{{ $customer->mobile_number ?? '' }}</span>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <b>@lang('lang.address'):</b> <span
-                                                        class="customer_address_span">{{ $customer->address ?? '' }}</span>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <b>@lang('lang.email'):</b> <span
-                                                        class="customer_email_span">{{ $customer->email ?? '' }}</span>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <b>@lang('lang.balance'):</b> <span
-                                                        class="balance @if ($balance < 0) text-red @endif">{{ $balance }}</span>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <b>@lang('lang.created_by'):</b> {{ $customer->created_by_admin?->name }}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="thumbnail">
-                                                    <img style="width: 200px; height: 200px;" class="img-fluid"
-                                                        src="@if ($customer->getFirstMediaUrl('customer_photo')) {{ $customer->getFirstMediaUrl('customer_photo') }} @else {{asset('/uploads/' . Modules\Setting\Entities\System::getProperty('logo'))}}@endif"
-                                                        alt="Customer photo">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <tbody>
+                                        @php
+                                        $total_purchase_payments = 0;
+                                        $total_purchase_due = 0;
+                                        @endphp
+                                        @foreach ($sale_returns as $return)
+                                        <tr>
+                                            <td>{{ @format_date($return->transaction_date) }}</td>
+                                            <td>{{ $return->invoice_no }}</td>
+                                            <td>
+                                                @if (!empty($return->customer))
+                                                {{ $return->customer->name }}
+                                                @endif
+                                            </td>
 
-                                <div role="tabpanel"
-                                    class="tab-pane fade @if (request()->show == 'purchases') show active @endif"
-                                    id="purchases">
-                                    <div class="table-responsive">
-                                        <table class="table" id="sales_table">
-                                            <thead>
-                                                <tr>
-                                                    <th>@lang('lang.date')</th>
-                                                    <th>@lang('lang.reference_no')</th>
-                                                    <th>@lang('lang.customer')</th>
-                                                    <th>@lang('lang.products')</th>
-                                                    <th class="currencies">@lang('lang.received_currency')</th>
-                                                    <th class="sum">@lang('lang.discount')</th>
-                                                    <th class="sum">@lang('lang.grand_total')</th>
-                                                    <th class="sum">@lang('lang.paid')</th>
-                                                    <th class="sum">@lang('lang.due')</th>
-                                                    <th>@lang('lang.payment_date')</th>
-                                                    <th>@lang('lang.status')</th>
-                                                    <th>@lang('lang.points_earned')</th>
-                                                    <th>@lang('lang.cashier')</th>
-                                                    <th>@lang('lang.files')</th>
-                                                    <th>@lang('lang.action')</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <th class="table_totals" style="text-align: right">
-                                                        @lang('lang.total')</th>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div role="tabpanel"
-                                    class="tab-pane fade @if (request()->show == 'sell_return') show active @endif"
-                                    id="sell_return">
-                                    <div class="table-responsive">
-                                        <table class="table dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>@lang('lang.date')</th>
-                                                    <th>@lang('lang.reference_no')</th>
-                                                    <th>@lang('lang.customer')</th>
-                                                    <th class="sum">@lang('lang.discount')</th>
-                                                    <th class="sum">@lang('lang.grand_total')</th>
-                                                    <th class="sum">@lang('lang.paid')</th>
-                                                    <th class="sum">@lang('lang.due')</th>
-                                                    <th>@lang('lang.payment_date')</th>
-                                                    <th>@lang('lang.status')</th>
-                                                    <th>@lang('lang.cashier')</th>
-                                                    <th>@lang('lang.action')</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                @php
-                                                    $total_purchase_payments = 0;
-                                                    $total_purchase_due = 0;
-                                                @endphp
-                                                @foreach ($sale_returns as $return)
-                                                    <tr>
-                                                        <td>{{ @format_date($return->transaction_date) }}</td>
-                                                        <td>{{ $return->invoice_no }}</td>
-                                                        <td>
-                                                            @if (!empty($return->customer))
-                                                                {{ $return->customer->name }}
-                                                            @endif
-                                                        </td>
-
-                                                        <td>{{ @num_format($return->discount_amount) }}</td>
-                                                        <td>{{ @num_format($return->final_total) }}</td>
-                                                        <td>{{ @num_format($return->transaction_payments->sum('amount')) }}
-                                                        </td>
-                                                        <td>{{ @num_format($return->final_total - $return->transaction_payments->sum('amount')) }}
-                                                        </td>
-                                                        <td>
-                                                            @if ($return->transaction_payments->count() > 0)
-                                                                {{ @format_date($return->transaction_payments->last()->paid_on) }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($return->status == 'final')
-                                                                <span class="badge badge-success">@lang('lang.completed')</span>
-                                                            @else
-                                                                {{ ucfirst($return->status) }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($return->transaction_payments->count() > 0)
-                                                                {{ $return->transaction_payments->last()->created_by_admin->name }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <div
-                                                                class="btn-
+                                            <td>{{ @num_format($return->discount_amount) }}</td>
+                                            <td>{{ @num_format($return->final_total) }}</td>
+                                            <td>{{ @num_format($return->transaction_payments->sum('amount')) }}
+                                            </td>
+                                            <td>{{ @num_format($return->final_total -
+                                                $return->transaction_payments->sum('amount')) }}
+                                            </td>
+                                            <td>
+                                                @if ($return->transaction_payments->count() > 0)
+                                                {{ @format_date($return->transaction_payments->last()->paid_on) }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($return->status == 'final')
+                                                <span class="badge badge-success">@lang('lang.completed')</span>
+                                                @else
+                                                {{ ucfirst($return->status) }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($return->transaction_payments->count() > 0)
+                                                {{ $return->transaction_payments->last()->created_by_admin->name }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div class="btn-
                                                     group">
-                                                                <button type="button"
-                                                                    class="btn btn-default btn-sm dropdown-toggle"
-                                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">@lang('lang.action')
-                                                                    <span class="caret"></span>
-                                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                                </button>
-                                                                <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
-                                                                    user="menu">
-                                                                    @can('sale.pos.view')
-                                                                        <li>
+                                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">@lang('lang.action')
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
+                                                        user="menu">
+                                                        @can('sale.pos.view')
+                                                        <li>
 
-                                                                            <a data-href="#{{-- action('SellReturnController@show', $return->return_parent_id) --}}"
-                                                                                data-container=".view_modal"
-                                                                                class="btn btn-modal"><i
-                                                                                    class="fa fa-eye"></i>
-                                                                                @lang('lang.view')</a>
-                                                                        </li>
-                                                                        <li class="divider"></li>
-                                                                    @endcan
-                                                                    @can('sale.pos.create_and_edit')
-                                                                        <li>
-                                                                            <a href="#{{-- action('SellReturnController@add', $return->return_parent_id) --}}"
-                                                                                class="btn"><i
-                                                                                    class="dripicons-document-edit"></i>
-                                                                                @lang('lang.edit')</a>
-                                                                        </li>
-                                                                        <li class="divider"></li>
-                                                                    @endcan
+                                                            <a data-href="#{{-- action('SellReturnController@show', $return->return_parent_id) --}}"
+                                                                data-container=".view_modal" class="btn btn-modal"><i
+                                                                    class="fa fa-eye"></i>
+                                                                @lang('lang.view')</a>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        @endcan
+                                                        @can('sale.pos.create_and_edit')
+                                                        <li>
+                                                            <a href="#{{-- action('SellReturnController@add', $return->return_parent_id) --}}"
+                                                                class="btn"><i class="dripicons-document-edit"></i>
+                                                                @lang('lang.edit')</a>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        @endcan
 
-                                                                    @can('sale.pos.delete')
-                                                                        <li>
-                                                                            <a data-href="{{ route('admin.sale.destroy', $return->id) }}"
-                                                                                data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
-                                                                                class="btn text-red delete_item"><i
-                                                                                    class="fa fa-trash"></i>
-                                                                                @lang('lang.delete')</a>
-                                                                        </li>
-                                                                    @endcan
-                                                                </ul>
-                                                            </div>
-                                                    </tr>
-                                                    @php
-                                                        $total_purchase_payments += $return->transaction_payments->sum(
-                                                            'amount',
-                                                        );
-                                                        $total_purchase_due +=
-                                                            $return->final_total -
-                                                            $return->transaction_payments->sum('amount');
-                                                    @endphp
+                                                        @can('sale.pos.delete')
+                                                        <li>
+                                                            <a data-href="{{ route('admin.sale.destroy', $return->id) }}"
+                                                                data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
+                                                                class="btn text-red delete_item"><i
+                                                                    class="fa fa-trash"></i>
+                                                                @lang('lang.delete')</a>
+                                                        </li>
+                                                        @endcan
+                                                    </ul>
+                                                </div>
+                                        </tr>
+                                        @php
+                                        $total_purchase_payments += $return->transaction_payments->sum(
+                                        'amount',
+                                        );
+                                        $total_purchase_due +=
+                                        $return->final_total -
+                                        $return->transaction_payments->sum('amount');
+                                        @endphp
+                                        @endforeach
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <th style="text-align: right">@lang('lang.total')</th>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel"
+                            class="tab-pane fade @if (request()->show == 'discounts') show active @endif"
+                            id="store-discount">
+                            <div class="table-responsive">
+                                <table class="table dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>@lang('lang.date')</th>
+                                            <th>@lang('lang.reference_no')</th>
+                                            <th>@lang('lang.customer')</th>
+                                            <th>@lang('lang.products')</th>
+                                            <th class="sum">@lang('lang.grand_total')</th>
+                                            <th>@lang('lang.status')</th>
+                                            <th>@lang('lang.action')</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @php
+                                        $total_discount_payments = 0;
+                                        $total_discount_due = 0;
+                                        @endphp
+                                        @foreach ($discounts as $discount)
+                                        <tr>
+                                            <td>{{ @format_date($discount->transaction_date) }}</td>
+                                            <td>{{ $discount->invoice_no }}</td>
+                                            <td>
+                                                @if (!empty($discount->customer))
+                                                {{ $discount->customer->name }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @foreach ($discount->transaction_sell_lines as $line)
+                                                ({{ @num_format($line->quantity) }})
+                                                @if (!empty($line->product))
+                                                {{ $line->product->name }}
+                                                @endif <br>
                                                 @endforeach
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <th style="text-align: right">@lang('lang.total')</th>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div role="tabpanel"
-                                    class="tab-pane fade @if (request()->show == 'discounts') show active @endif"
-                                    id="store-discount">
-                                    <div class="table-responsive">
-                                        <table class="table dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>@lang('lang.date')</th>
-                                                    <th>@lang('lang.reference_no')</th>
-                                                    <th>@lang('lang.customer')</th>
-                                                    <th>@lang('lang.products')</th>
-                                                    <th class="sum">@lang('lang.grand_total')</th>
-                                                    <th>@lang('lang.status')</th>
-                                                    <th>@lang('lang.action')</th>
-                                                </tr>
-                                            </thead>
+                                            </td>
+                                            <td>{{ @num_format($discount->final_total) }}</td>
+                                            </td>
+                                            <td>
+                                                @if ($discount->status == 'final')
+                                                <span class="badge badge-success">@lang('lang.completed')</span>
+                                                @else
+                                                {{ ucfirst($discount->status) }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">@lang('lang.action')
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
+                                                        user="menu">
+                                                        @can('sale.pos.view')
+                                                        <li>
+                                                            <a data-href="{{ action('SellController@show', $discount->id) }}"
+                                                                data-container=".view_modal" class="btn btn-modal"><i
+                                                                    class="fa fa-eye"></i>
+                                                                @lang('lang.view')</a>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        @endcan
+                                                        @can('sale.pos.create_and_edit')
+                                                        <li>
+                                                            <a href="{{ action('SellController@edit', $discount->id) }}"
+                                                                class="btn"><i class="dripicons-document-edit"></i>
+                                                                @lang('lang.edit')</a>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        @endcan
 
-                                            <tbody>
+                                                        @can('sale.pos.delete')
+                                                        <li>
+                                                            <a data-href="{{ action('SellController@destroy', $discount->id) }}"
+                                                                data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
+                                                                class="btn text-red delete_item"><i
+                                                                    class="fa fa-trash"></i>
+                                                                @lang('lang.delete')</a>
+                                                        </li>
+                                                        @endcan
+                                                    </ul>
+                                                </div>
+                                        </tr>
+                                        @php
+                                        $total_discount_payments += $discount->transaction_payments->sum(
+                                        'amount',
+                                        );
+                                        $total_discount_due +=
+                                        $discount->final_total -
+                                        $discount->transaction_payments->sum('amount');
+                                        @endphp
+                                        @endforeach
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <th style="text-align: right">@lang('lang.total')</th>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel"
+                            class="tab-pane fade @if (request()->show == 'view_payments') show active @endif"
+                            id="view-payments">
+                            <div class="table-responsive">
+                                <table class="table dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>@lang('lang.amount')</th>
+                                            <th>@lang('lang.type')</th>
+                                            <th>@lang('lang.payment_date')</th>
+                                            <th>@lang('lang.payment_type')</th>
+                                            <th>@lang('lang.bank_name')</th>
+                                            <th>@lang('lang.ref_number')</th>
+                                            <th>@lang('lang.bank_deposit_date')</th>
+
+                                            <th>@lang('lang.files')</th>
+                                            <th>@lang('lang.created_by')</th>
+                                            <th width="50%">@lang('lang.date_of_creation')</th>
+                                            <th>@lang('lang.action')</th>
+
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @isset($payments)
+                                        @foreach ($payments as $payment)
+                                        <tr>
+                                            <td>{{ @num_format($payment->amount) }}</td>
+                                            <td><span class="type-{{ $payment->type }}">{{ __('lang.type_' .
+                                                    $payment->type) }}</span>
+                                            </td>
+                                            <td>{{ @format_date($payment->paid_on) }}</td>
+                                            <td>{{ $payment_type_array[$payment->method] }}</td>
+                                            <td>{{ $payment->bank_name }}</td>
+                                            <td>{{ $payment->ref_number }}</td>
+                                            <td>
+                                                @if (!empty($payment->bank_deposit_date && ($payment->method ==
+                                                'bank_transfer' || $payment->method == 'cheque')))
+                                                {{ @format_date($payment->bank_deposit_date) }}
+                                                @endif
+                                            </td>
+
+
+                                            <td>
                                                 @php
-                                                    $total_discount_payments = 0;
-                                                    $total_discount_due = 0;
+                                                $payment_media = $payment->getMedia(
+                                                'transaction_payment',
+                                                );
                                                 @endphp
-                                                @foreach ($discounts as $discount)
-                                                    <tr>
-                                                        <td>{{ @format_date($discount->transaction_date) }}</td>
-                                                        <td>{{ $discount->invoice_no }}</td>
-                                                        <td>
-                                                            @if (!empty($discount->customer))
-                                                                {{ $discount->customer->name }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @foreach ($discount->transaction_sell_lines as $line)
-                                                                ({{ @num_format($line->quantity) }})
-                                                                @if (!empty($line->product))
-                                                                    {{ $line->product->name }}
-                                                                @endif <br>
-                                                            @endforeach
-                                                        </td>
-                                                        <td>{{ @num_format($discount->final_total) }}</td>
-                                                        </td>
-                                                        <td>
-                                                            @if ($discount->status == 'final')
-                                                                <span class="badge badge-success">@lang('lang.completed')</span>
-                                                            @else
-                                                                {{ ucfirst($discount->status) }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                                <button type="button"
-                                                                    class="btn btn-default btn-sm dropdown-toggle"
-                                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">@lang('lang.action')
-                                                                    <span class="caret"></span>
-                                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                                </button>
-                                                                <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
-                                                                    user="menu">
-                                                                    @can('sale.pos.view')
-                                                                        <li>
-                                                                            <a data-href="{{ action('SellController@show', $discount->id) }}"
-                                                                                data-container=".view_modal"
-                                                                                class="btn btn-modal"><i
-                                                                                    class="fa fa-eye"></i>
-                                                                                @lang('lang.view')</a>
-                                                                        </li>
-                                                                        <li class="divider"></li>
-                                                                    @endcan
-                                                                    @can('sale.pos.create_and_edit')
-                                                                        <li>
-                                                                            <a href="{{ action('SellController@edit', $discount->id) }}"
-                                                                                class="btn"><i
-                                                                                    class="dripicons-document-edit"></i>
-                                                                                @lang('lang.edit')</a>
-                                                                        </li>
-                                                                        <li class="divider"></li>
-                                                                    @endcan
-
-                                                                    @can('sale.pos.delete')
-                                                                        <li>
-                                                                            <a data-href="{{ action('SellController@destroy', $discount->id) }}"
-                                                                                data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
-                                                                                class="btn text-red delete_item"><i
-                                                                                    class="fa fa-trash"></i>
-                                                                                @lang('lang.delete')</a>
-                                                                        </li>
-                                                                    @endcan
-                                                                </ul>
-                                                            </div>
-                                                    </tr>
-                                                    @php
-                                                        $total_discount_payments += $discount->transaction_payments->sum(
-                                                            'amount',
-                                                        );
-                                                        $total_discount_due +=
-                                                            $discount->final_total -
-                                                            $discount->transaction_payments->sum('amount');
-                                                    @endphp
+                                                @if (!empty($payment_media))
+                                                @foreach ($payment_media as $media)
+                                                <a href="{{ $media->getUrl() }}">{{ $media->name }}</a>
+                                                <br>
                                                 @endforeach
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <th style="text-align: right">@lang('lang.total')</th>
-                                                    <td></td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div role="tabpanel"
-                                    class="tab-pane fade @if (request()->show == 'view_payments') show active @endif"
-                                    id="view-payments">
-                                    <div class="table-responsive">
-                                        <table class="table dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>@lang('lang.amount')</th>
-                                                    <th>@lang('lang.type')</th>
-                                                    <th>@lang('lang.payment_date')</th>
-                                                    <th>@lang('lang.payment_type')</th>
-                                                    <th>@lang('lang.bank_name')</th>
-                                                    <th>@lang('lang.ref_number')</th>
-                                                    <th>@lang('lang.bank_deposit_date')</th>
+                                                @endif
+                                            </td>
+                                            <td>{{ $payment->created_by_user->name }}</td>
+                                            <td>{{ $payment->created_at->format('Y/m/d h:i A') }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">@lang('lang.action')
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
+                                                        user="menu">
+                                                        @can('sale.pay.create_and_edit')
+                                                        <li>
+                                                            <a data-href="{{ route('admin.transaction.addPayment', $payment->id) }}"
+                                                                data-container=".view_modal" class="btn btn-modal"><i
+                                                                    class="dripicons-document-edit"></i>
+                                                                @lang('lang.edit')</a>
+                                                        </li>
+                                                        @endcan
+                                                        @can('sale.pay.delete')
+                                                        <li>
+                                                            <a data-href="{{ route('admin.transaction-payment.destroy', $payment->id) }}"
+                                                                data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
+                                                                class="btn text-red delete_item"><i
+                                                                    class="fa fa-trash"></i>
+                                                                @lang('lang.delete')</a>
+                                                        </li>
+                                                        @endcan
+                                                    </ul>
+                                                </div>
+                                            </td>
 
-                                                    <th>@lang('lang.files')</th>
-                                                    <th>@lang('lang.created_by')</th>
-                                                    <th width="50%">@lang('lang.date_of_creation')</th>
-                                                    <th>@lang('lang.action')</th>
+                                        </tr>
+                                        @endforeach
+                                        @endisset
+                                    </tbody>
 
-
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                @isset($payments)
-                                                    @foreach ($payments as $payment)
-                                                        <tr>
-                                                            <td>{{ @num_format($payment->amount) }}</td>
-                                                            <td><span
-                                                                    class="type-{{ $payment->type }}">{{ __('lang.type_' . $payment->type) }}</span>
-                                                            </td>
-                                                            <td>{{ @format_date($payment->paid_on) }}</td>
-                                                            <td>{{ $payment_type_array[$payment->method] }}</td>
-                                                            <td>{{ $payment->bank_name }}</td>
-                                                            <td>{{ $payment->ref_number }}</td>
-                                                            <td>
-                                                                @if (!empty($payment->bank_deposit_date && ($payment->method == 'bank_transfer' || $payment->method == 'cheque')))
-                                                                    {{ @format_date($payment->bank_deposit_date) }}
-                                                                @endif
-                                                            </td>
-
-
-                                                            <td>
-                                                                @php
-                                                                    $payment_media = $payment->getMedia(
-                                                                        'transaction_payment',
-                                                                    );
-                                                                @endphp
-                                                                @if (!empty($payment_media))
-                                                                    @foreach ($payment_media as $media)
-                                                                        <a
-                                                                            href="{{ $media->getUrl() }}">{{ $media->name }}</a>
-                                                                        <br>
-                                                                    @endforeach
-                                                                @endif
-                                                            </td>
-                                                            <td>{{ $payment->created_by_user->name }}</td>
-                                                            <td>{{ $payment->created_at->format('Y/m/d h:i A') }}</td>
-                                                            <td>
-                                                                <div class="btn-group">
-                                                                    <button type="button"
-                                                                        class="btn btn-default btn-sm dropdown-toggle"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">@lang('lang.action')
-                                                                        <span class="caret"></span>
-                                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
-                                                                        user="menu">
-                                                                        @can('sale.pay.create_and_edit')
-                                                                            <li>
-                                                                                <a data-href="{{ route('admin.transaction.addPayment', $payment->id) }}"
-                                                                                    data-container=".view_modal"
-                                                                                    class="btn btn-modal"><i
-                                                                                        class="dripicons-document-edit"></i>
-                                                                                    @lang('lang.edit')</a>
-                                                                            </li>
-                                                                        @endcan
-                                                                        @can('sale.pay.delete')
-                                                                            <li>
-                                                                                <a data-href="{{ route('admin.transaction-payment.destroy', $payment->id) }}"
-                                                                                    data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
-                                                                                    class="btn text-red delete_item"><i
-                                                                                        class="fa fa-trash"></i>
-                                                                                    @lang('lang.delete')</a>
-                                                                            </li>
-                                                                        @endcan
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-
-                                                        </tr>
-                                                    @endforeach
-                                                @endisset
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                </div>
-                                <div role="tabpanel"
-                                     class="tab-pane fade @if (request()->show == 'view_prescriptions') show active @endif"
-                                     id="view-prescriptions">
-                                    <div class="table-responsive">
-                                        <table class="table" id="prescriptions_table">
-                                            <thead>
-                                            <tr>
-                                                <th>@lang('lang.invoice_no')</th>
-                                                <th>@lang('lang.lens')</th>
-                                                <th>@lang('lang.date')</th>
-                                                <th >@lang('lang.amount')</th>
-                                                <th >@lang('lang.VA_amount')</th>
-                                                <th>@lang('lang.created_by')</th>
-                                                <th>@lang('lang.action')</th>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel"
+                            class="tab-pane fade @if (request()->show == 'view_prescriptions') show active @endif"
+                            id="view-prescriptions">
+                            <div class="table-responsive">
+                                <table class="table" id="prescriptions_table">
+                                    <thead>
+                                        <tr>
+                                            <th>@lang('lang.invoice_no')</th>
+                                            <th>@lang('lang.lens')</th>
+                                            <th>@lang('lang.date')</th>
+                                            <th>@lang('lang.amount')</th>
+                                            <th>@lang('lang.VA_amount')</th>
+                                            <th>@lang('lang.created_by')</th>
+                                            <th>@lang('lang.action')</th>
 
 
-                                            </tr>
-                                            </thead>
+                                        </tr>
+                                    </thead>
 
-                                            <tbody>
+                                    <tbody>
 
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <section class="invoice print_section print-only" id="print_section"> </section>
-    <section class="invoice print_section print-only" id="receipt_section"> </section>
+    </div>
+    </div>
+</section>
+<section class="invoice print_section print-only" id="print_section"> </section>
+<section class="invoice print_section print-only" id="receipt_section"> </section>
 @endsection
 
 @section('javascript')
-    <script>
-        $(document).on('click', '.print-invoice', function() {
+<script>
+    $(document).on('click', '.print-invoice', function() {
             $(".modal").modal("hide");
             $.ajax({
                 method: "get",
@@ -897,5 +915,5 @@
                 },
             });
         });
-    </script>
+</script>
 @endsection

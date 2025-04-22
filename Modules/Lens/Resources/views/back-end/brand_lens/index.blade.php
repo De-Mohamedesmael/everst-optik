@@ -36,7 +36,7 @@
         @endcan
 @endsection
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
         <div class="container-fluid">
             <div class="col-md-12 px-1 no-print">
                 <div class="card mb-2 mt-2">

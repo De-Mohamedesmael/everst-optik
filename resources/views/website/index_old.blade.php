@@ -180,6 +180,7 @@
         }
 
         .technicalLeftMenu {
+            overflow: scroll;
             width: 80px;
             height: 100%;
             position: fixed;
@@ -352,11 +353,16 @@
 
 
         <div class="technicalLeftMenu pixarMenu">
-            <a data-img="/assets/website/pixar.png" data-color="#4eaf30" href="#"><img src="/assets/website/pixarV.png"></a>
-            <a data-img="/assets/website/pixarUv.png" data-color="#4eaf30" href="#"><img src="/assets/website/pixarUvV.png"></a>
-            <a data-img="/assets/website/pixarBluv.png" data-color="#1a89ca" class="active" href="#"><img src="/assets/website/pixarBluvV.png"></a>
-            <a data-img="/assets/website/pixarAqua.png" data-color="#00abc6" href="#"><img src="/assets/website/pixarAquaV.png"></a>
-            <a data-img="/assets/website/pixarDrive.png" data-color="#eb639f" href="#"><img src="/assets/website/pixarDriveV.png"></a>
+            <a data-img="/assets/website/pixar.png" data-color="#4eaf30" href="#"><img
+                    src="/assets/website/pixarV.png"></a>
+            <a data-img="/assets/website/pixarUv.png" data-color="#4eaf30" href="#"><img
+                    src="/assets/website/pixarUvV.png"></a>
+            <a data-img="/assets/website/pixarBluv.png" data-color="#1a89ca" class="active" href="#"><img
+                    src="/assets/website/pixarBluvV.png"></a>
+            <a data-img="/assets/website/pixarAqua.png" data-color="#00abc6" href="#"><img
+                    src="/assets/website/pixarAquaV.png"></a>
+            <a data-img="/assets/website/pixarDrive.png" data-color="#eb639f" href="#"><img
+                    src="/assets/website/pixarDriveV.png"></a>
             <a data-img="/assets/website/slc.png" data-color="#215395" href="#"><img src="/assets/website/slcV.png"></a>
         </div>
 

@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="modal-header d-flex justify-content-between py-2 flex-row ">
             <h5 class="modal-title" id="edit">{{translate('edit_brand')}}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -16,7 +16,7 @@
 
         <div
             class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif align-items-center">
-            <div class="form-group col-md-6 px-5">
+            <div class="form-group col-md-12 px-5">
                 {!! Form::label('name', __('lang.name') . '*', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
@@ -27,7 +27,7 @@
                 ]) !!}
             </div>
 
-            <div class="form-group col-md-6 px-5 d-flex flex-column mb-2">
+            <div class="form-group col-md-12 px-5 d-flex flex-column mb-2">
                 <label
                     class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"
                     for="projectinput2"> {{ __('lang.image') }}</label>
@@ -74,7 +74,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editBrandModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>

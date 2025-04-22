@@ -7,14 +7,14 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #476762" href="{{ route('admin.add-stock.index') }}">/
+            style="text-decoration: none;color: #476762" href="{{ route('admin.add-stock.index') }}">
             {{translate('view_all_added_stocks')}}</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
         @lang('lang.edit_stock')</li>
 @endsection
 @section('content')
-    <section class="forms py-0">
+    <section class="forms px-3 py-1">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 px-1">
@@ -245,9 +245,12 @@
                                                         </h6>
                                                     </td>
                                                     <td>
-                                                        <div class="i-checks"><input name="stock_pricechange"
+                                                        <div class="i-checks toggle-pill-color flex-col-centered">
+                                                            <input name="stock_pricechange"
                                                                 id="active" type="checkbox" class=""
-                                                                value="1"></div>
+                                                                value="1">
+                                                            <label for="active"></label>
+                                                            </div>
                                                     </td>
                                                     <td>
                                                         <button type="button"

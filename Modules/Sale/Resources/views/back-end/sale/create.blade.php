@@ -279,12 +279,16 @@
                                 </div>
 
                                 <div class="col-md-12 hide">
-                                    <div class="i-checks">
+                                    <div class="i-checks toggle-pill-color flex-col-centered">
                                         <input id="print_the_transaction" name="print_the_transaction" type="checkbox"
                                             checked value="1" class="form-control-custom">
                                         <label
                                             class="@if (app()->isLocale('ar')) mb-1 label-ar @else mb-1 label-en @endif"
-                                            for="print_the_transaction"><strong>@lang('lang.print_the_transaction')</strong></label>
+                                            for="print_the_transaction">
+                                        </label>
+                                        <span>
+                                            <strong>@lang('lang.print_the_transaction')</strong>
+                                        </span>
                                     </div>
                                 </div>
 

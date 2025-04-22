@@ -12,7 +12,7 @@ __quantity_precision = $("input#__quantity_precision").val();
 
 $(document).ready(function () {
     $(".time_picker").datetimepicker({
-        format: moment_time_format,
+        format: 'dd-mm-yyyy',
         icons: {
             up: "fa fa-angle-up",
             down: "fa fa-angle-down",
@@ -23,12 +23,15 @@ $(document).ready(function () {
 
     $("input[name='start_date']").datepicker({
         language: __language,
-        format: "yyyy-mm-dd",
+
+        format: 'dd-mm-yyyy',
+
         todayHighlight: true,
     });
     $("input[name='end_date']").datepicker({
         language: __language,
-        format: "yyyy-mm-dd",
+
+        format: 'dd-mm-yyyy',
         todayHighlight: true,
     });
     $("input[name='start_date']").attr("autocomplete", "off");
@@ -36,7 +39,10 @@ $(document).ready(function () {
 
     $(".datepicker").datepicker({
         language: __language,
+        format: "DD/MM/YYYY",
         todayHighlight: true,
+        format: 'dd-mm-yyyy',
+
     });
 });
 
@@ -73,7 +79,7 @@ function __currency_trans_from_en(
     if (!isNaN(input) && input > 0) {
         new_input = Math.round(input * Math.pow(10, __quantity_precision)) / Math.pow(10, __quantity_precision);
         precision = (new_input % 1 !== 0) ? new_input.toString().split('.')[1].length : 2;
-    }else{
+    } else {
         precision = 2;
     }
     return accounting.formatMoney(
@@ -256,12 +262,12 @@ if (language == "en") {
 } else {
     dt_lang_url = base_path + "/js/datatables_lang/en.json";
 }
-var print_title="";
-if($('.print-title').length){
-    print_title=$('.print-title').text();
-    }else{
-        print_title=$('title').text();
-    }
+var print_title = "";
+if ($('.print-title').length) {
+    print_title = $('.print-title').text();
+} else {
+    print_title = $('title').text();
+}
 var buttons = [
     {
         extend: "print",
@@ -305,14 +311,14 @@ var buttons = [
             data = document.getElementsByClassName("dataTable")[0].innerHTML;
             // Done but error 414 request url is too larg solved by changing get to post
             let title = $('title').text()
-            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
             // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 url: "/pdf",
                 type: 'post',
                 // dataType: "json",
-                data: {'data': data, 'title': title},
-                xhrFields: {responseType: 'blob'},
+                data: { 'data': data, 'title': title },
+                xhrFields: { responseType: 'blob' },
                 success: function (response, status, xhr) {
 
                     var filename = "";
@@ -325,7 +331,7 @@ var buttons = [
                     }
                     var linkelem = document.createElement('a');
                     try {
-                        var blob = new Blob([response], {type: 'application/octet-stream'});
+                        var blob = new Blob([response], { type: 'application/octet-stream' });
 
                         if (typeof window.navigator.msSaveBlob !== 'undefined') {
                             //   IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
@@ -390,8 +396,8 @@ var buttons = [
         columns: ":gt(0)",
     },
 ];
-if($('.print-title-hint').text()=="product_report"){
-var button= [
+if ($('.print-title-hint').text() == "product_report") {
+    var button = [
         {
             extend: 'print',
             text: '<i class="fas fa-print"></i>',
@@ -400,26 +406,26 @@ var button= [
             footer: true,
             title: print_title,
             exportOptions: {
-                columns: [0, 7, 8 , 9]
+                columns: [0, 7, 8, 9]
             }
         }
     ];
-buttons.push(button);
+    buttons.push(button);
 }
-if($('.print-title-hint').text()=="sale_report"){
-    var button= [
-            {
-                extend: 'print',
-                text: '<i class="fas fa-print"></i>',
-                charset: 'UTF-8',
-                bom: true,
-                footer: true,
-                title: print_title,
-                exportOptions: {
-                    columns: [0, 1, 3 , 10,12]
-                }
+if ($('.print-title-hint').text() == "sale_report") {
+    var button = [
+        {
+            extend: 'print',
+            text: '<i class="fas fa-print"></i>',
+            charset: 'UTF-8',
+            bom: true,
+            footer: true,
+            title: print_title,
+            exportOptions: {
+                columns: [0, 1, 3, 10, 12]
             }
-        ];
+        }
+    ];
     buttons.push(button);
 }
 var datatable_params = {
@@ -463,7 +469,7 @@ var datatable_params = {
         };
 
         this.api()
-            .columns(".sum", {page: "current"})
+            .columns(".sum", { page: "current" })
             .every(function () {
                 var column = this;
                 if (column.data().count()) {
