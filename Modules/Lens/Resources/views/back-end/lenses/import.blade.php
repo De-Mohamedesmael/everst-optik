@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@section('title', __('lang.import_products'))
+@extends('back-end.layouts.app')
+@section('title', __('lang.import_lenses'))
 
 @section('content')
 
@@ -8,10 +8,10 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <h4>@lang('lang.import_products')</h4>
+                    <h4>@lang('lang.import_lenses')</h4>
                 </div>
                 <div class="card-body">
-                    {!! Form::open(['url' =>  route('admin.products.saveImport'), 'method' => 'post', 'files' =>
+                    {!! Form::open(['url' =>  route('admin.lenses.saveImport'), 'method' => 'post', 'files' =>
                     true, 'class' => 'pos-form', 'id' => 'import_sale_form']) !!}
                     <div class="row">
                         <div class="col-md-12">
@@ -25,7 +25,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <a class="btn btn-block btn-primary"
-                                            href="{{asset('sample_files/product_import.xlsx')}}"><i
+                                            href="{{asset('sample_files/lenses_import.xlsx')}}"><i
                                                 class="fa fa-download"></i>@lang('lang.download_sample_file')</a>
                                     </div>
                                 </div>

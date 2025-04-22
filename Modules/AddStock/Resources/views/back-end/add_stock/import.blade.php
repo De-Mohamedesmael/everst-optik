@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.import_add_stock'))
 @section('style')
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
@@ -38,20 +38,7 @@
                                         ]) !!}
                                     </div>
                                 </div>
-                                <div class="col-md-3 px-5">
-                                    <div class="form-group">
-                                        {!! Form::label('supplier_id', __('lang.supplier') . '*', [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::select('supplier_id', $suppliers, $suppliers, [
-                                            'class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true',
-                                            'required',
-                                            'style' => 'width: 80%',
-                                            'placeholder' => __('lang.please_select'),
-                                        ]) !!}
-                                    </div>
-                                </div>
+
 
                                 <div class="col-md-3 px-5">
                                     <div class="form-group">
@@ -84,14 +71,14 @@
                                     <div class="form-group">
                                         <input type="hidden" name="exchange_rate" id="exchange_rate" value="1">
                                         <input type="hidden" name="default_currency_id" id="default_currency_id"
-                                            value="{{ !empty(App\Models\System::getProperty('currency')) ? App\Models\System::getProperty('currency') : '' }}">
+                                            value="{{ !empty(Modules\Setting\Entities\System::getProperty('currency')) ? Modules\Setting\Entities\System::getProperty('currency') : '' }}">
                                         {!! Form::label('paying_currency_id', __('lang.paying_currency'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                         ]) !!}
                                         {!! Form::select(
                                             'paying_currency_id',
                                             $exchange_rate_currencies,
-                                            !empty(App\Models\System::getProperty('currency')) ? App\Models\System::getProperty('currency') : null,
+                                            !empty(Modules\Setting\Entities\System::getProperty('currency')) ? Modules\Setting\Entities\System::getProperty('currency') : null,
                                             ['class' => 'form-control selectpicker', 'data-live-search' => 'true', 'required'],
                                         ) !!}
                                     </div>
@@ -205,7 +192,7 @@
                                         {!! Form::label('source_of_payment', __('lang.source_of_payment'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                         ]) !!}
-                                        {!! Form::select('source_id', $users, null, [
+                                        {!! Form::select('source_id', $admins, null, [
                                             'class' => 'selectpicker form-control',
                                             'data-live-search' => 'true',
                                             'style' => 'width: 80%',
@@ -231,7 +218,7 @@
                                     </div>
                                 </div>
 
-                                @include('back-end.products.add_stock.partials.payment_form')
+                                @include('addstock::back-end.add_stock.partials.payment_form')
 
                                 <div class="col-md-3 px-5 due_amount_div hide">
                                     <label for="due_amount"
@@ -300,7 +287,7 @@
                     <div class="row my-2 justify-content-center align-items-center">
                         <div class="col-md-2">
                             <button type="submit" name="submit" id="print" value="save"
-                                class="btn py-1  submit-btn submit">@lang('lang.save')</button>
+                                class="btn py-1  submit-btn submit btn btn-block btn-primary">@lang('lang.save')</button>
                         </div>
                     </div>
 

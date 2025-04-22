@@ -20,10 +20,6 @@ $(document).ready(function () {
             next: "fa fa-angle-right",
         },
     });
-
- new-design
-
-
     $(document).ready(function () {
 
         $("input[name='start_date']").datepicker({
