@@ -32,8 +32,7 @@
 
                             <div class="col-sm-6">
                                 <label for="fname">@lang('lang.name'):*</label>
-                                <input type="text" class="form-control" name="name" value="{{ $employee->name }}" @if
-                                    ($employee->name == 'Admin') readonly @endif id="name" required
+                                <input type="text" class="form-control" name="name" value="{{ $employee->name }}" @if($employee->name == 'Admin') readonly @endif id="name" required
                                 placeholder="Name">
                             </div>
                             <div class="col-sm-6">
@@ -125,8 +124,7 @@
                             <div class="col-sm-6">
                                 <div class="i-checks">
                                     <input id="number_of_leaves{{ $number_of_leave->id }}"
-                                        name="number_of_leaves[{{ $number_of_leave->id }}][enabled]" @if
-                                        ($number_of_leave->enabled == 1) checked @endif type="checkbox" value="1"
+                                        name="number_of_leaves[{{ $number_of_leave->id }}][enabled]" @if($number_of_leave->enabled == 1) checked @endif type="checkbox" value="1"
                                     class="form-control-custom">
                                     <label for="number_of_leaves{{ $number_of_leave->id }}"><strong>{{
                                             $number_of_leave->name }}</strong></label>
@@ -166,8 +164,7 @@
                                             <td>
                                                 <div class="form-group">
                                                     <div class="i-checks">
-                                                        <input id="working_day_per_week{{ $key }}" @if
-                                                            (!empty($employee->working_day_per_week[$key])) checked
+                                                        <input id="working_day_per_week{{ $key }}" @if(!empty($employee->working_day_per_week[$key])) checked
                                                         @endif
                                                         name="working_day_per_week[{{ $key }}]"
                                                         type="checkbox" value="1"
