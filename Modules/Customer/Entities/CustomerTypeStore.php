@@ -4,6 +4,7 @@ namespace Modules\Customer\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Setting\Entities\Store;
 
 class CustomerTypeStore extends Model
 {

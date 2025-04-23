@@ -296,6 +296,7 @@
                                                             class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                             data-rl="Right" data-signfor="Right_Far_SPH"
                                                             id="Right_Far_SPHDeg" disabled>
+                                                        <option value="" @if($data_prescription->Lens->Right->Far->SPHDeg=='') selected @endif></option>
                                                         <option value="+" @if($data_prescription->Lens->Right->Far->SPHDeg=='+') selected @endif>+</option>
                                                         <option value="-"@if($data_prescription->Lens->Right->Far->SPHDeg=='-') selected @endif>-</option>
                                                     </select>
@@ -322,6 +323,7 @@
                                                             class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                             data-signfor="Right_Far_CYL" data-rl="Right"
                                                             id="Right_Far_CYLDeg" disabled>
+                                                        <option value="" @if($data_prescription->Lens->Right->Far->CYLDeg=='') selected @endif></option>
                                                         <option value="+" @if($data_prescription->Lens->Right->Far->CYLDeg=='+') selected @endif>+</option>
                                                         <option value="-" @if($data_prescription->Lens->Right->Far->CYLDeg=='-') selected @endif>-</option>
                                                     </select>
@@ -375,8 +377,9 @@
                                                             data-signfor="Right_Near_SPH"
                                                             data-rl="Right"
                                                             id="Right_Near_SPHDeg" disabled>
-                                                        <option value="+"@if($data_prescription->Lens->Right->Near->SPHDeg=='+') selected @endif>+</option>
-                                                        <option value="-"@if($data_prescription->Lens->Right->Near->SPHDeg=='-') selected @endif>-</option>
+                                                        <option value="" @if($data_prescription->Lens->Right->Near->SPHDeg=='+') selected @endif></option>
+                                                        <option value="+" @if($data_prescription->Lens->Right->Near->SPHDeg=='+') selected @endif>+</option>
+                                                        <option value="-" @if($data_prescription->Lens->Right->Near->SPHDeg=='-') selected @endif>-</option>
                                                     </select>
                                                 </td>
                                                 <td>
@@ -401,6 +404,7 @@
                                                             class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                             data-rl="Right" data-signfor="Right_Near_CYL"
                                                             id="Right_Near_CYLDeg" disabled>
+                                                        <option value=""@if($data_prescription->Lens->Right->Near->CYLDeg=='') selected @endif></option>
                                                         <option value="+"@if($data_prescription->Lens->Right->Near->CYLDeg=='+') selected @endif>+</option>
                                                         <option value="-" @if($data_prescription->Lens->Right->Near->CYLDeg=='-') selected @endif>-</option>
 
@@ -528,6 +532,7 @@
                                                                 class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                 id="Left_Far_SPHDeg" data-rl="Left"
                                                                 data-signfor="Left_Far_SPH" disabled="">
+                                                            <option value="" @if($data_prescription->Lens->Left->Near->CYLDeg=='') selected @endif></option>
                                                             <option value="+" @if($data_prescription->Lens->Left->Near->CYLDeg=='+') selected @endif>+</option>
                                                             <option value="-" @if($data_prescription->Lens->Left->Near->CYLDeg=='-') selected @endif>-</option>
 
@@ -552,6 +557,7 @@
                                                                 class="form-control lensPlusMinusSelect CYLPlusMinusSelect input-block-level"
                                                                 style="width: 100%" data-rl="Left"
                                                                 id="Left_Far_CYLDeg" disabled="">
+                                                            <option value="" @if($data_prescription->Lens->Left->Far->CYLDeg=='+') selected @endif></option>
                                                             <option value="+" @if($data_prescription->Lens->Left->Far->CYLDeg=='+') selected @endif>+</option>
                                                             <option value="-" @if($data_prescription->Lens->Left->Far->CYLDeg=='-') selected @endif>-</option>
 
@@ -600,6 +606,7 @@
                                                                 class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                 id="Left_Near_SPHDeg" data-rl="Left"
                                                                 data-signfor="Left_Near_SPH" disabled="">
+                                                            <option value="" @if($data_prescription->Lens->Left->Near->SPHDeg == '') selected @endif></option>
                                                             <option value="+" @if($data_prescription->Lens->Left->Near->SPHDeg == '+') selected @endif>+</option>
                                                             <option value="-" @if($data_prescription->Lens->Left->Near->SPHDeg == '-') selected @endif>-</option>
 
@@ -623,6 +630,7 @@
                                                                 class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                                 data-rl="Left" data-signfor="Left_Near_CYL"
                                                                 id="Left_Near_CYLDeg" disabled="">
+                                                            <option value="" @if($data_prescription->Lens->Left->Near->CYLDeg=='') selected @endif></option>
                                                             <option value="+" @if($data_prescription->Lens->Left->Near->CYLDeg=='+') selected @endif>+</option>
                                                             <option value="-" @if($data_prescription->Lens->Left->Near->CYLDeg=='-') selected @endif>-</option>
 

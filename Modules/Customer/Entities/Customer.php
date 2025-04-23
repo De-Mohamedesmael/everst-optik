@@ -6,6 +6,7 @@ use App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Modules\Hr\Entities\Employee;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -62,38 +63,15 @@ class Customer extends Model implements HasMedia
 
     public static function getCustomerArrayWithMobile()
     {
-        $customers = Customer::select('id', 'name', 'mobile_number')->get();
+        $customers = Customer::select('id', 'name', 'id_number')->get();
         $customer_array = [];
         foreach ($customers as $customer) {
-            $customer_array[$customer->id] = $customer->name . ' ' . $customer->mobile_number;
+            $customer_array[$customer->id] = $customer->id_number . ' ' . $customer->name;
         }
 
         return $customer_array;
     }
 
-    public static function referred_by_admins($id)
-    {
-        $referred_by_admins = [];
-        $referreds = Referred::where('customer_id', $id)->get();
-        foreach ($referreds as $referred) {
-            foreach ($referred->referred_by as $referred_by) {
-                if ($referred->referred_type == 'customer') {
-                    $customer = Customer::where('id', $referred_by)->first();
-                    $referred_by_admins[] = $customer->name ?? '';
-                }
-                if ($referred->referred_type == 'employee') {
-                    $employee = Employee::where('id', $referred_by)->first();
-                    $referred_by_admins[] = $employee->employee_name ?? '';
-                }
-                if ($referred->referred_type == 'supplier') {
-                    $supplier = Supplier::where('id', $referred_by)->first();
-                    $referred_by_admins[] = $supplier->name ?? '';
-                }
-            }
-        }
-
-        return implode(', ', $referred_by_admins);
-    }
 
     public static function getDropdownGender()
     {

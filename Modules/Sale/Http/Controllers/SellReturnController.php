@@ -455,7 +455,7 @@ class SellReturnController extends Controller
                         $line->save();
                         $product = Product::find($line->product_id);
                         if (!$product->is_service) {
-                            $this->productUtil->updateProductQuantityStore($line->product_id, $line->variation_id, $sell_return->store_id, $sell_line['quantity'], $old_quantity);
+                            $this->productUtil->updateProductQuantityStore($line->product_id, $sell_return->store_id, $sell_line['quantity'], $old_quantity);
                         }
                     }
                 }

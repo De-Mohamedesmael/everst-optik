@@ -129,9 +129,9 @@
                                         </div>
                                         <div class="info-row mb-2 d-flex justify-content-start align-items-center"
                                             style="background: #476762;border-radius: 8px;padding: 5px;color: white;width: 48%;">
-                                            <b>@lang('lang.age'):</b> <span style="font-weight: 600;font-size: 20px"
+                                            <b>@lang('lang.id_number'):</b> <span style="font-weight: 600;font-size: 20px"
                                                 class="customer_email_span">{{
-                                                $customer->age ?? '' }}</span>
+                                                $customer->id_number ?? '' }}</span>
                                         </div>
                                         <div class="info-row mb-2 d-flex justify-content-start align-items-center"
                                             style="background: #476762;border-radius: 8px;padding: 5px;color: white;width: 48%;">

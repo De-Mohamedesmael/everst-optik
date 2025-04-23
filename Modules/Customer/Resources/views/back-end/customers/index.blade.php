@@ -146,9 +146,9 @@
                                         <tr>
                                             <th>@lang('lang.customer_type')</th>
                                             <th>@lang('lang.photo')</th>
+                                            <th>@lang('lang.id_number')</th>
                                             <th>@lang('lang.name')</th>
                                             <th>@lang('lang.mobile_number')</th>
-                                            <th>@lang('lang.age')</th>
                                             <th>@lang('lang.gender')</th>
                                             <th>@lang('lang.address')</th>
                                             <th class="sum">@lang('lang.balance')</th>
@@ -248,6 +248,10 @@
                         name: 'image'
                     },
                     {
+                        data: 'id_number',
+                        name: 'customers.id_number'
+                    },
+                    {
                         data: 'customer_name',
                         name: 'customers.name'
                     },
@@ -255,10 +259,7 @@
                         data: 'mobile_number',
                         name: 'customers.mobile_number'
                     },
-                    {
-                        data: 'age',
-                        name: 'customers.age'
-                    },
+
                     {
                         data: 'gender',
                         name: 'gender'
