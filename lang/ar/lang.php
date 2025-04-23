@@ -1335,4 +1335,5 @@
   'add_lens_information' => 'Add lens information',
   'lens_image' => 'Lens image',
   'lens_information' => 'Lens information',
+  'Female' => 'Female',
 );

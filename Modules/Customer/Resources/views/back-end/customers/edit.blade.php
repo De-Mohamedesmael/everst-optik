@@ -48,7 +48,15 @@
                                     ]) !!}
                                 </div>
                             </div>
-
+                            <div class="col-md-4 mb-2">
+                                {!! Form::label('id_number', translate('id_number') , [
+                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                {!! Form::number('id_number', $customer->id_number , [
+                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                'placeholder' => __('lang.id_number'),
+                                ]) !!}
+                            </div>
                             <div class="col-md-4 mb-2">
                                 <div class="form-group">
                                     {!! Form::label('name', __('lang.name'), [
@@ -81,15 +89,7 @@
                                     ]) !!}
                                 </div>
                             </div>
-                            <div class="col-md-2 mb-2">
-                                {!! Form::label('age', __('lang.age') , [
-                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                ]) !!}
-                                {!! Form::number('age', $customer->age , [
-                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                'placeholder' => __('lang.age'),
-                                ]) !!}
-                            </div>
+
                             <div class="col-md-2 mb-2">
                                 {!! Form::label('gender', translate('gender') . '*', [
                                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',

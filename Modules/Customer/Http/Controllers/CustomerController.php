@@ -835,7 +835,7 @@ class CustomerController extends Controller
             $html = '<option value="">Please Select</option>';
         }
         foreach ($customer as $value) {
-            $html .= '<option value="' . $value->id . '">' . $value->name  . ' ' . $value->mobile_number . '</option>';
+            $html .= '<option value="' . $value->id . '">' . $value->id_number . '</option>';
         }
 
         return $html;

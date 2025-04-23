@@ -637,6 +637,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     'style' => 'width: 80%',
                                                                     'data-actions-box' => 'true',
                                                                     'id' => 'specific_diameter_input',
+                                                                    'autocomplete'=>"off",
                                                                     ]) !!}
                                                                 </div>
                                                             </div>
@@ -947,7 +948,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                             checked=""
                                                                             name="product[Lens][Right][isCheck]"
                                                                             value="1" data-skin="square"
-                                                                            data-color="orange" data-rl="Right">
+                                                                            data-color="orange" data-rl="Right" autocomplete="off">
 
                                                                         <label class="inline icheck-label "
                                                                             for="RightLens">
@@ -977,6 +978,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                     data-rl="Right" data-signfor="Right_Far_SPH"
                                                                     id="Right_Far_SPHDeg">
+                                                                    <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-">-</option>
                                                                 </select>
@@ -989,7 +991,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensVal lensSPH farSPH number-input"
                                                                     data-rl="Right" required aria-required="true"
-                                                                    step="0.25" min="-30" max="30">
+                                                                    step="0.25" min="-30" max="30" autocomplete="off">
 
                                                             </td>
                                                             <td>
@@ -997,6 +999,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                                     data-signfor="Right_Far_CYL" data-rl="Right"
                                                                     id="Right_Far_CYLDeg">
+                                                                    <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-" selected="selected">-</option>
                                                                 </select>
@@ -1009,7 +1012,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensVal lensCYL farCYL number-input"
                                                                     data-rl="Right" required aria-required="true"
-                                                                    step="0.25" min="-15" max="15">
+                                                                    step="0.25" min="-15" max="15" autocomplete="off">
                                                             </td>
                                                             <td>
                                                                 <input type="number"
@@ -1017,7 +1020,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     data-reqval="farAX" value="" id="Right_Far_Axis"
                                                                     placeholder=" "
                                                                     class="form-control input-block-level input-sm lensAxis farAX  number-input"
-                                                                    data-rl="Right" step="1" min="0" max="180">
+                                                                    data-rl="Right" step="1" min="0" max="180" autocomplete="off">
                                                             </td>
 
                                                         </tr>
@@ -1037,6 +1040,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                     data-signfor="Right_Near_SPH" data-rl="Right"
                                                                     id="Right_Near_SPHDeg">
+                                                                    <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-">-</option>
                                                                 </select>
@@ -1050,13 +1054,14 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensVal lensSPH  number-input"
                                                                     data-rl="Right" required aria-required="true"
-                                                                    step="0.25" min="-30" max="30">
+                                                                    step="0.25" min="-30" max="30" autocomplete="off">
                                                             </td>
                                                             <td>
                                                                 <select name="product[Lens][Right][Near][CYLDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                                     data-rl="Right" data-signfor="Right_Near_CYL"
                                                                     id="Right_Near_CYLDeg">
+                                                                    <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-" selected="selected">-</option>
 
@@ -1069,7 +1074,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     data-reqval="nearCYL" value="" id="Right_Near_CYL"
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensVal lensCYL  number-input"
-                                                                    data-rl="Right" step="0.25" min="-15" max="15">
+                                                                    data-rl="Right" step="0.25" min="-15" max="15" autocomplete="off">
 
                                                             </td>
                                                             <td>
@@ -1078,7 +1083,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     data-reqval="nearAX" value="" id="Right_Near_Axis"
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensAxis nearAX  number-input"
-                                                                    data-rl="Right" step="1" min="0" max="180">
+                                                                    data-rl="Right" step="1" min="0" max="180" autocomplete="off">
                                                             </td>
 
                                                         </tr>
@@ -1099,8 +1104,8 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     data-reqval="addVal" value="" id="Right_Addition"
                                                                     placeholder=""
                                                                     class="form-control input-block-level lensAddition lensVal"
-                                                                    data-rl="Right" required="" aria-required="true"
-                                                                    disabled>
+                                                                    data-rl="Right" required="" aria-required="true" autocomplete="off"
+                                                                    >
                                                             </td>
                                                             <td></td>
 
@@ -1110,14 +1115,14 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     data-reqval="Distance" value="" id="Right_Distance"
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensAxis nearAX  number-input"
-                                                                    data-rl="Right" step="o.50" min="o.50" max="45">
+                                                                    data-rl="Right" step="o.50" min="o.50" max="45" autocomplete="off">
                                                             </td>
                                                             <td>
                                                                 <input type="number" name="product[Lens][Right][Height]"
                                                                     data-reqval="Height" value="" id="Right_Height"
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensAxis nearAX  number-input"
-                                                                    data-rl="Right" step="o.25" min="o.25" max="45">
+                                                                    data-rl="Right" step="o.25" min="o.25" max="45" autocomplete="off">
                                                             </td>
 
 
@@ -1170,7 +1175,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                                     value="1" data-skin="square"
                                                                                     data-color="orange"
                                                                                     data-original-title="" title=""
-                                                                                    disabled="">
+                                                                                    disabled="" >
                                                                                 <label class="inline icheck-label "
                                                                                     for="sameToRight">
                                                                                     {{translate('Left glass is the same
@@ -1205,6 +1210,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                     id="Left_Far_SPHDeg" data-rl="Left"
                                                                     data-signfor="Left_Far_SPH" disabled="">
+                                                                    <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-">-</option>
 
@@ -1218,13 +1224,14 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensVal lensSPH farSPH number-input"
                                                                     data-rl="Left" required="" aria-required="true"
-                                                                    disabled="" step="0.25" min="-30" max="30">
+                                                                    disabled="" step="0.25" min="-30" max="30" autocomplete="off">
                                                             </td>
                                                             <td>
                                                                 <select name="product[Lens][Left][Far][CYLDeg]"
                                                                     class="form-control lensPlusMinusSelect CYLPlusMinusSelect input-block-level"
                                                                     style="width: 100%" data-rl="Left"
                                                                     id="Left_Far_CYLDeg" disabled="">
+                                                                    <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-" selected="selected">-</option>
 
@@ -1238,7 +1245,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level input-sm lensVal lensCYL farCYL number-input"
                                                                     data-rl="Left" disabled="" step="0.25" min="-15"
-                                                                    max="15">
+                                                                    max="15" autocomplete="off">
                                                             </td>
                                                             <td>
                                                                 <input type="number"
@@ -1247,7 +1254,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level input-sm lensAxis farAX number-input"
                                                                     data-rl="Left" disabled="" step="1" min="0"
-                                                                    max="180">
+                                                                    max="180" autocomplete="off">
                                                             </td>
 
                                                         </tr>
@@ -1267,6 +1274,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                     id="Left_Near_SPHDeg" data-rl="Left"
                                                                     data-signfor="Left_Near_SPH" disabled="">
+                                                                    <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-">-</option>
 
@@ -1280,13 +1288,14 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensVal lensSPH  number-input"
                                                                     data-rl="Left" disabled="" step="0.25" min="-30"
-                                                                    max="30">
+                                                                    max="30" autocomplete="off">
                                                             </td>
                                                             <td>
                                                                 <select name="product[Lens][Left][Near][CYLDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                                     data-rl="Left" data-signfor="Left_Near_CYL"
                                                                     id="Left_Near_CYLDeg" disabled="">
+                                                                    <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-" selected="selected">-</option>
 
@@ -1300,7 +1309,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensVal lensCYL number-input"
                                                                     data-rl="Left" disabled="" step="0.25" min="-15"
-                                                                    max="15">
+                                                                    max="15" autocomplete="off">
                                                             </td>
                                                             <td>
                                                                 <input type="number"
@@ -1309,7 +1318,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensAxis nearAX number-input"
                                                                     data-rl="Left" disabled="" step="1" min="0"
-                                                                    max="180">
+                                                                    max="180" autocomplete="off">
                                                             </td>
 
                                                         </tr>
@@ -1331,7 +1340,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=""
                                                                     class="form-control input-block-level lensAddition lensVal number-input"
                                                                     data-rl="Left" required="" aria-required="true"
-                                                                    disabled="">
+                                                                       disabled="" autocomplete="off">
                                                             </td>
                                                             <td></td>
 
@@ -1342,7 +1351,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensAxis nearAX  number-input"
                                                                     data-rl="Left" step="o.50" min="o.50" max="45"
-                                                                    disabled="">
+                                                                    disabled="" autocomplete="off">
                                                             </td>
                                                             <td>
                                                                 <input type="number" name="product[Lens][Left][Height]"
@@ -1350,7 +1359,8 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensAxis nearAX  number-input"
                                                                     data-rl="Left" step="o.25" min="o.25" max="45"
-                                                                    disabled="">
+                                                                    disabled=""
+                                                                       autocomplete="off">
                                                             </td>
 
 
@@ -1428,9 +1438,6 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                         if(Lens.Right) {
                             if (Lens.Right.isCheck === '1') {
                                 $("#RightLens").prop('checked', true);
-                                let Right_Addition = 0;
-                                if (Lens.Right.Far) {
-                                    Right_Addition += parseFloat(Lens.Right.Far.SPH);
                                     $("#Right_Far_CYL").val(Lens.Right.Far.CYL);
                                     $("#Right_Far_CYLDeg").val(Lens.Right.Far.CYLDeg).change();
                                     $("#Right_Far_SPH").val(Lens.Right.Far.SPH);
@@ -1439,30 +1446,26 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                 }
 
                                 if (Lens.Right.Near) {
-                                    if(Lens.Right.Near.SPH !== ''  && Lens.Right.Near.SPH){
-                                        Right_Addition -= parseFloat(Lens.Right.Near.SPH);
-                                    }
+
                                     $("#Right_Near_CYL").val(Lens.Right.Near.CYL);
                                     $("#Right_Near_CYLDeg").val(Lens.Right.Near.CYLDeg).change();
                                     $("#Right_Near_SPH").val(Lens.Right.Near.SPH);
                                     $("#Right_Near_SPHDeg").val(Lens.Right.Near.SPHDeg).change();
                                     $("#Right_Near_Axis").val(Lens.Right.Near.Axis);
                                 }
-                                console.log(Right_Addition)
-                                $("#Right_Addition").val(Right_Addition);
+                                $("#Right_Addition").val(Lens.Right.Addition);
                                 $("#Right_Distance").val(Lens.Right.Distance);
                                 $("#Right_Height").val(Lens.Right.Height);
 
 
 
-                            }
+
                         }
                         if(Lens.Left) {
 
                             if(Lens.Left.isCheck === '1'){
                                 $("#LeftLens").prop('checked',true);
                                 LeftLensChecked();
-                                let Left_Addition =0;
 
                                 if(Lens.Left.sameToRight){
                                     $("#sameToRight").prop('checked',true);
@@ -1470,7 +1473,6 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
 
                                 }
                                 if(Lens.Left.Far){
-                                    Left_Addition+=parseFloat( Lens.Left.Far.SPH);
                                     $("#Left_Far_CYL").val(Lens.Left.Far.CYL);
                                     $("#Left_Far_CYLDeg").val(Lens.Left.Far.CYLDeg).change();
                                     $("#Left_Far_SPH").val(Lens.Left.Far.SPH);
@@ -1479,7 +1481,6 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                 }
 
                                 if(Lens.Left.Near){
-                                    Left_Addition-=parseFloat( Lens.Left.Near.SPH);
 
                                     $("#Left_Near_CYL").val(Lens.Left.Near.CYL);
                                     $("#Left_Near_CYLDeg").val(Lens.Left.Near.CYLDeg).change();
@@ -1487,7 +1488,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                     $("#Left_Near_SPHDeg").val(Lens.Left.Near.SPHDeg).change();
                                     $("#Left_Near_Axis").val(Lens.Left.Near.Axis);
                                 }
-                                $("#Left_Addition").val(Left_Addition);
+                                $("#Left_Addition").val(Lens.Left.Addition);
                                 $("#Left_Distance").val(Lens.Left.Distance);
                                 $("#Left_Height").val(Lens.Left.Height);
                             }else{
@@ -1570,15 +1571,38 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         const Far_CYL = $('#Right_Far_CYL').val();
         $('#Right_Near_CYL').val(Far_CYL);
     });
-    $(document).on("change", "#Right_Far_SPH,#Right_Near_SPH", function (e) {
+    $(document).on("change", "#Right_Far_SPH,#Right_Near_SPH,#Right_Addition", function (e) {
         const Far_SPH = $('#Right_Far_SPH').val();
         const Near_SPH = $('#Right_Near_SPH').val();
-        $('#Right_Addition').val(Far_SPH - Near_SPH);
+        const Right_Addition = $('#Right_Addition').val();
+        console.log(Right_Addition,Near_SPH,Far_SPH);
+        if(Far_SPH !== '' && Near_SPH !== '' ){
+            $('#Right_Addition').val(Near_SPH - Far_SPH);
+        }else if(Right_Addition !== '' && Near_SPH !== ''){
+            $('#Right_Far_SPH').val(Near_SPH - Right_Addition);
+        }else if(Right_Addition !== '' && Far_SPH !== ''){
+            $('#Right_Near_SPH').val( parseFloat(Far_SPH) +  parseFloat(Right_Addition));
+        }else{
+
+        }
+
+
     });
-    $(document).on("change", "#Left_Far_SPH,#Left_Near_SPH", function (e) {
+
+    $(document).on("change", "#Left_Far_SPH,#Left_Near_SPH,#Left_Addition", function (e) {
         const Far_SPH = $('#Left_Far_SPH').val();
         const Near_SPH = $('#Left_Near_SPH').val();
-        $('#Left_Addition').val(Far_SPH - Near_SPH);
+
+        const Left_Addition = $('#Left_Addition').val();
+        if(Far_SPH !== '' && Near_SPH !== '' ){
+            $('#Left_Addition').val(Near_SPH - Far_SPH);
+        }else if(Left_Addition !== '' && Near_SPH !== ''){
+            $('#Right_Far_SPH').val(Near_SPH - Left_Addition);
+        }else if(Left_Addition !== '' && Far_SPH !== ''){
+            $('#Left_Near_SPH').val( parseFloat(Far_SPH) +  parseFloat(Left_Addition));
+        }else{
+
+        }
     });
 
     $('.predefinedShape').on('click', function () {
@@ -1742,6 +1766,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         $('#Left_Far_SPH').attr('disabled', true);
         $('#Left_Near_SPH').attr('disabled', true);
         $('#Left_Distance').prop('disabled', true);
+        $('#Left_Addition').prop('disabled', true);
         $('#Left_Height').prop('disabled', true);
 
 
@@ -1761,6 +1786,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         $('#Left_Far_CYLDeg').prop('disabled', false);
         $('#Left_Far_SPHDeg').prop('disabled', false);
 
+        $('#Left_Addition').prop('disabled', false);
         $('#Left_Distance').prop('disabled', false);
         $('#Left_Height').prop('disabled', false);
     }

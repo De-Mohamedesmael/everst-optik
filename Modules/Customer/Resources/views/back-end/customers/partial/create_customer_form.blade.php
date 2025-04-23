@@ -13,7 +13,16 @@
                 'placeholder' => __('lang.please_select'),
                 ]) !!}
             </div>
-
+            <div class="col-md-4 mb-2">
+                {!! Form::label('id_number', __('lang.id_number') , [
+                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                {!! Form::text('id_number', null, [
+                'style'=> "border:1px solid #e6e6e6 !important",
+                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                'placeholder' => __('lang.id_number'),
+                ]) !!}
+            </div>
             <div class="col-md-3 mb-2">
                 {!! Form::label('name', __('lang.name'), [
                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -37,16 +46,7 @@
 
 
 
-            <div class="col-md-2 mb-2">
-                {!! Form::label('age', __('lang.age') , [
-                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                ]) !!}
-                {!! Form::number('age', null, [
-                'style'=> "border:1px solid #e6e6e6 !important",
-                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                'placeholder' => __('lang.age'),
-                ]) !!}
-            </div>
+
             <div class="col-md-2 mb-2">
                 {!! Form::label('gender', translate('gender') . '*', [
                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',

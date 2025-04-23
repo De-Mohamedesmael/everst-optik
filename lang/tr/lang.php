@@ -1287,4 +1287,17 @@
   'Left glass is the same as right glass' => 'Left glass is the same as right glass',
   'Filter' => 'Filter',
   'I Want Right Glass' => 'I Want Right Glass',
+  'Left glass is the same
+                                                                                    as right glass' => 'Left glass is the same
+                                                                                    as right glass',
+  'Nothing' => 'Nothing',
+  'Önceden Tanımlanmış
+                                                                            Şekiller' => 'Önceden Tanımlanmış
+                                                                            Şekiller',
+  'Önceki
+                                                                    reçeteler' => 'Önceki
+                                                                    reçeteler',
+    'Female' => 'Kadın',
+    'id_number' => 'Kimlik Numarası',
+
 );
