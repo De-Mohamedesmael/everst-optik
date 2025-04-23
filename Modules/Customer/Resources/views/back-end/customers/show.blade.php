@@ -91,8 +91,7 @@
                             <li class="nav-item">
                                 <a id="view-prescriptions-a"
                                     class="nav-link @if (request()->show == 'view_prescriptions') active @endif"
-                                    href="#view-prescriptions" role="tab" data-toggle="tab">{{translate('view
-                                    prescriptions')}}</a>
+                                    href="#view-prescriptions" role="tab" data-toggle="tab">{{translate('view prescriptions')}}</a>
                             </li>
                         </ul>
 

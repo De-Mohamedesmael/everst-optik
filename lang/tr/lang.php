@@ -1297,7 +1297,9 @@
   'Önceki
                                                                     reçeteler' => 'Önceki
                                                                     reçeteler',
-    'Female' => 'Kadın',
-    'id_number' => 'Kimlik Numarası',
-
+  'Female' => 'Kadın',
+  'id_number' => 'Kimlik Numarası',
+  'view prescriptions' => 'View prescriptions',
+  'prescriptions' => 'Prescriptions',
+  'VA_amount' => 'VA amount',
 );

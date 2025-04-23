@@ -1268,6 +1268,8 @@ class CustomerController extends Controller
                 'products.sku as product_sku',
                 'admins.name as created_by_name'
             )->first();
+
+
         return view('customer::back-end.customers.partial.view_prescription')->with(compact(
             'prescription'
         ));
