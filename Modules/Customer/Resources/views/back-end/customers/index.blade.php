@@ -148,6 +148,8 @@
                                             <th>@lang('lang.photo')</th>
                                             <th>@lang('lang.id_number')</th>
                                             <th>@lang('lang.name')</th>
+                                            <th>{{translate('tax_location')}}</th>
+                                            <th>@lang('lang.tax_number')</th>
                                             <th>@lang('lang.mobile_number')</th>
                                             <th>@lang('lang.gender')</th>
                                             <th>@lang('lang.address')</th>
@@ -165,6 +167,8 @@
                                     <tfoot>
                                         <tr>
                                             {{-- <td></td> --}}
+                                            <td></td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -256,6 +260,12 @@
                         name: 'customers.name'
                     },
                     {
+                        data: 'tax_location',
+                        name: 'tax_location'
+                    },{
+                        data: 'tax_number',
+                        name: 'customers.tax_number'
+                    },{
                         data: 'mobile_number',
                         name: 'customers.mobile_number'
                     },

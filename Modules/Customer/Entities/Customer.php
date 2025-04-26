@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Modules\Hr\Entities\Employee;
+use Modules\Setting\Entities\TaxLocation;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -36,6 +37,10 @@ class Customer extends Model implements HasMedia
     public function customer_type()
     {
         return $this->belongsTo(CustomerType::class,'customer_type_id');
+    }
+    public function tax_location()
+    {
+        return $this->belongsTo(TaxLocation::class,'tax_location_id');
     }
 
     public function created_by_user()

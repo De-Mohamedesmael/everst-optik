@@ -166,7 +166,7 @@
                             <td>{{ $stock_detial->product->sku ?? '' }}</td>
                             <td>{{ $stock_detial->store->name ?? '' }}</td>
                             <td>{{
-                                @number_format($stock_detial->qty_available,Modules\Setting\Entities\System::getProperty('numbers_length_after_dot'))
+                                @number_format($stock_detial->qty_available,Modules\Setting\Entities\System::getProperty('numbers_length_after_dot'),',','.')
                                 }}</td>
                         </tr>
                         @endforeach

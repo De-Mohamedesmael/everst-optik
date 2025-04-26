@@ -116,17 +116,17 @@ class AddStockController extends Controller
                 ->editColumn('final_total', function ($row) use ($default_currency_id) {
                     $final_total =  $row->final_total;
                     $paying_currency_id = $row->paying_currency_id ?? $default_currency_id;
-                    return '<span data-currency_id="' . $paying_currency_id . '">' . number_format($final_total,2) . '</span>';
+                    return '<span data-currency_id="' . $paying_currency_id . '">' . number_format($final_total,2,',','.') . '</span>';
                 })
                 ->addColumn('paid_amount', function ($row) use ($default_currency_id) {
                     $amount_paid =  $row->transaction_payments->sum('amount');
                     $paying_currency_id = $row->paying_currency_id ?? $default_currency_id;
-                    return '<span data-currency_id="' . $paying_currency_id . '">' . number_format($amount_paid,2) . '</span>';
+                    return '<span data-currency_id="' . $paying_currency_id . '">' . number_format($amount_paid,2,',','.') . '</span>';
                 })
                 ->addColumn('due', function ($row) use ($default_currency_id) {
                     $due =  $row->final_total - $row->transaction_payments->sum('amount');
                     $paying_currency_id = $row->paying_currency_id ?? $default_currency_id;
-                    return '<span data-currency_id="' . $paying_currency_id . '">' . number_format($due,2) . '</span>';
+                    return '<span data-currency_id="' . $paying_currency_id . '">' . number_format($due,2,',','.') . '</span>';
                 })
                 ->editColumn('paying_currency_symbol', function ($row) use ($default_currency_id) {
                     $default_currency = Currency::find($default_currency_id);

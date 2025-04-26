@@ -1,23 +1,23 @@
 @extends('back-end.layouts.app')
-@section('title', __('lang.color'))
+@section('title', __('lang.tax_location'))
 
 @section('breadcrumbs')
 @parent
 <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-        style="text-decoration: none;color: #476762" href="#">
+        style="text-decoration: none;tax_location: #476762" href="#">
         @lang('lang.setting')</a>
 </li>
 <li class="breadcrumb-item  @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
-    @lang('lang.colors')</li>
+    @lang('lang.tax_locations')</li>
 @endsection
 
 @section('button')
 
-@can('product_module.color.create_and_edit')
+@can('product_module.tax_location.create_and_edit')
 <div class="widgetbar d-flex @if (app()->isLocale('ar')) justify-content-start @else justify-content-end @endif">
-    <a style="color: white" data-href="{{ route('admin.colors.create') }}" data-container=".view_modal"
+    <a style="color: white" data-href="{{ route('admin.tax_locations.create') }}" data-container=".view_modal"
         class="btn btn-modal btn-main"><i class="dripicons-plus"></i>
-        {{translate('add_color')}}
+        {{translate('add_tax_location')}}
     </a>
 </div>
 @endcan
@@ -36,31 +36,27 @@
                             <thead>
                                 <tr>
                                     <th>@lang('lang.name')</th>
-                                    <th>{{translate('type_color')}}</th>
-                                    <th>@lang('lang.color_hex')</th>
                                     <th class="notexport">@lang('lang.action')</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($colors as $color)
+                                @foreach ($tax_locations as $tax_location)
                                 <tr>
-                                    <td>{{ $color->name }}</td>
-                                    <td>{{ $color->is_lens ? translate('lens') : translate('Product') }}</td>
-                                    <td>{{ $color->color_hex }}</td>
+                                    <td>{{ $tax_location->name }}</td>
 
                                     <td>
 
-                                        @can('product_module.color.create_and_edit')
+                                        @can('product_module.tax_location.create_and_edit')
 
 
-                                        <a data-href="{{ route('admin.colors.edit', $color->id) }}"
+                                        <a data-href="{{ route('admin.tax_locations.edit', $tax_location->id) }}"
                                             data-container=".view_modal" class="btn btn-primary btn-modal  edit_job">
                                             <i class="fa fa-pencil-square-o"></i>
                                         </a>
 
                                         @endcan
-                                        @can('product_module.color.delete')
-                                        <a data-href="{{ route('admin.colors.destroy', $color->id) }}"
+                                        @can('product_module.tax_location.delete')
+                                        <a data-href="{{ route('admin.tax_locations.destroy', $tax_location->id) }}"
                                             data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
                                             class="btn btn-danger text-white delete_item"><i class="fa fa-trash"></i>
                                         </a>
