@@ -156,35 +156,43 @@ class SellController extends Controller
                 $query->where('transaction_payments.method', request()->get('method'));
             }
             if (!empty(request()->start_date)) {
-                $start_date = Carbon::createFromFormat('m-d-Y', request()->start_date)->format('Y-m-d');
+                $start_date = Carbon::createFromFormat('d-m-Y', request()->start_date)->format('Y-m-d');
                 $query->whereDate('transaction_date', '>=', $start_date);
             }
             if (!empty(request()->end_date)) {
-                $end_date = Carbon::createFromFormat('m-d-Y', request()->end_date)->format('Y-m-d');
+                $end_date = Carbon::createFromFormat('d-m-Y', request()->end_date)->format('Y-m-d');
 
                 $query->whereDate('transaction_date', '<=',$end_date);
             }
             if (!empty(request()->start_time)) {
-                $query->where('transaction_date', '>=', request()->start_date . ' ' . Carbon::parse(request()->start_time)->format('H:i:s'));
+                $start_date = Carbon::createFromFormat('d-m-Y', request()->start_date)->format('Y-m-d');
+
+                $query->where('transaction_date', '>=', $start_date . ' ' . Carbon::parse(request()->start_time)->format('H:i:s'));
             }
             if (!empty(request()->end_time)) {
-                $query->where('transaction_date', '<=', request()->end_date . ' ' . Carbon::parse(request()->end_time)->format('H:i:s'));
+                $end_date = Carbon::createFromFormat('d-m-Y', request()->end_date)->format('Y-m-d');
+
+                $query->where('transaction_date', '<=', $end_date . ' ' . Carbon::parse(request()->end_time)->format('H:i:s'));
             }
             if (!empty(request()->payment_start_date)) {
-                $payment_start_date = Carbon::createFromFormat('m-d-Y', request()->payment_start_date)->format('Y-m-d');
+                $payment_start_date = Carbon::createFromFormat('d-m-Y', request()->payment_start_date)->format('Y-m-d');
 
                 $query->whereDate('paid_on', '>=', $payment_start_date);
             }
             if (!empty(request()->payment_end_date)) {
-                $payment_end_date = Carbon::createFromFormat('m-d-Y', request()->payment_end_date)->format('Y-m-d');
+                $payment_end_date = Carbon::createFromFormat('d-m-Y', request()->payment_end_date)->format('Y-m-d');
 
                 $query->whereDate('paid_on', '<=', $payment_end_date);
             }
             if (!empty(request()->payment_start_time)) {
-                $query->where('paid_on', '>=', request()->payment_start_date . ' ' . Carbon::parse(request()->payment_start_time)->format('H:i:s'));
+                $payment_start_date = Carbon::createFromFormat('d-m-Y', request()->payment_start_date)->format('Y-m-d');
+
+                $query->where('paid_on', '>=', $payment_start_date . ' ' . Carbon::parse(request()->payment_start_time)->format('H:i:s'));
             }
             if (!empty(request()->payment_end_time)) {
-                $query->where('paid_on', '<=', request()->payment_end_date . ' ' . Carbon::parse(request()->payment_end_time)->format('H:i:s'));
+                $payment_end_date = Carbon::createFromFormat('d-m-Y', request()->payment_end_date)->format('Y-m-d');
+
+                $query->where('paid_on', '<=', $payment_end_date . ' ' . Carbon::parse(request()->payment_end_time)->format('H:i:s'));
             }
 
             if (strtolower(Session::get('user.job_title')) == 'cashier') {
@@ -249,9 +257,9 @@ class SellController extends Controller
                 ->editColumn('final_total', function ($row) use ($default_currency_id, $product_ids) {
                     if ($product_ids == 'all') {
                         if (!empty($row->return_parent)) {
-                            $final_total = number_format($row->final_total - $row->return_parent->final_total, 2, '.', ',');
+                            $final_total = number_format($row->final_total - $row->return_parent->final_total, 2,',','.');
                         } else {
-                            $final_total = number_format($row->final_total, 2, '.', ',');
+                            $final_total = number_format($row->final_total, 2,',','.');
                         }
                     } else {
                         $final_total = 0;
@@ -285,14 +293,14 @@ class SellController extends Controller
                     }
                     $received_currency_id = $row->received_currency_id ?? $default_currency_id;
 
-                    return '<span data-currency_id="' . $received_currency_id . '">' . number_format($amount_paid, 2, '.', ',') . '</span>';
+                    return '<span data-currency_id="' . $received_currency_id . '">' . number_format($amount_paid, 2, ',', '.') . '</span>';
                 })
                 ->addColumn('due', function ($row) use ($default_currency_id) {
                     $paid = $row->transaction_payments->sum('amount');
                     $due = $row->final_total - $paid;
                     $received_currency_id = $row->received_currency_id ?? $default_currency_id;
 
-                    return '<span data-currency_id="' . $received_currency_id . '">' . number_format($due, 2, '.', ',') . '</span>';
+                    return '<span data-currency_id="' . $received_currency_id . '">' . number_format($due, 2, ',', '.') . '</span>';
                 })
                 ->addColumn('customer_type', function ($row) {
                     if (!empty($row->customer->customer_type)) {
@@ -307,7 +315,7 @@ class SellController extends Controller
                     foreach ($commissions as $commission) {
                         $total += $commission->final_total;
                     }
-                    return number_format($total, 2, '.', ',');
+                    return number_format($total, 2, ',', '.');
                 })
                 ->editColumn('received_currency_symbol', function ($row) use ($default_currency_id) {
                     $default_currency = Currency::find($default_currency_id);

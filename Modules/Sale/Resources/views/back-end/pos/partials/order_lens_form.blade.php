@@ -1789,6 +1789,12 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         $('#Left_Addition').prop('disabled', false);
         $('#Left_Distance').prop('disabled', false);
         $('#Left_Height').prop('disabled', false);
+
+
+        $('#Left_Near_CYLDeg').selectpicker('refresh');
+        $('#Left_Near_SPHDeg').selectpicker('refresh');
+        $('#Left_Far_CYLDeg').selectpicker('refresh');
+        $('#Left_Far_SPHDeg').selectpicker('refresh');
     }
     function changePrice() {
         let   lens_id = $('#lens_id').val(),

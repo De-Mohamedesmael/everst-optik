@@ -100,16 +100,16 @@
                         <ul
                             class="dropdown-menu list-style-none @if (app()->isLocale('ar')) text-end @else text-start @endif">
                             <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                       href="{{ route('admin.products.index') }}" target="_blank"
+                                                       href="{{ route('admin.products.index') }}"
                                                        class="jobs-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>@lang('lang.products')</a>
                             </li>
                             <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                       href="{{ route('admin.categories.index') }}" target="_blank"
+                                                       href="{{ route('admin.categories.index') }}"
                                                        class="employees-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>@lang('lang.categories')</a></li>
                             <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                       href="{{ route('admin.brands.index') }}" target="_blank"
+                                                       href="{{ route('admin.brands.index') }}"
                                                        class="wages-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>@lang('lang.brands')</a>
                             </li>
@@ -117,7 +117,7 @@
 
                             @can('product_module.barcode.create_and_edit')
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                           href="{{ route('admin.barcode.create') }}" target="_blank"
+                                                           href="{{ route('admin.barcode.create') }}"
                                                            class="wages-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>{{translate('print_barcode')}}</a>
                                 </li>
@@ -140,21 +140,21 @@
                             class="dropdown-menu list-style-none @if (app()->isLocale('ar')) text-end @else text-start @endif">
                             <li class="navbar_item">
                                 <a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                       href="{{ route('admin.lenses.index') }}" target="_blank"
+                                                       href="{{ route('admin.lenses.index') }}"
                                                        class="jobs-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>@lang('lang.lenses')</a>
                             </li>
                             <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                       href="{{ route('admin.add-stock.create',['type'=>'lenses']) }}" target="_blank"
+                                                       href="{{ route('admin.add-stock.create',['type'=>'lenses']) }}"
                                                        class="employees-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>{{translate('add_new_stock')}}</a></li>
 
                             <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                       href="{{ route('admin.brand_lenses.index') }}" target="_blank"
+                                                       href="{{ route('admin.brand_lenses.index') }}"
                                                        class="employees-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>{{translate('brand_lenses')}}</a></li>
                             <li class="navbar_item">
-                                <a style="cursor: pointer;font-weight: 600;text-decoration: none"  href="{{ route('admin.features.index') }}" target="_blank" class="wages-button d-flex item-list-a">
+                                <a style="cursor: pointer;font-weight: 600;text-decoration: none"  href="{{ route('admin.features.index') }}" class="wages-button d-flex item-list-a">
                                     <i class="mdi mdi-circle"></i>{{translate('features')}}
                                 </a>
                             </li>
@@ -208,16 +208,16 @@
                         <ul
                             class="dropdown-menu list-style-none @if (app()->isLocale('ar')) text-end @else text-start @endif">
                             <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                       href="{{ route('admin.products.getProductStocks') }}" target="_blank"
+                                                       href="{{ route('admin.products.getProductStocks') }}"
                                                        class="jobs-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>{{translate('product_stocks')}}</a>
                             </li>
                             <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                       href="{{ route('admin.add-stock.create') }}" target="_blank"
+                                                       href="{{ route('admin.add-stock.create') }}"
                                                        class="employees-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>{{translate('add_new_stock')}}</a></li>
                             <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                       href="{{ route('admin.add-stock.index') }}" target="_blank"
+                                                       href="{{ route('admin.add-stock.index') }}"
                                                        class="wages-button d-flex item-list-a"><i
                                         class="mdi mdi-circle"></i>{{translate('view_all_added_stocks')}}</a>
                             </li>
@@ -247,7 +247,7 @@
                                     @can('sale.pos.view')
                                         <li class="navbar_item">
                                             <a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                                   href="{{ route('admin.sale.index') }}" target="_blank"
+                                                                   href="{{ route('admin.sale.index') }}"
                                                                    class="jobs-button d-flex item-list-a"><i
                                                     class="mdi mdi-circle"></i>{{__('lang.sales_list')}}
                                             </a>
@@ -255,14 +255,14 @@
                                     @endcan
                                     @can('sale.pos.view')
                                         <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                                   href="{{ route('admin.sale.index',['type_trans'=>'Lens']) }}" target="_blank"
+                                                                   href="{{ route('admin.sale.index',['type_trans'=>'Lens']) }}"
                                                                    class="wages-button d-flex item-list-a"><i
                                                     class="mdi mdi-circle"></i>{{translate('sales_lenses_list')}}</a>
                                         </li>
                                     @endcan
                                     @can('sale.pos.create_and_edit')
                                         <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                                   href="{{ route('admin.pos.create') }}" target="_blank"
+                                                                   href="{{ route('admin.pos.create') }}"
                                                                    class="employees-button d-flex item-list-a"><i
                                                     class="mdi mdi-circle"></i>{{translate('add_sales')}}</a>
                                         </li>
@@ -289,7 +289,7 @@
                                 @can('return.sell_return.view')
                                     <li class="navbar_item">
                                         <a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                           href="{{route('admin.sale-return.index')}}" target="_blank"
+                                           href="{{route('admin.sale-return.index')}}"
                                            class="jobs-button d-flex item-list-a"><i
                                                 class="mdi mdi-circle"></i>{{__('lang.view_all_return_sales')}}
                                         </a>
@@ -373,16 +373,16 @@
                             <ul
                                 class="dropdown-menu list-style-none @if (app()->isLocale('ar')) text-end @else text-start @endif">
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                           href="{{ route('admin.hr.jobs.index') }}" target="_blank"
+                                                           href="{{ route('admin.hr.jobs.index') }}"
                                                            class="jobs-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>@lang('lang.jobs')</a>
                                 </li>
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                           href="{{ route('admin.hr.employees.index') }}" target="_blank"
+                                                           href="{{ route('admin.hr.employees.index') }}"
                                                            class="employees-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>@lang('lang.employees')</a></li>
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                           href="{{ route('admin.hr.wages-and-compensations.index') }}" target="_blank"
+                                                           href="{{ route('admin.hr.wages-and-compensations.index') }}"
                                                            class="wages-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>@lang('lang.wages')</a>
                                 </li>
@@ -390,7 +390,7 @@
                                 <li class="navbar_item">
                                     <a
                                         style="cursor: pointer;font-weight: 600;text-decoration: none;font-size: 12px"
-                                        href="{{ route('admin.hr.attendances.index') }}" target="_blank"
+                                        href="{{ route('admin.hr.attendances.index') }}"
                                         class="attendance-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>@lang('lang.attend_and_leave')</a></li>
                             </ul>
@@ -441,11 +441,11 @@
                             <ul
                                     class="dropdown-menu list-style-none @if (app()->isLocale('ar')) text-end @else text-start @endif">
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                           href="{{ route('admin.customers.index') }}" target="_blank"
+                                                           href="{{ route('admin.customers.index') }}"
                                                            class="customers-button d-flex item-list-a"><i
                                                 class="mdi mdi-circle"></i>{{ __('lang.customers') }}</a></li>
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                           href="{{ route('admin.customer-type.index') }}" target="_blank"
+                                                           href="{{ route('admin.customer-type.index') }}"
                                                            class="customer-types-button d-flex item-list-a"><i
                                                 class="mdi mdi-circle"></i>{{ __('lang.customer_types') }}</a></li>
                             </ul>
@@ -514,21 +514,21 @@
                                         <ul class="sub-menu p-0" style="list-style: none">
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif stores-button"
-                                                   href="{{ route('admin.store.index') }}" target="_blank"
+                                                   href="{{ route('admin.store.index') }}"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.stores')
                                                 </a>
                                             </li>
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif stores_pos-button"
-                                                   href="{{ route('admin.store-pos.index') }}" target="_blank"
+                                                   href="{{ route('admin.store-pos.index') }}"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.store_pos')
                                                 </a>
                                             </li>
                                             <li class="navbar_item">
                                                 <a class="moneysafes-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
-                                                   href="{{ route('admin.money_safe.index') }}" target="_blank"
+                                                   href="{{ route('admin.money_safe.index') }}"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.money_safe')
                                                 </a>
@@ -542,28 +542,28 @@
                                         <ul class="sub-menu p-0" style="list-style: none">
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif general-tax-button"
-                                                   href="{{route('admin.tax.index')}}?type=general_tax" target="_blank"
+                                                   href="{{route('admin.tax.index')}}?type=general_tax"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.general_tax')
                                                 </a>
                                             </li>
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif product_tax-button"
-                                                   href="{{route('admin.tax.index')}}?type=product_tax" target="_blank"
+                                                   href="{{route('admin.tax.index')}}?type=product_tax"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.product_tax')
                                                 </a>
                                             </li>
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif colors-button"
-                                                   href="{{ route('admin.special_bases.index') }}" target="_blank"
+                                                   href="{{ route('admin.special_bases.index') }}"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>{{translate('special_bases')}}
                                                 </a>
                                             </li>
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif colors-button"
-                                                   href="{{ route('admin.special_additions.index') }}" target="_blank"
+                                                   href="{{ route('admin.special_additions.index') }}"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>{{translate('special_additions')}}
                                                 </a>
@@ -576,22 +576,29 @@
 
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif colors-button"
-                                                   href="{{ route('admin.colors.index') }}" target="_blank"
+                                                   href="{{ route('admin.colors.index') }}"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.colors')
                                                 </a>
                                             </li>
                                             <li class="navbar_item">
                                                 <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif sizes-button"
-                                                   href="{{  route('admin.sizes.index') }}" target="_blank"
+                                                   href="{{  route('admin.sizes.index') }}"
                                                    style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                     <i class="mdi mdi-circle"></i>@lang('lang.sizes')
+                                                </a>
+                                            </li>
+                                            <li class="navbar_item">
+                                                <a class="d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif sizes-button"
+                                                   href="{{  route('admin.tax_locations.index') }}"
+                                                   style="cursor: pointer;font-weight: 600;text-decoration: none">
+                                                    <i class="mdi mdi-circle"></i>@lang('lang.tax_locations')
                                                 </a>
                                             </li>
                                             @can('settings.general_settings.view')
                                                 <li class="navbar_item">
                                                     <a class="general_settings-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
-                                                       href="{{route('admin.settings.getGeneralSetting')}}" target="_blank"
+                                                       href="{{route('admin.settings.getGeneralSetting')}}"
                                                        style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                         <i class="mdi mdi-circle"></i>@lang('lang.general_settings')
                                                     </a>
@@ -608,7 +615,7 @@
                                             @can('settings.design.view')
                                                 <li class="navbar_item">
                                                     <a class="index_lens-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
-                                                       href="{{route('admin.designs.index')}}" target="_blank"
+                                                       href="{{route('admin.designs.index')}}"
                                                        style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                         <i class="mdi mdi-circle"></i>{{translate('designs')}}
                                                     </a>
@@ -617,7 +624,7 @@
                                             @can('settings.focus.view')
                                                 <li class="navbar_item">
                                                     <a class="focus-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
-                                                       href="{{route('admin.foci.index')}}" target="_blank"
+                                                       href="{{route('admin.foci.index')}}"
                                                        style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                         <i class="mdi mdi-circle"></i>{{translate('foci')}}
                                                     </a>
@@ -626,7 +633,7 @@
                                             @can('settings.index_lens.view')
                                                 <li class="navbar_item">
                                                     <a class="index_lens-button d-flex @if (app()->isLocale('ar')) width-full text-end flex-row-reverse  @else flex-row text-start @endif"
-                                                       href="{{route('admin.index_lenses.index')}}" target="_blank"
+                                                       href="{{route('admin.index_lenses.index')}}"
                                                        style="cursor: pointer;font-weight: 600;text-decoration: none">
                                                         <i class="mdi mdi-circle"></i>{{translate('index_lenses')}}
                                                     </a>

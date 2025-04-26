@@ -59,8 +59,15 @@
             }
         });
 
-
-        $('.datepicker').datepicker({
+    $('#customer_type_id').on('change', function() {
+        var value = $(this).val();
+        if (value >= 2) {
+           $('.div-company').removeClass('d-none');
+        }else{
+            $('.div-company').addClass('d-none');
+        }
+    });
+    $('.datepicker').datepicker({
             language: '{{ session('language') }}',
             todayHighlight: true,
 

@@ -1336,4 +1336,11 @@
   'lens_image' => 'Lens image',
   'lens_information' => 'Lens information',
   'Female' => 'Female',
+  'add_tax_location' => 'Add tax location',
+  'tax_locations' => 'اماكن استحقاق الضريبة',
+  'id_number' => 'Id number',
+  'tax_number' => 'Tax number',
+  'Product' => 'Product',
+  'type_color' => 'Type color',
+  'lens' => 'Lens',
 );

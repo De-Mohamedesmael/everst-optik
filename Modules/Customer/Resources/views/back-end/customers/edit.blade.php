@@ -48,15 +48,7 @@
                                     ]) !!}
                                 </div>
                             </div>
-                            <div class="col-md-4 mb-2">
-                                {!! Form::label('id_number', translate('id_number') , [
-                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                ]) !!}
-                                {!! Form::number('id_number', $customer->id_number , [
-                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                'placeholder' => __('lang.id_number'),
-                                ]) !!}
-                            </div>
+
                             <div class="col-md-4 mb-2">
                                 <div class="form-group">
                                     {!! Form::label('name', __('lang.name'), [
@@ -67,6 +59,37 @@
                                     'placeholder' => __('lang.name'),
                                     ]) !!}
                                 </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                {!! Form::label('id_number', translate('id_number') , [
+                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                {!! Form::number('id_number', $customer->id_number , [
+                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                'placeholder' => __('lang.id_number'),
+                                ]) !!}
+                            </div>
+                            <div class="col-md-2 mb-2 div-company  @if($customer->customer_type_id == 1 ||  !$customer->customer_type_id ) d-none @endif">
+                                {!! Form::label('id_number', translate('tax_number') , [
+                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                {!! Form::text('tax_number', $customer->tax_number, [
+                                'style'=> "border:1px solid #e6e6e6 !important",
+                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                'placeholder' => __('lang.tax_number'),
+                                ]) !!}
+                            </div>
+                            <div class="col-md-2 mb-2 div-company @if($customer->customer_type_id == 1 ||  !$customer->customer_type_id )d-none @endif ">
+
+                                {!! Form::label('tax_location_id', translate('tax_locations') . '*', [
+                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                {!! Form::select('tax_location_id', $tax_locations, $customer->tax_location_id , [
+                                'class' => 'selectpicker form-control',
+                                'data-live-search' => 'true',
+                                'placeholder' => __('lang.tax_locations'),
+                                'required',
+                                ]) !!}
                             </div>
                             <div class="col-md-4 mb-2">
                                 <div class="form-group">
@@ -211,7 +234,14 @@
                 $(this).submit();
             }
         })
-
+    $('#customer_type_id').on('change', function() {
+        var value = $(this).val();
+        if (value >= 2) {
+            $('.div-company').removeClass('d-none');
+        }else{
+            $('.div-company').addClass('d-none');
+        }
+    });
         $(document).on('click', '.add_date', function() {
             let index = __read_number($('#important_date_index'));
             console.log(index);

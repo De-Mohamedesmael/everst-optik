@@ -61,12 +61,12 @@ function __currency_trans_from_en(
 ) {
     if (use_page_currency && __p_currency_symbol) {
         var s = __p_currency_symbol;
-        var thousand = __p_currency_thousand_separator;
-        var decimal = __p_currency_decimal_separator;
+        var thousand = ".";  // تغيير الفاصلة للألاف إلى "."
+        var decimal = ",";   // تغيير الفاصلة للكسور إلى ","
     } else {
         var s = __currency_symbol;
-        var thousand = __currency_thousand_separator;
-        var decimal = __currency_decimal_separator;
+        var thousand = ".";  // تغيير الفاصلة للألاف إلى "."
+        var decimal = ",";   // تغيير الفاصلة للكسور إلى ","
     }
     symbol = "";
     var format = "%s%v";
@@ -97,6 +97,7 @@ function __currency_trans_from_en(
         format
     );
 }
+
 
 function __currency_convert_recursively(element, use_page_currency = false) {
     element.find(".display_currency").each(function () {

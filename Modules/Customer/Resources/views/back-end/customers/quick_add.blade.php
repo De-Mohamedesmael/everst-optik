@@ -35,4 +35,12 @@
 </div><!-- /.modal-dialog -->
 <script>
     $('.selectpicker').selectpicker('render');
+    $('#customer_type_id').on('change', function() {
+        var value = $(this).val();
+        if (value >= 2) {
+            $('.div-company').removeClass('d-none');
+        }else{
+            $('.div-company').addClass('d-none');
+        }
+    });
 </script>

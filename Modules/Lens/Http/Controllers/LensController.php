@@ -199,7 +199,7 @@ class LensController extends Controller
                     })
                     ->latest()->first();
                     $price= $price? $price->sell_price:$row->sell_price;
-                    return number_format($price,2);
+                    return number_format($price,2,',','.');
                 })//, '{{@num_format($default_sell_price)}}')
                 ->editColumn('purchase_price', function ($row) {
                     $price= AddStockLine::where('product_id',$row->product_id)
@@ -209,7 +209,7 @@ class LensController extends Controller
                     ->latest()->first();
                     $price= $price? ($price->purchase_price > 0 ? $price->purchase_price : $row->purchase_price):$row->purchase_price;
 
-                    return number_format($price,2);
+                    return number_format($price,2,',','.');
                 })
                 ->addColumn('tax', '{{$tax}}')
                 ->editColumn('color', function ($row){

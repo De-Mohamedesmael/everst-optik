@@ -1244,7 +1244,6 @@
   'create_lens' => 'Lens Oluştur',
   'order_lens_modal' => 'Lens Sipariş Modalı',
   'order_lens' => 'Lens Siparişi',
-  'lens' => 'Lens',
   'index' => 'Dizin',
   'design' => 'Design',
   'doctor_name' => 'doktor adı',
@@ -1302,4 +1301,20 @@
   'view prescriptions' => 'View prescriptions',
   'prescriptions' => 'Prescriptions',
   'VA_amount' => 'VA amount',
+  'tax_locations' => 'Vergi Tahakkuk Yerleri',
+  'tax_number' => 'Vergi Numarası',
+  'is_lens' => 'Lens Rengi',
+  'type_color' => 'Tür Rengi',
+  'Product' => 'Ürün',
+  'lens' => 'Lens',
+  'tax_location' => 'Vergi Yeri',
+  'Önceki
+                                                                    reçeteler' => 'Önceki
+                                                                    reçeteler',
+  'Önceden Tanımlanmış
+                                                                            Şekiller' => 'Önceden Tanımlanmış
+                                                                            Şekiller',
+  'Left glass is the same
+                                                                                    as right glass' => 'Left glass is the same
+                                                                                    as right glass',
 );

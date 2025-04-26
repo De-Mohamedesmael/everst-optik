@@ -28,6 +28,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Modules\Setting\Entities\TaxLocation;
 use Yajra\DataTables\Facades\DataTables;
 use App\Utils\CashRegisterUtil;
 
@@ -152,13 +153,13 @@ class CustomerController extends Controller
                     $class= "text-red";
                 }
                 $balance=ceil($balance* 100) / 100;
-                return "<span class='".$class."'>".$balance."</span>";
+                return "<span class='".$class."'>".number_format($balance,2,',','.')."</span>";
             }else{
                 return $balance;
             }
          })
          ->addColumn('purchases', function ($row) {
-            $purchase=number_format(($row->total_purchase - $row->total_return) ,2);
+            $purchase=number_format(($row->total_purchase - $row->total_return) ,2,',','.');
             return $purchase;
 
          })
@@ -168,6 +169,9 @@ class CustomerController extends Controller
          })
          ->addColumn('joining_date', function ($row) {
             return $row->created_at->format('Y-m-d');
+         })
+            ->addColumn('tax_location', function ($row) {
+            return $row->tax_location?->name;
          })
 
 
@@ -253,6 +257,7 @@ class CustomerController extends Controller
             'gender',
             'created_by',
             'mobile_number',
+            'tax_location',
             'address',
             'balance','purchases','discount','joining_date','action'
         ])
@@ -275,11 +280,12 @@ class CustomerController extends Controller
         $quick_add = request()->quick_add ?? null;
         $customers = Customer::getCustomerArrayWithMobile();
         $genders = Customer::getDropdownGender();
-
+        $tax_locations=TaxLocation::pluck('name', 'id');
         if ($quick_add) {
             return view('customer::back-end.customers.quick_add')->with(compact(
                 'customer_types',
                 'customers',
+                'tax_locations',
                 'genders',
                 'quick_add'
             ));
@@ -288,6 +294,8 @@ class CustomerController extends Controller
         return view('customer::back-end.customers.create')->with(compact(
             'customer_types',
             'customers',
+            'tax_locations',
+
             'genders',
             'quick_add'
         ));
@@ -724,10 +732,12 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         $customer_types = CustomerType::pluck('name', 'id');
         $genders = Customer::getDropdownGender();
+        $tax_locations=TaxLocation::pluck('name', 'id');
 
         return view('customer::back-end.customers.edit')->with(compact(
             'customer',
             'genders',
+            'tax_locations',
             'customer_types',
         ));
     }

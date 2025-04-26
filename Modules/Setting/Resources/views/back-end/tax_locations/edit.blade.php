@@ -2,9 +2,9 @@
     <div class="modal-content">
 
         {!! Form::open([
-            'url' => route('admin.colors.update', $color->id),
+            'url' => route('admin.tax_locations.update', $tax_location->id),
             'method' => 'put',
-            'id' => 'color_add_form',
+            'id' => 'tax_location_add_form',
         ]) !!}
 
         <div
@@ -20,37 +20,17 @@
         </div>
         <div
             class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse justify-content-end @else justify-content-start flex-row @endif align-items-center">
-            <div class="row">
-                <div class="col-md-2 px-0 d-flex justify-content-center">
-                    <div class="i-checks toggle-pill-color flex-col-centered">
-                        <input id="is_lens" name="is_lens" type="checkbox" value="1" @if($color->is_lens) checked @endif class="form-control-custom">
-                        <label for="is_lens">
-                        </label>
-                        <span>
-                    <strong>@lang('lang.is_lens')</strong>
-                </span>
-                    </div>
-                </div>
-            </div>
             <div class="col-sm-6 mb-2">
                 {!! Form::label('name', __('lang.name') . '*', [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
-                {!! Form::text('name', $color->name, [
+                {!! Form::text('name', $tax_location->name, [
                     'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',
                     'placeholder' => __('lang.name'),
                     'required',
                 ]) !!}
             </div>
-            <div class="col-sm-6 mb-2">
-                {!! Form::label('color_hex', __('lang.color_hex') . '*', [
-                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                ]) !!}
-                {!! Form::text('color_hex', $color->color_hex, [
-                    'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',
-                    'placeholder' => __('lang.color_hex'),
-                ]) !!}
-            </div>
+
         </div>
 
         <div class="modal-footer d-flex justify-content-center align-content-center gap-3">

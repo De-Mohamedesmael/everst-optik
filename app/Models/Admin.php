@@ -235,6 +235,7 @@ class Admin extends Authenticatable
                 'index_lens' => __('lang.index_lens'),
                 'focus' => __('lang.focus'),
                 'design' => __('lang.design'),
+                'tax_location' => __('lang.tax_location'),
 
                 'exchange_rate' => __('lang.exchange_rate'),
                 'terms_and_conditions' => __('lang.terms_and_conditions'),
