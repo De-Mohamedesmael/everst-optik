@@ -108,6 +108,7 @@ class ProductController extends Controller
                 $products=   $products->Product();
             }
 
+
             $products= $products->leftjoin('add_stock_lines', function ($join) {
                 $join->on('products.id', 'add_stock_lines.product_id');
             })
@@ -181,8 +182,6 @@ class ProductController extends Controller
                 'edited.name as edited_by_name',
                 DB::raw('(SELECT SUM(product_stores.qty_available) FROM product_stores JOIN products as v ON product_stores.product_id=v.id WHERE v.id=products.id ' . $store_query . ') as current_stock'),
             )->groupBy('products.id');
-
-            //  return $products_;
             return DataTables::of($products)
                 ->addColumn('show_at_the_main_pos_page', function ($row) {
                     if (!empty($row->show_at_the_main_pos_page)&& $row->show_at_the_main_pos_page=="yes"){
