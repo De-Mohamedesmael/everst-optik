@@ -187,15 +187,17 @@
 
     .technicalLeftMenu {
         overflow: auto;
-        width: 120px;
-        height: 100%;
+        width: 100%;
+        height: 120;
         position: fixed;
-        top: 0;
+        bottom: 0;
         left: 0;
+        right: 0;
         background: #f4f4f4;
         padding-top: 20px;
         z-index: 5;
         border-right: 1px solid #ebebeb;
+        display: flex;
     }
 
     .technicalLeftMenu.pixarMenu a {
@@ -204,7 +206,7 @@
         justify-content: center;
         align-items: center;
 
-        min-height: 150px;
+
         width: 100%;
         min-width: 50px;
 
@@ -216,7 +218,7 @@
         justify-content: center;
         align-items: center;
 
-        min-height: 150px;
+
 
         width: 100%;
 
@@ -369,7 +371,8 @@
 
 
     @php
-    $html_links .= '<div class="d-flex flex-row">';
+    $html_links .= '<div class="d-flex flex-column" style="min-width: 200px;
+    border-right: 1px solid #aaa">';
         $html_links .= '<a data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
 
             if($key==0){
@@ -378,22 +381,22 @@
             $html_links .= '">';
 
 
-            $html_links .=' <img style="    transform: rotate(-90deg);height: 30px;" src="'.$brand->icon.'">';
+            $html_links .=' <img style="height: 25px;" src="'.$brand->icon.'">';
             $html_links .='</a>';
 
 
 
 
 
-        $html_links .= '<a class="div-price" data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
+        $html_links .= '<a class="div-price" style="font-weight: 600" data-id="'.$brand->id.'"
+            data-color="'.$brand->color.'" href="#" class="';
 
           if($key==0){
               $html_links .= 'active';
           }
           $html_links .= '">';
 
-            $html_links .=' <span
-                style="writing-mode: vertical-rl; transform: rotate(180deg); height: 55px;color: #dd8888;">
+            $html_links .=' <span style="  width: 55px;color: #dd8888;">
                 '.$brand->price.' '.session("currency")["symbol"].' </span>';
             $html_links .='</a>';
         $html_links .= '</div>';
