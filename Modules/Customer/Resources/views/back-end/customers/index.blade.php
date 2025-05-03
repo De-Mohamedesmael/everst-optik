@@ -338,30 +338,50 @@
                     };
 
                     this.api()
-                        .columns(".sum,.sum_purchase,.sum_discounts,.sum_points", {
+                        .columns(".sum,.sum_purchase,.sum_discounts", {
                             page: "current"
                         })
                         .every(function() {
                             var column = this;
+
+                            function parseEuroNumber(val) {
+                                var isNegative=false;
+
+                                if (typeof val === "string") {
+                                    val = val.trim();
+                                    val = val.replace(/[\u200E\u202D\u202C\u00A0]/g, '');
+                                    if (val.includes('-')) {
+                                        isNegative = true;
+                                    }
+                                    val = val.replace(/[^\d,-]/g, '');
+                                    val = val.replace(/-/g, '');
+                                    val = val.replace(/\./g, '').replace(',', '.');
+                                }
+
+                                let number = parseFloat(val) || 0;
+
+                                if (isNegative) {
+                                    number = -number;
+                                }
+                                return number ;
+                            }
+
                             if (column.data().count()) {
                                 var sum = column.data().reduce(function(a, b) {
-                                    a = intVal(a);
-                                    if (isNaN(a)) {
-                                        a = 0;
-                                    }
-
-                                    b = intVal(b);
-                                    if (isNaN(b)) {
-                                        b = 0;
-                                    }
+                                    a = parseEuroNumber(a);
+                                    b = parseEuroNumber(b);
+                                    console.log(a + b);
 
                                     return a + b;
                                 });
+                                console.log( sum);
                                 $(column.footer()).html(
-                                    __currency_trans_from_en(sum, false)
+                                __currency_trans_from_en(sum, false)
                                 );
                             }
                         });
+
+
                 },
             });
 

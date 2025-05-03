@@ -1437,6 +1437,7 @@
   'Left glass is the same
                                                                                     as right glass' => 'Left glass is the same
                                                                                     as right glass',
+
   'Önceki
                                                                     reçeteler' => 'Önceki
                                                                     reçeteler',
@@ -1445,6 +1446,7 @@
                                                                             Şekiller',
   'Nothing' => 'Nothing',
   'Left glass is the same
-                                                                                    as right glass' => 'Left glass is the same
-                                                                                    as right glass',
+  as right glass' => 'Left glass is the same',
+  'tax_location' => 'Tax location',
+  'Nothing' => 'Nothing',
 );
