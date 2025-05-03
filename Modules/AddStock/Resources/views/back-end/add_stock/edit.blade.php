@@ -217,11 +217,11 @@
                                                         <h6 style="width: 100%;height: 100%;"
                                                             class="d-flex justify-content-center align-items-center">
                                                             <span
-                                                                class="sub_total_span">{{ number_format($product->sub_total, 2) }}</span>
+                                                                class="sub_total_span">{{ number_format($product->sub_total, 2,',','.') }}</span>
                                                         </h6>
                                                         <input type="hidden" class="form-control sub_total"
                                                             name="add_stock_lines[{{ $loop->index }}][sub_total]"
-                                                            value="{{ number_format($product->sub_total, 2) }}">
+                                                            value="{{ number_format($product->sub_total, 2,',','.') }}">
 
                                                     </td>
                                                     @php
@@ -234,12 +234,12 @@
                                                     @endphp
                                                     <td>
                                                         <input type="hidden" name="current_stock" class="current_stock"
-                                                            value="@if (isset($current_stock)) {{ number_format($current_stock,\Modules\Setting\Entities\System::getProperty('numbers_length_after_dot')) }} @else{{ 0 }} @endif">
+                                                            value="@if (isset($current_stock)) {{ number_format($current_stock,\Modules\Setting\Entities\System::getProperty('numbers_length_after_dot'),',','.') }} @else{{ 0 }} @endif">
                                                         <h6 style="width: 100%;height: 100%;"
                                                             class="d-flex justify-content-center align-items-center">
                                                             <span class="current_stock_text">
                                                                 @if (isset($current_stock))
-                                                                    {{ number_format($current_stock, \Modules\Setting\Entities\System::getProperty('numbers_length_after_dot')) }}@else{{ 0 }}
+                                                                    {{ number_format($current_stock, \Modules\Setting\Entities\System::getProperty('numbers_length_after_dot'),',','.') }}@else{{ 0 }}
                                                                 @endif
                                                             </span>
                                                         </h6>
@@ -778,7 +778,7 @@
                 $('.quantity').each(function() {
                     var inputValue = $(this).val();
                     var sanitizedValue = inputValue.replace(/,/g, '');
-                    sanitizedValue = number_format(floatval(sanitizedValue), 2, '.', '');
+                    sanitizedValue = number_format(floatval(sanitizedValue), 2,',','.');
                     $(this).val(sanitizedValue);
                 });
             });

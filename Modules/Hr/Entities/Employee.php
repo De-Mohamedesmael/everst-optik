@@ -157,7 +157,7 @@ class Employee extends Model implements HasMedia
         $forfeit_leaves = ForfeitLeave::where('employee_id', $id)->where('start_date', Carbon::now()->format('Y'))->sum('number_of_days');
         $leave_balance = $leave_balance - $forfeit_leaves;
 
-        return number_format($leave_balance, 2);
+        return number_format($leave_balance, 2,',','.');
     }
 
     public static function getBalanceLeaveByLeaveType($employee_id, $id)
@@ -186,7 +186,7 @@ class Employee extends Model implements HasMedia
         $forfeit_leaves = ForfeitLeave::where('employee_id', $employee_id)->where('leave_type_id', $id)->where('start_date', Carbon::now()->format('Y'))->sum('number_of_days');
         $leave_balance = $leave_balance - $forfeit_leaves;
 
-        return number_format($leave_balance, 2);
+        return number_format($leave_balance, 2,',','.');
     }
 
     public static function getWorkedMonth($employee)

@@ -76,7 +76,7 @@ class LensController extends Controller
     public function getLensStocks(Request $request)
     {
         $brands = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
-        $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors = Color::where('is_lens',true)->orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
@@ -199,7 +199,7 @@ class LensController extends Controller
                     })
                     ->latest()->first();
                     $price= $price? $price->sell_price:$row->sell_price;
-                    return number_format($price,2);
+                    return number_format($price,2,',','.');
                 })//, '{{@num_format($default_sell_price)}}')
                 ->editColumn('purchase_price', function ($row) {
                     $price= AddStockLine::where('product_id',$row->product_id)
@@ -209,7 +209,7 @@ class LensController extends Controller
                     ->latest()->first();
                     $price= $price? ($price->purchase_price > 0 ? $price->purchase_price : $row->purchase_price):$row->purchase_price;
 
-                    return number_format($price,2);
+                    return number_format($price,2,',','.');
                 })
                 ->addColumn('tax', '{{$tax}}')
                 ->editColumn('color', function ($row){
@@ -363,7 +363,7 @@ class LensController extends Controller
         }
         $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
         $brands = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
-        $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors = Color::where('is_lens',true)->orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::where('type', 'product_tax')
             ->orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
@@ -401,7 +401,7 @@ class LensController extends Controller
         $foci = Focus::orderBy('name', 'asc')->pluck('name', 'id');
         $index_lenses = IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
         $brands = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
-        $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors = Color::where('is_lens',true)->orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::where('type', 'product_tax')->orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
@@ -585,7 +585,7 @@ class LensController extends Controller
         $foci = Focus::orderBy('name', 'asc')->pluck('name', 'id');
         $index_lenses = IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
         $brands = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
-        $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors = Color::where('is_lens',true)->orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::where('type', 'product_tax')->orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');

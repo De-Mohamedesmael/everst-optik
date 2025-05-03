@@ -9,8 +9,18 @@
                 {!! Form::select('customer_type_id', $customer_types, false, [
                 'class' => 'selectpicker form-control',
                 'data-live-search' => 'true',
+                'id' => 'customer_type_id',
                 'required',
                 'placeholder' => __('lang.please_select'),
+                ]) !!}
+            </div>
+            <div class="col-md-3 mb-2">
+                {!! Form::label('name', __('lang.name'), [
+                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                {!! Form::text('name', null, [
+                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                'placeholder' => __('lang.name'),
                 ]) !!}
             </div>
             <div class="col-md-4 mb-2">
@@ -23,15 +33,28 @@
                 'placeholder' => __('lang.id_number'),
                 ]) !!}
             </div>
-            <div class="col-md-3 mb-2">
-                {!! Form::label('name', __('lang.name'), [
+            <div class="col-md-2 mb-2 div-company d-none">
+                {!! Form::label('id_number', __('lang.tax_number') , [
                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
-                {!! Form::text('name', null, [
+                {!! Form::text('tax_number', null, [
+                'style'=> "border:1px solid #e6e6e6 !important",
                 'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                'placeholder' => __('lang.name'),
+                'placeholder' => __('lang.tax_number'),
                 ]) !!}
             </div>
+            <div class="col-md-2 mb-2 div-company d-none">
+                {!! Form::label('tax_location_id', translate('tax_locations') . '*', [
+                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                {!! Form::select('tax_location_id', $tax_locations, null , [
+                'class' => 'selectpicker form-control',
+                'data-live-search' => 'true',
+                'placeholder' => __('lang.tax_locations'),
+                'required',
+                ]) !!}
+            </div>
+
 
             <div class="col-md-3 mb-2">
                 {!! Form::label('mobile_number', __('lang.mobile_number') . '*', [

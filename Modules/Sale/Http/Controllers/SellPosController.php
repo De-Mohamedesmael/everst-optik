@@ -160,7 +160,7 @@ class SellPosController extends Controller
         $design_lenses = Design::orderBy('name', 'asc')->pluck('name', 'id');
         $foci = Focus::orderBy('name', 'asc')->pluck('name', 'id');
         $index_lenses = IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
-        $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors = Color::where('is_lens',true)->orderBy('name', 'asc')->pluck('name', 'id');
         $lenses = Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
 
 
@@ -510,7 +510,7 @@ class SellPosController extends Controller
         $design_lenses = Design::orderBy('name', 'asc')->pluck('name', 'id');
         $foci = Focus::orderBy('name', 'asc')->pluck('name', 'id');
         $index_lenses = IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
-        $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors = Color::where('is_lens',true)->orderBy('name', 'asc')->pluck('name', 'id');
         $lenses = Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
         return view('sale::back-end.pos.edit')->with(compact(
             'transaction',

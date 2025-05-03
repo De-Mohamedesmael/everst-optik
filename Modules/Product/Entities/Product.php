@@ -52,11 +52,11 @@ class Product extends Model implements HasMedia
     }
     public function scopeLens($query)
     {
-        $query->where('is_lens', true);
+        $query->where('products.is_lens', true);
     }
     public function scopeProduct($query)
     {
-        $query->where('is_lens', false);
+        $query->where('products.is_lens', false);
     }
     public function categories()
     {

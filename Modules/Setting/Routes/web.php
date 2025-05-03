@@ -14,6 +14,7 @@ use Modules\Setting\Http\Controllers\StoreController;
 use Modules\Setting\Http\Controllers\StorePosController;
 use Modules\Setting\Http\Controllers\TaxController;
 use Modules\Setting\Http\Controllers\SpecialBaseController;
+use Modules\Setting\Http\Controllers\TaxLocationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,10 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
 
     Route::get('colors/get-dropdown', [ColorController::class,'getDropdown'])->name('colors.dropdown');
     Route::resource('colors', ColorController::class);
+
+    Route::get('tax_locations/get-dropdown', [TaxLocationController::class,'getDropdown'])->name('colors.dropdown');
+    Route::resource('tax_locations', TaxLocationController::class);
+
     Route::get('sizes/get-dropdown', [SizeController::class,'getDropdown'])->name('sizes.dropdown');
     Route::resource('sizes', SizeController::class);
 //Özel Baz
