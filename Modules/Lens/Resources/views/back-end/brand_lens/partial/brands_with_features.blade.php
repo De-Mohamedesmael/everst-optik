@@ -187,15 +187,17 @@
 
     .technicalLeftMenu {
         overflow: auto;
-        width: 80px;
-        height: 100%;
+        width: 100%;
+        height: 120;
         position: fixed;
-        top: 0;
+        bottom: 0;
         left: 0;
+        right: 0;
         background: #f4f4f4;
         padding-top: 20px;
         z-index: 5;
         border-right: 1px solid #ebebeb;
+        display: flex;
     }
 
     .technicalLeftMenu.pixarMenu a {
@@ -204,8 +206,9 @@
         justify-content: center;
         align-items: center;
 
-        min-height: 150px;
+
         width: 100%;
+        min-width: 50px;
 
     }
 
@@ -215,7 +218,7 @@
         justify-content: center;
         align-items: center;
 
-        min-height: 150px;
+
 
         width: 100%;
 
@@ -368,29 +371,35 @@
 
 
     @php
-    $html_links .= '<a data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
+    $html_links .= '<div class="d-flex flex-column" style="min-width: 200px;
+    border-right: 1px solid #aaa">';
+        $html_links .= '<a data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
+
+            if($key==0){
+                $html_links .= 'active';
+            }
+            $html_links .= '">';
+
+
+            $html_links .=' <img style="height: 25px;" src="'.$brand->icon.'">';
+            $html_links .='</a>';
+
+
+
+
+
+        $html_links .= '<a class="div-price" style="font-weight: 600" data-id="'.$brand->id.'"
+            data-color="'.$brand->color.'" href="#" class="';
 
           if($key==0){
               $html_links .= 'active';
           }
           $html_links .= '">';
 
-
-        $html_links .=' <img style="    transform: rotate(-90deg);height: 30px;" src="'.$brand->icon.'">';
-        $html_links .='</a>';
-
-
-    $html_links_ .= '<a class="div-price" data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
-
-          if($key==0){
-              $html_links_ .= 'active';
-          }
-          $html_links_ .= '">';
-
-        $html_links_ .=' <span
-            style="writing-mode: vertical-rl; transform: rotate(180deg); height: 55px;color: #dd8888;">
-            '.$brand->price.' '.session("currency")["symbol"].' </span>';
-        $html_links_ .='</a>';
+            $html_links .=' <span style="  width: 55px;color: #dd8888;">
+                '.$brand->price.' '.session("currency")["symbol"].' </span>';
+            $html_links .='</a>';
+        $html_links .= '</div>';
     @endphp
 
 
@@ -398,9 +407,8 @@
     <div class="pixar-menu-container">
         <div id="technicalLeftMenu" class="technicalLeftMenu pixarMenu">
             {!! $html_links !!}
-        </div>
-        <div id="technicalLeftMenu_" class="technicalLeftMenu technicalLeftMenu_ pixarMenu">
-            {!! $html_links_ !!}
+
+            {{-- {!! $html_links_ !!} --}}
         </div>
     </div>
 
@@ -509,56 +517,4 @@
             });
         });
     });
-</script>
-
-<script>
-    // Get references to both divs
-const div1 = document.getElementById('technicalLeftMenu');
-const div2 = document.getElementById('technicalLeftMenu_');
-
-// Use requestAnimationFrame for smoother performance
-let isScrolling = false;
-let scrollTimeout;
-let lastKnownScrollPosition = 0;
-let ticking = false;
-
-// Function to handle the scroll synchronization
-function syncScroll(sourceDiv, targetDiv) {
-if (isScrolling) return;
-
-isScrolling = true;
-targetDiv.scrollTop = sourceDiv.scrollTop;
-
-// Clear any existing timeout
-clearTimeout(scrollTimeout);
-
-// Set a timeout to release the lock
-scrollTimeout = setTimeout(() => {
-isScrolling = false;
-}, 5); // Reduced from 10ms to 5ms for faster response
-}
-
-// Use passive event listeners for better performance
-div1.addEventListener('scroll', () => {
-if (!ticking) {
-window.requestAnimationFrame(() => {
-syncScroll(div1, div2);
-ticking = false;
-});
-ticking = true;
-}
-}, { passive: true });
-
-div2.addEventListener('scroll', () => {
-if (!ticking) {
-window.requestAnimationFrame(() => {
-syncScroll(div2, div1);
-ticking = false;
-});
-ticking = true;
-}
-}, { passive: true });
-
-
-
 </script>
