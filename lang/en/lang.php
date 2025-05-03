@@ -1437,4 +1437,6 @@
   'Left glass is the same
                                                                                     as right glass' => 'Left glass is the same
                                                                                     as right glass',
+  'tax_location' => 'Tax location',
+  'Nothing' => 'Nothing',
 );

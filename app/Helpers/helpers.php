@@ -83,7 +83,7 @@ function getCroppedImages($cropImages){
 function num_format($expression): string
 {
     $currency_precision = 2;
-    return number_format($expression,  $currency_precision, '.', '');
+    return number_format($expression,  $currency_precision, ',', '.');
 }
 
 
