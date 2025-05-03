@@ -858,29 +858,38 @@
                         .every(function() {
                             var column = this;
                             var currency_total = [];
+
                             $.each(currency_obj, function(key, value) {
                                 currency_total[value.currency_id] = 0;
                             });
+
+                            function parseEuroNumber(val) {
+                                if (typeof val === "string") {
+                                    val = val.replace(/\./g, '').replace(',', '.');
+                                }
+                                return parseFloat(val) || 0;
+                            }
+
                             column.data().each(function(group, i) {
                                 b = $(group).text();
                                 currency_id = $(group).data('currency_id');
 
                                 $.each(currency_obj, function(key, value) {
                                     if (currency_id == value.currency_id) {
-                                        currency_total[value.currency_id] += intVal(
-                                            b);
+                                        currency_total[value.currency_id] += parseEuroNumber(b);
                                     }
                                 });
                             });
+
                             var footer_html = '';
                             $.each(currency_obj, function(key, value) {
                                 footer_html +=
-                                    `<h6 class="currency_total currency_total_${value.currency_id}" data-currency_id="${value.currency_id}" data-is_default="${value.is_default}" data-conversion_rate="${value.conversion_rate}" data-base_conversion="${currency_total[value.currency_id] * value.conversion_rate}" data-orig_value="${currency_total[value.currency_id]}">${__currency_trans_from_en(currency_total[value.currency_id], false)}</h6>`
+                                    `<h6 class="currency_total currency_total_${value.currency_id}" data-currency_id="${value.currency_id}" data-is_default="${value.is_default}" data-conversion_rate="${value.conversion_rate}" data-base_conversion="${currency_total[value.currency_id] * value.conversion_rate}" data-orig_value="${currency_total[value.currency_id]}">${__currency_trans_from_en(currency_total[value.currency_id], false)}</h6>`;
                             });
-                            $(column.footer()).html(
-                                footer_html
-                            );
+
+                            $(column.footer()).html(footer_html);
                         });
+
                 },
                 initComplete: function (settings, json) {
                 // Move elements into the .top-controls div after DataTable initializes

@@ -49,8 +49,8 @@ class Util
      */
     public function num_f($input_number, $add_symbol = false, $business_details = null, $is_quantity = false)
     {
-        $thousand_separator = ',';
-        $decimal_separator = '.';
+        $thousand_separator = '.';
+        $decimal_separator = ',';
 
         $currency_precision =  !empty(System::getProperty('numbers_length_after_dot')) ? System::getProperty('numbers_length_after_dot') : 2;
 

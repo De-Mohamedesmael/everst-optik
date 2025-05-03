@@ -187,9 +187,9 @@
                                             <th>@lang('lang.products')</th>
                                             <th class="currencies">@lang('lang.received_currency')</th>
                                             <th class="sum">@lang('lang.discount')</th>
-                                            <th class="sum">@lang('lang.grand_total')</th>
-                                            <th class="sum">@lang('lang.paid')</th>
-                                            <th class="sum">@lang('lang.due')</th>
+                                            <th class="sum_discounts">@lang('lang.grand_total')</th>
+                                            <th class="sum_purchase">@lang('lang.paid')</th>
+                                            <th class="sum_purchase_due">@lang('lang.due')</th>
                                             <th>@lang('lang.payment_date')</th>
                                             <th>@lang('lang.status')</th>
                                             <th>@lang('lang.points_earned')</th>
@@ -228,9 +228,9 @@
                                             <th>@lang('lang.reference_no')</th>
                                             <th>@lang('lang.customer')</th>
                                             <th class="sum">@lang('lang.discount')</th>
-                                            <th class="sum">@lang('lang.grand_total')</th>
-                                            <th class="sum">@lang('lang.paid')</th>
-                                            <th class="sum">@lang('lang.due')</th>
+                                            <th class="sum_discounts">@lang('lang.grand_total')</th>
+                                            <th class="sum_purchase">@lang('lang.paid')</th>
+                                            <th class="sum_purchase_due">@lang('lang.due')</th>
                                             <th>@lang('lang.payment_date')</th>
                                             <th>@lang('lang.status')</th>
                                             <th>@lang('lang.cashier')</th>
@@ -291,7 +291,7 @@
                                                         @can('sale.pos.view')
                                                         <li>
 
-                                                            <a data-href="#{{-- action('SellReturnController@show', $return->return_parent_id) --}}"
+                                                            <a data-href="{{ route('admin.sale-return.show', $return->return_parent_id) }}"
                                                                 data-container=".view_modal" class="btn btn-modal"><i
                                                                     class="fa fa-eye"></i>
                                                                 @lang('lang.view')</a>
@@ -300,7 +300,7 @@
                                                         @endcan
                                                         @can('sale.pos.create_and_edit')
                                                         <li>
-                                                            <a href="#{{-- action('SellReturnController@add', $return->return_parent_id) --}}"
+                                                            <a href="{{ route('admin.saleReturn.add', $return->return_parent_id) }}"
                                                                 class="btn"><i class="dripicons-document-edit"></i>
                                                                 @lang('lang.edit')</a>
                                                         </li>
@@ -404,7 +404,7 @@
                                                         user="menu">
                                                         @can('sale.pos.view')
                                                         <li>
-                                                            <a data-href="{{ action('SellController@show', $discount->id) }}"
+                                                            <a data-href="{{ route('admin.sale.show', $discount->id) }}"
                                                                 data-container=".view_modal" class="btn btn-modal"><i
                                                                     class="fa fa-eye"></i>
                                                                 @lang('lang.view')</a>
@@ -413,7 +413,7 @@
                                                         @endcan
                                                         @can('sale.pos.create_and_edit')
                                                         <li>
-                                                            <a href="{{ action('SellController@edit', $discount->id) }}"
+                                                            <a href="{{ route('admin.sale.edit', $discount->id) }}"
                                                                 class="btn"><i class="dripicons-document-edit"></i>
                                                                 @lang('lang.edit')</a>
                                                         </li>
@@ -422,7 +422,7 @@
 
                                                         @can('sale.pos.delete')
                                                         <li>
-                                                            <a data-href="{{ action('SellController@destroy', $discount->id) }}"
+                                                            <a data-href="{{ route('admin.sale.destroy', $discount->id) }}"
                                                                 data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"
                                                                 class="btn text-red delete_item"><i
                                                                     class="fa fa-trash"></i>
@@ -748,34 +748,46 @@
                             });
                         })
                         this.api()
-                            .columns(".sum", {
+                            .columns(".sum,.sum_purchase,.sum_discounts,.sum_purchase_due", {
                                 page: "current"
                             })
-                            .every(function () {
+                            .every(function() {
                                 var column = this;
-                                var currency_total = [];
-                                $.each(currency_obj, function (key, value) {
-                                    currency_total[value.currency_id] = 0;
-                                });
-                                column.data().each(function (group, i) {
-                                    b = $(group).text();
-                                    currency_id = $(group).data('currency_id');
 
-                                    $.each(currency_obj, function (key, value) {
-                                        if (currency_id == value.currency_id) {
-                                            currency_total[value.currency_id] += intVal(
-                                                b);
+                                function parseEuroNumber(val) {
+                                    var isNegative=false;
+
+                                    if (typeof val === "string") {
+                                        val = val.trim();
+                                        if (val.includes('-')) {
+                                            isNegative = true;
                                         }
+                                        val = val.replace(/[^\d,-]/g, '');
+                                        val = val.replace(/-/g, '');
+                                        val = val.replace(/\./g, '').replace(',', '.');
+                                    }
+
+                                    let number = parseFloat(val) || 0;
+                                    console.log(isNegative,val,number);
+                                    if (isNegative) {
+                                        number = -number;
+                                    }
+                                    return number ;
+                                }
+
+                                if (column.data().count()) {
+                                    var sum = column.data().reduce(function(a, b) {
+                                        a = parseEuroNumber(a);
+                                        b = parseEuroNumber(b);
+                                        console.log(a + b);
+
+                                        return a + b;
                                     });
-                                });
-                                var footer_html = '';
-                                $.each(currency_obj, function (key, value) {
-                                    footer_html +=
-                                        `<h6 class="currency_total currency_total_${value.currency_id}" data-currency_id="${value.currency_id}" data-is_default="${value.is_default}" data-conversion_rate="${value.conversion_rate}" data-base_conversion="${currency_total[value.currency_id] * value.conversion_rate}" data-orig_value="${currency_total[value.currency_id]}">${__currency_trans_from_en(currency_total[value.currency_id], false)}</h6>`
-                                });
-                                $(column.footer()).html(
-                                    footer_html
-                                );
+                                    console.log( sum);
+                                    $(column.footer()).html(
+                                        __currency_trans_from_en(sum, false)
+                                    );
+                                }
                             });
                     },
                 });
@@ -831,7 +843,7 @@
                 }],
                 columns: [{
                     data: "invoice_no",
-                    name: "invoice_no"
+                    name: "transactions.invoice_no"
                 },
                     {
                         data: "lens",
@@ -888,28 +900,36 @@
                         .every(function() {
                             var column = this;
                             var currency_total = [];
+
                             $.each(currency_obj, function(key, value) {
                                 currency_total[value.currency_id] = 0;
                             });
+
+                            function parseEuroNumber(val) {
+                                if (typeof val === "string") {
+                                    val = val.replace(/\./g, '').replace(',', '.');
+                                }
+                                return parseFloat(val) || 0;
+                            }
+
                             column.data().each(function(group, i) {
                                 b = $(group).text();
                                 currency_id = $(group).data('currency_id');
 
                                 $.each(currency_obj, function(key, value) {
                                     if (currency_id == value.currency_id) {
-                                        currency_total[value.currency_id] += intVal(
-                                            b);
+                                        currency_total[value.currency_id] += parseEuroNumber(b);
                                     }
                                 });
                             });
+
                             var footer_html = '';
                             $.each(currency_obj, function(key, value) {
                                 footer_html +=
-                                    `<h6 class="currency_total currency_total_${value.currency_id}" data-currency_id="${value.currency_id}" data-is_default="${value.is_default}" data-conversion_rate="${value.conversion_rate}" data-base_conversion="${currency_total[value.currency_id] * value.conversion_rate}" data-orig_value="${currency_total[value.currency_id]}">${__currency_trans_from_en(currency_total[value.currency_id], false)}</h6>`
+                                    `<h6 class="currency_total currency_total_${value.currency_id}" data-currency_id="${value.currency_id}" data-is_default="${value.is_default}" data-conversion_rate="${value.conversion_rate}" data-base_conversion="${currency_total[value.currency_id] * value.conversion_rate}" data-orig_value="${currency_total[value.currency_id]}">${__currency_trans_from_en(currency_total[value.currency_id], false)}</h6>`;
                             });
-                            $(column.footer()).html(
-                                footer_html
-                            );
+
+                            $(column.footer()).html(footer_html);
                         });
                 },
             });
