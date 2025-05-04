@@ -277,29 +277,42 @@
                         })
                         .every(function() {
                             var column = this;
-                            var currency_total = [];
-                            $.each(currency_obj, function(key, value) {
-                                currency_total[value.currency_id] = 0;
-                            });
-                            column.data().each(function(group, i) {
-                                b = $(group).text();
-                                currency_id = $(group).data('currency_id');
 
-                                $.each(currency_obj, function(key, value) {
-                                    if (currency_id == value.currency_id) {
-                                        currency_total[value.currency_id] += intVal(
-                                            b);
+                            function parseEuroNumber(val) {
+                                var isNegative=false;
+
+                                if (typeof val === "string") {
+                                    val = val.trim();
+                                    val = val.replace(/[\u200E\u202D\u202C\u00A0]/g, '');
+                                    if (val.includes('-')) {
+                                        isNegative = true;
                                     }
+                                    val = val.replace(/[^\d,-]/g, '');
+                                    val = val.replace(/-/g, '');
+                                    val = val.replace(/\./g, '').replace(',', '.');
+                                }
+
+                                let number = parseFloat(val) || 0;
+
+                                if (isNegative) {
+                                    number = -number;
+                                }
+                                return number ;
+                            }
+
+                            if (column.data().count()) {
+                                var sum = column.data().reduce(function(a, b) {
+                                    a = parseEuroNumber(a);
+                                    b = parseEuroNumber(b);
+                                    console.log(a + b);
+
+                                    return a + b;
                                 });
-                            });
-                            var footer_html = '';
-                            $.each(currency_obj, function(key, value) {
-                                footer_html +=
-                                    `<h6 class="currency_total currency_total_${value.currency_id}" data-currency_id="${value.currency_id}" data-is_default="${value.is_default}" data-conversion_rate="${value.conversion_rate}" data-base_conversion="${currency_total[value.currency_id] * value.conversion_rate}" data-orig_value="${currency_total[value.currency_id]}">${__currency_trans_from_en(currency_total[value.currency_id], false)}</h6>`
-                            });
-                            $(column.footer()).html(
-                                footer_html
-                            );
+                                console.log( sum);
+                                $(column.footer()).html(
+                                    __currency_trans_from_en(sum, false)
+                                );
+                            }
                         });
                 },
             });

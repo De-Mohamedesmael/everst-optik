@@ -609,11 +609,8 @@ class SellPosController extends Controller
                 $transaction = $this->transactionUtil->updateTransactionPaymentStatus($transaction->id);
             }
 
-            if (!empty($request->transaction_customer_size)) {
-                $this->transactionUtil->createOrUpdateTransactionCustomerSize($transaction, $request->transaction_customer_size);
-            }
 
-            // $this->transactionUtil->createOrUpdateTransactionSupplierService($transaction, $request);
+
 
             if (!empty($request->commissioned_employees)) {
                 $this->transactionUtil->createOrUpdateTransactionCommissionedEmployee($transaction, $request->commissioned_employees);
@@ -626,10 +623,7 @@ class SellPosController extends Controller
             }
 
 
-            if (!empty($request->dining_table_id)) {
-                $dining_table = DiningTable::find($request->dining_table_id);
-                $transaction_data['dining_room_id'] = $dining_table->dining_room_id;
-            }
+
 
 
             DB::commit();
@@ -1588,8 +1582,8 @@ class SellPosController extends Controller
         $validator = validator($request->all(), [
             'lens_id' => 'required|integer|exists:products,id',
             'product' => 'required|array',
-            'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+            //            'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            //            'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
             //            'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
             //            'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
             //            'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
@@ -1600,8 +1594,8 @@ class SellPosController extends Controller
             //            'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
 
 
-            'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+//            'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+//            'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
             //            'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
             //            'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
             //            'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',

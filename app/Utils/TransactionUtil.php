@@ -106,7 +106,7 @@ class TransactionUtil extends Util
      * updateTransactionPaymentStatus function
      *
      * @param integer $transaction_id
-     * @return void
+     * @return mixed
      */
     public function updateTransactionPaymentStatus($transaction_id)
     {
@@ -1065,6 +1065,9 @@ class TransactionUtil extends Util
                 if (!$product->is_service) {
                     $this->productUtil->updateProductQuantityStore($deleted_line->product_id, $transaction->store_id, $deleted_line->quantity);
                 }
+            }
+            if($deleted_line->is_lens){
+                Prescription::where('sell_line_id',$deleted_line->id)->delete();
             }
             $deleted_line->delete();
         }

@@ -1609,7 +1609,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         if(Far_SPH !== '' && Near_SPH !== '' ){
             $('#Left_Addition').val(Near_SPH - Far_SPH);
         }else if(Left_Addition !== '' && Near_SPH !== ''){
-            $('#Right_Far_SPH').val(Near_SPH - Left_Addition);
+            $('#Left_Far_SPH').val(Near_SPH - Left_Addition);
         }else if(Left_Addition !== '' && Far_SPH !== ''){
             $('#Left_Near_SPH').val( parseFloat(Far_SPH) +  parseFloat(Left_Addition));
         }else{

@@ -597,8 +597,7 @@ $prescription_id= \Modules\Customer\Entities\Prescription::where('sell_line_id',
                                                 class="col-lg-4  @if ($transaction->shared_commission != 1) hide @endif shared_commission_div">
                                                 <div class="i-checks toggle-pill-color flex-col-centered" style="margin-top: 37px;">
                                                     <input id="shared_commission" name="shared_commission"
-                                                        type="checkbox" value="1" class="form-control-custom" @if
-                                                        ($transaction->shared_commission == 1) checked @endif>
+                                                        type="checkbox" value="1" class="form-control-custom" @if($transaction->shared_commission == 1) checked @endif>
                                                     <label for="shared_commission">
                                                     </label>
                                                     <span>
