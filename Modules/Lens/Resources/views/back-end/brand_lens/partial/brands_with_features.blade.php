@@ -243,6 +243,10 @@
         -webkit-filter: grayscale(0%);
     }
 
+    .technicalMenuContainer:hover img {
+        -webkit-filter: grayscale(0%);
+    }
+
     .beforeAfterMenu {
         width: 100%;
         max-width: 730px;
@@ -371,7 +375,7 @@
 
 
     @php
-    $html_links .= '<div class="d-flex flex-column" style="min-width: 200px;
+    $html_links .= '<div class="d-flex flex-column technicalMenuContainer" style="min-width: 200px;
     border-right: 1px solid #aaa">';
         $html_links .= '<a data-id="'.$brand->id.'" data-color="'.$brand->color.'" href="#" class="';
 
@@ -396,7 +400,7 @@
           }
           $html_links .= '">';
 
-            $html_links .=' <span style="  width: 55px;color: #dd8888;">
+            $html_links .=' <span style="  width: 100%;color: #dd8888;text-align: center;">
                 '.$brand->price.' '.session("currency")["symbol"].' </span>';
             $html_links .='</a>';
         $html_links .= '</div>';
