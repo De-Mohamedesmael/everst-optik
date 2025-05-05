@@ -476,23 +476,42 @@ var datatable_params = {
         };
 
         this.api()
-            .columns(".sum", { page: "current" })
-            .every(function () {
+            .columns(".sum,.sum_purchase,.sum_discounts,.sum_purchase_due", {
+                page: "current"
+            })
+            .every(function() {
                 var column = this;
-                if (column.data().count()) {
-                    var sum = column.data().reduce(function (a, b) {
-                        a = intVal(a);
-                        if (isNaN(a)) {
-                            a = 0;
-                        }
 
-                        b = intVal(b);
-                        if (isNaN(b)) {
-                            b = 0;
+                function parseEuroNumber(val) {
+                    var isNegative=false;
+
+                    if (typeof val === "string") {
+                        val = val.trim();
+                        if (val.includes('-')) {
+                            isNegative = true;
                         }
+                        val = val.replace(/[^\d,-]/g, '');
+                        val = val.replace(/-/g, '');
+                        val = val.replace(/\./g, '').replace(',', '.');
+                    }
+
+                    let number = parseFloat(val) || 0;
+                    console.log(isNegative,val,number);
+                    if (isNegative) {
+                        number = -number;
+                    }
+                    return number ;
+                }
+
+                if (column.data().count()) {
+                    var sum = column.data().reduce(function(a, b) {
+                        a = parseEuroNumber(a);
+                        b = parseEuroNumber(b);
+                        console.log(a + b);
 
                         return a + b;
                     });
+                    console.log( sum);
                     $(column.footer()).html(
                         __currency_trans_from_en(sum, false)
                     );

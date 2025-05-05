@@ -165,7 +165,7 @@ input.form-control-custom:checked+label::before {
     border-top: 4px solid #dadada;
     width: 70%;
     margin: auto;
-    margin-top: 15px;
+    margin-top: -40px;
     /* padding: 0; */
     padding-top: 15px;
 }
@@ -211,4 +211,8 @@ input.form-control-custom:checked+label::before {
 .select_product_button:hover {
     background-color: var(--secondary-color);
     color: white;
+}
+
+#order_lens_modal {
+    padding-bottom: 70px;
 }

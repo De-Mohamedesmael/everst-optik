@@ -540,11 +540,12 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                         <div
                                                             class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                                                             <div class="col-md-3 ">
-                                                                <div class="noBorderRight">
+                                                                <div class="noBorderRight" class="noBorderRight"
+                                                                    style="margin-bottom:5px">
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[qepho] ">
+                                                                            class="icheckbox_square-orange toggle-pill-color flex-row-centered icheck-item  icheck-item icheck[qepho] ">
                                                                             <input type="checkbox" id="VATintingCheck"
                                                                                 data-subs="tintingList"
                                                                                 class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
@@ -575,11 +576,12 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 ">
-                                                                <div class="noBorderRight">
+                                                                <div class="noBorderRight" class="noBorderRight"
+                                                                    style="margin-bottom:5px">
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] ">
+                                                                            class="icheckbox_square-orange toggle-pill-color flex-row-centered icheck-item  icheck-item icheck[wzqw0] ">
                                                                             <input type="checkbox" id="VABaseCheck"
                                                                                 data-subs="vaBaseList"
                                                                                 class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
@@ -609,11 +611,12 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 ">
-                                                                <div class="noBorderRight">
+                                                                <div class="noBorderRight" class="noBorderRight"
+                                                                    style="margin-bottom:5px">
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] ">
+                                                                            class="icheckbox_square-orange toggle-pill-color flex-row-centered icheck-item  icheck-item icheck[wzqw0] ">
                                                                             <input type="checkbox"
                                                                                 id="specific_diameter"
                                                                                 data-subs="vaBaseList"
@@ -642,11 +645,12 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 ">
-                                                                <div class="noBorderRight">
+                                                                <div class="noBorderRight" class="noBorderRight"
+                                                                    style="margin-bottom:5px">
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[wzqw0] ">
+                                                                            class="icheckbox_square-orange toggle-pill-color flex-row-centered icheck-item  icheck-item icheck[wzqw0] ">
                                                                             <input type="checkbox" id="VASpecialCheck"
                                                                                 data-subs="vaBaseList"
                                                                                 class="icheck-me additionalProcessChecker icheck-input icheck[wzqw0]"
@@ -676,11 +680,12 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
-                                                                <div class="noBorderRight">
+                                                                <div class="noBorderRight" class="noBorderRight"
+                                                                    style="margin-bottom:5px">
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
                                                                         <div
-                                                                            class="icheckbox_square-orange icheck-item icheck[qepho] ">
+                                                                            class="icheckbox_square-orange toggle-pill-color flex-row-centered icheck-item  icheck-item icheck[qepho] ">
                                                                             <input type="checkbox" id="codeCheck"
                                                                                 data-subs="tintingList"
                                                                                 class="icheck-me additionalProcessChecker icheck-input icheck[qepho] valid"
@@ -942,7 +947,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 <div class="check-line"
                                                                     style="width: 100%;text-align: left;">
                                                                     <div
-                                                                        class="icheckbox_square-orange icheck-item  checked ">
+                                                                        class="icheckbox_square-orange   toggle-pill-color flex-row-centered icheck-item  checked ">
                                                                         <input type="checkbox" id="RightLens"
                                                                             class="icheck-me checkForLens icheck-input icheck[ho025]"
                                                                             checked=""
@@ -952,9 +957,11 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
 
                                                                         <label class="inline icheck-label "
                                                                             for="RightLens">
-                                                                            {{translate('I Want Right Glass')}}
 
                                                                         </label>
+                                                                        <span>
+                                                                            {{translate('I Want Right Glass')}}
+                                                                        </span>
                                                                     </div>
                                                                 </div>
 
@@ -1148,9 +1155,9 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 <div class="row" style="padding-left: 0;">
                                                                     <div class="col-xs-12 d-flex">
                                                                         <div class="check-line"
-                                                                            style="width: 100%;text-align: left;">
+                                                                            style="width: 50%;text-align: left;">
                                                                             <div
-                                                                                class="icheckbox_square-orange icheck-item ">
+                                                                                class="icheckbox_square-orange toggle-pill-color flex-row-centered icheck-item  icheck-item ">
                                                                                 <input type="checkbox" id="LeftLens"
                                                                                     class="icheck-me checkForLens icheck-input "
                                                                                     name="product[Lens][Left][isCheck]"
@@ -1158,16 +1165,18 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                                     data-color="orange" data-rl="Left">
                                                                                 <label class="inline icheck-label "
                                                                                     for="LeftLens">
-                                                                                    {{translate('I Want Left Glass')}}
                                                                                 </label>
+                                                                                <span>
+                                                                                    {{translate('I Want Left Glass')}}
 
+                                                                                </span>
                                                                             </div>
 
                                                                         </div>
                                                                         <div class="check-line"
-                                                                            style="width: 100%;text-align: left;">
+                                                                            style="width: 80%;text-align: left;">
                                                                             <div
-                                                                                class="icheckbox_square-orange icheck-item ">
+                                                                                class="icheckbox_square-orange toggle-pill-color flex-row-centered icheck-item  icheck-item ">
                                                                                 <input type="checkbox" id="sameToRight"
                                                                                     class="icheck-me popover2 icheck-input icheck[veqwi]"
                                                                                     data-popover="&lt;Bilgi|Sağ cam sol cam ile aynı olsun|left"
@@ -1178,9 +1187,12 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                                     disabled="" >
                                                                                 <label class="inline icheck-label "
                                                                                     for="sameToRight">
+                                                                                </label>
+                                                                                <span>
                                                                                     {{translate('Left glass is the same
                                                                                     as right glass')}}
-                                                                                </label>
+
+                                                                                </span>
                                                                             </div>
 
 
@@ -1597,7 +1609,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         if(Far_SPH !== '' && Near_SPH !== '' ){
             $('#Left_Addition').val(Near_SPH - Far_SPH);
         }else if(Left_Addition !== '' && Near_SPH !== ''){
-            $('#Right_Far_SPH').val(Near_SPH - Left_Addition);
+            $('#Left_Far_SPH').val(Near_SPH - Left_Addition);
         }else if(Left_Addition !== '' && Far_SPH !== ''){
             $('#Left_Near_SPH').val( parseFloat(Far_SPH) +  parseFloat(Left_Addition));
         }else{
