@@ -156,12 +156,17 @@ function __get_percent_value(amount, percentage = 0) {
     return (percentage / 100) * amount;
 }
 
-function __number_uf(input, use_page_currency = false) {
+function __number_uf(input, use_page_currency = false,is_urp=false) {
+    if (is_urp) {
+        let normalized = input.replace(/\./g, '').replace(',', '.');
+        return parseFloat(normalized);
+    }
     if (use_page_currency && __currency_decimal_separator) {
         var decimal = __p_currency_decimal_separator;
     } else {
         var decimal = __currency_decimal_separator;
     }
+
     return accounting.unformat(input, decimal);
 }
 
@@ -179,8 +184,8 @@ function __number_f(
     );
 }
 
-function __read_number(input_element, use_page_currency = false) {
-    return __number_uf(input_element.val(), use_page_currency);
+function __read_number(input_element, use_page_currency = false,is_urp =false) {
+    return __number_uf(input_element.val(), use_page_currency,is_urp);
 }
 
 function __write_number(

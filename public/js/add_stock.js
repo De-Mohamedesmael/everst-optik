@@ -302,7 +302,7 @@ function calculate_sub_totals() {
     $("#product_table > tbody > .product_row").each((ele, tr) => {
         let quantity = __read_number($(tr).find(".quantity"));
         let productId = $(tr).find(".product_id").val();
-        let purchase_price = __read_number($(tr).find(".purchase_price"));
+        let purchase_price = __read_number($(tr).find(".purchase_price"),false,true);
         let sub_total = purchase_price * quantity;
         let hasBatchQuantity = false;
 
@@ -310,7 +310,7 @@ function calculate_sub_totals() {
             let batchProductId = $(td).find(".batch_product_id").val();
             if (batchProductId === productId) {
                 let batch_quantity = __read_number($(td).find(".batch_quantity" + productId));
-                let batch_purchase_price = __read_number($(td).find(".batch_purchase_price" + productId));
+                let batch_purchase_price = __read_number($(td).find(".batch_purchase_price" + productId),false,true);
                 if (batch_quantity) {
                     sub_total += batch_quantity * batch_purchase_price;
                     hasBatchQuantity = true;
@@ -331,9 +331,13 @@ function calculate_sub_totals() {
     var other_expenses = __read_number($("#other_expenses"));
     var discount_amount = __read_number($("#discount_amount"));
     var other_payments = __read_number($("#other_payments"));
+    console.log(total+'total');
+    console.log(other_expenses+'other_expenses');
+    console.log(discount_amount+'discount_amount');
+    console.log(other_payments+'other_payments');
 
     total = total + other_expenses - discount_amount + other_payments;
-
+        console.log(total+'total');
     // Update grand total and final total
     __write_number($("#grand_total"), total);
     __write_number($("#final_total"), total);
@@ -344,8 +348,8 @@ function calculate_sub_totals() {
 }
 
 $(document).on("change", "#amount", function () {
-    let amount = __read_number($("#amount"));
-    let final_total = __read_number($("#final_total"));
+    let amount = __read_number($("#amount"),false,true);
+    let final_total = __read_number($("#final_total"),false,true);
 
     let due_amount = final_total - amount;
     if (due_amount > 0) {
@@ -370,14 +374,14 @@ function calculate_final_cost_for_products() {
     $('.items_count_span').text(item_count);
     $('.items_quantity_span').text(total_qauntity);
     let unit_other_expenses =
-        __read_number($("#other_expenses")) / total_qauntity;
+        __read_number($("#other_expenses"),false,true) / total_qauntity;
     let unit_discount_amount =
-        __read_number($("#discount_amount")) / total_qauntity;
+        __read_number($("#discount_amount"),false,true) / total_qauntity;
     let unit_other_payments =
-        __read_number($("#other_payments")) / total_qauntity;
+        __read_number($("#other_payments"),false,true) / total_qauntity;
 
     $("#product_table > tbody  > tr").each((ele, tr) => {
-        let purchase_price = __read_number($(tr).find(".purchase_price"));
+        let purchase_price = __read_number($(tr).find(".purchase_price"),false,true);
         let final_cost =
             purchase_price +
             unit_other_expenses -
@@ -402,15 +406,13 @@ $(document).on("change", ".purchase_price", function () {
 $(document).on("change", ".quantity", function () {
     let tr = $(this).closest("tr");
     let old_qty=parseInt($(this).data('val'));
-    let number_vs_base_unit = __read_number($(tr).find("#number_vs_base_unit"));
     let current_stock = __read_number($(tr).find(".current_stock"));
     let qty = __read_number($(tr).find(".quantity"));
+
     let is_service = parseInt($(tr).find(".is_service").val());
-    let purchase_price = __read_number($(tr).find(".purchase_price"));
-    qty=qty * number_vs_base_unit;
-    old_qty=old_qty * number_vs_base_unit;
+
     let new_qty =0;
-    if(current_stock==0){
+    if(current_stock === 0){
         new_qty=current_stock + qty;
     }else{
         if(old_qty){
@@ -424,7 +426,7 @@ $(document).on("change", ".quantity", function () {
     }
     $(tr)
     .find(".current_stock")
-    .val(__currency_trans_from_en(new_qty, false));
+    .val(new_qty);
     $(tr)
         .find("span.current_stock_text")
         .text(__currency_trans_from_en(new_qty, false));
