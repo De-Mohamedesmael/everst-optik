@@ -378,6 +378,7 @@ class AddStockController extends Controller
                 ];
           } catch (\Exception $e) {
               DB::rollback();
+              dd($e);
               Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
               $output = [
                   'success' => false,

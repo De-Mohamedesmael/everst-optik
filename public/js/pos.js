@@ -700,9 +700,10 @@ function calculate_sub_totals() {
     $("#product_table > tbody  > tr").each((ele, tr) => {
         let quantity = __read_number($(tr).find(".quantity"));
         item_quantity+=quantity;
-        let sell_price = __read_number($(tr).find(".sell_price"));
+        let sell_price = __read_number($(tr).find(".sell_price"),false,true);
 
-        let price_hidden = __read_number($(tr).find(".price_hidden"));
+        let price_hidden = __read_number($(tr).find(".price_hidden"),false,true);
+        console.log(price_hidden,sell_price);
         let sub_total = 0;
         if (sell_price > price_hidden) {
 

@@ -51,7 +51,6 @@
                 'class' => 'selectpicker form-control',
                 'data-live-search' => 'true',
                 'placeholder' => __('lang.tax_locations'),
-                'required',
                 ]) !!}
             </div>
 
