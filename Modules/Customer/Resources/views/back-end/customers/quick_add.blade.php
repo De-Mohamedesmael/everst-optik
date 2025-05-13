@@ -1,10 +1,10 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         {!! Form::open([
-            'url' => route('admin.customers.store'),
-            'method' => 'post',
-            'id' => $quick_add ? 'quick_add_customer_form' : 'customer_add_form',
-            'enctype' => 'multipart/form-data',
+        'url' => route('admin.customers.store'),
+        'method' => 'post',
+        'id' => $quick_add ? 'quick_add_customer_form' : 'customer_add_form',
+        'enctype' => 'multipart/form-data',
         ]) !!}
 
         <div
@@ -21,6 +21,7 @@
 
         <div
             class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse justify-content-end @else justify-content-start flex-row @endif align-items-center">
+
             @include('customer::back-end.customers.partial.create_customer_form')
         </div>
 

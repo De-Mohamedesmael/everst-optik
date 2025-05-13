@@ -45,7 +45,8 @@
             <div class="modal-footer">
                 <button type="submit" class="col-3 py-1 btn btn-main " id="btn-lens-add"
                     data-dismiss="modal">@lang('lang.add')</button>
-                <button type="button" class="btn btn-secondary " data-dismiss="modal">{{ __('lang.close') }}</button>
+                <button type="button" class="btn btn-secondary " style="z-index: 1111" data-dismiss="modal">{{
+                    __('lang.close') }}</button>
             </div>
         </div>
     </div>
