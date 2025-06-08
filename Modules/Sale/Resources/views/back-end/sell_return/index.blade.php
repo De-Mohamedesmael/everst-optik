@@ -71,32 +71,7 @@
                                         ]) !!}
                                     </div>
                                 </div>
-                                @if (session('system_mode') == 'restaurant')
-                                    <div class="col-md-3 px-5">
-                                        <div class="form-group">
-                                            {!! Form::label('dining_room_id', __('lang.dining_room'), [
-                                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                            ]) !!}
-                                            {!! Form::select('dining_room_id', $dining_rooms, request()->dining_room_id, [
-                                                'class' => 'form-control sale_filter',
-                                                'placeholder' => __('lang.all'),
-                                                'data-live-search' => 'true',
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 px-5">
-                                        <div class="form-group">
-                                            {!! Form::label('dining_table_id', __('lang.dining_table'), [
-                                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                            ]) !!}
-                                            {!! Form::select('dining_table_id', $dining_tables, request()->dining_table_id, [
-                                                'class' => 'form-control sale_filter',
-                                                'placeholder' => __('lang.all'),
-                                                'data-live-search' => 'true',
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                @endif
+
                                 <div class="col-md-3 px-5">
                                     <div class="form-group">
                                         {!! Form::label('start_date', __('lang.start_date'), [

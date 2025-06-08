@@ -318,7 +318,7 @@
         </td>
     </tr>
     @if($old_len && $data_len && $total_vu > 0)
-        <tr class="lens-row-{{  $index }}" style="font-weight: bold">
+        <tr class="lenses-item lens-row-{{  $index }}" style="font-weight: bold">
             <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($data_len->VA_amount->TinTing_amount) && $data_len->VA_amount->TinTing_amount > 0)
@@ -416,7 +416,7 @@
             </td>
         </tr>
     @elseif($product->is_lens && $total_vu > 0)
-        <tr class="lens-row-{{  $index }}" style="font-weight: bold">
+        <tr class="lenses-item lens-row-{{  $index }}" style="font-weight: bold">
             <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)
