@@ -1386,4 +1386,19 @@
                                                                                     as right glass' => 'Left glass is the same
                                                                                     as right glass',
   'lens_transactions' => 'Lens transactions',
+  'tax_location' => 'Tax location',
+  'add_factory' => 'Add factory',
+  'factory_code' => 'كود المصنع',
+  'owner_name' => 'اسم المالك',
+  'lenses_send' => 'ارسال عدسات للتصنيع',
+  'factories' => 'المصانع',
+  'Önceki
+                                                                    reçeteler' => 'Önceki
+                                                                    reçeteler',
+  'Önceden Tanımlanmış
+                                                                            Şekiller' => 'Önceden Tanımlanmış
+                                                                            Şekiller',
+  'Left glass is the same
+                                                                                    as right glass' => 'Left glass is the same
+                                                                                    as right glass',
 );

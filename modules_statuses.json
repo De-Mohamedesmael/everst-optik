@@ -8,5 +8,6 @@
     "CashRegister": true,
     "Supplier": false,
     "AddStock": true,
-    "Lens": true
+    "Lens": true,
+    "Factory": true
 }
