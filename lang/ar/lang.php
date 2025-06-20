@@ -1401,4 +1401,6 @@
   'Left glass is the same
                                                                                     as right glass' => 'Left glass is the same
                                                                                     as right glass',
+  'factory' => 'Factory',
+  'add_lenses' => 'Add lenses',
 );

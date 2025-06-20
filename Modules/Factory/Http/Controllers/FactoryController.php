@@ -22,6 +22,8 @@ use Modules\Setting\Entities\SpecialAddition;
 use Illuminate\Support\Facades\Cache;
 use Modules\Factory\Mail\LensOrderMail;
 use Illuminate\Support\Facades\Mail;
+use Modules\Customer\Entities\Prescription;
+use Yajra\DataTables\Facades\DataTables;
 
 
 
@@ -30,7 +32,6 @@ class FactoryController extends Controller
 
     public function index()
     {
-        
         return view('factory::back-end.factories.index');
     }
 
@@ -145,6 +146,42 @@ class FactoryController extends Controller
         return redirect()->route('admin.factories.index')->with('status', $output);
     }
 
+
+    public function getFactoriesLenses(Request $request)
+    {
+        $prescriptions = Prescription::with(['factory', 'product'])->ofFactories()->paginate(10);
+
+        if (request()->ajax()) {
+            return DataTables::of($prescriptions)
+                ->addColumn('factory_name', function ($row) {
+                    if(!empty($row->factory)){
+                        return $row->factory->name;
+                    }else{
+                        return '';
+                    }
+                })
+                ->addColumn('product', function ($row) {
+                    if(!empty($row->product)){
+                        return $row->product->name;
+                    }else{
+                        return '';
+                    }
+                })                
+                ->addColumn('date', function ($row) {
+                    return $row->date;
+                })
+                ->rawColumns([
+                    'factory_name',
+                    'product',
+                    'date',
+                    'action',
+                ])
+                ->make(true);
+        }
+
+        return view('factory::back-end.lenses.index', compact('prescriptions'));
+    }
+
     public function createLenses()
     {
         $brand_lenses = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
@@ -156,6 +193,7 @@ class FactoryController extends Controller
         $special_bases = SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
         $special_additions = SpecialAddition::orderBy('name', 'asc')->pluck('name', 'id');
 
+        $factories = Factory::where('active',1)->orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('factory::back-end.lenses.create', compact(
             'brand_lenses', 
@@ -165,42 +203,41 @@ class FactoryController extends Controller
             'colors', 
             'lenses', 
             'special_bases',
-            'special_additions'));
+            'special_additions',
+            'factories'));
     }
 
     public function sendLenses(Request $request)
     {
+
         $validator = validator($request->all(), [
+            'factory_id' => 'required|integer|exists:factories,id',
             'lens_id' => 'required|integer|exists:products,id',
-            'product' => 'required|array',
-            //            'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
-
-
-            //            'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
-
-
-            'product.VA.TinTing.value' => 'required_if:product.VA.TinTing.isCheck,1',
-            'product.VA.Base.value' => 'required_if:product.VA.Base.isCheck,1',
-            'product.VA.Ozel.value' => 'required_if:product.VA.Ozel.isCheck,1',
-            'product.VA.code.value' => 'required_if:product.VA.code.isCheck,1',
+            // 'product' => 'required|array',
+            // 'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            // 'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+            // 'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            // 'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+            // 'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+            // 'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            // 'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+            // 'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+            // 'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+            // 'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+            // 'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            // 'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+            // 'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            // 'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+            // 'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+            // 'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            // 'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+            // 'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            // 'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+            // 'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+            // 'product.VA.TinTing.value' => 'required_if:product.VA.TinTing.isCheck,1',
+            // 'product.VA.Base.value' => 'required_if:product.VA.Base.isCheck,1',
+            // 'product.VA.Ozel.value' => 'required_if:product.VA.Ozel.isCheck,1',
+            // 'product.VA.code.value' => 'required_if:product.VA.code.isCheck,1',
         ]);
         if ($validator->fails())
             return [
@@ -211,6 +248,7 @@ class FactoryController extends Controller
         $VA_amount = [];
         $total = 0;
         $VA = [];
+
         if (isset($request->product['VA']['TinTing']['isCheck']) && $request->product['VA']['TinTing']['isCheck'] != null) {
 
             $VA_amount['TinTing_amount'] = System::getProperty('TinTing_amount') ?: 10;
@@ -232,14 +270,12 @@ class FactoryController extends Controller
             $VA['Base']['text'] = $Base?->name;
         }
 
-
         if (isset($request->product['VA']['Ozel']['isCheck']) && $request->product['VA']['Ozel']['isCheck'] != null) {
             $VA_amount['Ozel_amount'] = System::getProperty('Ozel_amount') ?: 10;
             $total = $total + $VA_amount['Ozel_amount'];
             $VA['Ozel'] = $request->product['VA']['Ozel'];
             $VA['Ozel']['text'] = $request->product['VA']['Ozel']['value'];
         }
-
 
         if (isset($request->product['VA']['Special']['isCheck']) && $request->product['VA']['Special']['isCheck'] != null) {
             $Specials = SpecialAddition::wherein('id', $request->product['VA']['Special']['value'])->get();
@@ -265,16 +301,35 @@ class FactoryController extends Controller
         $timestamp = time();
 
 
-        $cacheKey = "{$randomNumber}_{$timestamp}";
-        $expirationTime = 60 * 6;
-        Cache::put($cacheKey, $data, $expirationTime);
+        // $cacheKey = "{$randomNumber}_{$timestamp}";
+        // $expirationTime = 60 * 6;
+        // Cache::put($cacheKey, $data, $expirationTime);
 
+        
+        // if($line['is_lens']){
+            // $is_lens=$line['is_lens'];
+            // $KeyLens=$line['KeyLens'];
+            $prescription_data=[
+                // 'customer_id' => $transaction->customer_id,
+                'product_id' => $request->lens_id,
+                // 'sell_line_id' => $transaction_sell_line->id,
+                'factory_id' => $request->factory_id,
+                'date' => date('Y-m-d'),
+                'data' => json_encode($data),
+            ];
+            $prescription = Prescription::create($prescription_data);
 
-        // dd($data);
+            //     api index from pdf, clcik any product send to supplier or send to client via uts
+            //     api list of finshed lens  send to supplier or send to client via uts
+            //     only ouyside indutries lenses will be traced
+            
+        // }
+
+        return redirect()->route('admin.factories.lenses.index');
 
         Mail::to('tariksalahnet@hotmail.com')->send(new LensOrderMail($data));
-
-
+        
+        
 
 
 

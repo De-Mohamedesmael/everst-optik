@@ -557,6 +557,21 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                         ]) !!}
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group ">
+                                                        {!! Form::label('factory_id', translate('factory'), [
+                                                        'class' => 'form-label d-block mb-1 ',
+                                                        ]) !!}
+                                                        {!! Form::select('factory_id', $factories,null, [
+                                                        'class' => ' selectpicker form-control',
+                                                        'data-live-search' => 'true',
+                                                        'style' => 'width: 80%',
+                                                        'data-actions-box' => 'true',
+                                                        'id' => 'factory_id',
+                                                        'placeholder' => __('lang.please_select'),
+                                                        ]) !!}
+                                                    </div>
+                                                </div>                                                
                                             </div>
 
 
