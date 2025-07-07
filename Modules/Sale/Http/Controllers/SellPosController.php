@@ -283,6 +283,7 @@ class SellPosController extends Controller
      */
     public function store(Request $request): array|RedirectResponse
     {
+        
         // return $request->payments[0]['method'];
         // try {
         $last_due = ($this->transactionUtil->getCustomerBalance($request->customer_id)['balance']);
@@ -1594,8 +1595,8 @@ class SellPosController extends Controller
             //            'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
 
 
-//            'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-//            'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+            //            'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+            //            'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
             //            'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
             //            'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
             //            'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',

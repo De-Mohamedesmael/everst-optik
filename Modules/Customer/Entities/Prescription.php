@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 use Modules\Product\Entities\Product;
+use Modules\Factory\Entities\Factory;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -30,5 +31,16 @@ class Prescription extends Model implements HasMedia
     {
         return $this->belongsTo(Product::class,'product_id');
     }
+
+    public function factory(): BelongsTo
+    {
+        return $this->belongsTo(Factory::class);
+    }
+
+    public function scopeOfFactories($query)
+    {
+        return $query->whereNotNull('factory_id');
+    }
+    
 
 }
