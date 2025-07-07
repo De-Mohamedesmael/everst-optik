@@ -1392,15 +1392,11 @@
   'owner_name' => 'اسم المالك',
   'lenses_send' => 'ارسال عدسات للتصنيع',
   'factories' => 'المصانع',
-  'Önceki
-                                                                    reçeteler' => 'Önceki
-                                                                    reçeteler',
-  'Önceden Tanımlanmış
-                                                                            Şekiller' => 'Önceden Tanımlanmış
-                                                                            Şekiller',
-  'Left glass is the same
-                                                                                    as right glass' => 'Left glass is the same
-                                                                                    as right glass',
   'factory' => 'Factory',
   'add_lenses' => 'Add lenses',
+  'code' => 'Code',
+  'updated_by' => 'Updated by',
+  'updated_at' => 'Updated at',
+  'created_at' => 'Created at',
+  'factory_name' => 'Factory name',
 );

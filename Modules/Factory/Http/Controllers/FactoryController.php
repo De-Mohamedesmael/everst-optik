@@ -2,11 +2,13 @@
 
 namespace Modules\Factory\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 // use Illuminate\Routing\Controller;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use Modules\Customer\Entities\Customer;
 use Modules\Factory\Entities\Factory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -32,13 +34,70 @@ class FactoryController extends Controller
 
     public function index()
     {
+        if (request()->ajax()) {
+
+            $customers = Factory::leftjoin('admins', 'factories.created_by', 'admins.id')
+                ->leftjoin('admins as edited', 'factories.edited_by', 'admins.id')
+                ->select(
+                'factories.*',
+                'admins.name as created_by_name',
+                'edited.name as updated_by_name',
+            );
+
+            return DataTables::of($customers)
+                ->editColumn('created_at', '{{@format_datetime($created_at)}}')
+                ->editColumn('created_by', '{{$created_by_name}}')
+                ->editColumn('updated_by', '{{$updated_by_name}}')
+                ->editColumn('updated_at', '{{@format_datetime($updated_at)}}')
+                ->addColumn(
+                    'action',
+                    function ($row) {
+                        $html = '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">' . __('lang.action') . '
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">';
+
+                        if (auth()->user()->can('customer_module.customer.create_and_edit')) {
+                            $html .=
+                                '<li>
+                    <a href="' . route('admin.customers.edit', $row->id) . '"
+                        ><i class="dripicons-document-edit"></i>
+                        ' .__('lang.edit') . '</a>
+                        </li>';
+                        }
+
+                        if (auth()->user()->can('customer_module.customer.delete')) {
+                                $html .=
+                                    '<li>
+                        <a data-href="' .route('admin.customers.destroy', $row->id). '"
+                        data-check_password="' .route('admin.check-password', auth('admin')->user()->id). '"
+                        class="btn text-red delete_customer"><i class="fa fa-trash"></i>
+                            ' .__('lang.delete') . '</a>
+                            </li>';
+                            }
+
+                        $html .="</ul>";
+                       return $html;
+                    }
+                )
+                ->rawColumns([
+                    'action',
+                    'created_at',
+                    'created_by',
+                    'updated_at',
+                    'updated_by',
+                ])
+               ->make(true);
+        }
         return view('factory::back-end.factories.index');
     }
 
     public function create()
     {
         $countries = Country::pluck('arabic', 'id');
-        return view('factory::back-end.factories.create')->with(compact('countries'));            
+        return view('factory::back-end.factories.create')->with(compact('countries'));
     }
 
     public function store(Request $request)
@@ -166,7 +225,7 @@ class FactoryController extends Controller
                     }else{
                         return '';
                     }
-                })                
+                })
                 ->addColumn('date', function ($row) {
                     return $row->date;
                 })
@@ -196,12 +255,12 @@ class FactoryController extends Controller
         $factories = Factory::where('active',1)->orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('factory::back-end.lenses.create', compact(
-            'brand_lenses', 
-            'foci', 
-            'design_lenses', 
-            'index_lenses', 
-            'colors', 
-            'lenses', 
+            'brand_lenses',
+            'foci',
+            'design_lenses',
+            'index_lenses',
+            'colors',
+            'lenses',
             'special_bases',
             'special_additions',
             'factories'));
@@ -305,7 +364,7 @@ class FactoryController extends Controller
         // $expirationTime = 60 * 6;
         // Cache::put($cacheKey, $data, $expirationTime);
 
-        
+
         // if($line['is_lens']){
             // $is_lens=$line['is_lens'];
             // $KeyLens=$line['KeyLens'];
@@ -322,14 +381,14 @@ class FactoryController extends Controller
             //     api index from pdf, clcik any product send to supplier or send to client via uts
             //     api list of finshed lens  send to supplier or send to client via uts
             //     only ouyside indutries lenses will be traced
-            
+
         // }
 
         return redirect()->route('admin.factories.lenses.index');
 
         Mail::to('tariksalahnet@hotmail.com')->send(new LensOrderMail($data));
-        
-        
+
+
 
 
 
