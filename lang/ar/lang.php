@@ -1399,4 +1399,6 @@
   'updated_at' => 'Updated at',
   'created_at' => 'Created at',
   'factory_name' => 'Factory name',
+  'request_lenses' => 'Request lenses',
+  'add_request_lenses' => 'Add request lenses',
 );

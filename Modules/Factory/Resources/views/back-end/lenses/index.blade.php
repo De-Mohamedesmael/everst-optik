@@ -65,7 +65,7 @@
 @endsection
 @section('button')
     <div class="widgetbar d-flex @if (app()->isLocale('ar')) justify-content-start @else justify-content-end @endif">
-        <a class="btn btn-primary" href="{{ route('admin.factories.lenses.create') }}">{{translate('add_lenses')}}</a>
+        <a class="btn btn-primary" href="{{ route('admin.factories_lenses.create') }}">{{translate('add_request_lenses')}}</a>
     </div>
 @endsection
 @section('content')
@@ -74,79 +74,22 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 px-1">
-                    {{-- <div class="card mb-2 mt-2">
-                        <div class="card-body p-2">
-                            <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                                <div class="col-md-2 px-5">
-                                    <div class="form-group">
-                                        {!! Form::label('start_date', __('lang.start_date'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::date('startdate', request()->start_date, [
-                                            'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                            'id' => 'startdate',
-                                        ]) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2 px-5">
-                                    <div class="form-group">
-                                        {!! Form::label('end_date', __('lang.end_date'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::date('enddate', request()->end_date, [
-                                            'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                            'id' => 'enddate',
-                                        ]) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2 px-5">
-                                    <div class="form-group">
-                                        {!! Form::label('customer_type_id', __('lang.customer_type'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::select('customer_type_id', $customer_types, request()->customer_type_id, [
-                                            'class' => 'form-control
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        selectpicker',
-                                            'data-live-search' => 'true',
-                                            'placeholder' => __('lang.all'),
-                                            'id' => 'customer_type_id',
-                                        ]) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-2 mb-2">
-                                    {!! Form::label('gender', translate('gender') . '*', [
-                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                    ]) !!}
-                                    {!! Form::select('gender', \Modules\Customer\Entities\Customer::getDropdownGender(), null , [
-                                        'class' => 'selectpicker form-control',
-                                        'data-live-search' => 'true',
-                                        'required',
-                                        'placeholder' => __('lang.all'),
-                                    ]) !!}
-                                </div>
-                                <div class="col-md-2 px-5 d-flex justify-content-center align-items-center">
-                                    <button type="button"
-                                        class="btn btn-main col-md-12 filter_product">@lang('lang.filter')</button>
-                                </div>
-                                <div class="col-md-2 px-5 d-flex justify-content-center align-items-center">
-                                    <button class="btn btn-danger col-md-12 clear_filters">@lang('lang.clear_filters')</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-
                     <div class="card mb-2">
                         <div class="card-body p-2">
                             <div class="table-responsive">
                                 <table id="store_table" class="table" style="width: 100%">
                                     <thead>
                                         <tr>
+
                                             <th>@lang('lang.factory_name')</th>
-                                            <th>@lang('lang.product')</th>
+                                            <th>@lang('lang.customer_name')</th>
+                                            <th>@lang('lang.customer_phone')</th>
+                                            <th>@lang('lang.lens_name')</th>
+                                            <th>@lang('lang.lenses_price')</th>
+                                            <th>@lang('lang.total_extra')</th>
+                                            <th>@lang('lang.amount_total')</th>
                                             <th>@lang('lang.date')</th>
+                                            <th>@lang('lang.created_at')</th>
                                             <th class="notexport">@lang('lang.action')</th>
                                         </tr>
                                     </thead>
@@ -155,6 +98,12 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -203,7 +152,7 @@
                 bSortable: true,
                 bRetrieve: true,
                 "ajax": {
-                    "url": "/dashboard/factories/lenses/index",
+                    "url": "{{route('admin.factories_lenses.index')}}",
                     "data": function(d) {
                         // d.startdate = $('#startdate').val();
                         // d.enddate = $('#enddate').val();
@@ -217,23 +166,48 @@
                         "searchable": true
                     },
                     {
-                        "targets": [6], // Column 6 (purchases)
+                        "targets": [7], // Column 6 (purchases)
                         "orderable": true, // Enable sorting for the "purchases" column
                         "searchable": true
                     }
                 ],
-                columns: [{
+                columns: [
+                    {
                         data: 'factory_name',
-                        name: 'factory_name'
+                        name: 'factories.name'
                     },
                     {
-                        data: 'product',
-                        name: 'product'
+                        data:'customer_name',
+                        name: 'customers.name',
+                    },
+                    {
+                        data:'customer_phone',
+                        name: 'customers.mobile_number'
+                    },
+                    {
+                        data: 'lens_name',
+                        name: 'products.name'
+                    },
+                    {
+                        data: 'amount_product',
+                        name: 'amount_product'
+                    },
+                    {
+                        data: 'total_extra',
+                        name: 'total_extra'
+                    },
+                    {
+                        data: 'amount_total',
+                        name: 'amount_total'
                     },
                     {
                         data: 'date',
                         name: 'date'
-                    },                    
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at'
+                    },
                     {
                         data: 'action',
                         name: 'action'
@@ -257,109 +231,6 @@
                 },
             });
 
-        });
-
-
-        $(document).on('click', '.delete_customer', function(e) {
-            e.preventDefault();
-            swal({
-                title: 'Are you sure?',
-                text: "@lang('lang.all_customer_transactions_will_be_deleted')",
-                icon: 'warning',
-            }).then(willDelete => {
-                if (willDelete) {
-                    var check_password = $(this).data('check_password');
-                    var href = $(this).data('href');
-                    var data = $(this).serialize();
-
-                    swal({
-                        title: 'Please Enter Your Password',
-                        content: {
-                            element: "input",
-                            attributes: {
-                                placeholder: "Type your password",
-                                type: "password",
-                                autocomplete: "off",
-                                autofocus: true,
-                            },
-                        },
-                        inputAttributes: {
-                            autocapitalize: 'off',
-                            autoComplete: 'off',
-                        },
-                        focusConfirm: true
-                    }).then((result) => {
-                        if (result) {
-                            $.ajax({
-                                url: check_password,
-                                method: 'POST',
-                                data: {
-                                    value: result
-                                },
-                                dataType: 'json',
-                                success: (data) => {
-
-                                    if (data.success == true) {
-                                        swal(
-                                            'Success',
-                                            'Correct Password!',
-                                            'success'
-                                        );
-
-                                        $.ajax({
-                                            method: 'DELETE',
-                                            url: href,
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function(result) {
-                                                if (result.success ==
-                                                    true) {
-                                                    swal(
-                                                        'Success',
-                                                        result.msg,
-                                                        'success'
-                                                    );
-                                                    setTimeout(() => {
-                                                        location
-                                                            .reload();
-                                                    }, 1500);
-                                                    location.reload();
-                                                } else {
-                                                    swal(
-                                                        'Error',
-                                                        result.msg,
-                                                        'error'
-                                                    );
-                                                }
-                                            },
-                                        });
-
-                                    } else {
-                                        swal(
-                                            'Failed!',
-                                            'Wrong Password!',
-                                            'error'
-                                        )
-
-                                    }
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-
-
-        });
-        $(document).on('click', '.filter_product', function() {
-            store_table.ajax.reload();
-        })
-        $(document).on('click', '.clear_filters', function(e) {
-            // e.preventDefault();
-            $('#startdate').val('');
-            $('#enddate').val('');
-            $('#customer_type_id').val('')
-            store_table.ajax.reload();
         });
     </script>
 @endsection
