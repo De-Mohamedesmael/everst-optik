@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Mail;
 use Modules\Customer\Entities\Prescription;
 use Yajra\DataTables\Facades\DataTables;
 
-
+use Illuminate\Support\Facades\Http;
 
 class FactoryController extends Controller
 {
@@ -204,6 +204,252 @@ class FactoryController extends Controller
 
         return redirect()->route('admin.factories.index')->with('status', $output);
     }
+
+
+    public function getFactoriesLenses(Request $request)
+    {
+        $prescriptions = Prescription::with(['factory', 'product'])->ofFactories();
+
+        if (request()->ajax()) {
+            return DataTables::of($prescriptions)
+                ->addColumn('factory_name', fn($row) => $row->factory?->name ?? '')
+                ->addColumn('product', fn($row) => $row->product?->name ?? '')
+                ->addColumn('date', fn($row) => $row->date)
+                ->addColumn('scan_input', function($row) {
+                    return '<input type="text" class="form-control scan-input" data-id="'.$row->id.'" value="'.e($row->qr_code).'" />';
+                })
+                ->addColumn('qr_code_image', function($row) {
+                    if ($row->qr_code) {
+                        $qr_url = 'https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=' . urlencode($row->qr_code);
+                        return '<img src="' . $qr_url . '" width="100" height="100">';
+                    }
+                    return '<span class="text-muted">—</span>';
+                })      
+                ->addColumn('actions', function($row) {
+                    return '<button class="btn btn-sm btn-primary send-btn" data-id="'.$row->id.'">بيع</button>';
+                })
+                ->rawColumns(['factory_name', 'product', 'date', 'scan_input', 'qr_code_image', 'actions'])                                          
+                ->make(true);
+        }        
+
+        return view('factory::back-end.lenses.index', compact('prescriptions'));
+    }
+
+    public function createLenses()
+    {
+        $brand_lenses = BrandLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $foci = Focus::orderBy('name', 'asc')->pluck('name', 'id');
+        $design_lenses = Design::orderBy('name', 'asc')->pluck('name', 'id');
+        $index_lenses = IndexLens::orderBy('name', 'asc')->pluck('name', 'id');
+        $colors = Color::where('is_lens',true)->orderBy('name', 'asc')->pluck('name', 'id');
+        $lenses = Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
+        $special_bases = SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
+        $special_additions = SpecialAddition::orderBy('name', 'asc')->pluck('name', 'id');
+
+        $factories = Factory::where('active',1)->orderBy('name', 'asc')->pluck('name', 'id');
+
+        return view('factory::back-end.lenses.create', compact(
+            'brand_lenses', 
+            'foci', 
+            'design_lenses', 
+            'index_lenses', 
+            'colors', 
+            'lenses', 
+            'special_bases',
+            'special_additions',
+            'factories'));
+    }
+
+    public function saveQr(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required|exists:prescriptions,id',
+            'qr_code' => 'nullable|string|max:255|unique:prescriptions,qr_code,' . $request->id,
+        ]);
+
+        $prescription = Prescription::findOrFail($request->id);
+        $prescription->qr_code = $request->qr_code;
+        $prescription->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم حفظ QR بنجاح'
+        ]);
+    }
+
+    public function sellToUts(Request $request)
+    {
+        $validated = $request->validate([
+            'uno' => 'required|string',
+            'lot' => 'nullable|string',
+            'sno' => 'nullable|string',
+            'adt' => 'nullable|integer',
+            'vrn' => 'required|date',
+            'vrnT' => 'required|string|in:SATIS,HIBE,IADESATIS',
+            'aciklama' => 'nullable|string',
+            'aliciKurum.krn' => 'required|string',
+            'aliciKurum.tip' => 'required|string|in:KURUM,FIRMA',
+        ]);
+
+        try {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'utsToken' => 'PUT_YOUR_TOKEN_HERE'
+            ])->post('https://utstest.saglik.gov.tr/UTS/uh/rest/bildirim/verme/ekle', $validated); // test
+            // https://utsuygulama.saglik.gov.tr/UTS/uh/rest/bildirim/verme/ekle // real
+
+            return response()->json([
+                'status' => $response->successful(),
+                'response' => $response->json(),
+            ], $response->status());
+
+        } catch (\Throwable $e) {
+            Log::error('UTS Error: '.$e->getMessage());
+
+            return response()->json([
+                'status' => false,
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
+    }
+
+    // not used
+    // public function sendLenses(Request $request)
+    // {
+
+    //     $validator = validator($request->all(), [
+    //         'factory_id' => 'required|integer|exists:factories,id',
+    //         'lens_id' => 'required|integer|exists:products,id',
+    //         // 'product' => 'required|array',
+    //         // 'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+    //         // 'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+    //         // 'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+    //         // 'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+    //         // 'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+    //         // 'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+    //         // 'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
+    //         // 'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
+    //         // 'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
+    //         // 'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
+    //         // 'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+    //         // 'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+    //         // 'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+    //         // 'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+    //         // 'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+    //         // 'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+    //         // 'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
+    //         // 'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
+    //         // 'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
+    //         // 'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
+    //         // 'product.VA.TinTing.value' => 'required_if:product.VA.TinTing.isCheck,1',
+    //         // 'product.VA.Base.value' => 'required_if:product.VA.Base.isCheck,1',
+    //         // 'product.VA.Ozel.value' => 'required_if:product.VA.Ozel.isCheck,1',
+    //         // 'product.VA.code.value' => 'required_if:product.VA.code.isCheck,1',
+    //     ]);
+    //     if ($validator->fails())
+    //         return [
+    //             'success' => false,
+    //             'msg' => $validator->errors()->first()
+    //         ];
+
+    //     $VA_amount = [];
+    //     $total = 0;
+    //     $VA = [];
+
+    //     if (isset($request->product['VA']['TinTing']['isCheck']) && $request->product['VA']['TinTing']['isCheck'] != null) {
+
+    //         $VA_amount['TinTing_amount'] = System::getProperty('TinTing_amount') ?: 10;
+    //         $color = Color::whereId($request->product['VA']['TinTing']['value'])->first();
+    //         $total = $total + $VA_amount['TinTing_amount'];
+    //         $VA['TinTing'] = $request->product['VA']['TinTing'];
+    //         $VA['TinTing']['text'] = $color?->name;
+    //     }
+
+    //     if (isset($request->product['VA']['Base']['isCheck']) && $request->product['VA']['Base']['isCheck'] != null) {
+
+    //         $Base = SpecialBase::whereId($request->product['VA']['Base']['value'])->first();
+    //         $VA_amount['Base_amount'] = 0;
+    //         if ($Base) {
+    //             $VA_amount['Base_amount'] = $Base->price;
+    //         }
+    //         $total = $total + $VA_amount['Base_amount'];
+    //         $VA['Base'] = $request->product['VA']['Base'];
+    //         $VA['Base']['text'] = $Base?->name;
+    //     }
+
+    //     if (isset($request->product['VA']['Ozel']['isCheck']) && $request->product['VA']['Ozel']['isCheck'] != null) {
+    //         $VA_amount['Ozel_amount'] = System::getProperty('Ozel_amount') ?: 10;
+    //         $total = $total + $VA_amount['Ozel_amount'];
+    //         $VA['Ozel'] = $request->product['VA']['Ozel'];
+    //         $VA['Ozel']['text'] = $request->product['VA']['Ozel']['value'];
+    //     }
+
+    //     if (isset($request->product['VA']['Special']['isCheck']) && $request->product['VA']['Special']['isCheck'] != null) {
+    //         $Specials = SpecialAddition::wherein('id', $request->product['VA']['Special']['value'])->get();
+    //         $VA_amount['Special_amount'] = $Specials->sum('price');
+    //         $VA['Special'] = $request->product['VA']['Special'];
+    //         foreach ($Specials as $key => $Special) {
+    //             $VA['Special']['TV'][$key] = [
+    //                 'text' => $Special->name,
+    //                 'price' => $Special->price,
+    //             ];
+    //         }
+    //         $total = $total + $VA_amount['Special_amount'];
+    //     }
+    //     $VA['code'] = $request->product['VA']['code'];
+    //     $VA['code']['text'] = $request->product['VA']['code']['value'];
+    //     $VA_amount['total'] = $total;
+    //     $data = [
+    //         'VA' => $VA,
+    //         'VA_amount' => $VA_amount,
+    //         'Lens' => $request->product['Lens'],
+    //     ];
+    //     $randomNumber = mt_rand(1000, 9999);
+    //     $timestamp = time();
+
+
+    //     // $cacheKey = "{$randomNumber}_{$timestamp}";
+    //     // $expirationTime = 60 * 6;
+    //     // Cache::put($cacheKey, $data, $expirationTime);
+
+        
+    //     // if($line['is_lens']){
+    //         // $is_lens=$line['is_lens'];
+    //         // $KeyLens=$line['KeyLens'];
+    //         $prescription_data=[
+    //             // 'customer_id' => $transaction->customer_id,
+    //             'product_id' => $request->lens_id,
+    //             // 'sell_line_id' => $transaction_sell_line->id,
+    //             'factory_id' => $request->factory_id,
+    //             'date' => date('Y-m-d'),
+    //             'data' => json_encode($data),
+    //         ];
+    //         $prescription = Prescription::create($prescription_data);
+
+    //         //     api index from pdf, clcik any product send to supplier or send to client via uts
+    //         //     api list of finshed lens  send to supplier or send to client via uts
+    //         //     only ouyside indutries lenses will be traced
+            
+    //     // }
+
+    //     return redirect()->route('admin.factories.lenses.index');
+
+    //     Mail::to('tariksalahnet@hotmail.com')->send(new LensOrderMail($data));
+        
+        
+
+
+
+    // }
+
+
+
+
+
+
 
 
 
