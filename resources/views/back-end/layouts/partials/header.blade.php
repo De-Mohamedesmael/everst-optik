@@ -508,8 +508,15 @@
                                 </li>
                                 <li class="navbar_item">
                                     <a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                        href="{{ route('admin.factories.lenses.create') }}"
+                                        href="{{ route('admin.factories_lenses.index') }}"
                                         class="customer-types-button d-flex item-list-a">
+                                        <i class="mdi mdi-circle"></i>{{translate('request_lenses') }}
+                                    </a>
+                                </li>
+                                <li class="navbar_item">
+                                    <a style="cursor: pointer;font-weight: 600;text-decoration: none"
+                                       href="{{ route('admin.factories_lenses.create') }}"
+                                       class="customer-types-button d-flex item-list-a">
                                         <i class="mdi mdi-circle"></i>{{ __('lang.lenses_send') }}
                                     </a>
                                 </li>
