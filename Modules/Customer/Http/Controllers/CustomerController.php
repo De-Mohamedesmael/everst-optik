@@ -316,7 +316,7 @@ class CustomerController extends Controller
         );
 
          try {
-            $data = $request->except('_token', 'quick_add', 'reward_system');
+            $data = $request->except('_token', 'quick_add', 'reward_system','image');
             $data['created_by'] = auth('admin')->user()->id;
 
             DB::beginTransaction();
@@ -552,96 +552,6 @@ class CustomerController extends Controller
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">';
-//                        if (auth()->user()->can('sale.pos.create_and_edit')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . route('admin.sale.print', $row->id) . '"
-//                                    class="btn print-invoice"><i class="dripicons-print"></i>
-//                                    ' . __('lang.generate_invoice') . '</a>
-//                            </li>';
-//                        }
-//
-//                        if (auth()->user()->can('sale.pos.view')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . route('admin.sale.show', $row->id) . '" data-container=".view_modal"
-//                                    class="btn btn-modal"><i class="fa fa-eye"></i> ' . __('lang.view') . '</a>
-//                            </li>';
-//                        }
-//                        if (auth()->user()->can('sale.pos.create_and_edit')) {
-//                            $html .=
-//                                '<li>
-//                                <a href="' . route('admin.pos.edit', $row->id) . '" class="btn"><i
-//                                        class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a>
-//                            </li>';
-//                        }
-//                        if (auth()->user()->can('sale.pos.create_and_edit')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . route('admin.sell.print', $row->id) . '"
-//                                    class="btn print-invoice"><i class="dripicons-print"></i>
-//                                    ' . __('lang.generate_invoice') . '</a>
-//                            </li>';
-//                        }
-//                        if (auth()->user()->can('sale.pos.create_and_edit')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . route('admin.sell.print', $row->id) . '?print_gift_invoice=true"
-//                                    class="btn print-invoice"><i class="fa fa-gift"></i>
-//                                    ' . __('lang.print_gift_invoice') . '</a>
-//                            </li>';
-//                        }
-//                        if (auth()->user()->can('sale.pos.view')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . route('admin.sell.show', $row->id) . '" data-container=".view_modal"
-//                                    class="btn btn-modal"><i class="fa fa-eye"></i> ' . __('lang.view') . '</a>
-//                            </li>';
-//                        }
-//                        if (auth()->user()->can('sale.pos.create_and_edit')) {
-//                            $html .=
-//                                '<li>
-//                                <a href="' . route('admin.sell.edit', $row->id) . '" class="btn"><i
-//                                        class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a>
-//                            </li>';
-//                        }
-////                        if (auth()->user()->can('return.sell_return.create_and_edit')) {
-////                            if (empty($row->return_parent)) {
-////                                $html .=
-////                                    '<li>
-////                                    <a href="' . action('SellReturnController@add', $row->id) . '" class="btn"><i
-////                                        class="fa fa-undo"></i> ' . __('lang.sale_return') . '</a>
-////                                    </li>';
-////                            }
-////                        }
-////                        if (auth()->user()->can('sale.pay.create_and_edit')) {
-////                            if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
-////                                $html .=
-////                                    ' <li>
-////                                    <a data-href="' . action('TransactionPaymentController@addPayment', $row->id) . '"
-////                                        data-container=".view_modal" class="btn btn-modal"><i class="fa fa-plus"></i>
-////                                        ' . __('lang.add_payment') . '</a>
-////                                    </li>';
-////                            }
-////                        }
-////                        if (auth()->user()->can('sale.pay.view')) {
-////                            $html .=
-////                                '<li>
-////                                <a data-href="' . action('TransactionPaymentController@show', $row->id) . '"
-////                                    data-container=".view_modal" class="btn btn-modal"><i class="fa fa-money"></i>
-////                                    ' . __('lang.view_payments') . '</a>
-////                                </li>';
-////                        }
-//                        if (auth()->user()->can('sale.pay.delete')) {
-//                            $html .=
-//                                '<li>
-//                                <a data-href="' . route('admin.sale.destroy', $row->id) . '"
-//                                    data-check_password="' . route('admin.check-password', Auth::user()->id) . '"
-//                                    class="btn text-red delete_item"><i class="fa fa-trash"></i>
-//                                    ' . __('lang.delete') . '</a>
-//                                </li>';
-//                        }
-
 
                         if (auth()->user()->can('sale.pos.create_and_edit')) {
                             $html .=
@@ -825,7 +735,7 @@ class CustomerController extends Controller
         );
 
         try {
-            $data = $request->except('_token', '_method');
+            $data = $request->except('_token', '_method','image');
 
             DB::beginTransaction();
             $customer = Customer::find($id);
@@ -929,7 +839,6 @@ class CustomerController extends Controller
                 DB::raw("SUM(IF(t.type = 'sell' AND t.status = 'final', (SELECT SUM(IF(is_return = 1,-1*amount,amount)) FROM transaction_payments WHERE transaction_payments.transaction_id=t.id), 0)) as total_paid"),
                 'customers.name',
                 'customers.address',
-                'customers.age',
                 'customers.gender',
                 'customers.deposit_balance',
                 'customers.id as customer_id',

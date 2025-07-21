@@ -6,7 +6,7 @@
 @section('breadcrumbs')
 @parent
 <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-        style="text-decoration: none;color: #476762" href="{{ route('admin.factories_lenses.index') }}">
+        style="text-decoration: none;color: #476762" href="{{ route('admin.factories.lenses.index') }}">
         {{translate('request_lenses')}}
     </a>
 </li>
@@ -408,6 +408,17 @@
     span.price-lens {
         float: inline-end;
     }
+    input#btn-lens-addaaaa {
+        width: 180px;
+        margin: auto;
+        text-align: center;
+        background-color: #398779;
+        color: #fff;
+    }
+    .row.my-2.justify-content-center.align-items-center {
+        text-align: center;
+        margin-top: 20px !important;
+    }
 </style>
 @php
 use Modules\Setting\Entities\System;
@@ -425,7 +436,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                         <div class="box box-color ">
                             <div class="box-content">
 
-                                <form id="orderLensFormCreate" action="{{route('admin.factories_lenses.store')}}" class="form-horizontal form-validate" method="POST"
+                                <form id="orderLensFormCreate" action="{{route('admin.factories.lenses.store')}}" class="form-horizontal form-validate" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
@@ -976,6 +987,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
 
                                             <hr>
                                             <div class="lens-vu-item-per total-lens ">
+                                                <input type="hidden" id="total_lens_valu" name="total_lens_valu">
                                                 {{translate('total_price')}}: <span class="price-lens " id="total-lens">
                                                     {!! num_format(0) !!} {{session("currency")["symbol"]}}</span>
                                             </div>
@@ -1440,9 +1452,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                     </div>
 
                                     <div class="row my-2 justify-content-center align-items-center">
-                                        <div class="col-md-4">
-                                            <input type="submit" value="{{ trans('lang.save') }}" id="btn-lens-addaaaa" class="btn py-1">
-                                        </div>
+                                            <input type="submit" value="{{ translate('send') }}" id="btn-lens-addaaaa" class="btn py-1">
                                     </div>
 
                                 </form>
@@ -1914,6 +1924,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                         sell_price_Text=(Number(sell_price) * 2 ).toFixed(2);
                     }
                     $("#price-lens").text(sell_price_Text + '{{session("currency")["symbol"]}}');
+                    $("#total_lens_valu").val(sell_price);
 
 
                     // sale price for Base
@@ -2076,7 +2087,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         formData = $('#orderLensFormCreate').serializeArray();
         $.ajax({
             type: "POST",
-            url: "{{route('admin.factories_lenses.store')}}",
+            url: "{{route('admin.factories.lenses.store')}}",
             data: formData,
             success: function (response) {
                 if (response.success) {

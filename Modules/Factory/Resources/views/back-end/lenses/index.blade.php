@@ -65,7 +65,7 @@
 @endsection
 @section('button')
     <div class="widgetbar d-flex @if (app()->isLocale('ar')) justify-content-start @else justify-content-end @endif">
-        <a class="btn btn-primary" href="{{ route('admin.factories_lenses.create') }}">{{translate('add_request_lenses')}}</a>
+        <a class="btn btn-primary" href="{{ route('admin.factories.lenses.create') }}">{{translate('add_request_lenses')}}</a>
     </div>
 @endsection
 @section('content')
@@ -79,30 +79,31 @@
                             <div class="table-responsive">
                                 <table id="store_table" class="table" style="width: 100%">
                                     <thead>
-                                        <tr>
-
-                                            <th>@lang('lang.factory_name')</th>
-                                            <th>@lang('lang.products')</th>
-                                            <th>@lang('lang.date')</th>
-                                            <th>@lang('qrcode')</th>
-                                            <th></th>
-                                            <th></th>
-
-                                        </tr>
+                                    <tr>
+                                        <th>{{translate('factory_name')}}</th>
+                                        <th>{{translate('lens_name')}}</th>
+                                        <th>{{translate('amount_product')}}</th>
+                                        <th>{{translate('total_extra')}}</th>
+                                        <th>{{translate('amount_total')}}</th>
+                                        <th>{{translate('date')}}</th>
+                                        <th>{{translate('qrcode')}}</th>
+                                        <th>{{translate('qr_code_image')}}</th>
+                                        <th>{{translate('actions')}}</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
 
                                     </tbody>
                                     <tfoot>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
 
-                                        </tr>
+                                    </tr>
                                     </tfoot>
                                 </table>
                             </div>
@@ -138,7 +139,7 @@
                 // searching: true,
                 serverSide: true,
                 aaSorting: [
-                    [2, 'asc']
+                    [5, 'asc']
                 ],
                 // bPaginate: false,
                 // bFilter: false,
@@ -146,7 +147,7 @@
                 bSortable: true,
                 bRetrieve: true,
                 "ajax": {
-                    "url": "{{route('admin.factories_lenses.index')}}",
+                    "url": "{{route('admin.factories.lenses.index')}}",
                     "data": function(d) {
                         // d.startdate = $('#startdate').val();
                         // d.enddate = $('#enddate').val();
@@ -155,9 +156,9 @@
                     }
                 },
                 columnDefs: [{
-                        "orderable": true,
-                        "searchable": true
-                    },
+                    "orderable": true,
+                    "searchable": true
+                },
                     {
 
                         "orderable": true, // Enable sorting for the "purchases" column
@@ -168,14 +169,6 @@
                     {
                         data: 'factory_name',
                         name: 'factories.name'
-                    },
-                    {
-                        data:'customer_name',
-                        name: 'customers.name',
-                    },
-                    {
-                        data:'customer_phone',
-                        name: 'customers.mobile_number'
                     },
                     {
                         data: 'lens_name',
@@ -198,27 +191,23 @@
                         name: 'date'
                     },
                     {
-                        data: 'created_at',
-                        name: 'created_at'
-                    },
-                    {
                         data: 'scan_input',
                         name: 'scan_input',
                         orderable: false,
                         searchable: false
                     },
-                    { 
-                        data: 'qr_code_image', 
-                        name: 'qr_code_image', 
-                        orderable: false, 
-                        searchable: false 
+                    {
+                        data: 'qr_code_image',
+                        name: 'qr_code_image',
+                        orderable: false,
+                        searchable: false
                     },
-                    { 
-                        data: 'actions', 
-                        name: 'actions', 
-                        orderable: false, 
-                        searchable: false 
-                    }                                        
+                    {
+                        data: 'actions',
+                        name: 'actions',
+                        orderable: false,
+                        searchable: false
+                    }
                 ],
             });
         });
@@ -334,7 +323,7 @@
 
             if (!qr_value) return;
 
-  
+
             $.ajax({
                 url: '/dashboard/factories/lenses/save-qr',
                 method: 'POST',

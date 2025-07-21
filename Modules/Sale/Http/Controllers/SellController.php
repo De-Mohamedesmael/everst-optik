@@ -301,6 +301,8 @@ class SellController extends Controller
                     $received_currency_id = $row->received_currency_id ?? $default_currency_id;
 
                     return '<span data-currency_id="' . $received_currency_id . '">' . number_format($due, 2, ',', '.') . '</span>';
+                })->addColumn('total_item_tax', function ($row) {
+                    return number_format($row->total_item_tax, 2, ',', '.');
                 })
                 ->addColumn('customer_type', function ($row) {
                     if (!empty($row->customer->customer_type)) {
@@ -477,6 +479,7 @@ class SellController extends Controller
                 )
                 ->rawColumns([
                     'action',
+                    'total_item_tax',
                     'method',
                     'invoice_no',
                     'ref_number',

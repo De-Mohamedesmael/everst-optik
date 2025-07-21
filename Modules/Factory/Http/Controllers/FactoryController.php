@@ -208,13 +208,21 @@ class FactoryController extends Controller
 
     public function getFactoriesLenses(Request $request)
     {
-        $prescriptions = Prescription::with(['factory', 'product'])->ofFactories();
+
 
         if (request()->ajax()) {
+            $prescriptions = Prescription::leftjoin('products', 'prescriptions.product_id', 'products.id')
+                ->leftjoin('factories', 'prescriptions.factory_id', 'factories.id')
+                ->select(
+                    'prescriptions.*',
+                    'products.name as lens_name',
+                    'factories.name as factory_name'
+                )->ofFactories();
             return DataTables::of($prescriptions)
-                ->addColumn('factory_name', fn($row) => $row->factory?->name ?? '')
-                ->addColumn('product', fn($row) => $row->product?->name ?? '')
-                ->addColumn('date', fn($row) => $row->date)
+                ->editColumn('created_at', '{{@format_datetime($created_at)}}')
+                ->editColumn('amount_product', '{{@number_format($amount_product)}}')
+                ->editColumn('total_extra', '{{@number_format($total_extra)}}')
+                ->editColumn('amount_total', '{{@number_format($amount_total)}}')
                 ->addColumn('scan_input', function($row) {
                     return '<input type="text" class="form-control scan-input" data-id="'.$row->id.'" value="'.e($row->qr_code).'" />';
                 })
@@ -224,15 +232,15 @@ class FactoryController extends Controller
                         return '<img src="' . $qr_url . '" width="100" height="100">';
                     }
                     return '<span class="text-muted">—</span>';
-                })      
+                })
                 ->addColumn('actions', function($row) {
                     return '<button class="btn btn-sm btn-primary send-btn" data-id="'.$row->id.'">بيع</button>';
                 })
-                ->rawColumns(['factory_name', 'product', 'date', 'scan_input', 'qr_code_image', 'actions'])                                          
+                ->rawColumns(['created_at', 'amount_product','total_extra','amount_total','scan_input', 'qr_code_image', 'actions'])
                 ->make(true);
-        }        
+        }
 
-        return view('factory::back-end.lenses.index', compact('prescriptions'));
+        return view('factory::back-end.lenses.index');
     }
 
     public function createLenses()
@@ -249,12 +257,12 @@ class FactoryController extends Controller
         $factories = Factory::where('active',1)->orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('factory::back-end.lenses.create', compact(
-            'brand_lenses', 
-            'foci', 
-            'design_lenses', 
-            'index_lenses', 
-            'colors', 
-            'lenses', 
+            'brand_lenses',
+            'foci',
+            'design_lenses',
+            'index_lenses',
+            'colors',
+            'lenses',
             'special_bases',
             'special_additions',
             'factories'));
@@ -415,7 +423,7 @@ class FactoryController extends Controller
     //     // $expirationTime = 60 * 6;
     //     // Cache::put($cacheKey, $data, $expirationTime);
 
-        
+
     //     // if($line['is_lens']){
     //         // $is_lens=$line['is_lens'];
     //         // $KeyLens=$line['KeyLens'];
@@ -432,14 +440,14 @@ class FactoryController extends Controller
     //         //     api index from pdf, clcik any product send to supplier or send to client via uts
     //         //     api list of finshed lens  send to supplier or send to client via uts
     //         //     only ouyside indutries lenses will be traced
-            
+
     //     // }
 
     //     return redirect()->route('admin.factories.lenses.index');
 
     //     Mail::to('tariksalahnet@hotmail.com')->send(new LensOrderMail($data));
-        
-        
+
+
 
 
 

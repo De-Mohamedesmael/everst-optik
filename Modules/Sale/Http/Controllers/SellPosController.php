@@ -283,7 +283,6 @@ class SellPosController extends Controller
      */
     public function store(Request $request): array|RedirectResponse
     {
-        
         // return $request->payments[0]['method'];
         // try {
         $last_due = ($this->transactionUtil->getCustomerBalance($request->customer_id)['balance']);
@@ -335,7 +334,6 @@ class SellPosController extends Controller
 
 
         $this->transactionUtil->createOrUpdateTransactionSellLine($transaction, $request->transaction_sell_line);
-
         foreach ($request->transaction_sell_line as $sell_line) {
             if (empty($sell_line['transaction_sell_line_id'])) {
                 if ($transaction->status == 'final') {
@@ -835,7 +833,7 @@ class SellPosController extends Controller
      */
     public function addProductRow(Request $request): array|RedirectResponse
     {
-        if ($request->ajax()) {
+//        if ($request->ajax()) {
             $batch_number_id = $request->input('batch_number_id');
             $product_id = $request->input('product_id');
             $store_pos_id = $request->input('store_pos_id');
@@ -848,10 +846,12 @@ class SellPosController extends Controller
 
             $exchange_rate = $this->commonUtil->getExchangeRateByCurrency($currency_id, $request->store_id);
             $store_pos = StorePos::where('admin_id', auth()->id())->first();
+            $old_pr=null;
             if ($store_pos && $store_pos_id == null) {
                 $store_pos_id = $store_pos->id;
             }
             $weighing_barcode = request()->get('weighing_scale_barcode');
+//            dd($weighing_barcode);
             if (!empty($weighing_barcode)) {
                 $product_details = $this->__parseWeighingBarcode($weighing_barcode);
 
@@ -859,6 +859,9 @@ class SellPosController extends Controller
                     $product_id = $product_details['product_id'];
                     $quantity = $product_details['qty'];
                     $edit_quantity = $quantity;
+                    if($product_details['pr']){
+                        $old_pr=$product_details['pr'];
+                    }
                 } else {
                     $output['success'] = false;
                     $output['msg'] = $product_details['msg'];
@@ -870,7 +873,9 @@ class SellPosController extends Controller
 
                 $index = $request->input('row_count');
                 $product = $this->productUtil->getDetailsFromProductByStore($product_id, $store_id, $batch_number_id);
-                if ($product->is_lens) {
+                if($old_pr){
+                    $old_len=$old_pr;
+                }else if ($product->is_lens) {
                     $old_len = Prescription::where('sell_line_id', $sell_lines_id)->where('product_id', $product_id)->first();
                 }
 
@@ -885,7 +890,7 @@ class SellPosController extends Controller
                 }
 
                 $have_weight = System::getProperty('weight_product' . $store_pos_id);
-
+//               dd($edit_quantity);
                 if (empty($edit_quantity)) {
                     $quantity =  $have_weight ? (float)$have_weight : 1;
                     $edit_quantity = !$product->have_weight ? $request->input('edit_quantity') : $quantity;
@@ -914,8 +919,8 @@ class SellPosController extends Controller
                 $output['msg'] = __('lang.sku_no_match');
             }
             return  $output;
-        }
-        return redirect()->back();
+//        }
+//        return redirect()->back();
     }
 
     public function addDiscounts(Request $request): JsonResponse|RedirectResponse
@@ -1000,6 +1005,15 @@ class SellPosController extends Controller
      */
     private function __parseWeighingBarcode($scale_barcode): array
     {
+        $pr=Prescription::where('qr_code',$scale_barcode)->whereNull('sell_line_id')->first();
+        if($pr && $scale_barcode ){
+            return [
+                'product_id' => $pr->product_id,
+                'qty' => 2,
+                'pr' => $pr,
+                'success' => true
+            ];
+        }
         $scale_setting = System::getProperty('weighing_scale_setting') ? json_decode(System::getProperty('weighing_scale_setting'), true) : [];
 
         $error_msg = trans("lang.something_went_wrong");

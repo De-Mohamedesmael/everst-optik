@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Cache;
 use Modules\Factory\Mail\LensOrderMail;
 use Illuminate\Support\Facades\Mail;
 use Modules\Customer\Entities\Prescription;
+use Modules\Setting\Entities\System;
 use Yajra\DataTables\Facades\DataTables;
 
 
@@ -37,13 +38,10 @@ class RequestLensController extends Controller
     {
         if (request()->ajax()) {
 
-            $customers = Prescription::leftjoin('customers', 'prescriptions.customer_id', 'customers.id')
-                ->leftjoin('products', 'prescriptions.product_id', 'products.id')
+            $customers = Prescription::leftjoin('products', 'prescriptions.product_id', 'products.id')
                 ->leftjoin('factories', 'prescriptions.factory_id', 'factories.id')
                 ->select(
                     'prescriptions.*',
-                    'customers.name as customer_name',
-                    'customers.mobile_number as customer_phone',
                     'products.name as lens_name',
                     'factories.name as factory_name'
                 );
@@ -53,7 +51,10 @@ class RequestLensController extends Controller
                 ->editColumn('amount_product', '{{@number_format($amount_product)}}')
                 ->editColumn('total_extra', '{{@number_format($total_extra)}}')
                 ->editColumn('amount_total', '{{@number_format($amount_total)}}')
-                ->addColumn(
+                ->addColumn('lens_name', function ($row) {
+                    dd($row->lens_name);
+                    return $row->lens_name ? $row->lens_name : '';
+                })->addColumn(
                     'action',
                     function ($row) {
                         $html = '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
@@ -73,6 +74,7 @@ class RequestLensController extends Controller
                 )
                 ->rawColumns([
                     'action',
+                    'lens_name',
                     'created_at',
                     'amount_product',
                     'amount_total',
@@ -150,6 +152,7 @@ class RequestLensController extends Controller
         $VA_amount = [];
         $total = 0;
         $VA = [];
+//        dd($request->all());
 
         if (isset($request->product['VA']['TinTing']['isCheck']) && $request->product['VA']['TinTing']['isCheck'] != null) {
 
@@ -214,20 +217,22 @@ class RequestLensController extends Controller
             $prescription_data=[
                 // 'customer_id' => $transaction->customer_id,
                 'product_id' => $request->lens_id,
-                // 'sell_line_id' => $transaction_sell_line->id,
+                 'amount_product' =>$request->total_lens_valu,
+                 'total_extra' => $total,
+                 'amount_total' => $total+$request->total_lens_valu,
                 'factory_id' => $request->factory_id,
                 'date' => date('Y-m-d'),
                 'data' => json_encode($data),
             ];
             $prescription = Prescription::create($prescription_data);
 
-            //     api index from pdf, clcik any product send to supplier or send to client via uts
-            //     api list of finshed lens  send to supplier or send to client via uts
-            //     only ouyside indutries lenses will be traced
+            //     api index from PDF, clcik any product send to supplier or send to a client via uts
+            //     api list of finshed lens  send to supplier or send to a client via uts
+            //     only ouyside industry lenses will be traced
 
         // }
 
-        return redirect()->route('admin.factories_lenses.index');
+        return redirect()->route('admin.factories.lenses.index');
 
         Mail::to('tariksalahnet@hotmail.com')->send(new LensOrderMail($data));
 

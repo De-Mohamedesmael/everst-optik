@@ -1011,41 +1011,41 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
 
 <script src="{{ asset('js/onscan.min.js') }}"></script>
 <script src="{{ asset('js/pos.js') }}"></script>
-<script>
-    $(document).on("click", "#btn-lens-add", function (e) {
-        e.preventDefault();
-        formData = $('#orderLensFormCreate').serializeArray();
-        $.ajax({
-            type: "POST",
-            url: "{{route('admin.pos.SaveLens')}}",
-            data: formData,
-            success: function (response) {
-                if (response.success) {
-                    var product_id = $('#lens_id').val();
-                    var KeyLens = response.KeyLens;
-                    get_label_product_row(product_id,null,1,0,null,KeyLens);
-                }else{
-                    Swal.fire({
-                        title: 'Error',
-                        text: response.msg,
-                        icon: 'error',
-                    });
-                }
-            },
-            error: function (response) {
-                if (!response.success) {
+{{--<script>--}}
+{{--    $(document).on("click", "#btn-lens-add", function (e) {--}}
+{{--        e.preventDefault();--}}
+{{--        formData = $('#orderLensFormCreate').serializeArray();--}}
+{{--        $.ajax({--}}
+{{--            type: "POST",--}}
+{{--            url: "{{route('admin.pos.SaveLens')}}",--}}
+{{--            data: formData,--}}
+{{--            success: function (response) {--}}
+{{--                if (response.success) {--}}
+{{--                    var product_id = $('#lens_id').val();--}}
+{{--                    var KeyLens = response.KeyLens;--}}
+{{--                    get_label_product_row(product_id,null,1,0,null,KeyLens);--}}
+{{--                }else{--}}
+{{--                    Swal.fire({--}}
+{{--                        title: 'Error',--}}
+{{--                        text: response.msg,--}}
+{{--                        icon: 'error',--}}
+{{--                    });--}}
+{{--                }--}}
+{{--            },--}}
+{{--            error: function (response) {--}}
+{{--                if (!response.success) {--}}
 
-                        Swal.fire({
-                            title: 'Error',
-                            text: response.msg,
-                            icon: 'error',
-                        });
+{{--                        Swal.fire({--}}
+{{--                            title: 'Error',--}}
+{{--                            text: response.msg,--}}
+{{--                            icon: 'error',--}}
+{{--                        });--}}
 
 
-                }
-            },
-        });
+{{--                }--}}
+{{--            },--}}
+{{--        });--}}
 
-    });
-</script>
+{{--    });--}}
+{{--</script>--}}
 @endsection
