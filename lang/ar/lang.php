@@ -1415,4 +1415,8 @@
   'DIGER' => 'DIGER',
   'total_item_tax' => 'Total item tax',
   'kun' => 'Kun',
+  'view prescriptions' => 'View prescriptions',
+  'prescriptions' => 'Prescriptions',
+  'VA_amount' => 'VA amount',
+  'Left glass is the same as right glass' => 'Left glass is the same as right glass',
 );

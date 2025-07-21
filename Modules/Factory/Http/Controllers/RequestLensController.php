@@ -231,14 +231,9 @@ class RequestLensController extends Controller
             //     only ouyside industry lenses will be traced
 
         // }
+        Mail::to('tariksalahnet@hotmail.com')->send(new LensOrderMail($prescription));
 
         return redirect()->route('admin.factories.lenses.index');
-
-        Mail::to('tariksalahnet@hotmail.com')->send(new LensOrderMail($data));
-
-
-
-
 
     }
 

@@ -1445,5 +1445,6 @@
   'factory' => 'Factory',
   'add_lenses' => 'Add lenses',
   'factory_name' => 'Factory',
-
+  'code' => 'Code',
+  'Ozel' => 'Ozel',
 );

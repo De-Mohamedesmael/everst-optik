@@ -25,6 +25,12 @@ Route::get('/', function () {
         return redirect('/login');
     }
 });
+//
+//
+//Route::get('/ssddwsdew', function () {
+//    $prescription=\Modules\Customer\Entities\Prescription::latest()->first();
+//    return view('factory::back-end.emails.lens_order')->with(['prescription'=>$prescription]);
+//});
 Route::group(['middleware' => ['language']], function () {
     Auth::routes(['register' => false]);
 });
