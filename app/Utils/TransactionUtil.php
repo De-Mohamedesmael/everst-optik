@@ -1631,10 +1631,16 @@ class TransactionUtil extends Util
     {
 
         $product=Product::where('id',$productId)->first();
-        $UNO=$pre->qr_code;
+
+        $qr=$pre->qr_code;
+        $UNO = str_replace('!|', '', $qr);
+        $afterMarker = explode('!|', $qr)[1];
+        $pos = strpos($afterMarker, "10");
+        $LNO = $pos !== false ? substr($afterMarker, $pos + 2) : null;
+
         $commonData = [
             'UNO' => $UNO,
-            'LNO' => $product->lno,
+            'LNO' => $LNO,
             'ADT' => $quantity,
             'GIT' => now()->toDateString(),
             'BEN' => 'HAYIR',
@@ -1669,8 +1675,20 @@ class TransactionUtil extends Util
             ])->post('http://everstoptek.com/api/uts/sell/customer', $data);
 
         } else {
-            \Log::warning('sendToUts: عميل غير معروف النوع', ['customer_id' => $customer->id ?? null]);
-            return false;
+            $fullName = trim($customer->name);
+            $parts = explode(' ', $fullName);
+            $first_name = array_shift($parts);
+            $last_name = implode(' ', $parts);
+            $data = array_merge($commonData, [
+                'TKN' => $customer->id_number,
+                'TUA' => $first_name ?? 'Ad',
+                'TUS' => $last_name ?? 'Soyad',
+                'DTA' => 'Türü alanının değeri Diğer olması durumunda bu',
+                'TUR' => "DIGER",
+            ]);
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json'
+            ])->post('http://everstoptek.com/api/uts/sell/customer', $data);
         }
         if ($response->successful()) {
             \Log::info('تم الإرسال إلى UTS بنجاح', ['response' => $response->json()]);

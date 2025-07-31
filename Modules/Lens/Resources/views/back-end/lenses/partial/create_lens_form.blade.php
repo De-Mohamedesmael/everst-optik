@@ -101,18 +101,18 @@
                     ]) !!}
                 </div>
             </div>
-            <div class="col-md-3 px-5">
-                <div class="form-group">
-                    {!! Form::label('lno',translate('lno'), [
-                        'class' => 'form-label d-block mb-1',
-                    ]) !!}
-                    {!! Form::text('lno', null, [
-                        'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                        'id' => 'lno',
-                        'placeholder' => translate('lno'),
-                    ]) !!}
-                </div>
-            </div>
+{{--            <div class="col-md-3 px-5">--}}
+{{--                <div class="form-group">--}}
+{{--                    {!! Form::label('lno',translate('lno'), [--}}
+{{--                        'class' => 'form-label d-block mb-1',--}}
+{{--                    ]) !!}--}}
+{{--                    {!! Form::text('lno', null, [--}}
+{{--                        'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',--}}
+{{--                        'id' => 'lno',--}}
+{{--                        'placeholder' => translate('lno'),--}}
+{{--                    ]) !!}--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div class="col-md-3 px-5">
                 <div class="form-group">
                     {!! Form::label('kun',translate('kun'), [
