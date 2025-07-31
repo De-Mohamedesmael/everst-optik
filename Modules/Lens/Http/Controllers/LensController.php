@@ -464,6 +464,8 @@ class LensController extends Controller
             $lens_data = [
                 'name' => $request->name,
                 'is_lens' => 1,
+                'lno' => $request->lno,
+                'kun' => $request->kun,
                 'sell_price' => $request->sell_price,
                 'purchase_price' => $request->purchase_price,
                 'translations' => !empty($request->translations) ? $request->translations : [],
@@ -642,7 +644,9 @@ class LensController extends Controller
              $lens_data = [
                 'name' => $request->name,
                 'is_lens' => 1,
-                'sell_price' => $request->sell_price,
+                 'lno' => $request->lno,
+                 'kun' => $request->kun,
+                 'sell_price' => $request->sell_price,
                 'purchase_price' => $request->purchase_price,
                 'translations' => !empty($request->translations) ? $request->translations : [],
                 'sku' => !empty($request->sku) ? $request->sku : $this->productUtil->generateSku($request->name),

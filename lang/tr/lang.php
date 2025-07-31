@@ -1308,13 +1308,8 @@
   'Product' => 'Ürün',
   'lens' => 'Lens',
   'tax_location' => 'Vergi Yeri',
-  'Önceki
-                                                                    reçeteler' => 'Önceki
-                                                                    reçeteler',
-  'Önceden Tanımlanmış
-                                                                            Şekiller' => 'Önceden Tanımlanmış
-                                                                            Şekiller',
-  'Left glass is the same
-                                                                                    as right glass' => 'Left glass is the same
-                                                                                    as right glass',
+  'request_lenses' => 'Request lenses',
+  'add_request_lenses' => 'Add request lenses',
+  'factory' => 'Factory',
+  'updated_at' => 'Updated at',
 );

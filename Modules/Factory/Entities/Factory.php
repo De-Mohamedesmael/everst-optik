@@ -20,11 +20,13 @@ class Factory extends Model implements HasMedia
      */
     protected $guarded = ['id'];
 
-
-    public function country()
+    public function created_by_user()
     {
-        return $this->belongsTo(\App\Models\Country::class);
+        return $this->belongsTo(Admin::class, 'created_by', 'id')->withDefault(['name' => '']);
     }
-
+    public function edited_by_user()
+    {
+        return $this->belongsTo(Admin::class, 'edited_by', 'id')->withDefault(['name' => '']);
+    }
 
 }

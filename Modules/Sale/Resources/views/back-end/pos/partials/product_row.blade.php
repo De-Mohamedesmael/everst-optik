@@ -23,26 +23,39 @@
                         $data_len=null;
                         if($product->is_lens){
                             $edit_quantity=0;
-                            $cach_lens= Cache::get($KeyLens);
-                            if(isset($cach_lens['Lens']['Left']['isCheck'])){
-                                $edit_quantity+=1;
-                            }
-                             if(isset($cach_lens['Lens']['Right']['isCheck'])){
-                                $edit_quantity+=1;
-                            }
-                            if(isset($cach_lens['VA_amount'])){
-                                $total_vu=$cach_lens['VA_amount']['total'];
-
-                            }elseif($old_len){
-                                if($old_len->data != null || $old_len->data != 'null'){
+                            if($old_len->data != null || $old_len->data != 'null'){
                                     $data_len=json_decode($old_len->data);
                                     if(isset($data_len->VA_amount)){
                                         $total_vu=$data_len->VA_amount->total;
                                     }
+
+                                    if(isset($data_len->Lens->Left->isCheck)){
+                                        $edit_quantity+=1;
+                                    }
+                                    if(isset($data_len->Lens->Right->isCheck)){
+                                        $edit_quantity+=1;
+                                    }
                                 }
-
-
-                            }
+//                            $cach_lens= Cache::get($KeyLens);
+//                            if(isset($cach_lens['Lens']['Left']['isCheck'])){
+//                                $edit_quantity+=1;
+//                            }
+//                             if(isset($cach_lens['Lens']['Right']['isCheck'])){
+//                                $edit_quantity+=1;
+//                            }
+//                            if(isset($cach_lens['VA_amount'])){
+//                                $total_vu=$cach_lens['VA_amount']['total'];
+//
+//                            }elseif($old_len){
+//                                if($old_len->data != null || $old_len->data != 'null'){
+//                                    $data_len=json_decode($old_len->data);
+//                                    if(isset($data_len->VA_amount)){
+//                                        $total_vu=$data_len->VA_amount->total;
+//                                    }
+//                                }
+//
+//
+//                            }
                         }
 
 
@@ -60,7 +73,9 @@
 
 
 
-
+                @if(isset($old_len) && $old_len->id)
+                    <input type="hidden" name="transaction_sell_line[{{  $index }}][prescription_id]" value="{{ $old_len->id }}">
+                @endif
                 <input type="hidden" name="transaction_sell_line[{{  $index }}][is_lens]"
                     class="is_lens" value="{{ $product->is_lens }}">
                 <input type="hidden" name="transaction_sell_line[{{  $index }}][have_weight]"
@@ -143,7 +158,7 @@
 
                         // Create a regular expression to match the whitespace between the `value` attribute and the value.
                         $regex = '/\s+/';
-
+//                        dd($edit_quantity);
                         // Replace the whitespace with an empty string.
                         $convertedInputValue = preg_replace($regex, '', $inputValue);
                     @endphp
@@ -318,7 +333,7 @@
         </td>
     </tr>
     @if($old_len && $data_len && $total_vu > 0)
-        <tr class="lens-row-{{  $index }}" style="font-weight: bold">
+        <tr class="is_lens_row lens-row-{{  $index }}" style="font-weight: bold">
             <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($data_len->VA_amount->TinTing_amount) && $data_len->VA_amount->TinTing_amount > 0)
@@ -387,7 +402,7 @@
                     @endif
                 </div>
                 <div  class="lens-vu" >
-                    @if(isset($data_len->VA->Special->isCheck) && $data_len->VA->Special->isCheck && $data_len->VA_amount->Ozel_amount >0 && isset($data_len->VA->Special->TV))
+                    @if(isset($data_len->VA->Special->isCheck) && $data_len->VA->Special->isCheck && $data_len->VA_amount->Special_amount >0 && isset($data_len->VA->Special->TV))
                         @foreach($data_len->VA->Special->TV as $item_sp)
                             <div class="lens-vu-item">
                                 {{$item_sp->text}}
@@ -416,7 +431,7 @@
             </td>
         </tr>
     @elseif($product->is_lens && $total_vu > 0)
-        <tr class="lens-row-{{  $index }}" style="font-weight: bold">
+        <tr class="is_lens_row lens-row-{{  $index }}" style="font-weight: bold">
             <td class="text-center" style="background-color:#f0f0f0;">
                 <div  class="lens-vu" >
                     @if(isset($cach_lens['VA_amount']['TinTing_amount']) && $cach_lens['VA_amount']['TinTing_amount'] > 0)

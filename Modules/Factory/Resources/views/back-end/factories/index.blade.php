@@ -74,85 +74,24 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 px-1">
-                    {{-- <div class="card mb-2 mt-2">
-                        <div class="card-body p-2">
-                            <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                                <div class="col-md-2 px-5">
-                                    <div class="form-group">
-                                        {!! Form::label('start_date', __('lang.start_date'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::date('startdate', request()->start_date, [
-                                            'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                            'id' => 'startdate',
-                                        ]) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2 px-5">
-                                    <div class="form-group">
-                                        {!! Form::label('end_date', __('lang.end_date'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::date('enddate', request()->end_date, [
-                                            'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                            'id' => 'enddate',
-                                        ]) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2 px-5">
-                                    <div class="form-group">
-                                        {!! Form::label('customer_type_id', __('lang.customer_type'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::select('customer_type_id', $customer_types, request()->customer_type_id, [
-                                            'class' => 'form-control
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        selectpicker',
-                                            'data-live-search' => 'true',
-                                            'placeholder' => __('lang.all'),
-                                            'id' => 'customer_type_id',
-                                        ]) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-2 mb-2">
-                                    {!! Form::label('gender', translate('gender') . '*', [
-                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                    ]) !!}
-                                    {!! Form::select('gender', \Modules\Customer\Entities\Customer::getDropdownGender(), null , [
-                                        'class' => 'selectpicker form-control',
-                                        'data-live-search' => 'true',
-                                        'required',
-                                        'placeholder' => __('lang.all'),
-                                    ]) !!}
-                                </div>
-                                <div class="col-md-2 px-5 d-flex justify-content-center align-items-center">
-                                    <button type="button"
-                                        class="btn btn-main col-md-12 filter_product">@lang('lang.filter')</button>
-                                </div>
-                                <div class="col-md-2 px-5 d-flex justify-content-center align-items-center">
-                                    <button class="btn btn-danger col-md-12 clear_filters">@lang('lang.clear_filters')</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-
                     <div class="card mb-2">
                         <div class="card-body p-2">
                             <div class="table-responsive">
-                                <table id="store_table" class="table" style="width: 100%">
+                                <table id="factory_table" class="table" style="width: 100%">
                                     <thead>
                                         <tr>
-                                            <th>@lang('lang.factory_name')</th>
-                                            <th>@lang('lang.email')</th>
-                                            <th>@lang('lang.address')</th>
-                                            <th>@lang('lang.country')</th>
-                                            <th>@lang('lang.code')</th>
-                                            <th>@lang('lang.postal_code')</th>
-                                            <th>@lang('lang.phone')</th>
-                                            <th>@lang('lang.owner_name')</th>
-                                            <th class="notexport">@lang('lang.action')</th>
+                                            <th> {{ translate('factory_name') }} </th>
+                                            <th> @lang('lang.owner_name') </th>
+                                            <th> @lang('lang.phone') </th>
+                                            <th> @lang('lang.email') </th>
+                                            <th> @lang('lang.address') </th>
+                                            <th> {{ translate('code') }} </th>
+                                            <th> {{ translate('postal_code') }} </th>
+                                            <th> {{ translate('created_at') }} </th>
+                                            <th> {{ translate('updated_at') }} </th>
+                                            <th> {{ translate('created_by') }} </th>
+                                            <th> {{ translate('updated_by') }} </th>
+                                            <th class="notexport"> @lang('lang.action') </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -160,6 +99,9 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -185,7 +127,7 @@
 @section('javascript')
     <script>
         $(document).ready(function() {
-            store_table = $('#store_table').DataTable({
+            factory_table = $('#factory_table').DataTable({
                 lengthChange: true,
                 paging: true,
                 info: false,
@@ -205,7 +147,7 @@
                 // searching: true,
                 serverSide: true,
                 aaSorting: [
-                    [2, 'asc']
+                    [1, 'asc']
                 ],
                 // bPaginate: false,
                 // bFilter: false,
@@ -213,13 +155,7 @@
                 bSortable: true,
                 bRetrieve: true,
                 "ajax": {
-                    "url": "/dashboard/factories/",
-                    "data": function(d) {
-                        // d.startdate = $('#startdate').val();
-                        // d.enddate = $('#enddate').val();
-                        // d.customer_type_id = $('#customer_type_id').val()
-                        // d.gender = $('#gender').val()
-                    }
+                    "url": "{{route('admin.factories.index')}}",
                 },
                 columnDefs: [{
                         // "targets": [0,2, 3],
@@ -227,14 +163,23 @@
                         "searchable": true
                     },
                     {
-                        "targets": [6], // Column 6 (purchases)
+                        "targets": [11], // Column 6 (purchases)
                         "orderable": true, // Enable sorting for the "purchases" column
                         "searchable": true
                     }
                 ],
-                columns: [{
-                        data: 'factory_name',
-                        name: 'factory_name'
+                columns: [
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'owner_name',
+                        name: 'owner_name'
+                    },
+                    {
+                        data: 'phone',
+                        name: 'phone'
                     },
                     {
                         data: 'email',
@@ -245,28 +190,33 @@
                         name: 'address'
                     },
                     {
-                        data: 'country',
-                        name: 'country.arabic'
-                    },
-                    {
                         data: 'code',
                         name: 'code'
                     },{
                         data: 'postal_code',
                         name: 'postal_code'
-                    },{
-                        data: 'phone',
-                        name: 'phone'
                     },
                     {
-                        data: 'owner_name',
-                        name: 'owner_name'
+                        data: 'created_at',
+                        name: 'created_at'
+                    },
+                    {
+                        data: 'updated_at',
+                        name: 'updated_at'
+                    }, {
+                        data: 'created_by',
+                        name: 'admins.name'
+                    },{
+                        data: 'updated_by',
+                        name: 'edited.name'
                     },
                     {
                         data: 'action',
-                        name: 'action'
-                    },
-
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center notexport'
+                    }
                 ],
                 createdRow: function(row, data, dataIndex) {
 
@@ -380,14 +330,15 @@
 
         });
         $(document).on('click', '.filter_product', function() {
-            store_table.ajax.reload();
+            factory_table.ajax.reload();
         })
         $(document).on('click', '.clear_filters', function(e) {
             // e.preventDefault();
             $('#startdate').val('');
             $('#enddate').val('');
             $('#customer_type_id').val('')
-            store_table.ajax.reload();
+            factory_table.ajax.reload();
         });
+        factory_table.ajax.reload();
     </script>
 @endsection

@@ -7,6 +7,7 @@ namespace App\Utils;
 //use ConsumptionDetail;
 use Illuminate\Support\Facades\Cache;
 
+use Illuminate\Support\Facades\Http;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\CustomerBalanceAdjustment;
 use Modules\Customer\Entities\CustomerImportantDate;
@@ -200,18 +201,11 @@ class TransactionUtil extends Util
                 $transaction_sell_line->save();
                 $keep_sell_lines[] = $transaction_sell_line->id;
                 if($line['is_lens']){
-                    $is_lens=$line['is_lens'];
-                    $KeyLens=$line['KeyLens'];
-                    $data=Cache::get($KeyLens);
-                    $prescription_data=[
-                        'customer_id' => $transaction->customer_id,
-                        'product_id' => $line['product_id'],
-                        'sell_line_id' => $transaction_sell_line->id,
-                        'date' => date('Y-m-d'),
-                        'data' => json_encode($data),
-                    ];
-
-                    Prescription::create($prescription_data);
+                    $pre=Prescription::where('id',$line['prescription_id'])->first();
+                    $pre->sell_line_id= $transaction_sell_line->id;
+                    $pre->customer_id= $transaction_sell_line->customer_id;
+                    $pre->save();
+                    $this->sendToUts($transaction->customer,$line['product_id'],$line['quantity'],$pre);
                 }
             }
             $stock_id=$line['stock_id'];
@@ -267,7 +261,7 @@ class TransactionUtil extends Util
 
 
     /**
-     * create or update transaction supplier service
+     * create or update a transaction supplier service
      *
      * @param object $transaction
      * @param object $request
@@ -358,7 +352,7 @@ class TransactionUtil extends Util
     }
 
     /**
-     * create or update transaction supplier service
+     * create or update a transaction supplier service
      *
      * @param object $transaction
      * @param double $purchase_price
@@ -1629,4 +1623,80 @@ class TransactionUtil extends Util
         $product_ids = !empty($product_ids) ? $product_ids : [];
         return (array)$product_ids;
     }
+
+
+
+
+    public function sendToUts($customer, $productId, $quantity,$pre)
+    {
+
+        $product=Product::where('id',$productId)->first();
+
+        $qr=$pre->qr_code;
+        $UNO = str_replace('!|', '', $qr);
+        $afterMarker = explode('!|', $qr)[1];
+        $pos = strpos($afterMarker, "10");
+        $LNO = $pos !== false ? substr($afterMarker, $pos + 2) : null;
+
+        $commonData = [
+            'UNO' => $UNO,
+            'LNO' => $LNO,
+            'ADT' => $quantity,
+            'GIT' => now()->toDateString(),
+            'BEN' => 'HAYIR',
+        ];
+
+        if (!empty($customer->BNO)) {
+            $data = array_merge($commonData, [
+                'KUN' => $product->kun?:1,
+                'BNO' => $customer->BNO,
+            ]);
+
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json'
+            ])->post('http://everstoptek.com/api/uts/sell/store', $data);
+
+        } elseif (!empty($customer->id_number) && !empty($customer->id_type)) {
+            $fullName = trim($customer->name);
+            $parts = explode(' ', $fullName);
+            $first_name = array_shift($parts);
+            $last_name = implode(' ', $parts);
+
+            $data = array_merge($commonData, [
+                'TKN' => $customer->id_number,
+                'TUA' => $first_name ?? 'Ad',
+                'TUS' => $last_name ?? 'Soyad',
+                'DTA' => 'Türü alanının değeri Diğer olması durumunda bu',
+                'TUR' => $customer->id_type,
+            ]);
+
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json'
+            ])->post('http://everstoptek.com/api/uts/sell/customer', $data);
+
+        } else {
+            $fullName = trim($customer->name);
+            $parts = explode(' ', $fullName);
+            $first_name = array_shift($parts);
+            $last_name = implode(' ', $parts);
+            $data = array_merge($commonData, [
+                'TKN' => $customer->id_number,
+                'TUA' => $first_name ?? 'Ad',
+                'TUS' => $last_name ?? 'Soyad',
+                'DTA' => 'Türü alanının değeri Diğer olması durumunda bu',
+                'TUR' => "DIGER",
+            ]);
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json'
+            ])->post('http://everstoptek.com/api/uts/sell/customer', $data);
+        }
+        if ($response->successful()) {
+            \Log::info('تم الإرسال إلى UTS بنجاح', ['response' => $response->json()]);
+            return true;
+        }
+
+        \Log::error('فشل الإرسال إلى UTS', ['status' => $response->status(), 'body' => $response->body()]);
+        return false;
+    }
+
 }

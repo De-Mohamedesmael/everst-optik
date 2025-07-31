@@ -618,6 +618,7 @@
                             <th class="sum">@lang('lang.grand_total')</th>
                             <th class="sum">@lang('lang.paid')</th>
                             <th class="sum">@lang('lang.due_sale_list')</th>
+                            <th class="sum">{{translate('total_item_tax')}}</th>
                             <th>@lang('lang.payment_date')</th>
                             <th>@lang('lang.cashier')</th>
                             <th>@lang('lang.commission')</th>
@@ -639,6 +640,11 @@
                             <td></td>
                             <td></td>
                             <th class="table_totals" style="text-align: right">@lang('lang.totals')</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -789,6 +795,9 @@
                         data: "due",
                         name: "transaction_payments.amount",
                         searchable: false
+                    },{
+                        data: "total_item_tax",
+                        name: "total_item_tax"
                     },
                     {
                         data: "paid_on",

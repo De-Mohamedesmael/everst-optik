@@ -83,32 +83,43 @@
     $loop_count = 0;
     @endphp
     @foreach ($product_details as $details)
+
     @while ($details['qty'] > 0)
     <div class="sticker-border text-center" style="display: flex;width:fit-content">
         <div style="width:200px !important;text-align: left;padding: 5px;">
             <h3 style="margin: 0;text-transform: uppercase">
-                test
+                @if ($print['name'])
+                    {{ data_get($details, 'details.product_name', '') }}
+                @endif
             </h3>
             <p style="margin:0 5px">
-                Lorem, ipsum dolor.
+                @if ($print['color'])
+                    {{ data_get($details, 'details.color_name', '') }}
+                @endif
             </p>
             <span style="margin:0 5px;display: block">
-                Lorem, ipsum dolor.
+                @if ($print['size'])
+                    {{ data_get($details, 'details.size_name', '') }}
+                @endif
             </span>
         </div>
         <div style="width:200px !important;text-align: center;font-size: 14px;margin:0 5px">
             <div style="font-size: 22px">
-                1650 TL
+                @if ($print['color'])
+                    {{ data_get($details, 'details.price', '') }} TL
+                @endif
             </div>
             <div>
-                KDV Dahil
+                {{-- $details['details']['brand_name'] --}}
+                {{ data_get($details, 'details.brand_name', '') }}
             </div>
             <div style="display: flex;gap: 10px">
                 <div>
-                    ewdwedwewedewdwe
+                    deleted
                 </div>
                 <div>
-                    27,01,2025
+                    {{-- $details['details']['updated_at']->format('Y-m-d') --}}
+                    {{ data_get($details, 'details.updated_at', '')?->format('Y-m-d') }}
                 </div>
             </div>
         </div>

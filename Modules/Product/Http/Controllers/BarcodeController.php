@@ -141,6 +141,11 @@ class BarcodeController extends Controller
             $currency = Currency::find(System::getProperty('currency'));
 
 
+            // print :
+            //     "name" => 1
+            //     "price" => 1
+            //     "size" => 1
+            //     "color" => 1
 
 
             if ($request->paper_size === "one") {

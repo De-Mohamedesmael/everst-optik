@@ -629,6 +629,7 @@ class ProductUtil extends Util
         $query = Product::leftjoin('product_stores AS ps', 'products.id', '=', 'ps.product_id')
             ->leftjoin('sizes', 'products.size_id', '=', 'sizes.id')
             ->leftjoin('colors', 'products.color_id', '=', 'colors.id')
+            ->leftjoin('brands', 'products.brand_id', '=', 'brands.id')
             ->where('products.id', $prodeuct_id);
 
 
@@ -647,7 +648,9 @@ class ProductUtil extends Util
             'products.barcode_type',
             'ps.qty_available',
             'sizes.name as size_name',
-            'colors.name as color_name'
+            'colors.name as color_name',
+            'brands.name as brand_name',
+            'products.updated_at'
         )
             ->first();
 

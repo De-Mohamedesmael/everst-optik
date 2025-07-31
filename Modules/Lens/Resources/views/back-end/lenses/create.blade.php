@@ -14,7 +14,7 @@
             @lang('lang.lenses')</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
-        @lang('lang.add_new_lens')</li>
+        {{translate('add_new_lens')}}</li>
 @endsection
 
 @section('content')
