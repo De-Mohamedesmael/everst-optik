@@ -1392,15 +1392,31 @@
   'owner_name' => 'اسم المالك',
   'lenses_send' => 'ارسال عدسات للتصنيع',
   'factories' => 'المصانع',
-  'Önceki
-                                                                    reçeteler' => 'Önceki
-                                                                    reçeteler',
-  'Önceden Tanımlanmış
-                                                                            Şekiller' => 'Önceden Tanımlanmış
-                                                                            Şekiller',
-  'Left glass is the same
-                                                                                    as right glass' => 'Left glass is the same
-                                                                                    as right glass',
   'factory' => 'Factory',
   'add_lenses' => 'Add lenses',
+  'code' => 'Code',
+  'updated_by' => 'Updated by',
+  'updated_at' => 'Updated at',
+  'created_at' => 'Created at',
+  'factory_name' => 'Factory name',
+  'request_lenses' => 'Request lenses',
+  'add_request_lenses' => 'Add request lenses',
+  'actions' => 'Actions',
+  'qr_code_image' => 'Qr code image',
+  'qrcode' => 'Qrcode',
+  'amount_total' => 'Amount total',
+  'total_extra' => 'Total extra',
+  'amount_product' => 'Amount product',
+  'lens_name' => 'Lens name',
+  'code_title' => 'Code title',
+  'lno' => 'Lno',
+  'edit_lens' => 'Edit lens',
+  'BNO' => 'BNO',
+  'DIGER' => 'DIGER',
+  'total_item_tax' => 'Total item tax',
+  'kun' => 'Kun',
+  'view prescriptions' => 'View prescriptions',
+  'prescriptions' => 'Prescriptions',
+  'VA_amount' => 'VA amount',
+  'Left glass is the same as right glass' => 'Left glass is the same as right glass',
 );

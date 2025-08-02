@@ -60,6 +60,24 @@
                                     ]) !!}
                                 </div>
                             </div>
+                            <div class="col-md-2 mb-2">
+                                {!! Form::label('id_type',translate('id_type') . '*', [
+                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                {!! Form::select('id_type', [
+                                "TC_KIMLIK_NUMARASI_VAR" => translate('TC_KIMLIK_NUMARASI_VAR'),
+                                "PASAPORT_NUMARASI_VAR" => translate('PASAPORT_NUMARASI_VAR'),
+                                "YUPASS_NUMARASI_VAR" => translate('YUPASS_NUMARASI_VAR'),
+                                "KIMLIGI_BELIRSIZ" => translate('KIMLIGI_BELIRSIZ'),
+                                "DIGER" => translate('DIGER'),
+                ]               , $customer->id_type, [
+                                'class' => 'selectpicker form-control',
+                                'data-live-search' => 'true',
+                                'id' => 'id_type',
+                                'required',
+                                'placeholder' => translate('please_select'),
+                                ]) !!}
+                            </div>
                             <div class="col-md-4 mb-2">
                                 {!! Form::label('id_number', translate('id_number') , [
                                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -67,6 +85,16 @@
                                 {!! Form::number('id_number', $customer->id_number , [
                                 'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
                                 'placeholder' => __('lang.id_number'),
+                                ]) !!}
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                {!! Form::label('BNO',translate('BNO') , [
+                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                {!! Form::text('BNO', $customer->BNO, [
+                                'style'=> "border:1px solid #e6e6e6 !important",
+                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                'placeholder' =>translate('BNO'),
                                 ]) !!}
                             </div>
                             <div class="col-md-2 mb-2 div-company  @if($customer->customer_type_id == 1 ||  !$customer->customer_type_id ) d-none @endif">

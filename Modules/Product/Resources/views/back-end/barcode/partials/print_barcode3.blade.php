@@ -92,16 +92,17 @@
             <div style="display: flex;justify-content: center;gap: 10px;">
                 <p class="text-center" style="padding: 2px !important; margin: 0px;">
                     @if (!empty($print['name']))
-                    @if (!empty($print['size']) && !empty($details['details']->size_name))
-                    {{ str_replace($details['details']->size_name, '', $details['details']->product_name) }}
-                    @elseif (!empty($print['color']) && !empty($details['details']->color_name))
-                    {{ str_replace($details['details']->color_name, '', $details['details']->product_name) }}
-                    @else
-                    {{ $details['details']->product_name }}
-                    @endif
-                    @if (!empty($print['color']) && !empty($details['details']->color_name))
-                    {{ $details['details']->color_name }}
-                    @endif
+                        @if (!empty($print['size']) && !empty($details['details']->size_name))
+                            {{ str_replace($details['details']->size_name, '', $details['details']->product_name) }}
+                        @elseif (!empty($print['color']) && !empty($details['details']->color_name))
+                            {{ str_replace($details['details']->color_name, '', $details['details']->product_name) }}
+                        @else
+                            {{ $details['details']->product_name }}
+                        @endif
+
+                        @if (!empty($print['color']) && !empty($details['details']->color_name))
+                            {{ $details['details']->color_name }}
+                        @endif
                     @endif
                 </p>
                 @if (!empty($print['size']) && !empty($details['details']->size_name))
@@ -124,6 +125,7 @@
                 @else
                 {!! DNS1D::getBarcodeSVG($details['details']->sku, "C128", 1,20, '#2A3239') !!}
                 @endif
+                <br>{{ $details['details']->sell_price }} TL
             </div>
         </div>
 
