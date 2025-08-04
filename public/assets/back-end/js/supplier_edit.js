@@ -38,7 +38,7 @@ myDropzone = new Dropzone("div#my-dropzone", {
                         url: $("#products-edit-form").attr("action"),
                         data: $("#products-edit-form").serialize(),
                         success: function (response) {
-                            // swal(response.status);
+                            // Swal.fire(response.status);
                             // Swal.fire("Success", response.status, "success");
                             Swal.fire({
                                 title: "Success",
@@ -50,7 +50,7 @@ myDropzone = new Dropzone("div#my-dropzone", {
                             location.replace('/suppliers');
                         },
                         error: function (response) {
-                            // swal(response.status);
+                            // Swal.fire(response.status);
                             // Swal.fire("Error", response.status, "error");
                             Swal.fire({
                                 title: "Error",
@@ -81,7 +81,7 @@ myDropzone = new Dropzone("div#my-dropzone", {
     // successmultiple: function (file, response) {
     success: function (file, response) {
         if (response.success) {
-            // swal("Success", response.status, "success");
+            // Swal.fire("Success", response.status, "success");
             // Swal.fire("Error", response.status, "error");
             Swal.fire({
                 title: "Error",
@@ -94,7 +94,7 @@ myDropzone = new Dropzone("div#my-dropzone", {
             // location.replace('/categories');
         }
         if (!response.success) {
-            // swal("Error", response.status, "error");
+            // Swal.fire("Error", response.status, "error");
             // Swal.fire("Success", response.status, "success");
             Swal.fire({
                 title: "Success",

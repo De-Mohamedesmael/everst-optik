@@ -61,14 +61,14 @@ $(document).on("click", ".remove_row", function () {
 //                         url: $("form#customer-form").attr("action"),
 //                         data: $("#customer-form").serialize(),
 //                         success: function (response) {
-//                             // swal(response.status);
-//                             swal("Success", response.status, "success");
+//                             // Swal.fire(response.status);
+//                             Swal.fire("Success", response.status, "success");
 //                             location.replace('/dashboard/customers/s');
 //                             // $(".ajaxform")[0].reset();
 //                         },
 //                         error: function (response) {
-//                             // swal(response.status);
-//                             swal("Error", response.status, "error");
+//                             // Swal.fire(response.status);
+//                             Swal.fire("Error", response.status, "error");
 //                         },
 
 //                     });
@@ -95,12 +95,12 @@ $(document).on("click", ".remove_row", function () {
 //     },
 //     success: function (file, response) {
 //         if (response.success) {
-//             // swal(response.status);
-//             swal("Error", response.status, "error");
+//             // Swal.fire(response.status);
+//             Swal.fire("Error", response.status, "error");
 //         }
 //         if (!response.success) {
-//             // swal(response.status);
-//             swal("Success", response.status, "success");
+//             // Swal.fire(response.status);
+//             Swal.fire("Success", response.status, "success");
 //             location.replace('/dashboard/customers/s');
 //         }
 //     },

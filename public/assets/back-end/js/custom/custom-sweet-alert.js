@@ -7,11 +7,11 @@
     'use strict';
         /* -- Sweet Alert - Basic -- */
         $("body").on("click", "#sa-basic", function() {
-            swal("Here's a message!")
+            Swal.fire("Here's a message!")
         });
         /* -- Sweet Alert - Title -- */
         $("body").on("click", "#sa-title", function() {
-            swal(
+            Swal.fire(
                 'The Theta?',
                 'That thing is still around?',
                 'question'
@@ -19,7 +19,7 @@
         });
         /* -- Sweet Alert - Success -- */
         $("body").on("click", "#sa-success", function() {
-            swal(
+            Swal.fire(
             {
                 title: 'Nice Work!',
                 text: 'You clicked the below button!',
@@ -32,7 +32,7 @@
         });
         /* -- Sweet Alert - Warning -- */
         $("body").on("click", "#sa-warning", function() {
-            swal({
+            Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
                 type: 'warning',
@@ -41,7 +41,7 @@
                 cancelButtonClass: 'btn btn-danger m-l-10',
                 confirmButtonText: 'Yes, delete it!'
             }).then(function () {
-                swal(
+                Swal.fire(
                     'Deleted!',
                     'Your data has been deleted.',
                     'success'
@@ -50,7 +50,7 @@
         });
         /* -- Sweet Alert - Parameter -- */
         $("body").on("click", "#sa-params", function() {
-            swal({
+            Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
                 type: 'warning',
@@ -61,14 +61,14 @@
                 cancelButtonClass: 'btn btn-danger m-l-10',
                 buttonsStyling: false
             }).then(function () {
-                swal(
+                Swal.fire(
                     'Deleted!',
                     'Your data has been deleted.',
                     'success'
                     )
             }, function (dismiss) {
                 if (dismiss === 'cancel') {
-                    swal(
+                    Swal.fire(
                         'Cancelled',
                         'Your imaginary data is safe :)',
                         'error'
@@ -78,7 +78,7 @@
         });
         /* -- Sweet Alert - Image -- */
         $("body").on("click", "#sa-image", function() {
-            swal({
+            Swal.fire({
                 title: 'Sweet!',
                 text: 'Modal with a custom images',
                 imageHeight: 30,
@@ -87,7 +87,7 @@
         });
         /* -- Sweet Alert - Auto Close Timer -- */
         $("body").on("click", "#sa-auto-close", function() {
-            swal({
+            Swal.fire({
                 title: 'Auto close alert!',
                 text: 'I will close in 2 seconds.',
                 timer: 2000
@@ -103,7 +103,7 @@
         });
         /* -- Sweet Alert - Custom HTML -- */
         $("body").on("click", "#custom-html", function() {
-            swal({
+            Swal.fire({
                 title: '<i>HTML</i> <u>example</u>',
                 type: 'info',
                 html: 'You can use <b>bold text</b>, ' +
@@ -119,7 +119,7 @@
         });
         /* -- Sweet Alert - Custom Padding Width -- */
         $("body").on("click", "#custom-padding-width", function() {
-            swal({
+            Swal.fire({
                 title: 'Custom width, padding, background.',
                 width: 600,
                 padding: 100,
@@ -128,7 +128,7 @@
         });
         /* -- Sweet Alert - Ajax -- */
         $("body").on("click", "#sa-ajax", function() {
-            swal({
+            Swal.fire({
                 title: 'Submit email to run ajax request',
                 input: 'email',
                 showCancelButton: true,
@@ -149,7 +149,7 @@
                 },
                 allowOutsideClick: false
             }).then(function (email) {
-                swal({
+                Swal.fire({
                     type: 'success',
                     title: 'Ajax request has been finished!',
                     html: 'Submitted email: ' + email
@@ -175,7 +175,7 @@
             ]
             swal.queue(steps).then(function (result) {
                 swal.resetDefaults()
-                swal({
+                Swal.fire({
                     title: 'All done!',
                     html: 'Your answers: <pre>' +
                     JSON.stringify(result) +

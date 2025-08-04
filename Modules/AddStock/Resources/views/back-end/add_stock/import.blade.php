@@ -345,7 +345,7 @@
                     data: $("#products-form-quick-add").serialize(),
                     success: function(response) {
                         if (response.success) {
-                            swal("Success", response.msg, "success");;
+                            Swal.fire("Success", response.msg, "success");;
                             $("#search_product").val(sku);
                             $('input#search_product').autocomplete("search");
                             $('.view_modal').modal('hide');
@@ -353,7 +353,7 @@
                     },
                     error: function(response) {
                         if (!response.success) {
-                            swal("Error", response.msg, "error");
+                            Swal.fire("Error", response.msg, "error");
                         }
                     },
                 });

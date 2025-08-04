@@ -13,7 +13,7 @@ $(document).ready(function () {
                             ._trigger("select", "autocompleteselect", ui);
                         $(this).autocomplete("close");
                     } else if (ui.content.length == 0) {
-                        swal("Product not found");
+                        Swal.fire("Product not found");
                     }
                 },
                 select: function (event, ui) {
@@ -59,7 +59,7 @@ $(document).ready(function () {
                 window.open(url, "newwindow");
             }
         } else {
-            swal("No products selected.").then((value) => {
+            Swal.fire("No products selected.").then((value) => {
                 $("#search_product_for_label").focus();
             });
         }

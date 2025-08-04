@@ -27,7 +27,7 @@ $(document).ready(function () {
                             ._trigger("select", "autocompleteselect", ui);
                         $(this).autocomplete("close");
                     } else if (ui.content.length == 0) {
-                        swal("Product not found");
+                        Swal.fire("Product not found");
                     }
                 },
                 select: function (event, ui) {
@@ -50,7 +50,7 @@ function get_label_product_row(product_id, variation_id) {
     //Get item addition method
     var sender_store_id = parseInt($("#sender_store_id").val());
     if (isNaN(sender_store_id)) {
-        swal("Please select store first.");
+        Swal.fire("Please select store first.");
         return false;
     }
     var add_via_ajax = true;
@@ -117,7 +117,7 @@ $(document).on("change", ".quantity", function () {
     let max_quantity = $(this).attr("max");
 
     if (quantity > max_quantity) {
-        swal("Quantity should not exceed the available quantity");
+        Swal.fire("Quantity should not exceed the available quantity");
         $(this).val(max_quantity);
     }
 });

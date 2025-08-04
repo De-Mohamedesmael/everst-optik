@@ -627,7 +627,7 @@ $(document).on("change", "#sku", function () {
             data: {},
             success: function (result) {
                 if (!result.success) {
-                    swal("Error", result.msg, "error");
+                    Swal.fire("Error", result.msg, "error");
                 }
             },
         });

@@ -74,12 +74,12 @@ $(document).on("submit", "form#quick_add_brand_form", function (e) {
         contentType: false,
         success: function (result) {
             if (result.success) {
-                swal("Success", result.msg, "success");
+                Swal.fire("Success", result.msg, "success");
                 $(".view_modal").modal("hide");
                 brand_id = result.brand_id;
                 get_brand_dropdown();
             } else {
-                swal("Error", result.msg, "error");
+                Swal.fire("Error", result.msg, "error");
             }
         },
     });
@@ -112,7 +112,7 @@ $(document).on("submit", "form#quick_add_tax_form", function (e) {
         contentType: false,
         success: function (result) {
             if (result.success) {
-                swal("Success", result.msg, "success");
+                Swal.fire("Success", result.msg, "success");
                 $(".view_modal").modal("hide");
                 var tax_id = result.tax_id;
                 $.ajax({
@@ -127,7 +127,7 @@ $(document).on("submit", "form#quick_add_tax_form", function (e) {
                     },
                 });
             } else {
-                swal("Error", result.msg, "error");
+                Swal.fire("Error", result.msg, "error");
             }
         },
     });
@@ -147,7 +147,7 @@ $(document).on("submit", "form#quick_add_color_form", function (e) {
         contentType: false,
         success: function (result) {
             if (result.success) {
-                swal("Success", result.msg, "success");
+                Swal.fire("Success", result.msg, "success");
                 $(".view_modal").modal("hide");
                 var color_id = result.color_id;
                 $.ajax({
@@ -165,7 +165,7 @@ $(document).on("submit", "form#quick_add_color_form", function (e) {
                     },
                 });
             } else {
-                swal("Error", result.msg, "error");
+                Swal.fire("Error", result.msg, "error");
             }
         },
     });
@@ -184,7 +184,7 @@ $(document).on("submit", "form#quick_add_size_form", function (e) {
         contentType: false,
         success: function (result) {
             if (result.success) {
-                swal("Success", result.msg, "success");
+                Swal.fire("Success", result.msg, "success");
                 $(".view_modal").modal("hide");
                 var size_id = result.size_id;
                 $.ajax({
@@ -202,7 +202,7 @@ $(document).on("submit", "form#quick_add_size_form", function (e) {
                     },
                 });
             } else {
-                swal("Error", result.msg, "error");
+                Swal.fire("Error", result.msg, "error");
             }
         },
     });
@@ -236,7 +236,7 @@ $(document).on("change", "#sku", function () {
             success: function (result) {
                 console.log(result.success);
                 if (!result.success) {
-                    swal("Error", result.msg, "error");
+                    Swal.fire("Error", result.msg, "error");
                 }
             },
         });
@@ -258,11 +258,11 @@ $(document).on("click", ".delete-image", function () {
         data: {},
         success: function (result) {
             if (result.success) {
-                swal("Success", result.msg, "success");
+                Swal.fire("Success", result.msg, "success");
                 $(images_div).remove();
             }
             if (!result.success) {
-                swal("Error", result.msg, "error");
+                Swal.fire("Error", result.msg, "error");
             }
         },
     });
@@ -326,7 +326,7 @@ $(document).on("change", "#sell_price", function () {
     let purchase_price = __read_number($("#purchase_price"));
 
     if (sell_price < purchase_price) {
-        swal(LANG.warning, LANG.sell_price_less_than_purchase_price, "warning");
+        Swal.fire(LANG.warning, LANG.sell_price_less_than_purchase_price, "warning");
         return;
     }
 });
@@ -380,7 +380,7 @@ $(document).on("submit", "form#quick_add_category_form", function (e) {
                     },
                 });
             } else {
-                swal("Error", result.msg, "error");
+                Swal.fire("Error", result.msg, "error");
             }
         },
     });

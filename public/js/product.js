@@ -50,7 +50,7 @@ $(document).on("click", "#clear_all_input_form", function () {
         contentType: "html",
         success: function (result) {
             if (result.success) {
-                swal("Success", "all inputs cleared", "success");
+                Swal.fire("Success", "all inputs cleared", "success");
             }
         },
     });

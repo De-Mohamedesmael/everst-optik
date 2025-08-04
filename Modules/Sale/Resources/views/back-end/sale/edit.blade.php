@@ -399,7 +399,7 @@
                 },
                 success: function(result) {
                     if (!result.success) {
-                        swal("Error", result.msg, 'error');
+                        Swal.fire("Error", result.msg, 'error');
                         $(payment_row).find('.cash_register_id').val('')
                     } else {
                         if (!jQuery.isEmptyObject(result.cash_register)) {

@@ -136,7 +136,7 @@ $(document).on("click", "#table_action_btn", function () {
             },
             success: function (result) {
                 if (result.success == "1") {
-                    swal("Success", result.msg, "success");
+                    Swal.fire("Success", result.msg, "success");
                     $("#dining_table_action_modal").modal("hide");
                     get_dining_content();
                 }
