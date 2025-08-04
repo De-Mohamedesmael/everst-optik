@@ -390,7 +390,7 @@
 
         $(document).on('click', '.delete_customer', function(e) {
             e.preventDefault();
-            swal({
+            Swal.fire({
                 title: 'Are you sure?',
                 text: "@lang('lang.all_customer_transactions_will_be_deleted')",
                 icon: 'warning',
@@ -400,7 +400,7 @@
                     var href = $(this).data('href');
                     var data = $(this).serialize();
 
-                    swal({
+                    Swal.fire({
                         title: 'Please Enter Your Password',
                         content: {
                             element: "input",
@@ -428,7 +428,7 @@
                                 success: (data) => {
 
                                     if (data.success == true) {
-                                        swal(
+                                        Swal.fire(
                                             'Success',
                                             'Correct Password!',
                                             'success'
@@ -442,7 +442,7 @@
                                             success: function(result) {
                                                 if (result.success ==
                                                     true) {
-                                                    swal(
+                                                    Swal.fire(
                                                         'Success',
                                                         result.msg,
                                                         'success'
@@ -453,7 +453,7 @@
                                                     }, 1500);
                                                     location.reload();
                                                 } else {
-                                                    swal(
+                                                    Swal.fire(
                                                         'Error',
                                                         result.msg,
                                                         'error'
@@ -463,7 +463,7 @@
                                         });
 
                                     } else {
-                                        swal(
+                                        Swal.fire(
                                             'Failed!',
                                             'Wrong Password!',
                                             'error'

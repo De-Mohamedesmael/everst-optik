@@ -153,13 +153,13 @@
                 }
             }
             if (selected_delete_ids.length == 0) {
-                swal({
+                Swal.fire({
                     title: 'Warning',
                     text: LANG.sorry_you_should_select_products_to_continue_delete,
                     icon: 'warning',
                 })
             } else {
-                swal({
+                Swal.fire({
                     title: 'Are you sure?',
                     text: LANG.all_transactions_related_to_this_products_will_be_deleted,
                     icon: 'warning',
@@ -169,7 +169,7 @@
                         var href = $(this).data('href');
                         var data = $(this).serialize();
 
-                        swal({
+                        Swal.fire({
                             title: 'Please Enter Your Password',
                             content: {
                                 element: "input",
@@ -197,7 +197,7 @@
                                     success: (data) => {
 
                                         if (data.success == true) {
-                                            swal(
+                                            Swal.fire(
                                                 'Success',
                                                 'Correct Password!',
                                                 'success'
@@ -212,7 +212,7 @@
                                                 success: function (result) {
                                                     if (result.success ==
                                                         true) {
-                                                        swal(
+                                                        Swal.fire(
                                                             'Success',
                                                             result.msg,
                                                             'success'
@@ -223,7 +223,7 @@
                                                         }, 1500);
                                                         location.reload();
                                                     } else {
-                                                        swal(
+                                                        Swal.fire(
                                                             'Error',
                                                             result.msg,
                                                             'error'
@@ -233,7 +233,7 @@
                                             });
 
                                         } else {
-                                            swal(
+                                            Swal.fire(
                                                 'Failed!',
                                                 'Wrong Password!',
                                                 'error'
@@ -263,13 +263,15 @@
                     var href = $(this).data('href');
                     var data = $(this).serialize();
                     Swal.fire({
-                        title: "{!! __('lang.please_enter_your_password') !!}",
-                        input: 'password',
-                        inputAttributes: {
-                            placeholder: "{!! __('lang.type_your_password') !!}",
-                            autocomplete: 'off',
-                            autofocus: true,
-                        },
+                            title: '{{ translate('please_enter_your_password') }}',
+                            input: 'password',
+                            inputPlaceholder: '{{ translate('type_your_password') }}',
+                            inputAttributes: {
+                                autocapitalize: 'off',
+                                autocomplete: 'off'
+                            },
+                            showCancelButton: true,
+                            confirmButtonText: "{{ translate('Submit') }}"
                     }).then((result) => {
                         if (result) {
                             $.ajax({
@@ -631,7 +633,7 @@
 
         $(document).on('click', '.delete_product', function (e) {
             e.preventDefault();
-            swal({
+            Swal.fire({
                 title: 'Are you sure?',
                 text: "@lang('lang.all_transactions_related_to_this_product_will_be_deleted')",
                 icon: 'warning',
@@ -641,7 +643,7 @@
                     var href = $(this).data('href');
                     var data = $(this).serialize();
 
-                    swal({
+                    Swal.fire({
                         title: 'Please Enter Your Password',
                         content: {
                             element: "input",
@@ -669,7 +671,7 @@
                                 success: (data) => {
 
                                     if (data.success == true) {
-                                        swal(
+                                        Swal.fire(
                                             'Success',
                                             'Correct Password!',
                                             'success'
@@ -683,7 +685,7 @@
                                             success: function (result) {
                                                 if (result.success ==
                                                     true) {
-                                                    swal(
+                                                    Swal.fire(
                                                         'Success',
                                                         result.msg,
                                                         'success'
@@ -694,7 +696,7 @@
                                                     }, 1500);
                                                     location.reload();
                                                 } else {
-                                                    swal(
+                                                    Swal.fire(
                                                         'Error',
                                                         result.msg,
                                                         'error'
@@ -704,7 +706,7 @@
                                         });
 
                                     } else {
-                                        swal(
+                                        Swal.fire(
                                             'Failed!',
                                             'Wrong Password!',
                                             'error'
@@ -730,7 +732,7 @@
                     if (response) {
                         $(this).removeAttr('checked');
                         $(this).attr('checked', false);
-                        swal(response.success, response.msg, response.status);
+                        Swal.fire(response.success, response.msg, response.status);
                     }
                 }
             });

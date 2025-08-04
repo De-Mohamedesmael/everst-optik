@@ -360,14 +360,16 @@
             e.preventDefault();
             var url = $(this).data('href');
 
-            Swal.fire({
-                title: "{!! __('lang.please_enter_your_password') !!}",
-                input: 'password',
-                inputAttributes: {
-                    placeholder: "{!! __('lang.type_your_password') !!}",
-                    autocomplete: 'off',
-                    autofocus: true,
-                },
+           Swal.fire({
+                            title: '{{ translate('please_enter_your_password') }}',
+                            input: 'password',
+                            inputPlaceholder: '{{ translate('type_your_password') }}',
+                            inputAttributes: {
+                                autocapitalize: 'off',
+                                autocomplete: 'off'
+                            },
+                            showCancelButton: true,
+                            confirmButtonText: "{{ translate('Submit') }}"
             }).then((result) => {
                 if (result) {
                     $.ajax({

@@ -207,7 +207,7 @@
             let value_qty = parseFloat($(this).val());
             if (max < value_qty) {
                 $(this).val(max);
-                swal(
+                Swal.fire(
                     "warning",
                     "Max quantity is " + " :" + max,
                     "warning"

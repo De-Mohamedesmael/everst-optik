@@ -568,7 +568,7 @@ $transaction_payment = $recent_stock->transaction_payments->first();
                     data: $("#products-form-quick-add").serialize(),
                     success: function (response) {
                         if (response.success) {
-                            swal("Success", response.msg, "success");
+                            Swal.fire("Success", response.msg, "success");
                             ;
                             $("#search_product").val(sku);
                             $('input#search_product').autocomplete("search");
@@ -577,7 +577,7 @@ $transaction_payment = $recent_stock->transaction_payments->first();
                     },
                     error: function (response) {
                         if (!response.success) {
-                            swal("Error", response.msg, "error");
+                            Swal.fire("Error", response.msg, "error");
                         }
                     },
                 });

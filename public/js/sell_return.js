@@ -252,7 +252,7 @@ $(document).on("change", ".quantity", function () {
     let value_qty = parseFloat($(this).val());
     if(max < value_qty){
         $(this).val(max);
-        swal(
+        Swal.fire(
             "warning",
             "Max quantity is " + " :" + max,
             "warning"
@@ -302,7 +302,7 @@ $(document).on("change", "#amount", function (e) {
     let total_amount_paid = __read_number($("#total_amount_paid"));
     if (total_amount_paid != 0){
         if (amount > total_amount_paid) {
-            swal(
+            Swal.fire(
                 "warning",
                 "amount exceeds total paid" + " :" + total_amount_paid,
                 "warning"

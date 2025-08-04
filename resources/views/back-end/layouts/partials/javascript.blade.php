@@ -435,13 +435,15 @@ $moment_time_format = \Modules\Setting\Entities\System::getProperty('time_format
                 var data = $(this).serialize();
 
                 Swal.fire({
-                    title: "{!! __('lang.please_enter_your_password') !!}",
+                    title: '{{ translate('please_enter_your_password') }}',
                     input: 'password',
+                    inputPlaceholder: '{{ translate('type_your_password') }}',
                     inputAttributes: {
-                        placeholder: "{!! __('lang.type_your_password') !!}",
-                        autocomplete: 'off',
-                        autofocus: true,
+                        autocapitalize: 'off',
+                        autocomplete: 'off'
                     },
+                    showCancelButton: true,
+                    confirmButtonText: "{{ translate('Submit') }}"
                 }).then((result) => {
                     if (result) {
                         $.ajax({

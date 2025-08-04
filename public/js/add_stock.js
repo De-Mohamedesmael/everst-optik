@@ -29,7 +29,7 @@ $(document).ready(function () {
                         $(this).autocomplete("close");
                     }
                     // else if (ui.content.length == 0) {
-                    //     swal("Product not found");
+                    //     Swal.fire("Product not found");
                     // }
                 },
                 focus: function (event, ui) {},
@@ -497,7 +497,7 @@ $(document).on("click", "#clear_all_input_form", function () {
         contentType: "html",
         success: function (result) {
             if (result.success) {
-                swal("Success", response.msg, "success");
+                Swal.fire("Success", response.msg, "success");
             }
         },
     });
@@ -513,7 +513,7 @@ function    checkAddStock(){
         .each(function() {
             if ($(this).find('.quantity').val() == 0) {
                 $(this).find('.quantity').css('border', '2px solid red');
-                swal("Error", LANG.qty_msg, "error");
+                Swal.fire("Error", LANG.qty_msg, "error");
                 willDelete = 3;
                 checkQty=3
             }
@@ -574,7 +574,7 @@ $(document).on('click', '#submit-edit-save', function(e) {
                     if(check != ''){
                         $(this).find('.purchase_price_submit').val('0');
                         $(this).find('.selling_price_submit').val('0')
-                        swal("warning", title, "warning");
+                        Swal.fire("warning", title, "warning");
                     }else{
                         $('form#edit_stock_form').valid();
                         $('form#edit_stock_form').submit();
@@ -594,7 +594,7 @@ $(document).on('click', '#submit-edit-save', function(e) {
 
                         $(this).find('.purchase_price_submit').val('0');
                         $(this).find('.selling_price_submit').val('0')
-            swal("warning", title, "warning");
+            Swal.fire("warning", title, "warning");
         }
 
     } else if(data[0]=="2") {
@@ -637,7 +637,7 @@ $(document).on('click', '#submit-save', function(e) {
                     if(check != ''){
                         $(this).find('.purchase_price_submit').val('0');
                         $(this).find('.selling_price_submit').val('0')
-                        swal("warning", title, "warning");
+                        Swal.fire("warning", title, "warning");
                     }else{
                         $('form#add_stock_product_form').valid();
                         $('form#add_stock_product_form').submit();
