@@ -327,7 +327,7 @@
                 }
             });
 
-
+            $('#store_table_filter input').attr('autocomplete', 'off');
         });
         $(document).on('click', '.filter_product', function() {
             factory_table.ajax.reload();

@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+
     customer_sales_table = $("#customer_sales_table").DataTable({
         lengthChange: true,
         paging: true,
@@ -85,6 +86,7 @@ $(document).ready(function () {
                 });
         },
     });
+    $('#store_table_filter input').attr('autocomplete', 'off');
     //Prevent enter key function except texarea
     $("form").on("keyup keypress", function (e) {
         var keyCode = e.keyCode || e.which;
@@ -1886,6 +1888,7 @@ $(document).on("shown.bs.modal", "#recentTransaction", function () {
 });
 $(document).on("click", "#view-lens-btn", function () {
     $("#lensTransaction").modal("show");
+
     $("#lens_table").DataTable({
         lengthChange: true,
         paging: true,
@@ -1973,6 +1976,7 @@ $(document).on("click", "#view-lens-btn", function () {
                 });
         },
     });
+    $('#store_table_filter input').attr('autocomplete', 'off');
 });
 $(document).on("click", "#view-online-order-btn", function () {
     $("#onlineOrderTransaction").modal("show");
@@ -2130,6 +2134,7 @@ $(document).on("change", "#customer_id", function () {
     getPrescriptionData();
     getCustomerData();
     getCustomerBalance();
+    $('#store_table_filter input').attr('autocomplete', 'off');
 
 });
 function getPrescriptionData() {
