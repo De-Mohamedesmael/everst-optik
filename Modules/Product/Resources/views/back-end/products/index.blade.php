@@ -263,15 +263,15 @@
                     var href = $(this).data('href');
                     var data = $(this).serialize();
                     Swal.fire({
-                            title: '{{ translate('please_enter_your_password') }}',
-                            input: 'password',
-                            inputPlaceholder: '{{ translate('type_your_password') }}',
-                            inputAttributes: {
-                                autocapitalize: 'off',
-                                autocomplete: 'off'
-                            },
-                            showCancelButton: true,
-                            confirmButtonText: "{{ translate('Submit') }}"
+                    title: '{{ translate('please_enter_your_password') }}',
+                    input: 'password',
+                    inputPlaceholder: '{{ translate('type_your_password') }}',
+                    inputAttributes: {
+                        autocomplete: 'new-password',
+                        autocapitalize: 'off',
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: '{{ translate('Submit') }}'
                     }).then((result) => {
                         if (result) {
                             $.ajax({
