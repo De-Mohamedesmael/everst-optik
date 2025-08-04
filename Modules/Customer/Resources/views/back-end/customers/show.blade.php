@@ -792,6 +792,7 @@
                     },
                 });
             });
+            $('#store_table_filter input').attr('autocomplete', 'off');
         });
 
         // $(document).ready(function() {
@@ -934,5 +935,6 @@
                 },
             });
         });
+    $('#store_table_filter input').attr('autocomplete', 'off');
 </script>
 @endsection

@@ -335,5 +335,6 @@
             $('.filters').selectpicker('refresh')
             add_stock_table.ajax.reload();
         })
+        $('#store_table_filter input').attr('autocomplete', 'off');
     </script>
 @endsection

@@ -384,7 +384,7 @@
 
                 },
             });
-
+            $('#store_table_filter input').attr('autocomplete', 'off');
         });
 
 
@@ -489,5 +489,6 @@
             $('#customer_type_id').val('')
             store_table.ajax.reload();
         });
+
     </script>
 @endsection

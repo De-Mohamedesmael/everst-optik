@@ -365,6 +365,7 @@
                         });
                 },
             });
+            $('#store_table_filter input').attr('autocomplete', 'off');
             $(document).on('change', '.sale_filter', function() {
                 sell_return_table.ajax.reload();
             });

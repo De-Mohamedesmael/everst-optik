@@ -701,6 +701,7 @@
                     });
                 }
             });
+            $('#store_table_filter input').attr('autocomplete', 'off');
         });
 
     </script>

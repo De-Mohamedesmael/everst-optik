@@ -912,7 +912,7 @@
                 }
             });
 
-
+        $('#store_table_filter input').attr('autocomplete', 'off');
             $(document).on('click', '#submit-filter', function() {
                 sales_table.ajax.reload();
                 get_total_details();
