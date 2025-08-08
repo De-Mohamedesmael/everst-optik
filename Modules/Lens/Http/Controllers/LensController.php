@@ -456,6 +456,7 @@ class LensController extends Controller
             $request,
             ['name' => ['required', 'max:255']],
             ['store_ids' => ['required']],
+            ['kun' => ['required']],
         );
 
         DB::beginTransaction();
@@ -464,7 +465,6 @@ class LensController extends Controller
             $lens_data = [
                 'name' => $request->name,
                 'is_lens' => 1,
-                'lno' => $request->lno,
                 'kun' => $request->kun,
                 'sell_price' => $request->sell_price,
                 'purchase_price' => $request->purchase_price,
@@ -644,7 +644,6 @@ class LensController extends Controller
              $lens_data = [
                 'name' => $request->name,
                 'is_lens' => 1,
-                 'lno' => $request->lno,
                  'kun' => $request->kun,
                  'sell_price' => $request->sell_price,
                 'purchase_price' => $request->purchase_price,

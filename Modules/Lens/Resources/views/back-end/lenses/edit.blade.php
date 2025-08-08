@@ -313,26 +313,16 @@
                                     ]) !!}
                                 </div>
                             </div>
+
                             <div class="col-md-3 px-5">
                                 <div class="form-group">
-                                    {!! Form::label('lno',translate('lno'), [
-                                        'class' => 'form-label d-block mb-1',
-                                    ]) !!}
-                                    {!! Form::text('lno', $lens->lno, [
-                                        'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                        'id' => 'lno',
-                                        'placeholder' => translate('lno'),
-                                    ]) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-3 px-5">
-                                <div class="form-group">
-                                    {!! Form::label('kun',translate('kun'), [
+                                    {!! Form::label('kun',translate('kun') . ' *', [
                                         'class' => 'form-label d-block mb-1',
                                     ]) !!}
                                     {!! Form::number('kun', $lens->kun, [
                                         'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
                                         'id' => 'kun',
+                                         'required',
                                         'placeholder' => translate('kun'),
                                     ]) !!}
                                 </div>
