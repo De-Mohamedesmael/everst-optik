@@ -1110,7 +1110,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 <select name="product[Lens][Right][Near][SPHDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                     data-signfor="Right_Near_SPH" data-rl="Right"
-                                                                    id="Right_Near_SPHDeg">
+                                                                    id="Right_Near_SPHDeg" disabled>
                                                                     <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-">-</option>
@@ -1122,7 +1122,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 <input type="number"
                                                                     name="product[Lens][Right][Near][SPH]" value=""
                                                                     id="Right_Near_SPH" data-reqval="nearSPH"
-                                                                    placeholder=" "
+                                                                    placeholder=" " readonly
                                                                     class="form-control input-block-level lensVal lensSPH  number-input"
                                                                     data-rl="Right" required aria-required="true"
                                                                     step="0.25" min="-30" max="30" autocomplete="off">
@@ -1131,7 +1131,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 <select name="product[Lens][Right][Near][CYLDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                                     data-rl="Right" data-signfor="Right_Near_CYL"
-                                                                    id="Right_Near_CYLDeg">
+                                                                    id="Right_Near_CYLDeg" disabled>
                                                                     <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-" selected="selected">-</option>
@@ -1143,7 +1143,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 <input type="number"
                                                                     name="product[Lens][Right][Near][CYL]"
                                                                     data-reqval="nearCYL" value="" id="Right_Near_CYL"
-                                                                    placeholder=" "
+                                                                    placeholder=" " readonly
                                                                     class="form-control input-block-level lensVal lensCYL  number-input"
                                                                     data-rl="Right" step="0.25" min="-15" max="15" autocomplete="off">
 
@@ -1151,7 +1151,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                             <td>
                                                                 <input type="number"
                                                                     name="product[Lens][Right][Near][Axis]"
-                                                                    data-reqval="nearAX" value="" id="Right_Near_Axis"
+                                                                    data-reqval="nearAX" value="" id="Right_Near_Axis" readonly
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensAxis nearAX  number-input"
                                                                     data-rl="Right" step="1" min="0" max="180" autocomplete="off">
@@ -1480,6 +1480,19 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
 <script>
     $(document).ready(function() {
         $("#RightLens").prop('checked', true);
+    let nearSPH = $(`#Right_Near_SPH`);
+    let nearSPHSign = $(`#Right_Near_SPHDeg`);
+    let nearCYL = $(`#Right_Near_CYL`);
+
+    let nearCYLSign = $(`#Right_Near_CYLDeg`);
+        let nearAxis = $(`#Right_Near_Axis`);
+
+         nearSPH.prop('readonly', true);
+        nearSPHSign.prop('disabled', true);
+    
+        nearCYL.prop('readonly', true);
+        nearCYLSign.prop('disabled', true);
+        nearAxis.prop('readonly', true);
     });
 
     @if(isset($prescription_id))
@@ -1661,39 +1674,161 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         const Far_CYL = $('#Right_Far_CYL').val();
         $('#Right_Near_CYL').val(Far_CYL);
     });
-    $(document).on("change", "#Right_Far_SPH,#Right_Near_SPH,#Right_Addition", function (e) {
-        const Far_SPH = $('#Right_Far_SPH').val();
-        const Near_SPH = $('#Right_Near_SPH').val();
-        const Right_Addition = $('#Right_Addition').val();
-        console.log(Right_Addition,Near_SPH,Far_SPH);
-        if(Far_SPH !== '' && Near_SPH !== '' ){
-            $('#Right_Addition').val(Near_SPH - Far_SPH);
-        }else if(Right_Addition !== '' && Near_SPH !== ''){
-            $('#Right_Far_SPH').val(Near_SPH - Right_Addition);
-        }else if(Right_Addition !== '' && Far_SPH !== ''){
-            $('#Right_Near_SPH').val( parseFloat(Far_SPH) +  parseFloat(Right_Addition));
-        }else{
-
-        }
-
-
+    
+    $(document).on("change", "#Right_Far_CYLDeg", function (e) {
+        const Far_CYLDeg = $('#Right_Far_CYLDeg').val();
+        $('#Right_Near_CYLDeg').val(Far_CYLDeg);
     });
+    // $(document).on("change", "#Right_Far_SPH,#Right_Near_SPH,#Right_Addition", function (e) {
+    //     const Far_SPH = $('#Right_Far_SPH').val();
+    //     const Near_SPH = $('#Right_Near_SPH').val();
+    //     const Right_Addition = $('#Right_Addition').val();
+    //     console.log(Right_Addition,Near_SPH,Far_SPH);
+    //     if(Far_SPH !== '' && Near_SPH !== '' ){
+    //         $('#Right_Addition').val(Near_SPH - Far_SPH);
+    //     }else if(Right_Addition !== '' && Near_SPH !== ''){
+    //         $('#Right_Far_SPH').val(Near_SPH - Right_Addition);
+    //     }else if(Right_Addition !== '' && Far_SPH !== ''){
+    //         $('#Right_Near_SPH').val( parseFloat(Far_SPH) +  parseFloat(Right_Addition));
+    //     }else{
 
-    $(document).on("change", "#Left_Far_SPH,#Left_Near_SPH,#Left_Addition", function (e) {
-        const Far_SPH = $('#Left_Far_SPH').val();
-        const Near_SPH = $('#Left_Near_SPH').val();
+    //     }
 
-        const Left_Addition = $('#Left_Addition').val();
-        if(Far_SPH !== '' && Near_SPH !== '' ){
-            $('#Left_Addition').val(Near_SPH - Far_SPH);
-        }else if(Left_Addition !== '' && Near_SPH !== ''){
-            $('#Left_Far_SPH').val(Near_SPH - Left_Addition);
-        }else if(Left_Addition !== '' && Far_SPH !== ''){
-            $('#Left_Near_SPH').val( parseFloat(Far_SPH) +  parseFloat(Left_Addition));
-        }else{
 
-        }
-    });
+    // });
+
+    // $(document).on("change", "#Left_Far_SPH,#Left_Near_SPH,#Left_Addition", function (e) {
+    //     const Far_SPH = $('#Left_Far_SPH').val();
+    //     const Near_SPH = $('#Left_Near_SPH').val();
+
+    //     const Left_Addition = $('#Left_Addition').val();
+    //     if(Far_SPH !== '' && Near_SPH !== '' ){
+    //         $('#Left_Addition').val(Near_SPH - Far_SPH);
+    //     }else if(Left_Addition !== '' && Near_SPH !== ''){
+    //         $('#Left_Far_SPH').val(Near_SPH - Left_Addition);
+    //     }else if(Left_Addition !== '' && Far_SPH !== ''){
+    //         $('#Left_Near_SPH').val( parseFloat(Far_SPH) +  parseFloat(Left_Addition));
+    //     }else{
+
+    //     }
+    // });
+    
+   
+   
+   function updateNearValues(side) {
+    let farSPH = parseFloat($(`#${side}_Far_SPH`).val()) || 0;
+    let addition = parseFloat($(`#${side}_Addition`).val()) || 0;
+    let farSPHSign = $(`#${side}_Far_SPHDeg`);
+    let nearSPH = $(`#${side}_Near_SPH`);
+    let nearSPHSign = $(`#${side}_Near_SPHDeg`);
+    let farCYLSign = $(`#${side}_Far_CYLDeg`);
+    let nearCYLSign = $(`#${side}_Near_CYLDeg`);
+    let farCYL = $(`#${side}_Far_CYL`).val() || '';
+    let nearCYL = $(`#${side}_Near_CYL`);
+    let farAxis = $(`#${side}_Far_Axis`).val() || '';
+    let nearAxis = $(`#${side}_Near_Axis`);
+
+
+    
+
+    let nearValue;
+    if (farSPHSign.val() === "-") {
+        nearValue = -farSPH + addition;
+    } else {
+        nearValue = farSPH + addition;
+    }
+    // nearCYLSign.val(farCYLSign.val());
+    if (nearValue < 0) {
+        nearSPHSign.val("-");
+        nearSPH.val(Math.abs(nearValue).toFixed(2));
+    } else {
+        nearSPHSign.val("+");
+        nearSPH.val(nearValue.toFixed(2));
+    }
+
+    nearCYL.val(farCYL);
+
+   
+    nearAxis.val(farAxis);
+
+    nearSPH.prop('readonly', true);
+    nearSPHSign.prop('disabled', true);
+
+    nearCYL.prop('readonly', true);
+    nearCYLSign.prop('disabled', true);
+
+    nearAxis.prop('readonly', true);
+    
+    
+    $(`#${side}_Near_CYLDeg`).selectpicker('refresh');
+    $(`#${side}_Near_SPHDeg`).selectpicker('refresh');
+    $(`#${side}_Far_SPHDeg`).selectpicker('refresh');
+}
+
+$(document).on("change", "#Right_Far_SPH", function () {
+    let farSPHSign = $(`#Right_Far_SPHDeg`);
+    let farSPH = parseFloat($(`#Right_Far_SPH`).val()) || 0;
+    if (farSPH < 0) {
+        console.log(farSPH);
+       $(`#Right_Far_SPH`).val(Math.abs(farSPH))
+       farSPHSign.val("-")
+    } else if(farSPH > 0) {
+        farSPHSign.val("+");
+    }
+    updateNearValues('Right');
+});
+
+
+$(document).on("change","#Right_Addition, #Right_Far_SPHDeg", function () {
+    updateNearValues('Right');
+});
+
+
+$(document).on("change", "#Left_Far_SPH", function () {
+    let farSPHSign = $(`#Left_Far_SPHDeg`);
+    let farSPH = parseFloat($(`#Left_Far_SPH`).val()) || 0;
+    if (farSPH < 0) {
+        console.log(farSPH);
+       $(`#Left_Far_SPH`).val(Math.abs(farSPH))
+       farSPHSign.val("-")
+    } else if(farSPH > 0) {
+        farSPHSign.val("+");
+    }
+    updateNearValues('Left');
+});
+$(document).on("change", "#Left_Addition, #Left_Far_SPHDeg", function () {
+    updateNearValues('Left');
+});
+
+$(document).on("change", "#Right_Far_CYLDeg", function () {
+    let val = $(this).val();
+    $("#Right_Near_CYLDeg").val(val);
+     $(`#Right_Near_CYLDeg`).selectpicker('refresh');
+});
+
+$(document).on("change", "#Left_Far_CYLDeg", function () {
+    let val = $(this).val();
+    $("#Left_Near_CYLDeg").val(val);
+         $(`#Left_Near_CYLDeg`).selectpicker('refresh');
+
+});
+
+$(document).on("input change", "#Right_Far_CYL, #Right_Far_Axis", function () {
+    $("#Right_Near_CYL").val($("#Right_Far_CYL").val());
+    $("#Right_Near_Axis").val($("#Right_Far_Axis").val());
+    
+});
+
+$(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
+    $("#Left_Near_CYL").val($("#Left_Far_CYL").val());
+    $("#Left_Near_Axis").val($("#Left_Far_Axis").val());
+});
+
+   
+   
+   
+   /////// نهايه
+
 
     $('.predefinedShape').on('click', function () {
         $(this).addClass('selected');
@@ -1844,17 +1979,17 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         cke.attr('disabled', true);
         cke.prop('checked', false);
 
-        $('#Left_Near_CYLDeg').prop('disabled', true);
-        $('#Left_Near_SPHDeg').prop('disabled', true);
+        // $('#Left_Near_CYLDeg').prop('disabled', true);
+        // $('#Left_Near_SPHDeg').prop('disabled', true);
         $('#Left_Far_CYLDeg').prop('disabled', true);
         $('#Left_Far_SPHDeg').prop('disabled', true);
 
         $('#Left_Far_Axis').attr('disabled', true);
-        $('#Left_Near_Axis').attr('disabled', true);
+        // $('#Left_Near_Axis').attr('disabled', true);
         $('#Left_Far_CYL').attr('disabled', true);
-        $('#Left_Near_CYL').attr('disabled', true);
+        // $('#Left_Near_CYL').attr('disabled', true);
         $('#Left_Far_SPH').attr('disabled', true);
-        $('#Left_Near_SPH').attr('disabled', true);
+        // $('#Left_Near_SPH').attr('disabled', true);
         $('#Left_Distance').prop('disabled', true);
         $('#Left_Addition').prop('disabled', true);
         $('#Left_Height').prop('disabled', true);
@@ -1865,14 +2000,14 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
     function LeftLensChecked() {
         $('#sameToRight').attr('disabled', false);
         $('#Left_Far_Axis').attr('disabled', false);
-        $('#Left_Near_Axis').attr('disabled', false);
+        // $('#Left_Near_Axis').attr('disabled', false);
         $('#Left_Far_CYL').attr('disabled', false);
-        $('#Left_Near_CYL').attr('disabled', false);
+        // $('#Left_Near_CYL').attr('disabled', false);
         $('#Left_Far_SPH').attr('disabled', false);
-        $('#Left_Near_SPH').attr('disabled', false);
+        // $('#Left_Near_SPH').attr('disabled', false);
 
-        $('#Left_Near_CYLDeg').prop('disabled', false);
-        $('#Left_Near_SPHDeg').prop('disabled', false);
+        // $('#Left_Near_CYLDeg').prop('disabled', false);
+        // $('#Left_Near_SPHDeg').prop('disabled', false);
         $('#Left_Far_CYLDeg').prop('disabled', false);
         $('#Left_Far_SPHDeg').prop('disabled', false);
 
@@ -1881,8 +2016,8 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         $('#Left_Height').prop('disabled', false);
 
 
-        $('#Left_Near_CYLDeg').selectpicker('refresh');
-        $('#Left_Near_SPHDeg').selectpicker('refresh');
+        // $('#Left_Near_CYLDeg').selectpicker('refresh');
+        // $('#Left_Near_SPHDeg').selectpicker('refresh');
         $('#Left_Far_CYLDeg').selectpicker('refresh');
         $('#Left_Far_SPHDeg').selectpicker('refresh');
     }
@@ -2072,6 +2207,9 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         $('#Left_Far_CYLDeg').selectpicker('refresh');
         $('#Left_Far_SPHDeg').selectpicker('refresh');
     }
+    
+    
+    
 </script>
 
 
