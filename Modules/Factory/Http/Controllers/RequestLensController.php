@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Cache;
 use Modules\Factory\Mail\LensOrderMail;
 use Illuminate\Support\Facades\Mail;
 use Modules\Customer\Entities\Prescription;
+use Modules\Setting\Entities\Store;
 use Modules\Setting\Entities\System;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -37,54 +38,63 @@ class RequestLensController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-
-            $customers = Prescription::leftjoin('products', 'prescriptions.product_id', 'products.id')
+            $prescriptions = Prescription::leftjoin('products', 'prescriptions.product_id', 'products.id')
                 ->leftjoin('factories', 'prescriptions.factory_id', 'factories.id')
+                ->leftjoin('transactions', 'prescriptions.transaction_id', 'transactions.id')
+                ->leftjoin('stores', 'prescriptions.store_id', 'stores.id')
                 ->select(
                     'prescriptions.*',
+                    'transactions.invoice_no as invoice_no',
+                    'stores.name as store_name',
                     'products.name as lens_name',
                     'factories.name as factory_name'
-                );
-
-            return DataTables::of($customers)
+                )->ofFactories();
+            return DataTables::of($prescriptions)
                 ->editColumn('created_at', '{{@format_datetime($created_at)}}')
-                ->editColumn('amount_product', '{{@number_format($amount_product)}}')
-                ->editColumn('total_extra', '{{@number_format($total_extra)}}')
-                ->editColumn('amount_total', '{{@number_format($amount_total)}}')
-                ->addColumn('lens_name', function ($row) {
-                    dd($row->lens_name);
-                    return $row->lens_name ? $row->lens_name : '';
-                })->addColumn(
-                    'action',
-                    function ($row) {
-                        $html = '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">' . __('lang.action') . '
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">';
-
-
-
-
-
-                        $html .="</ul>";
-                        return $html;
+                ->editColumn('amount_product', function ($row) {
+                   $amount_product= $row->amount_product;
+                    $data_prescription =json_decode($row->data);
+                    $q=1;
+                    if((isset($data_prescription->Lens->Right->isCheck)&&$data_prescription->Lens->Right->isCheck) && (isset($data_prescription->Lens->Left->isCheck)&&$data_prescription->Lens->Left->isCheck)){
+                      $q=2;
                     }
-                )
-                ->rawColumns([
-                    'action',
-                    'lens_name',
-                    'created_at',
-                    'amount_product',
-                    'amount_total',
-                    'total_extra',
-                ])
+                    return  number_format($amount_product*$q);
+                })
+                ->editColumn('total_extra', function ($row) {
+                    $total_extra= $row->total_extra;
+                    $data_prescription =json_decode($row->data);
+                    $q=1;
+                    if((isset($data_prescription->Lens->Right->isCheck)&&$data_prescription->Lens->Right->isCheck) && (isset($data_prescription->Lens->Left->isCheck)&&$data_prescription->Lens->Left->isCheck)){
+                        $q=2;
+                    }
+                    return  number_format($total_extra*$q);
+                }) ->editColumn('amount_total', function ($row) {
+                    $amount_total= $row->amount_total;
+                    $data_prescription =json_decode($row->data);
+                    $q=1;
+                    if((isset($data_prescription->Lens->Right->isCheck)&&$data_prescription->Lens->Right->isCheck) && (isset($data_prescription->Lens->Left->isCheck)&&$data_prescription->Lens->Left->isCheck)){
+                        $q=2;
+                    }
+                    return  number_format($amount_total*$q);
+                })
+                ->editColumn('sku', function ($row) {
+                    return '<span class="copy-sku" data-id="' . $row->id . '" data-sku="' . $row->sku . '" style="cursor:pointer;" title="'.translate('Click_To_Copy').'">' . $row->sku . '</span>';
+                })->addColumn('scan_input', function ($row) {
+                    return '<input type="text" class="form-control scan-input" data-id="' . $row->id . '" value="' . e($row->qr_code) . '" />';
+                })
+                ->addColumn('qr_code_image', function ($row) {
+                    if ($row->qr_code) {
+                        $qr_url = 'https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=' . urlencode($row->qr_code);
+                        return '<img src="' . $qr_url . '" width="100" height="100">';
+                    }
+                    return '<span class="text-muted">—</span>';
+                })
+                ->rawColumns(['created_at','sku', 'amount_product', 'total_extra', 'amount_total', 'scan_input', 'qr_code_image', 'actions'])
                 ->make(true);
         }
+
         return view('factory::back-end.lenses.index');
     }
-
 
     public function create()
     {
@@ -96,6 +106,7 @@ class RequestLensController extends Controller
         $lenses = Product::Lens()->orderBy('name', 'asc')->pluck('name', 'id');
         $special_bases = SpecialBase::orderBy('name', 'asc')->pluck('name', 'id');
         $special_additions = SpecialAddition::orderBy('name', 'asc')->pluck('name', 'id');
+        $stores = Store::getDropdown();
 
         $factories = Factory::where('active',1)->orderBy('name', 'asc')->pluck('name', 'id');
 
@@ -104,6 +115,7 @@ class RequestLensController extends Controller
             'foci',
             'design_lenses',
             'index_lenses',
+            'stores',
             'colors',
             'lenses',
             'special_bases',
@@ -114,45 +126,16 @@ class RequestLensController extends Controller
     public function store(Request $request)
     {
 
-        $validator = validator($request->all(), [
+       $request->validate([
             'factory_id' => 'required|integer|exists:factories,id',
             'lens_id' => 'required|integer|exists:products,id',
-            // 'product' => 'required|array',
-            // 'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            // 'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
-            // 'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            // 'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
-            // 'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
-            // 'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            // 'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
-            // 'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            // 'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
-            // 'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
-            // 'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            // 'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
-            // 'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            // 'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
-            // 'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
-            // 'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            // 'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
-            // 'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            // 'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
-            // 'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
-            // 'product.VA.TinTing.value' => 'required_if:product.VA.TinTing.isCheck,1',
-            // 'product.VA.Base.value' => 'required_if:product.VA.Base.isCheck,1',
-            // 'product.VA.Ozel.value' => 'required_if:product.VA.Ozel.isCheck,1',
-            // 'product.VA.code.value' => 'required_if:product.VA.code.isCheck,1',
+            'store_id' => 'required|integer|exists:stores,id'
         ]);
-        if ($validator->fails())
-            return [
-                'success' => false,
-                'msg' => $validator->errors()->first()
-            ];
+
 
         $VA_amount = [];
         $total = 0;
         $VA = [];
-//        dd($request->all());
 
         if (isset($request->product['VA']['TinTing']['isCheck']) && $request->product['VA']['TinTing']['isCheck'] != null) {
 
@@ -200,40 +183,31 @@ class RequestLensController extends Controller
         $data = [
             'VA' => $VA,
             'VA_amount' => $VA_amount,
-            'Lens' => $request->product['Lens'],
+            'Lens' => $request->product['Lens'] ?? null,
         ];
-        $randomNumber = mt_rand(1000, 9999);
-        $timestamp = time();
 
-
-        // $cacheKey = "{$randomNumber}_{$timestamp}";
-        // $expirationTime = 60 * 6;
-        // Cache::put($cacheKey, $data, $expirationTime);
-
-
-        // if($line['is_lens']){
-            // $is_lens=$line['is_lens'];
-            // $KeyLens=$line['KeyLens'];
             $prescription_data=[
-                // 'customer_id' => $transaction->customer_id,
                 'product_id' => $request->lens_id,
+                'store_id' => $request->store_id,
                  'amount_product' =>$request->total_lens_valu,
                  'total_extra' => $total,
                  'amount_total' => $total+$request->total_lens_valu,
                 'factory_id' => $request->factory_id,
+                'note' => $request->note,
                 'date' => date('Y-m-d'),
                 'data' => json_encode($data),
             ];
             $prescription = Prescription::create($prescription_data);
+            $sku = 'RX' . date('Ymd') . str_pad($prescription->id, 6, '0', STR_PAD_LEFT);
+            $prescription->sku=$sku;
+            $prescription->save();
 
-            //     api index from PDF, clcik any product send to supplier or send to a client via uts
-            //     api list of finshed lens  send to supplier or send to a client via uts
-            //     only ouyside industry lenses will be traced
-
-        // }
         $factory = Factory::where('id',$request->factory_id)->first();
 
-        Mail::to($factory->email)->send(new LensOrderMail($prescription));
+        if($factory->email)
+            Mail::to($factory->email)->send(new LensOrderMail($prescription));
+
+
         return redirect()->route('admin.factories.lenses.index');
 
     }

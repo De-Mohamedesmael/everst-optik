@@ -17,7 +17,7 @@
                 </x-page-title>
 
 
-                {!! Form::open(['url' => action('SellController@saveImport'), 'method' => 'post', 'files' =>
+                {!! Form::open(['url' => route('admin.sale.saveImport'), 'method' => 'post', 'files' =>
                 true, 'class' => 'pos-form', 'id' => 'import_sale_form']) !!}
                 <input type="hidden" name="store_id" id="store_id" value="{{$store_pos->store_id}}">
                 <input type="hidden" name="default_customer_id" id="default_customer_id"

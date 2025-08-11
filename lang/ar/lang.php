@@ -1419,4 +1419,5 @@
   'prescriptions' => 'Prescriptions',
   'VA_amount' => 'VA amount',
   'Left glass is the same as right glass' => 'Left glass is the same as right glass',
+  'Submit' => 'Submit',
 );

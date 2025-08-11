@@ -14,7 +14,7 @@
 
 
 
-                {!! Form::open(['url' => action('SellPosController@store'), 'method' => 'post', 'files' =>
+                {!! Form::open(['url' => route('admin.pos.store'), 'method' => 'post', 'files' =>
                 true, 'class' => 'pos-form', 'id' => 'add_sale_form']) !!}
                 {{-- <input type="hidden" name="is_add_stock" id="is_add_stock" value="1"> --}}
                 <input type="hidden" name="default_customer_id" id="default_customer_id"

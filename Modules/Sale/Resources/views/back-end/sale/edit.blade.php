@@ -22,7 +22,7 @@
                 <div class="card">
 
                     <div class="card-body">
-                        {!! Form::open(['url' => action('SellPosController@update', $sale->id), 'method' => 'put',
+                        {!! Form::open(['url' => route('admin.pos.update', $sale->id), 'method' => 'put',
                         'files' => true, 'class' => 'pos-form', 'id' => 'edit_pos_form']) !!}
                         <input type="hidden" name="is_edit" id="is_edit" value="1">
                         <input type="hidden" name="store_id" id="store_id" value="{{ $sale->store_id }}">

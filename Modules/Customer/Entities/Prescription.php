@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 use Modules\Product\Entities\Product;
 use Modules\Factory\Entities\Factory;
+use Modules\Setting\Entities\Store;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -31,6 +32,10 @@ class Prescription extends Model implements HasMedia
     {
         return $this->belongsTo(Product::class,'product_id');
     }
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class,'store_id');
+    }
 
     public function factory(): BelongsTo
     {
@@ -41,6 +46,6 @@ class Prescription extends Model implements HasMedia
     {
         return $query->whereNotNull('factory_id');
     }
-    
+
 
 }

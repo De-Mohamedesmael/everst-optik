@@ -77,7 +77,7 @@
                             <button type="submit" class="btn btn-primary w-100">@lang('lang.filter')</button>
                         </div>
                         <div class="col-md-3 d-flex justify-content-center align-items-end mb-11px">
-                            <a href="{{action('SellController@index')}}"
+                            <a href="{{route('admin.sale.index')}}"
                                 class="btn btn-danger w-100">@lang('lang.clear_filter')</a>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                             <tr>
                                 <td>{{@format_date($sale->transaction_date)}}</td>
                                 <td>{{$sale->invoice_no}} @if(!empty($sale->return_parent))<a
-                                        data-href="{{action('SellReturnController@show', $sale->id)}}"
+                                        data-href="{{route('admin.sale-return.show', $sale->id)}}"
                                         data-container=".view_modal" class="btn btn-modal"
                                         style="color: #007bff;">R</a>@endif
                                 </td>
@@ -139,7 +139,7 @@
                                             @can('sale.pos.create_and_edit')
                                             <li>
 
-                                                <a data-href="{{action('SellController@print', $sale->id)}}"
+                                                <a data-href="{{route('admin.sale.print', $sale->id)}}"
                                                     class="btn print-invoice"><i class="dripicons-print"></i>
                                                     @lang('lang.generate_invoice')</a>
                                             </li>
@@ -148,7 +148,7 @@
                                             @can('sale.pos.view')
                                             <li>
 
-                                                <a data-href="{{action('SellController@show', $sale->id)}}"
+                                                <a data-href="{{route('admin.sale.show', $sale->id)}}"
                                                     data-container=".view_modal" class="btn btn-modal"><i
                                                         class="fa fa-eye"></i>
                                                     @lang('lang.view')</a>
@@ -158,7 +158,7 @@
                                             @can('sale.pos.create_and_edit')
                                             <li>
 
-                                                <a href="{{action('SellController@edit', $sale->id)}}" class="btn"><i
+                                                <a href="{{route('admin.sale.edit', $sale->id)}}" class="btn"><i
                                                         class="dripicons-document-edit"></i> @lang('lang.edit')</a>
                                             </li>
                                             <li class="divider"></li>
@@ -185,7 +185,7 @@
                                             @endcan
                                             @can('sale.pos.delete')
                                             <li>
-                                                <a data-href="{{action('SellController@destroy', $sale->id)}}"
+                                                <a data-href="{{route('admin.sale.destroy', $sale->id)}}"
                                                     data-check_password="{{action('UserController@checkPassword', Auth::user()->id)}}"
                                                     class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                     @lang('lang.delete')</a>
