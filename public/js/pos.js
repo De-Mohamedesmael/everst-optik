@@ -1158,6 +1158,8 @@ $(document).on("click", ".plus", function () {
 $(document).on("submit", "form#quick_add_customer_form", function (e) {
     e.preventDefault();
     var data = new FormData(this);
+    $("#close_model_cus_create").trigger("click");
+
     $.ajax({
         method: "post",
         url: $(this).attr("action"),

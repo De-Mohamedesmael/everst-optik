@@ -313,7 +313,7 @@
                                     ]) !!}
                                 </div>
                             </div>
-
+                            
                             <div class="col-md-3 px-5">
                                 <div class="form-group">
                                     {!! Form::label('kun',translate('kun') . ' *', [

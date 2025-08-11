@@ -517,6 +517,7 @@ class LensController extends Controller
             ];
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
