@@ -88,7 +88,6 @@
                                         <th>{{translate('date')}}</th>
                                         <th>{{translate('qrcode')}}</th>
                                         <th>{{translate('qr_code_image')}}</th>
-                                        <th>{{translate('actions')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -201,13 +200,8 @@
                         name: 'qr_code_image',
                         orderable: false,
                         searchable: false
-                    },
-                    {
-                        data: 'actions',
-                        name: 'actions',
-                        orderable: false,
-                        searchable: false
                     }
+                    
                 ],
             });
         });

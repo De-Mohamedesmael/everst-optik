@@ -45,7 +45,6 @@ class LensImport implements ToCollection, WithHeadingRow, WithValidation
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
-
             if($row['lens_name'] != null ){
                 $color = null;
                 $tax = null;
@@ -208,7 +207,7 @@ class LensImport implements ToCollection, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'lens_name' => 'required',
+            'lens_name' => 'sometimes',
             'sku' => 'sometimes|unique:products',
         ];
     }

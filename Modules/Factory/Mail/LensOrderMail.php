@@ -1,6 +1,7 @@
 <?php
 namespace Modules\Factory\Mail;
 
+use  Modules\Customer\Entities\Prescription;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,7 +12,7 @@ class LensOrderMail extends Mailable
 
     public $data;
 
-    public function __construct(array $data)
+    public function __construct(Prescription $data)
     {
         $this->data = $data;
     }
@@ -20,6 +21,6 @@ class LensOrderMail extends Mailable
     {
         return $this->subject('Lens Order Details')
                     ->view('factory::back-end.emails.lens_order')
-                    ->with(['data' => $this->data]);
+                    ->with(['prescription' => $this->data]);
     }
 }

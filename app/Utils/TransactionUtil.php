@@ -1655,6 +1655,13 @@ class TransactionUtil extends Util
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json'
             ])->post('http://everstoptek.com/api/uts/sell/store', $data);
+             if ($response->successful()) {
+                \Log::info('تم الإرسال إلى UTS بنجاح', ['response' => $response->json()]);
+                return true;
+            }
+    
+            \Log::error('فشل الإرسال إلى UTS', ['status' => $response->status(), 'body' => $response->body()]);
+            return false;
 
         } elseif (!empty($customer->id_number) && !empty($customer->id_type)) {
             $fullName = trim($customer->name);
@@ -1673,30 +1680,32 @@ class TransactionUtil extends Util
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json'
             ])->post('http://everstoptek.com/api/uts/sell/customer', $data);
-
-        } else {
-            $fullName = trim($customer->name);
-            $parts = explode(' ', $fullName);
-            $first_name = array_shift($parts);
-            $last_name = implode(' ', $parts);
-            $data = array_merge($commonData, [
-                'TKN' => $customer->id_number,
-                'TUA' => $first_name ?? 'Ad',
-                'TUS' => $last_name ?? 'Soyad',
-                'DTA' => 'Türü alanının değeri Diğer olması durumunda bu',
-                'TUR' => "DIGER",
-            ]);
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json'
-            ])->post('http://everstoptek.com/api/uts/sell/customer', $data);
-        }
-        if ($response->successful()) {
+             if ($response->successful()) {
             \Log::info('تم الإرسال إلى UTS بنجاح', ['response' => $response->json()]);
             return true;
         }
 
-        \Log::error('فشل الإرسال إلى UTS', ['status' => $response->status(), 'body' => $response->body()]);
-        return false;
+            \Log::error('فشل الإرسال إلى UTS', ['status' => $response->status(), 'body' => $response->body()]);
+            return false;
+
+        } 
+        // else {
+        //     $fullName = trim($customer->name);
+        //     $parts = explode(' ', $fullName);
+        //     $first_name = array_shift($parts);
+        //     $last_name = implode(' ', $parts);
+        //     $data = array_merge($commonData, [
+        //         'TKN' => $customer->id_number,
+        //         'TUA' => $first_name ?? 'Ad',
+        //         'TUS' => $last_name ?? 'Soyad',
+        //         'DTA' => 'Türü alanının değeri Diğer olması durumunda bu',
+        //         'TUR' => "DIGER",
+        //     ]);
+        //     $response = Http::withHeaders([
+        //         'Content-Type' => 'application/json'
+        //     ])->post('http://everstoptek.com/api/uts/sell/customer', $data);
+        // }
+       return false;
     }
 
 }

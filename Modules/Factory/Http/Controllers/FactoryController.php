@@ -233,9 +233,7 @@ class FactoryController extends Controller
                     }
                     return '<span class="text-muted">—</span>';
                 })
-                ->addColumn('actions', function($row) {
-                    return '<button class="btn btn-sm btn-primary send-btn" data-id="'.$row->id.'">بيع</button>';
-                })
+               
                 ->rawColumns(['created_at', 'amount_product','total_extra','amount_total','scan_input', 'qr_code_image', 'actions'])
                 ->make(true);
         }
