@@ -1212,7 +1212,9 @@ class SellPosController extends Controller
                         return '<span class="badge badge-danger">' . __('lang.cancel') . '</span>';
                     } elseif ($row->status == 'final' && $row->payment_status == 'pending') {
                         return '<span class="badge badge-warning">' . __('lang.pay_later') . '</span>';
-                    } else {
+                    } elseif ($row->status == 'pending'){
+                        return '<span class="badge badge-warning">' . ucfirst($row->status) . '</span>';
+                    }else {
                         return '<span class="badge badge-success">' . ucfirst($row->status) . '</span>';
                     }
                 })
@@ -1250,10 +1252,18 @@ class SellPosController extends Controller
                                 class="btn btn-primary text-white  btn-modal" data-container=".view_modal" data-dismiss="modal" ><i
                                 title="' . __('lang.view') . '" data-toggle="tooltip" class="fa fa-eye"></i></a>';
                         }
-                        $html .=
-                            '<a  target="_blank" href="' . route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
-                        title="' . __('lang.edit') . '" data-toggle="tooltip"
-                        class="dripicons-document-edit"></i></a>';
+                        if (auth()->user()->can('sale.pos.create_and_edit')) {
+                            $html .=
+                                '<a  target="_blank" href="' . route('admin.pos.edit', $row->id) . '?status=final" class="btn btn-success draft_pay"><i
+                                title="' . __('lang.edit') . '" data-toggle="tooltip"
+                                class="dripicons-document-edit"></i></a>';
+                            if ($row->status == 'pending') {
+                                $html .=
+                                    '<a data-href="' . route('admin.transaction.complete', ['id' => $row->id]) . '"
+                                    title="' . __('lang.complete_now') . '" data-toggle="tooltip" data-container=".view_modal"
+                                    class="btn btn-primary text-white  btn-modal" style="color: white"><i class="fa fa-check"></i></a>';
+                            }
+                        }
                         if (auth()->user()->can('sale.pay.create_and_edit')) {
                             if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
                                 $final_total = $row->final_total;
@@ -1267,6 +1277,7 @@ class SellPosController extends Controller
                                     class="btn btn-primary text-white  btn-modal" style="color: white"><i class="fa fa-money"></i></a>';
                                 }
                             }
+
                         }
                         if (auth()->user()->can('sale.pos.delete')) {
                             $html .=

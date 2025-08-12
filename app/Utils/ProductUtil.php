@@ -891,6 +891,7 @@ class ProductUtil extends Util
         $number_vs_base_unit=1;
         // return $add_stocks;
         foreach ($add_stocks as $line) {
+
             if( $transaction->discount_amount || $transaction->other_payments || $transaction->other_expenses){
                 $all_cost_percentage = ((($line['quantity'] * $this->num_uf( $line['purchase_price']))*100) / $transaction->grand_total); //percentage
                 $discount_amount_per_line =  !empty($transaction->discount_amount) ? ($transaction->discount_amount * $all_cost_percentage /100 ): 0;

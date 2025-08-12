@@ -103,7 +103,7 @@
                 <input type="hidden" name="transaction_sell_line[{{  $index }}][tax_method]"
                     class="tax_method" value="{{ $product->tax_method }}">
                 <input type="hidden" name="transaction_sell_line[{{  $index }}][tax_rate]"
-                    class="tax_rate" value="{{ @num_format($product->tax_rate) }}">
+                    class="tax_rate" value="{{ $product->tax_rate }}">
                 <input type="hidden" name="transaction_sell_line[{{  $index }}][item_tax]"
                     class="item_tax" value="0">
                 <input type="hidden" value="{{$KeyLens}}" name="transaction_sell_line[{{  $index }}][KeyLens]">

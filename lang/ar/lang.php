@@ -1420,4 +1420,9 @@
   'VA_amount' => 'VA amount',
   'Left glass is the same as right glass' => 'Left glass is the same as right glass',
   'Submit' => 'Submit',
+  'Click_To_Copy' => 'Click To Copy',
+  'Delivered' => 'Delivered',
+  'send_to_uts' => 'Send to uts',
+  'complete_order' => 'Complete order',
+  'Copied!' => 'Copied!',
 );
