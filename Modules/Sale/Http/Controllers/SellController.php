@@ -655,11 +655,19 @@ class SellController extends Controller
     public function print($id)
     {
         try {
-            $transaction = Transaction::find($id);
+            $sale = Transaction::find($id);
 
-            $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
+            $payment_type_array = $this->commonUtil->getPaymentTypeArrayForPos();
 
-            $html_content = $this->transactionUtil->getInvoicePrint($transaction, $payment_types);
+            $html_content = view('sale::back-end.sale.partials.print')->with(compact(
+                'sale',
+                'payment_type_array',
+            ))->render();
+
+
+//            $html_content = $this->transactionUtil->getInvoicePrint($sale, $payment_type_array);
+
+
 
             $output = [
                 'success' => true,
@@ -667,6 +675,7 @@ class SellController extends Controller
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
+            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,

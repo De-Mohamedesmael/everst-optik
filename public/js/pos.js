@@ -1850,7 +1850,7 @@ function get_recent_transactions() {
         footerCallback: function (row, data, start, end, display) {
             var intVal = function (i) {
                 return typeof i === "string"
-                    ? i.replace(/[\$,]/g, "") * 1
+                    ? i.replace(/\./g, '').replace(',', '.') * 1
                     : typeof i === "number"
                     ? i
                     : 0;
@@ -1870,7 +1870,9 @@ function get_recent_transactions() {
                 });
 
             this.api()
-                .columns(".sum", { page: "current" })
+                .columns(".sum", {
+                    page: "current"
+                })
                 .every(function () {
                     var column = this;
                     var currency_total = [];
