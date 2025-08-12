@@ -31,7 +31,7 @@ class ProductUtil extends Util
      *
      * @param string $string
      *
-     * @return generated sku (string)
+     * @return string sku (string)
      */
     public function generateProductSku($string)
     {
@@ -47,18 +47,18 @@ class ProductUtil extends Util
      * @param string $c
      * @param string $barcode_type
      *
-     * @return void
+     * @return string
      */
-    public function generateSubSku($sku, $c, $barcode_type = 'C128')
+    public function generateSubSku(string $sku, string $c, string $barcode_type = 'C128'): string
     {
-        $sub_sku = $sku . $c;
+        return $sku . $c;
 
-        if (in_array($barcode_type, ['C128', 'C39'])) {
-            $sub_sku = $sku . $c;
-            // $sub_sku = $sku . '-' . $c;
-        }
-
-        return $sub_sku;
+//        if (in_array($barcode_type, ['C128', 'C39'])) {
+//            $sub_sku = $sku . $c;
+//            // $sub_sku = $sku . '-' . $c;
+//        }
+//
+//        return $sub_sku;
     }
 
     /**

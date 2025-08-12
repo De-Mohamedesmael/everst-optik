@@ -327,8 +327,6 @@ class SellPosController extends Controller
             'created_by' => Auth::user()->id,
         ];
 
-
-
         DB::beginTransaction();
         $transaction = Transaction::create($transaction_data);
 
@@ -349,8 +347,8 @@ class SellPosController extends Controller
 
         if ($transaction->status != 'draft') {
             foreach ($request->payments as $payment) {
-                $amount = $this->commonUtil->num_uf($payment['amount']) - $this->commonUtil->num_uf($payment['change_amount']);
 
+                $amount = $this->commonUtil->num_uf($payment['amount']) - $this->commonUtil->num_uf($payment['change_amount']);
                 if ($amount > 0) {
                     $payment_data = [
                         'transaction_id' => $transaction->id,
@@ -370,7 +368,6 @@ class SellPosController extends Controller
                         'change_amount' => $payment['change_amount'] ?? 0,
                         'customer_balance' => $request->add_to_customer_balance ?? 0,
                     ];
-
                     $transaction_payment = $this->transactionUtil->createOrUpdateTransactionPayment($transaction, $payment_data);
                     $this->transactionUtil->updateTransactionPaymentStatus($transaction->id);
                     $this->cashRegisterUtil->addPayments($transaction, $payment_data, 'credit', null, $transaction_payment->id);
@@ -623,7 +620,6 @@ class SellPosController extends Controller
             ];
         } catch (\Exception $e) {
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
-            dd($e);
             $output = [
                 'success' => false,
                 'msg' => __('lang.something_went_wrong')
@@ -836,8 +832,7 @@ class SellPosController extends Controller
                 $store_pos_id = $store_pos->id;
             }
             $weighing_barcode = request()->get('weighing_scale_barcode');
-//            dd($weighing_barcode);
-            if (!empty($weighing_barcode)) {
+            if ($weighing_barcode && empty($product_id)) {
                 $product_details = $this->__parseWeighingBarcode($weighing_barcode);
 
                 if ($product_details['success']) {
@@ -990,7 +985,8 @@ class SellPosController extends Controller
      */
     private function __parseWeighingBarcode($scale_barcode): array
     {
-        $pr=Prescription::where('qr_code',$scale_barcode)->whereNull('sell_line_id')->first();
+
+        $pr=Prescription::where('sku',$scale_barcode)->whereNull('sell_line_id')->first();
         if($pr && $scale_barcode ){
             return [
                 'product_id' => $pr->product_id,
@@ -1161,7 +1157,7 @@ class SellPosController extends Controller
                     $string = $row->invoice_no . ' ';
                     if (!empty($row->return_parent)) {
                         $string .= '<a
-                        data-href="' . action('SellReturnController@show', $row->id) . '" data-container=".view_modal"
+                        data-href="' . route('admin.sale-return.show', $row->id) . '" data-container=".view_modal"
                         class="btn btn-modal" style="color: #007bff;">R</a>';
                     }
 
@@ -1573,113 +1569,5 @@ class SellPosController extends Controller
         return $output;
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function SaveLens(Request $request): mixed
-    {
-        $validator = validator($request->all(), [
-            'lens_id' => 'required|integer|exists:products,id',
-            'product' => 'required|array',
-            //            'product.Lens.Right.Far.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Far.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Far.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Far.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Far.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Near.SPHDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Near.SPH' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Near.CYLDeg' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Near.CYL' => 'required_if:product.Lens.Right.isCheck,==,1',
-            //            'product.Lens.Right.Near.Axis' => 'required_if:product.Lens.Right.isCheck,==,1',
 
-
-            //            'product.Lens.Left.Far.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Far.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Far.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Far.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Far.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Near.SPHDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Near.SPH' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Near.CYLDeg' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Near.CYL' => 'required_if:product.Lens.Left.isCheck,==,1',
-            //            'product.Lens.Left.Near.Axis' => 'required_if:product.Lens.Left.isCheck,==,1',
-
-
-            'product.VA.TinTing.value' => 'required_if:product.VA.TinTing.isCheck,1',
-            'product.VA.Base.value' => 'required_if:product.VA.Base.isCheck,1',
-            'product.VA.Ozel.value' => 'required_if:product.VA.Ozel.isCheck,1',
-            'product.VA.code.value' => 'required_if:product.VA.code.isCheck,1',
-        ]);
-        if ($validator->fails())
-            return [
-                'success' => false,
-                'msg' => $validator->errors()->first()
-            ];
-
-        $VA_amount = [];
-        $total = 0;
-        $VA = [];
-        if (isset($request->product['VA']['TinTing']['isCheck']) && $request->product['VA']['TinTing']['isCheck'] != null) {
-
-            $VA_amount['TinTing_amount'] = System::getProperty('TinTing_amount') ?: 10;
-            $color = Color::whereId($request->product['VA']['TinTing']['value'])->first();
-            $total = $total + $VA_amount['TinTing_amount'];
-            $VA['TinTing'] = $request->product['VA']['TinTing'];
-            $VA['TinTing']['text'] = $color?->name;
-        }
-
-        if (isset($request->product['VA']['Base']['isCheck']) && $request->product['VA']['Base']['isCheck'] != null) {
-
-            $Base = SpecialBase::whereId($request->product['VA']['Base']['value'])->first();
-            $VA_amount['Base_amount'] = 0;
-            if ($Base) {
-                $VA_amount['Base_amount'] = $Base->price;
-            }
-            $total = $total + $VA_amount['Base_amount'];
-            $VA['Base'] = $request->product['VA']['Base'];
-            $VA['Base']['text'] = $Base?->name;
-        }
-
-
-        if (isset($request->product['VA']['Ozel']['isCheck']) && $request->product['VA']['Ozel']['isCheck'] != null) {
-            $VA_amount['Ozel_amount'] = System::getProperty('Ozel_amount') ?: 10;
-            $total = $total + $VA_amount['Ozel_amount'];
-            $VA['Ozel'] = $request->product['VA']['Ozel'];
-            $VA['Ozel']['text'] = $request->product['VA']['Ozel']['value'];
-        }
-
-
-        if (isset($request->product['VA']['Special']['isCheck']) && $request->product['VA']['Special']['isCheck'] != null) {
-            $Specials = SpecialAddition::wherein('id', $request->product['VA']['Special']['value'])->get();
-            $VA_amount['Special_amount'] = $Specials->sum('price');
-            $VA['Special'] = $request->product['VA']['Special'];
-            foreach ($Specials as $key => $Special) {
-                $VA['Special']['TV'][$key] = [
-                    'text' => $Special->name,
-                    'price' => $Special->price,
-                ];
-            }
-            $total = $total + $VA_amount['Special_amount'];
-        }
-        $VA['code'] = $request->product['VA']['code'];
-        $VA['code']['text'] = $request->product['VA']['code']['value'];
-        $VA_amount['total'] = $total;
-        $data = [
-            'VA' => $VA,
-            'VA_amount' => $VA_amount,
-            'Lens' => $request->product['Lens'],
-        ];
-        $randomNumber = mt_rand(1000, 9999);
-        $timestamp = time();
-
-
-        $cacheKey = "{$randomNumber}_{$timestamp}";
-        $expirationTime = 60 * 6;
-        Cache::put($cacheKey, $data, $expirationTime);
-        return [
-            'success' => true,
-            'KeyLens' => $cacheKey,
-        ];
-    }
 }

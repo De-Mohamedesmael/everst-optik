@@ -186,7 +186,7 @@
                                                         class="fa fa-balance-scale text-primary fa-lg"></i></button>
                                             @endif
                                             <button type="button" class="btn btn-success btn-lg btn-modal"
-                                                data-href="{{ action('ProductController@create') }}?quick_add=1"
+                                                data-href="{{ action('admin.product.create') }}?quick_add=1"
                                                 data-container=".view_modal"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </div>
@@ -523,7 +523,7 @@
 
                                         <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                                             <li class="nav-item">
-                                                <a href="{{ action('SellController@create') }}"
+                                                <a href="{{ route('admin.sale.create') }}"
                                                     id="commercial_invoice_btn" data-toggle="tooltip"
                                                     data-title="@lang('lang.add_sale')" class="btn no-print"><img
                                                         src="{{ asset('images/396 Commercial Invoice Icon.png') }}"

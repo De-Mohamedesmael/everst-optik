@@ -554,7 +554,22 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-3 px-5">
+
+                                                    {!! Form::label('store_id', translate('store'), [
+                                                        'class' => 'form-label d-block mb-1 ',
+                                                        ]) !!}
+                                                    {!! Form::select('store_id', $stores,null, [
+                                                    'class' => ' selectpicker form-control',
+                                                    'data-live-search' => 'true',
+                                                    'style' => 'width: 80%',
+                                                    'data-actions-box' => 'true',
+                                                    'id' => 'store_id',
+                                                    'required',
+                                                    'placeholder' => __('lang.please_select'),
+                                                    ]) !!}
+                                                </div>
+                                                <div class="col-md-4">
                                                     <div class="form-group ">
                                                         {!! Form::label('lens_id', translate('lens'), [
                                                         'class' => 'form-label d-block mb-1 ',
@@ -565,11 +580,12 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                         'style' => 'width: 80%',
                                                         'data-actions-box' => 'true',
                                                         'id' => 'lens_id',
+                                                        'required',
                                                         'placeholder' => __('lang.please_select'),
                                                         ]) !!}
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-3">
                                                     <div class="form-group ">
                                                         {!! Form::label('factory_id', translate('factory'), [
                                                         'class' => 'form-label d-block mb-1 ',
@@ -580,10 +596,26 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                         'style' => 'width: 80%',
                                                         'data-actions-box' => 'true',
                                                         'id' => 'factory_id',
+                                                        'required',
                                                         'placeholder' => __('lang.please_select'),
                                                         ]) !!}
                                                     </div>
                                                 </div>
+{{--                                                <div class="col-md-2 d-hide" style="display: none">--}}
+{{--                                                    <div class="form-group ">--}}
+{{--                                                        {!! Form::label('amount', translate('amount'), [--}}
+{{--                                                        'class' => 'form-label d-block mb-1 ',--}}
+{{--                                                        ]) !!}--}}
+{{--                                                        {!! Form::number('amount',1, [--}}
+{{--                                                        'class' => 'form-control',--}}
+{{--                                                        'style' => 'width: 80%',--}}
+
+{{--                                                        'id' => 'amount',--}}
+{{--                                                        'required',--}}
+{{--                                                        'min'=>1,--}}
+{{--                                                        ]) !!}--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
                                             </div>
 
 
@@ -603,7 +635,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                         <div
                                                             class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                                                             <div class="col-md-3 ">
-                                                                <div class="noBorderRight" class="noBorderRight"
+                                                                <div class="noBorderRight noBorderRight"
                                                                     style="margin-bottom:5px">
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
@@ -639,7 +671,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 ">
-                                                                <div class="noBorderRight" class="noBorderRight"
+                                                                <div class="noBorderRight noBorderRight"
                                                                     style="margin-bottom:5px">
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
@@ -674,7 +706,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 ">
-                                                                <div class="noBorderRight" class="noBorderRight"
+                                                                <div class="noBorderRight noBorderRight"
                                                                     style="margin-bottom:5px">
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
@@ -708,7 +740,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 ">
-                                                                <div class="noBorderRight" class="noBorderRight"
+                                                                <div class="noBorderRight noBorderRight"
                                                                     style="margin-bottom:5px">
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
@@ -743,7 +775,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
-                                                                <div class="noBorderRight" class="noBorderRight"
+                                                                <div class="noBorderRight noBorderRight"
                                                                     style="margin-bottom:5px">
                                                                     <div class="check-line"
                                                                         style="width: 100%;text-align: left;">
@@ -1061,7 +1093,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     id="Right_Far_SPH" data-reqval="farSPH"
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensVal lensSPH farSPH number-input"
-                                                                    data-rl="Right" required aria-required="true"
+                                                                    data-rl="Right"
                                                                     step="0.25" min="-30" max="30" autocomplete="off">
 
                                                             </td>
@@ -1082,7 +1114,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     id="Right_Far_CYL" data-reqval="farCYL"
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensVal lensCYL farCYL number-input"
-                                                                    data-rl="Right" required aria-required="true"
+                                                                    data-rl="Right"
                                                                     step="0.25" min="-15" max="15" autocomplete="off">
                                                             </td>
                                                             <td>
@@ -1110,7 +1142,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 <select name="product[Lens][Right][Near][SPHDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect SPHPlusMinusSelect"
                                                                     data-signfor="Right_Near_SPH" data-rl="Right"
-                                                                    id="Right_Near_SPHDeg" disabled>
+                                                                    id="Right_Near_SPHDeg" >
                                                                     <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-">-</option>
@@ -1122,16 +1154,16 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 <input type="number"
                                                                     name="product[Lens][Right][Near][SPH]" value=""
                                                                     id="Right_Near_SPH" data-reqval="nearSPH"
-                                                                    placeholder=" " readonly
+                                                                    placeholder=" "
                                                                     class="form-control input-block-level lensVal lensSPH  number-input"
-                                                                    data-rl="Right" required aria-required="true"
+                                                                    data-rl="Right"
                                                                     step="0.25" min="-30" max="30" autocomplete="off">
                                                             </td>
                                                             <td>
                                                                 <select name="product[Lens][Right][Near][CYLDeg]"
                                                                     class="form-control input-block-level lensPlusMinusSelect CYLPlusMinusSelect"
                                                                     data-rl="Right" data-signfor="Right_Near_CYL"
-                                                                    id="Right_Near_CYLDeg" disabled>
+                                                                    id="Right_Near_CYLDeg">
                                                                     <option value="">{{translate('Nothing')}}</option>
                                                                     <option value="+">+</option>
                                                                     <option value="-" selected="selected">-</option>
@@ -1143,7 +1175,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                 <input type="number"
                                                                     name="product[Lens][Right][Near][CYL]"
                                                                     data-reqval="nearCYL" value="" id="Right_Near_CYL"
-                                                                    placeholder=" " readonly
+                                                                    placeholder=" "
                                                                     class="form-control input-block-level lensVal lensCYL  number-input"
                                                                     data-rl="Right" step="0.25" min="-15" max="15" autocomplete="off">
 
@@ -1151,7 +1183,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                             <td>
                                                                 <input type="number"
                                                                     name="product[Lens][Right][Near][Axis]"
-                                                                    data-reqval="nearAX" value="" id="Right_Near_Axis" readonly
+                                                                    data-reqval="nearAX" value="" id="Right_Near_Axis"
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensAxis nearAX  number-input"
                                                                     data-rl="Right" step="1" min="0" max="180" autocomplete="off">
@@ -1175,7 +1207,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     data-reqval="addVal" value="" id="Right_Addition"
                                                                     placeholder=""
                                                                     class="form-control input-block-level lensAddition lensVal"
-                                                                    data-rl="Right" required="" aria-required="true" autocomplete="off"
+                                                                    data-rl="Right" autocomplete="off"
                                                                     >
                                                             </td>
                                                             <td></td>
@@ -1449,6 +1481,18 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                             </div>
 
                                         </div>
+                                        <div class="col-md-6 mt-3">
+                                            <div class="form-group ">
+                                                {!! Form::label('note', translate('note'), [
+                                                'class' => 'form-label d-block mb-1 ',
+                                                ]) !!}
+                                                {!! Form::textarea('note',null, [
+                                                'class' => 'form-control',
+                                                'id' => 'note',
+                                                'min'=>1,
+                                                ]) !!}
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row my-2 justify-content-center align-items-center">
@@ -1480,19 +1524,6 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
 <script>
     $(document).ready(function() {
         $("#RightLens").prop('checked', true);
-    let nearSPH = $(`#Right_Near_SPH`);
-    let nearSPHSign = $(`#Right_Near_SPHDeg`);
-    let nearCYL = $(`#Right_Near_CYL`);
-
-    let nearCYLSign = $(`#Right_Near_CYLDeg`);
-        let nearAxis = $(`#Right_Near_Axis`);
-
-         nearSPH.prop('readonly', true);
-        nearSPHSign.prop('disabled', true);
-    
-        nearCYL.prop('readonly', true);
-        nearCYLSign.prop('disabled', true);
-        nearAxis.prop('readonly', true);
     });
 
     @if(isset($prescription_id))
@@ -1500,13 +1531,8 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         getPrescription();
     });
     @endif
-    //brand_lens => products
-    //focus_id => design_id & products
-    //design_id =>  products
-    //index_id =>  products
-    //color_id =>  products
-    $('#prescription_id').on('change', function () {
 
+    $('#prescription_id').on('change', function () {
         getPrescription();
     });
     $(document).on("change", "#RightLens , #LeftLens", function () {
@@ -1515,8 +1541,8 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
 
     function getPrescription(){
         if ($('#prescription_id').val()) {
-            RightLensClear();
-            LeftLensClear();
+            LensClear('Right');
+            LensClear('Left');
             $.ajax({
                 method: "get",
                 url: "{{route('admin.sale.getPrescriptionDetails')}}",
@@ -1568,7 +1594,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
 
                             if(Lens.Left.isCheck === '1'){
                                 $("#LeftLens").prop('checked',true);
-                                LeftLensChecked();
+                                LensChecked('Left');
 
                                 if(Lens.Left.sameToRight){
                                     $("#sameToRight").prop('checked',true);
@@ -1666,104 +1692,10 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
         }
 
     }
-    $(document).on("change", "#Right_Far_Axis", function (e) {
-        const Far_Axis = $('#Right_Far_Axis').val();
-        $('#Right_Near_Axis').val(Far_Axis);
-    });
-    $(document).on("change", "#Right_Far_CYL", function (e) {
-        const Far_CYL = $('#Right_Far_CYL').val();
-        $('#Right_Near_CYL').val(Far_CYL);
-    });
-    
-    $(document).on("change", "#Right_Far_CYLDeg", function (e) {
-        const Far_CYLDeg = $('#Right_Far_CYLDeg').val();
-        $('#Right_Near_CYLDeg').val(Far_CYLDeg);
-    });
-    // $(document).on("change", "#Right_Far_SPH,#Right_Near_SPH,#Right_Addition", function (e) {
-    //     const Far_SPH = $('#Right_Far_SPH').val();
-    //     const Near_SPH = $('#Right_Near_SPH').val();
-    //     const Right_Addition = $('#Right_Addition').val();
-    //     console.log(Right_Addition,Near_SPH,Far_SPH);
-    //     if(Far_SPH !== '' && Near_SPH !== '' ){
-    //         $('#Right_Addition').val(Near_SPH - Far_SPH);
-    //     }else if(Right_Addition !== '' && Near_SPH !== ''){
-    //         $('#Right_Far_SPH').val(Near_SPH - Right_Addition);
-    //     }else if(Right_Addition !== '' && Far_SPH !== ''){
-    //         $('#Right_Near_SPH').val( parseFloat(Far_SPH) +  parseFloat(Right_Addition));
-    //     }else{
-
-    //     }
 
 
-    // });
-
-    // $(document).on("change", "#Left_Far_SPH,#Left_Near_SPH,#Left_Addition", function (e) {
-    //     const Far_SPH = $('#Left_Far_SPH').val();
-    //     const Near_SPH = $('#Left_Near_SPH').val();
-
-    //     const Left_Addition = $('#Left_Addition').val();
-    //     if(Far_SPH !== '' && Near_SPH !== '' ){
-    //         $('#Left_Addition').val(Near_SPH - Far_SPH);
-    //     }else if(Left_Addition !== '' && Near_SPH !== ''){
-    //         $('#Left_Far_SPH').val(Near_SPH - Left_Addition);
-    //     }else if(Left_Addition !== '' && Far_SPH !== ''){
-    //         $('#Left_Near_SPH').val( parseFloat(Far_SPH) +  parseFloat(Left_Addition));
-    //     }else{
-
-    //     }
-    // });
-    
-   
-   
-   function updateNearValues(side) {
-    let farSPH = parseFloat($(`#${side}_Far_SPH`).val()) || 0;
-    let addition = parseFloat($(`#${side}_Addition`).val()) || 0;
-    let farSPHSign = $(`#${side}_Far_SPHDeg`);
-    let nearSPH = $(`#${side}_Near_SPH`);
-    let nearSPHSign = $(`#${side}_Near_SPHDeg`);
-    let farCYLSign = $(`#${side}_Far_CYLDeg`);
-    let nearCYLSign = $(`#${side}_Near_CYLDeg`);
-    let farCYL = $(`#${side}_Far_CYL`).val() || '';
-    let nearCYL = $(`#${side}_Near_CYL`);
-    let farAxis = $(`#${side}_Far_Axis`).val() || '';
-    let nearAxis = $(`#${side}_Near_Axis`);
 
 
-    
-
-    let nearValue;
-    if (farSPHSign.val() === "-") {
-        nearValue = -farSPH + addition;
-    } else {
-        nearValue = farSPH + addition;
-    }
-    // nearCYLSign.val(farCYLSign.val());
-    if (nearValue < 0) {
-        nearSPHSign.val("-");
-        nearSPH.val(Math.abs(nearValue).toFixed(2));
-    } else {
-        nearSPHSign.val("+");
-        nearSPH.val(nearValue.toFixed(2));
-    }
-
-    nearCYL.val(farCYL);
-
-   
-    nearAxis.val(farAxis);
-
-    nearSPH.prop('readonly', true);
-    nearSPHSign.prop('disabled', true);
-
-    nearCYL.prop('readonly', true);
-    nearCYLSign.prop('disabled', true);
-
-    nearAxis.prop('readonly', true);
-    
-    
-    $(`#${side}_Near_CYLDeg`).selectpicker('refresh');
-    $(`#${side}_Near_SPHDeg`).selectpicker('refresh');
-    $(`#${side}_Far_SPHDeg`).selectpicker('refresh');
-}
 
 $(document).on("change", "#Right_Far_SPH", function () {
     let farSPHSign = $(`#Right_Far_SPHDeg`);
@@ -1775,13 +1707,10 @@ $(document).on("change", "#Right_Far_SPH", function () {
     } else if(farSPH > 0) {
         farSPHSign.val("+");
     }
-    updateNearValues('Right');
+    farSPHSign.selectpicker("refresh");
+
 });
 
-
-$(document).on("change","#Right_Addition, #Right_Far_SPHDeg", function () {
-    updateNearValues('Right');
-});
 
 
 $(document).on("change", "#Left_Far_SPH", function () {
@@ -1794,11 +1723,40 @@ $(document).on("change", "#Left_Far_SPH", function () {
     } else if(farSPH > 0) {
         farSPHSign.val("+");
     }
-    updateNearValues('Left');
+    farSPHSign.selectpicker("refresh");
 });
-$(document).on("change", "#Left_Addition, #Left_Far_SPHDeg", function () {
-    updateNearValues('Left');
-});
+
+
+
+
+    $(document).on("change", "#Right_Near_SPH", function () {
+        let NearSPHSign = $(`#Right_Near_SPHDeg`);
+        let NearSPH = parseFloat($(`#Right_Near_SPH`).val()) || 0;
+        if (NearSPH < 0) {
+            console.log(NearSPH);
+            $(`#Right_Near_SPH`).val(Math.abs(NearSPH))
+            NearSPHSign.val("-")
+        } else if(NearSPH > 0) {
+            NearSPHSign.val("+");
+        }
+        NearSPHSign.selectpicker("refresh");
+
+    });
+
+
+
+    $(document).on("change", "#Left_Near_SPH", function () {
+        let NearSPHSign = $(`#Left_Near_SPHDeg`);
+        let NearSPH = parseFloat($(`#Left_Near_SPH`).val()) || 0;
+        if (NearSPH < 0) {
+            console.log(farSPH);
+            $(`#Left_Near_SPH`).val(Math.abs(NearSPH))
+            NearSPHSign.val("-")
+        } else if(NearSPH > 0) {
+            NearSPHSign.val("+");
+        }
+        NearSPHSign.selectpicker("refresh");
+    });
 
 $(document).on("change", "#Right_Far_CYLDeg", function () {
     let val = $(this).val();
@@ -1816,7 +1774,7 @@ $(document).on("change", "#Left_Far_CYLDeg", function () {
 $(document).on("input change", "#Right_Far_CYL, #Right_Far_Axis", function () {
     $("#Right_Near_CYL").val($("#Right_Far_CYL").val());
     $("#Right_Near_Axis").val($("#Right_Far_Axis").val());
-    
+
 });
 
 $(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
@@ -1824,9 +1782,9 @@ $(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
     $("#Left_Near_Axis").val($("#Left_Far_Axis").val());
 });
 
-   
-   
-   
+
+
+
    /////// نهايه
 
 
@@ -1841,9 +1799,20 @@ $(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
     $('#LeftLens').on('change', function () {
         var cke;
         if (this.checked) {
-            LeftLensChecked();
+            LensChecked('Left');
         } else {
-            LeftLensUnChecked();
+            LensUnChecked('Left');
+
+        }
+
+    });
+
+    $('#RightLens').on('change', function () {
+        var cke;
+        if (this.checked) {
+            LensChecked('Right');
+        } else {
+            LensUnChecked('Right');
 
         }
 
@@ -1884,6 +1853,9 @@ $(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
         }
         getPrices();
     });
+    // $(document).on("input change", "#amount", function () {
+    //     getPrices();
+    // });
     $('#codeCheck').on('change', function () {
         if (this.checked) {
             $('.owf-page-shapeDefinition-manual-shape ').removeClass('d-none')
@@ -1947,84 +1919,68 @@ $(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
     });
 
 
-    function RightLensClear() {
 
-        $('#Right_Far_Axis').val('');
-        $('#Right_Near_Axis').val('');
-        $('#Right_Far_CYL').val('');
-        $('#Right_Near_CYL').val('');
-        $('#Right_Far_SPH').val('');
-        $('#Right_Near_SPH').val('');
-        $('#Right_Addition').val('');
+    function LensClear(side) {
+        const fields = [
+            'Far_Axis', 'Near_Axis', 'Far_CYL', 'Near_CYL',
+            'Far_SPH', 'Near_SPH', 'Addition', 'Height',
+            'Distance', 'Near_CYLDeg', 'Near_SPHDeg',
+            'Far_CYLDeg', 'Far_SPHDeg'
+        ];
 
-        $('#Right_Height').val('');
-        $('#Right_Distance').val('');
-
+        fields.forEach(field => {
+            $(`#${side}_${field}`).val('');
+        });
     }
-    function LeftLensClear() {
-        $('#Left_Far_Axis').val('');
-        $('#Left_Near_Axis').val('');
-        $('#Left_Far_CYL').val('');
-        $('#Left_Near_CYL').val('');
-        $('#Left_Far_SPH').val('');
-        $('#Left_Near_SPH').val('');
-        $('#Left_Addition').val('');
 
-        $('#Left_Height').val('');
-        $('#Left_Distance').val('');
+    function LensUnChecked(side) {
+        if(side === 'Left'){
+            const cke = $(`#sameToRight`);
+            cke.attr('disabled', true);
+            cke.prop('checked', false);
+        }
 
+        LensClear(side);
+
+        const disableFields = [
+            'Near_CYLDeg', 'Near_SPHDeg', 'Far_CYLDeg', 'Far_SPHDeg',
+            'Far_Axis', 'Near_Axis', 'Far_CYL', 'Near_CYL',
+            'Far_SPH', 'Near_SPH', 'Distance', 'Addition', 'Height'
+        ];
+
+        disableFields.forEach(field => {
+            $(`#${side}_${field}`).prop('disabled', true);
+            if (field.endsWith('Deg')) {
+                $(`#${side}_${field}`).selectpicker('refresh');
+            }
+        });
     }
-    function LeftLensUnChecked() {
-        cke = $('#sameToRight');
-        cke.attr('disabled', true);
-        cke.prop('checked', false);
 
-        // $('#Left_Near_CYLDeg').prop('disabled', true);
-        // $('#Left_Near_SPHDeg').prop('disabled', true);
-        $('#Left_Far_CYLDeg').prop('disabled', true);
-        $('#Left_Far_SPHDeg').prop('disabled', true);
+    function LensChecked(side) {
+        if(side === 'Left') {
+            const cke = $(`#sameToRight`);
+                cke.attr('disabled', false);
+        }
+        const enableFields = [
+            'Far_Axis', 'Near_Axis', 'Far_CYL', 'Near_CYL',
+            'Far_SPH', 'Near_SPH', 'Addition', 'Distance',
+            'Height', 'Near_CYLDeg', 'Near_SPHDeg',
+            'Far_CYLDeg', 'Far_SPHDeg'
+        ];
 
-        $('#Left_Far_Axis').attr('disabled', true);
-        // $('#Left_Near_Axis').attr('disabled', true);
-        $('#Left_Far_CYL').attr('disabled', true);
-        // $('#Left_Near_CYL').attr('disabled', true);
-        $('#Left_Far_SPH').attr('disabled', true);
-        // $('#Left_Near_SPH').attr('disabled', true);
-        $('#Left_Distance').prop('disabled', true);
-        $('#Left_Addition').prop('disabled', true);
-        $('#Left_Height').prop('disabled', true);
-
-
-
+        enableFields.forEach(field => {
+            $(`#${side}_${field}`).prop('disabled', false);
+            if (field.endsWith('Deg')) {
+                $(`#${side}_${field}`).selectpicker('refresh');
+            }
+        });
     }
-    function LeftLensChecked() {
-        $('#sameToRight').attr('disabled', false);
-        $('#Left_Far_Axis').attr('disabled', false);
-        // $('#Left_Near_Axis').attr('disabled', false);
-        $('#Left_Far_CYL').attr('disabled', false);
-        // $('#Left_Near_CYL').attr('disabled', false);
-        $('#Left_Far_SPH').attr('disabled', false);
-        // $('#Left_Near_SPH').attr('disabled', false);
 
-        // $('#Left_Near_CYLDeg').prop('disabled', false);
-        // $('#Left_Near_SPHDeg').prop('disabled', false);
-        $('#Left_Far_CYLDeg').prop('disabled', false);
-        $('#Left_Far_SPHDeg').prop('disabled', false);
-
-        $('#Left_Addition').prop('disabled', false);
-        $('#Left_Distance').prop('disabled', false);
-        $('#Left_Height').prop('disabled', false);
-
-
-        // $('#Left_Near_CYLDeg').selectpicker('refresh');
-        // $('#Left_Near_SPHDeg').selectpicker('refresh');
-        $('#Left_Far_CYLDeg').selectpicker('refresh');
-        $('#Left_Far_SPHDeg').selectpicker('refresh');
-    }
     function changePrice() {
         let   lens_id = $('#lens_id').val(),
             special_base = $('#special_base').val(),
             special_addition = $('#special_addition').val(),
+            // amount = $('#amount').val(),
             check_base =0,
             check_special =0;
         if ($('#VASpecialCheck').prop('checked')) {
@@ -2050,13 +2006,14 @@ $(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
                     var sell_price = result.data.sell_price;
                     var Base_amount = result.data.Base_amount;
                     var Special_amount = result.data.Special_amount;
+                    var Special_amount = result.data.Special_amount;
 
                     // sale price for lens
 
                     $("#price_lens").val(sell_price);
                     let  sell_price_Text=Number(sell_price).toFixed(2);
                     if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
-                        sell_price_Text=(Number(sell_price) * 2 ).toFixed(2);
+                        sell_price_Text=(Number(sell_price) * 2).toFixed(2);
                     }
                     $("#price-lens").text(sell_price_Text + '{{session("currency")["symbol"]}}');
                     $("#total_lens_valu").val(sell_price);
@@ -2114,9 +2071,9 @@ $(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
 
         if ($('#VATintingCheck').prop('checked')) {
             default_TinTing = {{$default_TinTing_amount}};
-           let  default_TinTing_Text=default_TinTing.toFixed(2);
+           let  default_TinTing_Text=(default_TinTing).toFixed(2);
             if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
-                default_TinTing_Text=(default_TinTing * 2 ).toFixed(2);
+                default_TinTing_Text=((default_TinTing * 2 )).toFixed(2);
             }
             $('#div-price-TinTing').removeClass('d-none');
             $("#price_TinTing").val(default_TinTing);
@@ -2129,9 +2086,9 @@ $(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
         if ($('#specific_diameter').prop('checked')) {
             default_Ozel = {{$default_Ozel_amount}};
 
-            let  default_Ozel_Text=default_Ozel.toFixed(2);
+            let  default_Ozel_Text=(default_Ozel).toFixed(2);
             if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
-                default_Ozel_Text=(default_Ozel * 2 ).toFixed(2);
+                default_Ozel_Text=((default_Ozel * 2 )).toFixed(2);
             }
             $('#div-price-Ozel').removeClass('d-none');
             $("#price_Ozel").val(default_Ozel);
@@ -2143,12 +2100,17 @@ $(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
         }
        let total=price_lens+price_Base+price_Special+default_TinTing+default_Ozel;
 
-        let  total_Text=total.toFixed(2);
+        let  total_Text=(total).toFixed(2);
         if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
-            total_Text=(total * 2 ).toFixed(2);
+            total_Text=((total * 2 )).toFixed(2);
         }
-
         $('#total-lens').text(total_Text + '{{session("currency")["symbol"]}}')
+
+        let  sell_price_Text=Number(price_lens).toFixed(2);
+        if($('#RightLens').prop('checked') && $('#LeftLens').prop('checked')){
+            sell_price_Text=(Number(price_lens) * 2 ).toFixed(2);
+        }
+        $("#price-lens").text(sell_price_Text + '{{session("currency")["symbol"]}}');
 
 
     }
@@ -2207,9 +2169,9 @@ $(document).on("input change", "#Left_Far_CYL, #Left_Far_Axis", function () {
         $('#Left_Far_CYLDeg').selectpicker('refresh');
         $('#Left_Far_SPHDeg').selectpicker('refresh');
     }
-    
-    
-    
+
+
+
 </script>
 
 

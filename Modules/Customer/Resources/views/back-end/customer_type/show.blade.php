@@ -233,7 +233,7 @@
 {{--                                                                    user="menu">--}}
 {{--                                                                    @can('sale.pos.view')--}}
 {{--                                                                        <li>--}}
-{{--                                                                            <a data-href="{{ action('SellController@show', $discount->id) }}"--}}
+{{--                                                                            <a data-href="{{ route('admin.sale.show', $discount->id) }}"--}}
 {{--                                                                                data-container=".view_modal"--}}
 {{--                                                                                class="btn btn-modal"><i class="fa fa-eye"></i>--}}
 {{--                                                                                @lang('lang.view')</a>--}}
@@ -242,7 +242,7 @@
 {{--                                                                    @endcan--}}
 {{--                                                                    @can('sale.pos.create_and_edit')--}}
 {{--                                                                        <li>--}}
-{{--                                                                            <a href="{{ action('SellController@edit', $discount->id) }}"--}}
+{{--                                                                            <a href="{{ route('admin.sale.edit', $discount->id) }}"--}}
 {{--                                                                                class="btn"><i--}}
 {{--                                                                                    class="dripicons-document-edit"></i>--}}
 {{--                                                                                @lang('lang.edit')</a>--}}
@@ -252,7 +252,7 @@
 
 {{--                                                                    @can('sale.pos.delete')--}}
 {{--                                                                        <li>--}}
-{{--                                                                            <a data-href="{{ action('SellController@destroy', $discount->id) }}"--}}
+{{--                                                                            <a data-href="{{ route('admin.sale.destroy', $discount->id) }}"--}}
 {{--                                                                                data-check_password="{{ route('admin.check-password', Auth::user()->id) }}"--}}
 {{--                                                                                class="btn text-red delete_item"><i--}}
 {{--                                                                                    class="fa fa-trash"></i>--}}

@@ -50,6 +50,8 @@
 @if($data_prescription)
     <div class="row dataLens" style="padding-bottom: 15px">
         <div class="lens-name">
+            &ensp;&ensp;&ensp; {{translate('store')}} : {{$prescription->store?->name }}
+            &ensp;&ensp;&ensp; | &ensp;&ensp;&ensp;
             &ensp;&ensp;&ensp; {{translate('lens')}} : {{$prescription->product?->name }}
             &ensp;&ensp;&ensp; | &ensp;&ensp;&ensp;
             @if(isset($data_prescription->VA))
@@ -500,6 +502,11 @@
 
                 </div>
 
+            </div>
+        @endif
+        @if($prescription->note)
+            <div class="col-md-6" style="padding: 0 15px; text-align: center">
+                {!! $prescription->note !!}
             </div>
         @endif
 

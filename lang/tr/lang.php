@@ -1312,4 +1312,26 @@
   'add_request_lenses' => 'Add request lenses',
   'factory' => 'Factory',
   'updated_at' => 'Updated at',
+  'Submit' => 'Submit',
+  'Left glass is the same
+                                                                                    as right glass' => 'Left glass is the same
+                                                                                    as right glass',
+  'Önceki
+                                                                    reçeteler' => 'Önceki
+                                                                    reçeteler',
+  'Önceden Tanımlanmış
+                                                                            Şekiller' => 'Önceden Tanımlanmış
+                                                                            Şekiller',
+  'qr_code_image' => 'Qr code image',
+  'qrcode' => 'Qrcode',
+  'amount_total' => 'Amount total',
+  'total_extra' => 'Total extra',
+  'amount_product' => 'Amount product',
+  'lens_name' => 'Lens name',
+  'Click_To_Copy' => 'Click To Copy',
+  'Copied!' => 'Copied!',
+  'factory_name' => 'Factory name',
+  'Base' => 'Base',
+  'factories' => 'Factories',
+  'TinTing' => 'TinTing',
 );

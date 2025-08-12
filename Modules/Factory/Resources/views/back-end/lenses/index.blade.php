@@ -1,5 +1,5 @@
 @extends('back-end.layouts.app')
-@section('title', __('lang.factories'))
+@section('title', translate('factories'))
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/stock.css') }}">
     <style>
@@ -80,7 +80,10 @@
                                 <table id="store_table" class="table" style="width: 100%">
                                     <thead>
                                     <tr>
+                                        <th>{{translate('sku')}}</th>
+                                        <th>{{translate('store_name')}}</th>
                                         <th>{{translate('factory_name')}}</th>
+                                        <th>{{translate('invoice_no')}}</th>
                                         <th>{{translate('lens_name')}}</th>
                                         <th>{{translate('amount_product')}}</th>
                                         <th>{{translate('total_extra')}}</th>
@@ -166,8 +169,18 @@
                 ],
                 columns: [
                     {
+                        data: 'sku',
+                        name: 'sku'
+                    }, {
+                        data: 'store_name',
+                        name: 'stores.name'
+                    },
+                    {
                         data: 'factory_name',
                         name: 'factories.name'
+                    }, {
+                        data: 'invoice_no',
+                        name: 'transactions.invoice_no'
                     },
                     {
                         data: 'lens_name',
@@ -201,7 +214,7 @@
                         orderable: false,
                         searchable: false
                     }
-                    
+
                 ],
             });
         });
@@ -398,4 +411,41 @@
 
 
     </script>
+
+    <script>
+        $(document).on('click', '.copy-sku', function () {
+            var sku = $(this).data('sku');
+
+            var $tempInput = $('<input>');
+            $('body').append($tempInput);
+            $tempInput.val(sku).select();
+            document.execCommand('copy');
+            $tempInput.remove();
+
+            var $tooltip = $('<div class="copy-tooltip">{{ translate("Copied!") }}</div>');
+            $('body').append($tooltip);
+
+            var offset = $(this).offset();
+            $tooltip.css({
+                top: offset.top - 30,
+                left: offset.left,
+                position: 'absolute',
+                background: '#333',
+                color: '#fff',
+                padding: '5px 10px',
+                'border-radius': '4px',
+                'font-size': '12px',
+                'z-index': 9999,
+                'box-shadow': '0 0 5px rgba(0,0,0,0.2)',
+            });
+
+            setTimeout(function () {
+                $tooltip.fadeOut(300, function () {
+                    $(this).remove();
+                });
+            }, 1500);
+        });
+    </script>
+
+
 @endsection

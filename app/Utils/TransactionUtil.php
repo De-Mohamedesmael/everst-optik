@@ -203,9 +203,10 @@ class TransactionUtil extends Util
                 if($line['is_lens']){
                     $pre=Prescription::where('id',$line['prescription_id'])->first();
                     $pre->sell_line_id= $transaction_sell_line->id;
+                    $pre->transaction_id=$transaction->id;
                     $pre->customer_id= $transaction_sell_line->customer_id;
                     $pre->save();
-                    $this->sendToUts($transaction->customer,$line['product_id'],$line['quantity'],$pre);
+//                    $this->sendToUts($transaction->customer,$line['product_id'],$line['quantity'],$pre);
                 }
             }
             $stock_id=$line['stock_id'];
@@ -1659,7 +1660,7 @@ class TransactionUtil extends Util
                 \Log::info('تم الإرسال إلى UTS بنجاح', ['response' => $response->json()]);
                 return true;
             }
-    
+
             \Log::error('فشل الإرسال إلى UTS', ['status' => $response->status(), 'body' => $response->body()]);
             return false;
 
@@ -1688,7 +1689,7 @@ class TransactionUtil extends Util
             \Log::error('فشل الإرسال إلى UTS', ['status' => $response->status(), 'body' => $response->body()]);
             return false;
 
-        } 
+        }
         // else {
         //     $fullName = trim($customer->name);
         //     $parts = explode(' ', $fullName);
