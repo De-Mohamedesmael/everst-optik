@@ -4,9 +4,60 @@
         color: #000000 !important;
         text-align: center !important;
     }
+
 </style>
 <div class="div-print-re" style="width: 100% ;overflow: hidden;background-color: #ffffff;" >
+    <div class="row div-hider-item" >
+        <div class="col-md-6" style="width: 33%">
+            <div class="col-md-12">
+                <h6>@lang('lang.invoice_no'): {{ $sale->invoice_no }}
 
+                </h6>
+            </div>
+            <div class="col-md-12">
+                <h6>@lang('lang.date'): {{ @format_datetime($sale->transaction_date) }}</h6>
+            </div>
+            <div class="col-md-12">
+                <h6>@lang('lang.store'): {{ $sale->store->name ?? '' }}</h6>
+            </div>
+        </div>
+        <div class="col-md-6" style="width: 33%">
+            <div class="col-md-12">
+                {!! Form::label('supplier_name', __('lang.customer_name'), []) !!}:
+                <b>{{ $sale->customer->name ?? '' }}</b>
+            </div>
+            <div class="col-md-12">
+                {!! Form::label('email', __('lang.email'), []) !!}: <b>{{ $sale->customer->email ?? '' }}</b>
+            </div>
+            <div class="col-md-12">
+                {!! Form::label('mobile_number', __('lang.mobile_number'), []) !!}:
+                <b>{{ $sale->customer->mobile_number ?? '' }}</b>
+            </div>
+            <div class="col-md-12">
+                {!! Form::label('address', __('lang.address'), []) !!}: <b>{{ $sale->customer->address ?? ''
+                            }}</b>
+            </div>
+        </div>
+        <div class="col-md-6" style="width: 33%">
+            <div class="col-md-12">
+                <h6>@lang('lang.sale_note'):</h6>
+                <p>{{ $sale->sale_note }}</p>
+            </div>
+            <div class="col-md-12">
+                <h6>@lang('lang.staff_note'):</h6>
+                <p>{{ $sale->staff_note }}</p>
+            </div>
+            <div class="col-md-12">
+                <h6>@lang('lang.payment_note'):</h6>
+                @foreach($sale->transaction_payments as $payment )
+                    @if(isset($payment->payment_note))
+                        <p> - {{ $payment->payment_note }}</p>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <hr/>
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered table-striped table-condensed" id="product_sale_table">
@@ -396,15 +447,24 @@
 
                                         </tr>
                                         <tr>
+                                            <td rowspan="2" class="verticalMiddle"></td>
+                                            <td> </td>
                                             <td>{{translate('Adisyon')}}</td>
-                                            <td colspan="5">
-                                                <div class="col-md-5 noPadding">
+                                            <td></td>
+                                            <td>{{translate('MF')}}</td>
+                                            <td>{{translate('Yük')}}</td>
+
+                                        </tr>
+                                        <tr>
+
+                                            <td colspan="2">
+                                                <div class="col-md-2 noPadding">
                                                     <input type="number"
                                                            name="product[Lens][Right][Addition]"
                                                            data-reqval="addVal"
                                                            id="Right_Addition"
                                                            placeholder=""
-                                                           value="{{ ($data_prescription->Lens->Right->Far->SPH?:0) - ($data_prescription->Lens->Right->Near->SPH?:0)}}"
+                                                           value="{{ $data_prescription->Lens->Right->Addition}}"
                                                            class="form-control input-block-level lensAddition lensVal"
                                                            data-rl="Right"
                                                            required=""
@@ -412,6 +472,26 @@
                                                            disabled>
                                                 </div>
 
+                                            </td>
+                                            <td></td>
+
+                                            <td>
+                                                <input type="number"
+                                                       name="product[Lens][Right][Distance]"
+                                                       data-reqval="Distance"  id="Right_Distance"
+                                                       placeholder=" "
+                                                       value="{{ $data_prescription->Lens->Right->Distance}}"
+                                                       class="form-control input-block-level lensAxis nearAX  number-input"
+                                                       data-rl="Right" step="o.50" min="o.50" max="45" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input type="number" name="product[Lens][Right][Height]"
+                                                       data-reqval="Height"  id="Right_Height"
+                                                       placeholder=" "
+                                                       value="{{ $data_prescription->Lens->Right->Height}}"
+
+                                                       class="form-control input-block-level lensAxis nearAX  number-input"
+                                                       data-rl="Right" step="o.25" min="o.25" max="45" autocomplete="off">
                                             </td>
                                         </tr>
                                         </tbody>
@@ -584,24 +664,51 @@
 
                                             </tr>
                                             <tr>
-                                                <td>{{translate('Adisyon')}}
-                                                </td>
-                                                <td colspan="5">
-                                                    <div class="col-md-5 noPadding">
-                                                        <input type="number" name="product[Lens][Left][Addition]"
+                                                <td rowspan="2" class="verticalMiddle"></td>
+                                                <td> </td>
+                                                <td>{{translate('Adisyon')}}</td>
+                                                <td></td>
+                                                <td>{{translate('MF')}}</td>
+                                                <td>{{translate('Yük')}}</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="col-md-2 noPadding">
+                                                        <input type="number"
+                                                               name="product[Lens][Left][Addition]"
                                                                data-reqval="addVal"
-                                                               value="{{ ($data_prescription->Lens->Left->Far->SPH?:0) - ($data_prescription->Lens->Left->Near->SPH?:0)}}"
                                                                id="Left_Addition"
                                                                placeholder=""
-                                                               class="form-control input-block-level lensAddition lensVal number-input"
-                                                               data-rl="Left" required="" aria-required="true"
-                                                               disabled
-
-                                                        >
-
+                                                               value="{{ $data_prescription->Lens->Left->Addition}}"
+                                                               class="form-control input-block-level lensAddition lensVal"
+                                                               data-rl="Left"
+                                                               required=""
+                                                               aria-required="true"
+                                                               disabled>
                                                     </div>
-                                                </td>
 
+                                                </td>
+                                                <td></td>
+
+                                                <td>
+                                                    <input type="number"
+                                                           name="product[Lens][Right][Distance]"
+                                                           data-reqval="Distance"  id="Left_Distance"
+                                                           placeholder=" "
+                                                           value="{{ $data_prescription->Lens->Left->Distance}}"
+                                                           class="form-control input-block-level lensAxis nearAX  number-input"
+                                                           data-rl="Right" step="o.50" min="o.50" max="45" autocomplete="off">
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="product[Lens][Left][Height]"
+                                                           data-reqval="Height"  id="Left_Height"
+                                                           placeholder=" "
+                                                           value="{{ $data_prescription->Lens->Left->Height}}"
+
+                                                           class="form-control input-block-level lensAxis nearAX  number-input"
+                                                           data-rl="Right" step="o.25" min="o.25" max="45" autocomplete="off">
+                                                </td>
                                             </tr>
 
                                             </tbody>
@@ -627,17 +734,17 @@
         <div class="row">
             <div class="col-md-6" style="width: 50%">
                 <div class="col-md-12">
-                    <h5>@lang('lang.invoice_no'): {{ $sale->invoice_no }} @if (!empty($sale->return_parent))
+                    <h6>@lang('lang.invoice_no'): {{ $sale->invoice_no }} @if (!empty($sale->return_parent))
                             <a data-href="{{ route('admin.sale-return.show', $sale->id) }}"
                                data-container=".view_modal" class="btn btn-modal" style="color: #007bff;">R</a>
                         @endif
-                    </h5>
+                    </h6>
                 </div>
                 <div class="col-md-12">
-                    <h5>@lang('lang.date'): {{ @format_datetime($sale->transaction_date) }}</h5>
+                    <h6>@lang('lang.date'): {{ @format_datetime($sale->transaction_date) }}</h6>
                 </div>
                 <div class="col-md-12">
-                    <h5>@lang('lang.store'): {{ $sale->store->name ?? '' }}</h5>
+                    <h6>@lang('lang.store'): {{ $sale->store->name ?? '' }}</h6>
                 </div>
             </div>
             <div class="col-md-6" style="width: 50%">
@@ -662,15 +769,15 @@
         <div class="row">
             <div class="col-md-6" style="width: 50%">
                 <div class="col-md-12">
-                    <h4>@lang('lang.sale_note'):</h4>
+                    <h6>@lang('lang.sale_note'):</h6>
                     <p>{{ $sale->sale_note }}</p>
                 </div>
                 <div class="col-md-12">
-                    <h4>@lang('lang.staff_note'):</h4>
+                    <h6>@lang('lang.staff_note'):</h6>
                     <p>{{ $sale->staff_note }}</p>
                 </div>
                 <div class="col-md-12">
-                    <h4>@lang('lang.payment_note'):</h4>
+                    <h6>@lang('lang.payment_note'):</h6>
                     @foreach($sale->transaction_payments as $payment )
                     @if(isset($payment->payment_note))
                     <p> - {{ $payment->payment_note }}</p>

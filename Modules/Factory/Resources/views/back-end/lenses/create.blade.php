@@ -1331,7 +1331,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     data-reqval="farSPH" value="" id="Left_Far_SPH"
                                                                     placeholder=" "
                                                                     class="form-control input-block-level lensVal lensSPH farSPH number-input"
-                                                                    data-rl="Left" required="" aria-required="true"
+                                                                    data-rl="Left"
                                                                     disabled="" step="0.25" min="-30" max="30" autocomplete="off">
                                                             </td>
                                                             <td>
@@ -1447,7 +1447,7 @@ $default_Ozel_amount = System::getProperty('Ozel_amount')?:10;
                                                                     data-reqval="addVal" value="" id="Left_Addition"
                                                                     placeholder=""
                                                                     class="form-control input-block-level lensAddition lensVal number-input"
-                                                                    data-rl="Left" required="" aria-required="true"
+                                                                    data-rl="Left"
                                                                        disabled="" autocomplete="off">
                                                             </td>
                                                             <td></td>

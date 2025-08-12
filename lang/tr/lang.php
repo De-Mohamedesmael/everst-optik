@@ -1313,15 +1313,6 @@
   'factory' => 'Factory',
   'updated_at' => 'Updated at',
   'Submit' => 'Submit',
-  'Left glass is the same
-                                                                                    as right glass' => 'Left glass is the same
-                                                                                    as right glass',
-  'Önceki
-                                                                    reçeteler' => 'Önceki
-                                                                    reçeteler',
-  'Önceden Tanımlanmış
-                                                                            Şekiller' => 'Önceden Tanımlanmış
-                                                                            Şekiller',
   'qr_code_image' => 'Qr code image',
   'qrcode' => 'Qrcode',
   'amount_total' => 'Amount total',
@@ -1334,4 +1325,5 @@
   'Base' => 'Base',
   'factories' => 'Factories',
   'TinTing' => 'TinTing',
+  'total_item_tax' => 'Total item tax',
 );
