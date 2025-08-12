@@ -285,15 +285,23 @@
 
                         </tr>
                         <tr>
+                            <td rowspan="2" class="verticalMiddle"></td>
+                            <td> </td>
                             <td>{{translate('Adisyon')}}</td>
-                            <td colspan="5">
-                                <div class="col-md-5 noPadding">
+                            <td></td>
+                            <td>{{translate('MF')}}</td>
+                            <td>{{translate('Yük')}}</td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="col-md-12 noPadding">
                                     <input type="number"
                                            name="product[Lens][Right][Addition]"
                                            data-reqval="addVal"
                                            id="Right_Addition"
                                            placeholder=""
-                                           value="{{ ($data_prescription->Lens->Right->Far->SPH?:0) - ($data_prescription->Lens->Right->Near->SPH?:0)}}"
+                                           value="{{ $data_prescription->Lens->Right->Addition}}"
                                            class="form-control input-block-level lensAddition lensVal"
                                            data-rl="Right"
                                            required=""
@@ -301,6 +309,26 @@
                                            disabled>
                                 </div>
 
+                            </td>
+                            <td></td>
+
+                            <td>
+                                <input type="number"
+                                       name="product[Lens][Right][Distance]"
+                                       data-reqval="Distance"  id="Right_Distance"
+                                       placeholder=" "
+                                       value="{{ $data_prescription->Lens->Right->Distance}}"
+                                       class="form-control input-block-level lensAxis nearAX  number-input"
+                                       data-rl="Right" step="o.50" min="o.50" max="45" autocomplete="off">
+                            </td>
+                            <td>
+                                <input type="number" name="product[Lens][Right][Height]"
+                                       data-reqval="Height"  id="Right_Height"
+                                       placeholder=" "
+                                       value="{{ $data_prescription->Lens->Right->Height}}"
+
+                                       class="form-control input-block-level lensAxis nearAX  number-input"
+                                       data-rl="Right" step="o.25" min="o.25" max="45" autocomplete="off">
                             </td>
                         </tr>
                         </tbody>
@@ -477,25 +505,54 @@
 
                         </tr>
                         <tr>
-                            <td>{{translate('Adisyon')}}
-                            </td>
-                            <td colspan="5">
-                                <div class="col-md-5 noPadding">
-                                    <input type="number" name="product[Lens][Left][Addition]"
-                                           data-reqval="addVal"
-                                           value="{{ ($data_prescription->Lens->Left->Far->SPH?:0) - ($data_prescription->Lens->Left->Near->SPH?:0)}}"
-                                           id="Left_Addition"
-                                           placeholder=""
-                                           class="form-control input-block-level lensAddition lensVal number-input"
-                                           data-rl="Left" required="" aria-required="true"
-                                           disabled
-
-                                    >
-
-                                </div>
-                            </td>
+                            <td rowspan="2" class="verticalMiddle"></td>
+                            <td> </td>
+                            <td>{{translate('Adisyon')}}</td>
+                            <td></td>
+                            <td>{{translate('MF')}}</td>
+                            <td>{{translate('Yük')}}</td>
 
                         </tr>
+                        <tr>
+
+                            <td colspan="2">
+                                <div class="col-md-12 noPadding">
+                                    <input type="number"
+                                           name="product[Lens][Left][Addition]"
+                                           data-reqval="addVal"
+                                           id="Left_Addition"
+                                           placeholder=""
+                                           value="{{ $data_prescription->Lens->Left->Addition}}"
+                                           class="form-control input-block-level lensAddition lensVal"
+                                           data-rl="Left"
+                                           required=""
+                                           aria-required="true"
+                                           disabled>
+                                </div>
+
+                            </td>
+                            <td></td>
+
+                            <td>
+                                <input type="number"
+                                       name="product[Lens][Right][Distance]"
+                                       data-reqval="Distance"  id="Left_Distance"
+                                       placeholder=" "
+                                       value="{{ $data_prescription->Lens->Left->Distance}}"
+                                       class="form-control input-block-level lensAxis nearAX  number-input"
+                                       data-rl="Right" step="o.50" min="o.50" max="45" autocomplete="off">
+                            </td>
+                            <td>
+                                <input type="number" name="product[Lens][Left][Height]"
+                                       data-reqval="Height"  id="Left_Height"
+                                       placeholder=" "
+                                       value="{{ $data_prescription->Lens->Left->Height}}"
+
+                                       class="form-control input-block-level lensAxis nearAX  number-input"
+                                       data-rl="Right" step="o.25" min="o.25" max="45" autocomplete="off">
+                            </td>
+                        </tr>
+
 
                         </tbody>
                     </table>
