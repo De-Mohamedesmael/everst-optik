@@ -147,6 +147,10 @@ class TransactionUtil extends Util
     {
         $keep_sell_lines = [];
         $is_lens=0;
+        $is_delivered=1;
+        $is_send_to_uts=1;
+        $status='final';
+
         foreach ($transaction_sell_lines as $line) {
             $old_quantity = 0;
 
@@ -205,6 +209,10 @@ class TransactionUtil extends Util
                     $pre->sell_line_id= $transaction_sell_line->id;
                     $pre->transaction_id=$transaction->id;
                     $pre->customer_id= $transaction_sell_line->customer_id;
+                    $is_lens=1;
+                    $is_delivered=0;
+                    $is_send_to_uts=0;
+                    $status='pending';
                     $pre->save();
 //                    $this->sendToUts($transaction->customer,$line['product_id'],$line['quantity'],$pre);
                 }
@@ -213,6 +221,9 @@ class TransactionUtil extends Util
             $this->updateSoldQuantityInAddStockLine($transaction_sell_line->product_id, $transaction->store_id,(float) $line['quantity'], $old_quantity,$stock_id);
         }
         $transaction->is_lens=$is_lens;
+        $transaction->is_delivered=$is_delivered;
+        $transaction->is_send_to_uts=$is_send_to_uts;
+        $transaction->status=$status;
         $transaction->save();
         //delete sell lines remove by user
         TransactionSellLine::where('transaction_id', $transaction->id)->whereNotIn('id', $keep_sell_lines)->delete();

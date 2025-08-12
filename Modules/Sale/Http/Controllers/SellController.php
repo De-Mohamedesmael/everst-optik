@@ -4,6 +4,7 @@ namespace Modules\Sale\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\Admin;
 use App\Utils\CashRegisterUtil;
 use App\Utils\NotificationUtil;
 use App\Utils\ProductUtil;
@@ -364,6 +365,8 @@ class SellController extends Controller
                 ->editColumn('status', function ($row) {
                     if ($row->status == 'canceled') {
                         return '<span class="badge badge-danger">' . __('lang.cancel') . '</span>';
+                    }elseif ($row->status == 'pending'){
+                        return '<span class="badge badge-warning">' . ucfirst($row->status) . '</span>';
                     } else {
                         return '<span class="badge badge-success">' . ucfirst($row->status) . '</span>';
                     }
@@ -429,6 +432,12 @@ class SellController extends Controller
                                 <a href="' . route('admin.pos.edit', $row->id) . '" class="btn"><i
                                         class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a>
                             </li>';
+                            if ($row->status == 'pending') {
+                                $html .=
+                                    '<a data-href="' . route('admin.transaction.complete', ['id' => $row->id]) . '"
+                                    title="' . __('lang.complete_now') . '" data-toggle="tooltip" data-container=".view_modal"
+                                    class="btn btn-primary text-white  btn-modal" style="color: white"><i class="fa fa-check"></i></a>';
+                            }
                         }
                         if (auth()->user()->can('return.sell_return.create_and_edit')) {
                             //                            if (empty($row->return_parent)) {
@@ -439,6 +448,7 @@ class SellController extends Controller
                                     </li>';
                             //                            }
                         }
+
                         if (auth()->user()->can('sale.pay.create_and_edit')) {
                             if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
                                 $final_total = $row->final_total;
@@ -706,5 +716,56 @@ class SellController extends Controller
         }
 
         return $output;
+    }
+
+
+    /**
+     * complete order
+     *
+     * @param integer $transaction_id
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function complete($transaction_id)
+    {
+
+
+        $transaction = Transaction::find($transaction_id);
+        return view('sale::back-end.pos.partials.complete_order')->with(compact(
+            'transaction_id',
+            'transaction'
+        ));
+    }
+
+    /**
+     * complete order store
+     *
+     * @param integer $transaction_id
+     * @param Request $request
+     * @return array
+     */
+    public function completeStore(int $transaction_id, request $request): array
+    {
+
+
+        $transaction = Transaction::find($transaction_id);
+        $transaction->is_delivered = $request->is_delivered?:0;
+        $transaction->status = 'final';
+        if($request->is_send_to_uts){
+            $transaction->is_send_to_uts=1;
+            foreach ($transaction->transaction_sell_lines as $line) {
+                if ($line->is_lens){
+                    $pre=Prescription::where('sell_line_id',$line->id)->first();
+                    if ($pre && $pre->qr_code){
+                        $this->transactionUtil->sendToUts($transaction->customer,$line->product_id,(int)$line->quantity, $pre);
+                    }
+                }
+            }
+        }
+        $transaction->save();
+        return  [
+            'success' => true,
+            'data' => [],
+            'msg' => __('lang.success')
+        ];
     }
 }

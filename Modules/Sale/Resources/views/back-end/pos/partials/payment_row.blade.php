@@ -12,7 +12,7 @@
     </div>
     <div class="col-md-6 mt-1">
         <label class="change_text">@lang('lang.change') : </label>
-        <span class="change" class="ml-2">0.00</span>
+        <span class="change ml-2">0.00</span>
         <input type="hidden" name="payments[{{$index}}][change_amount]" class="change_amount">
         <input type="hidden" name="payments[{{$index}}][pending_amount]" class="pending_amount">
     </div>

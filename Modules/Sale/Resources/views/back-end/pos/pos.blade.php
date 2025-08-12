@@ -77,6 +77,10 @@
         position: absolute;
         bottom: -35px;
     }
+    .btn-group a.btn {
+        margin: 0 5px;
+        border-radius: 3px !important;
+    }
 </style>
 @endsection
 
@@ -148,7 +152,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                 </div>
 
 
-                                <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">
+                                <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center" style="display: none !important;">
                                     <div>
                                         <input type="hidden" name="setting_invoice_lang" id="setting_invoice_lang"
                                             value="{{ !empty(Modules\Setting\Entities\System::getProperty('invoice_lang')) ? Modules\Setting\Entities\System::getProperty('invoice_lang') : 'en' }}">
@@ -169,8 +173,7 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         <input type="hidden" name="exchange_rate" id="exchange_rate" value="1">
                                         <input type="hidden" name="default_currency_id" id="default_currency_id"
                                             value="{{ !empty(Modules\Setting\Entities\System::getProperty('currency')) ? Modules\Setting\Entities\System::getProperty('currency') : '' }}">
-                                        {{-- {!! Form::label('received_currency_id', __('lang.received_currency') . ':',
-                                        []) !!} --}}
+
                                         {!! Form::select(
                                         'received_currency_id',
                                         $exchange_rate_currencies,
@@ -242,14 +245,6 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         </button>
                                     </div>
                                 </div>
-                                <input type="hidden" name="tax_id_hidden" id="tax_id_hidden" value="">
-                                <input type="hidden" name="tax_method" id="tax_method" value="">
-                                <input type="hidden" name="tax_rate" id="tax_rate" value="0">
-                                <input type="hidden" name="tax_type" id="tax_type" value="">
-
-
-
-
                             </div>
 
 
@@ -284,10 +279,9 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-2 mb-2 mb-lg-0">
+                                    <div class="col-lg-3 mb-2 mb-lg-0">
                                         <div class="col-12 p-0 ml-1 input-group my-group d-flex flex-row justify-content-between height-responsive text-center"
-                                            style="background-color: white; border: none;
-                                 border: 1px solid #bbb;
+                                            style="background-color: white; border: 1px solid #bbb;
                                     border-radius: 16px;
                                     color: white;
                                     box-shadow: 0 8px 6px -5px #bbb;
@@ -481,14 +475,9 @@ $watsapp_numbers = Modules\Setting\Entities\System::getProperty('watsapp_numbers
                                     </div>
 
                                     <div class="col-md-6 d-flex justify-content-between align-items-center">
-                                        <div class=" table_room_hide d-flex flex-column align-items-center"
-                                            style="background: #578981;color: white;padding: 5px;border-radius: 6px;font-weight: 500;">
-                                            <span class="totals-title">{{ __('lang.sales_promotion')
-                                                }}</span>
-                                            <span id="sales_promotion-cost_span" class="">0.00</span>
-                                            <input type="hidden" id="sales_promotion-cost" value="0">
 
-                                        </div>
+
+                                            <input type="hidden" id="sales_promotion-cost" value="0">
 
                                         <div class="mt-0 payment-amount table_room_hide d-flex flex-column align-items-center"
                                             style="background: #578981;color: white;padding: 5px;border-radius: 6px;font-weight: 500;">

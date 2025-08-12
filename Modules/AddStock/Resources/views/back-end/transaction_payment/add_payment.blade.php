@@ -21,6 +21,36 @@
             {{-- <div class="modal-body">--}}
                 <div class="modal-body">
                     <input type="hidden" name="transaction_id" value="{{ $transaction_id }}">
+                    @if($transaction->is_lens && (!$transaction->is_send_to_uts || !$transaction->is_delivered))
+                        <div class="col-5 d-flex  flex-row justify-content-between align-items-center">
+                            @if(!$transaction->is_send_to_uts)
+                                <div class="col-md-5 px-0 d-flex justify-content-center">
+                                    <div class="i-checks toggle-pill-color flex-col-centered">
+                                        <input id="is_send_to_uts" name="is_send_to_uts" type="checkbox" checked value="1" class="form-control-custom">
+                                        <label for="is_send_to_uts">
+                                        </label>
+                                        <span>
+                                            <strong>
+                                                {{translate('send_to_uts')}}
+                                            </strong>
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+                                @if(!$transaction->is_delivered)
+                                    <div class="col-md-5 px-0 d-flex justify-content-center">
+                                        <div class="i-checks toggle-pill-color flex-col-centered">
+                                            <input id="is_delivered" name="is_delivered" type="checkbox" checked value="1" class="form-control-custom">
+                                            <label for="is_delivered">
+                                            </label>
+                                            <span>
+                                            <strong>{{translate('Delivered')}}</strong>
+                                        </span>
+                                        </div>
+                                    </div>
+                                @endif
+                        </div>
+                    @endif
 
                     <div class="row">
                         <div class="col-md-4">
@@ -28,12 +58,12 @@
                                 {!! Form::label('amount', __('lang.amount') . ':*', []) !!} <br>
                                 @if($balance >0 && $balance<$transaction->final_total -
                                     $transaction->transaction_payments->sum('amount'))
-                                    {!! Form::text('amount', @num_format($transaction->final_total -
+                                    {!! Form::text('amount', ($transaction->final_total -
                                     $transaction->transaction_payments->sum('amount')-$balance), ['class' =>
                                     'form-control',
                                     'placeholder' => __('lang.amount')]) !!}
                                     @else
-                                    {!! Form::text('amount', @num_format($transaction->final_total -
+                                    {!! Form::text('amount', ($transaction->final_total -
                                     $transaction->transaction_payments->sum('amount')), ['class' => 'form-control',
                                     'placeholder' => __('lang.amount')]) !!}
                                     @endif
@@ -141,7 +171,7 @@
             $(document).ready(function() {
 
         var pageTitle = window.location.pathname;
-        console.log(pageTitle);
+
         $('#submit_form_button').click(function() {
             $('#add_payment_form').submit();
         });
@@ -159,7 +189,6 @@
                     processData: false,
                     success: function(response) {
                         // Handle success response here
-                        console.log(response);
 
                         $('#add_payment_form')[0].reset();
                         $('#close_modal_button').click();

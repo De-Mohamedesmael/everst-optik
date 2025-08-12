@@ -430,7 +430,6 @@ function get_label_product_row(
                     else {
                         __write_number(qty_element, qty + 1);
                         qty_element.change;
-                        check_for_sale_promotion();
                         calculate_sub_totals();
                         $("input#search_product").val("");
                         $("input#search_product").focus();
@@ -457,7 +456,6 @@ function get_label_product_row(
                     else {
                         __write_number(qty_element, qty + 1);
                         qty_element.change;
-                        check_for_sale_promotion();
                         calculate_sub_totals();
                         $("input#search_product").val("");
                         $("input#search_product").focus();
@@ -514,7 +512,6 @@ function get_label_product_row(
                 $("table#product_table tbody").prepend(result.html_content);
                 $("input#search_product").val("");
                 $("input#search_product").focus();
-                check_for_sale_promotion();
                 calculate_sub_totals();
                 reset_row_numbering();
             },
@@ -529,162 +526,7 @@ function reset_row_numbering() {
     });
 }
 
-function check_for_sale_promotion() {
-    var store_id = $("#store_id").val();
-    var customer_id = $("#customer_id").val();
 
-    var added_products = [];
-    var added_qty = [];
-    $("#product_table > tbody  > tr").each((ele, tr) => {
-        let product_id_tr = __read_number($(tr).find(".product_id"));
-        let qty_tr = {
-            product_id: product_id_tr,
-            qty: __read_number($(tr).find(".quantity")),
-        };
-        added_products.push(product_id_tr);
-        added_qty.push(qty_tr);
-    });
-
-    $.ajax({
-        method: "GET",
-        url: "/dashboard/pos/get-sale-promotion-details-if-valid",
-        data: {
-            store_id: store_id,
-            customer_id: customer_id,
-            added_products: JSON.stringify(added_products),
-            added_qty: JSON.stringify(added_qty),
-        },
-        success: function (result) {
-            if (result.valid) {
-                let  discount = 0;
-                let  sum_item_discount = 0;
-                result.sale_promotion_details.forEach((data, index) => {
-
-                    let sum_discount = 0;
-                    if (
-                        data.type === "package_promotion"
-                    ) {
-
-                        if (
-                            data.discount_type === "fixed"
-                        ) {
-                            sum_discount =
-                                ( parseFloat(
-                                        data.discount_value
-                                    ) ) *  parseFloat(data.count_discount_number);
-
-                        }
-                        if (
-                            data.discount_type ===
-                            "percentage"
-                        ) {
-                            let discount_value =
-                                ( parseFloat(
-                                        data.discount_value
-                                    )) /
-                                100;
-                            sum_discount =
-                                (parseFloat(
-                                    data.actual_sell_price
-                                ) - discount_value ) *  parseFloat(data.count_discount_number);;
-
-                        }
-                        if (data.purchase_condition) {
-                            let purchase_condition_amount =
-                                data
-                                    .purchase_condition_amount;
-                            let grand_total = __read_number($("#grand_total"));
-                            if (purchase_condition_amount > grand_total) {
-                                sum_discount = 0;
-                            }
-                        }
-                        discount+=sum_discount;
-                        var product_ids = data.product_ids;
-                        $("#product_table > tbody > tr").each(function (ele, tr) {
-                            let product_id = __read_number(
-                                $(tr).find(".product_id")
-                            );
-                            if (product_ids.includes(product_id)) {
-                                $(tr).find(".sell_price").attr("readonly", true);
-                                //neglect all other discount for this products if any
-                                $(tr).find(".promotion_discount_value").val(0);
-                                $(tr).find(".product_discount_value").val(0);
-                            }
-                        });
-
-
-
-                    }
-                    if (data.type === "item_discount") {
-                        let product_ids = data.product_ids;
-                        let discount_type =
-                            data.discount_type;
-                        let discount_value =
-                            data.discount_value;
-                        let purchase_condition =
-                            data.purchase_condition;
-                        let purchase_condition_amount =
-                            data.purchase_condition_amount;
-                        product_ids.forEach((product_id) => {
-                            $("#product_table tbody")
-                                .find("tr")
-                                .each(function () {
-
-                                    var row_product_id = $(this)
-                                        .find(".product_id")
-                                        .val()
-                                        .trim();
-                                    var qty = $(this)
-                                        .find(".qty")
-                                        .val()
-                                        .trim();
-                                    if (row_product_id == product_id) {
-                                        if (discount_type == "fixed") {
-                                            $(this)
-                                                .find(".promotion_discount_type")
-                                                .val("fixed");
-                                        } else if (discount_type == "percentage") {
-                                            $(this)
-                                                .find(".promotion_discount_type")
-                                                .val("percentage");
-                                        }
-
-                                        $(this)
-                                            .find(".promotion_discount_value")
-                                            .val(discount_value*qty);
-
-                                        sum_item_discount +=(discount_value*qty);
-                                        $(this)
-                                            .find(
-                                                ".promotion_purchase_condition_amount"
-                                            )
-                                            .val(purchase_condition_amount);
-                                        $(this)
-                                            .find(".promotion_purchase_condition")
-                                            .val(purchase_condition);
-                                    }
-                                });
-                        });
-                    }
-
-                });
-                $("span#sales_promotion-cost_span").text(
-                    __currency_trans_from_en(sum_item_discount+discount, false)
-                );
-                __write_number($("#total_pp_discount"), discount);
-
-
-                calculate_sub_totals();
-            }else{
-                $("span#sales_promotion-cost_span").text(
-                    __currency_trans_from_en(0, false)
-                );
-                __write_number($("#total_pp_discount"), 0);
-                calculate_sub_totals();
-            }
-        },
-    });
-}
 
 function calculate_sub_totals() {
     var grand_total = 0; //without any discounts
@@ -695,7 +537,6 @@ function calculate_sub_totals() {
     var total_item_tax = 0;
     var total_tax_payable = 0;
     var total_coupon_discount = 0;
-    var sales_promotion_cost = __read_number($("#sales_promotion-cost"));
     let item_quantity=0;
     let total_before_discount=0;
     var exchange_rate = __read_number($("#exchange_rate"));
@@ -770,27 +611,19 @@ function calculate_sub_totals() {
             product_surplus_total += calculate_product_surplus(tr);
 
             let tax_method = $(tr).find(".tax_method").val();
-            let tax_rate = __read_number($(tr).find(".tax_rate"));
-            let tax_id = __read_number($(tr).find(".tax_id"));
-            let main_tax_id = $("#tax_id_hidden").val();
-            let main_tax_type = $("#tax_type").val();
-
-            if (main_tax_type == "product_tax") {
-                if (main_tax_id == tax_id) {
-                    let item_tax = (sub_total * tax_rate) / 100;
-                    item_tax = item_tax / exchange_rate;
-                    __write_number($(tr).find(".item_tax"), item_tax);
-                    total_item_tax += item_tax;
-                    if (tax_method === "exclusive") {
-                        total_tax_payable += item_tax;
-                    }
-                }
+            let tax_rate = $(tr).find(".tax_rate").val();
+            let item_tax = (sub_total * tax_rate) / 100;
+            item_tax = item_tax / exchange_rate;
+            __write_number($(tr).find(".item_tax"), item_tax);
+            total_item_tax += item_tax;
+            if (tax_method === "exclusive") {
+                total_tax_payable += item_tax;
             }
+
         }
 
     });
-    // $("#subtotal").text(total);
-    // $(".subtotal").text(total);
+
     $('#total_before_discount').text(__currency_trans_from_en(total_before_discount, false));
     $("#subtotal").text(__currency_trans_from_en(total, false));
     $(".subtotal").text(__currency_trans_from_en(total, false));
@@ -802,8 +635,9 @@ function calculate_sub_totals() {
     $(".payment_modal_surplus_text").text(
         __currency_trans_from_en(product_surplus_total, false)
     );
-
+    $("#tax").text(__currency_trans_from_en(total_item_tax, false));
     __write_number($("#total_item_tax"), total_item_tax);
+    console.log(total_item_tax);
     total += total_tax_payable;
 
     __write_number($("#grand_total"), grand_total); // total without any discounts
@@ -812,64 +646,14 @@ function calculate_sub_totals() {
     $(".discount_span").text(__currency_trans_from_en(discount_amount, false));
     total -= discount_amount;
 
-    let tax_amount = get_tax_amount(total);
-
-    total += tax_amount;
-
-    let points_redeemed_value = 0;
-    if (parseInt($("#is_redeem_points").val())) {
-        let customer_total_redeemable = __read_number(
-            $("#customer_total_redeemable")
-        );
-        if (total >= customer_total_redeemable) {
-            total -= customer_total_redeemable;
-            points_redeemed_value = customer_total_redeemable;
-        } else if (total < customer_total_redeemable) {
-            total = 0;
-            points_redeemed_value = total;
-        }
-        if (points_redeemed_value > 0) {
-            let customer_points = __read_number($(".customer_points"));
-            let customer_points_value = __read_number(
-                $("#customer_points_value")
-            );
-
-            let one_point_value = customer_points / customer_points_value;
-            let total_rp_redeemed = points_redeemed_value * one_point_value;
-            $("#rp_redeemed").val(total_rp_redeemed);
-            $("#rp_redeemed_value").val(points_redeemed_value);
-        }
-    }
-    apply_promotion_discounts();
-    let promo_discount = __read_number($("#total_sp_discount"));
-    // if (promo_discount > 0) {
-    //     __write_number($("#discount_amount"), promo_discount);
-    // }
-
-    if(__currency_trans_from_en($("#subtotal").text(), false) > 0){
-        total -= promo_discount;
-    }
-
-
-
-    let delivery_cost = 0;
-    if ($("#delivery_cost_paid_by_customer").prop("checked")) {
-        delivery_cost = __read_number($("#delivery_cost"));
-    }
-    delivery_cost = delivery_cost / exchange_rate;
-    if ($("#delivery_cost_given_to_deliveryman").prop("checked")) {
-        delivery_cost = 0;
-    }
-    total += delivery_cost;
-
     //calculate service fee
     let service_fee_rate = __read_number($("#service_fee_rate"));
     let dining_table_id = $("#dining_table_id").val();
 
     if (
         dining_table_id != null &&
-        dining_table_id != "" &&
-        dining_table_id != undefined
+        dining_table_id !== "" &&
+        dining_table_id !== undefined
     ) {
         let service_fee_value = __get_percent_value(total, service_fee_rate);
         $("#service_fee_value").val(service_fee_value);
@@ -1014,31 +798,30 @@ $("#tax_btn").click(function () {
     calculate_sub_totals();
 });
 
-function get_tax_amount(total) {
-    let tax_rate = parseFloat($("#tax_id").find(":selected").data("rate"));
-    let tax_type = $("#tax_type").val();
-    let tax_method = $("#tax_method").val();
-    let tax_amount = 0;
-    let exchange_rate = __read_number($("#exchange_rate"));
-    if (tax_type == "general_tax") {
-        if (!isNaN(tax_rate)) {
-            tax_amount = __get_percent_value(total, tax_rate);
-        }
-    }
-
-    if (tax_method == "exclusive") {
-        $("#tax").text(__currency_trans_from_en(tax_amount, false));
-    } else {
-        $("#tax").text(__currency_trans_from_en(0, false));
-    }
-    tax_amount = tax_amount;
-    __write_number($("#total_tax"), tax_amount);
-
-    if (tax_method == "exclusive") {
-        return tax_amount;
-    }
-    return 0;
-}
+// function get_tax_amount(total) {
+//     console.log('get_tax_amount')
+//     let tax_rate = parseFloat($("#tax_id").find(":selected").data("rate"));
+//     let tax_type = $("#tax_type").val();
+//     let tax_method = $("#tax_method").val();
+//     let tax_amount = 0;
+//     // if (tax_type === "general_tax") {
+//     //     if (!isNaN(tax_rate)) {
+//             tax_amount = __get_percent_value(total, tax_rate);
+//     //     }
+//     // }
+//
+//     if (tax_method === "exclusive") {
+//         $("#tax").text(__currency_trans_from_en(tax_amount, false));
+//     } else {
+//         $("#tax").text(__currency_trans_from_en(0, false));
+//     }
+//     __write_number($("#total_tax"), tax_amount);
+//
+//     if (tax_method === "exclusive") {
+//         return tax_amount;
+//     }
+//     return 0;
+// }
 function get_discount_amount(total) {
     let discount_type = $("#discount_type").val();
     let discount_value = __read_number($("#discount_value"));
@@ -1113,7 +896,6 @@ $(document).on("change", ".sell_price", function () {
     }
 });
 $(document).on("change", ".quantity, .sell_price", function () {
-    check_for_sale_promotion();
     calculate_sub_totals();
 });
 $(document).on("click", ".remove_row", function () {
@@ -1122,7 +904,6 @@ $(document).on("click", ".remove_row", function () {
     $("tr.lens-row-"+index).remove();
 
     calculate_sub_totals();
-    check_for_sale_promotion();
     reset_row_numbering();
     $(this).find(".change").text(0);
     __write_number($("#add_to_customer_balance"),0);
@@ -2133,33 +1914,31 @@ function get_recent_transactions() {
 }
 
 $(document).on("change", "#customer_id", function () {
-    getPrescriptionData();
+    // getPrescriptionData();
     getCustomerData();
     getCustomerBalance();
     $('#store_table_filter input').attr('autocomplete', 'off');
 
 });
-function getPrescriptionData() {
-    let customer_id = $("#customer_id").val();
-    $.ajax({
-        method: "get",
-        url: "/dashboard/prescriptions/get-dropdown?customer_id="+customer_id,
-        data: {},
-        contactType: "html",
-        success: function (data_html) {
-            $("#prescription_id").empty().append(data_html);
-            $("#prescription_id").selectpicker("refresh");
-            old_prescription_id=  $('#old_prescription_id').val();
-            console.log('old_prescription_id',old_prescription_id);
-
-            if(old_prescription_id){
-                console.log('old_prescription_id',old_prescription_id);
-                $("#prescription_id").selectpicker("val", old_prescription_id);
-            }
-        },
-    });
-
-}
+// function getPrescriptionData() {
+//     let customer_id = $("#customer_id").val();
+//     $.ajax({
+//         method: "get",
+//         url: "/dashboard/prescriptions/get-dropdown?customer_id="+customer_id,
+//         data: {},
+//         contactType: "html",
+//         success: function (data_html) {
+//             $("#prescription_id").empty().append(data_html);
+//             $("#prescription_id").selectpicker("refresh");
+//             old_prescription_id=  $('#old_prescription_id').val();
+//
+//             if(old_prescription_id){
+//                 $("#prescription_id").selectpicker("val", old_prescription_id);
+//             }
+//         },
+//     });
+//
+// }
 function getCustomerData() {
     let customer_id = $("#customer_id").val();
     if(customer_id){
@@ -2333,7 +2112,6 @@ $(document).on("submit", "form#add_payment_form", function (e) {
     let data = $(this).serialize();
     let submitButton = $("#submit_form_button");
     if (!updateadd_payment_formClicked) {
-
         $.ajax({
             method: "post",
             url: $(this).attr("action"),
@@ -2364,7 +2142,37 @@ $(document).on("submit", "form#add_payment_form", function (e) {
         submitButton.prop('disabled', true);
     }
 });
+$(document).on("submit", "form#complete_order_form", function (e) {
+    e.preventDefault();
+    let data = $(this).serialize();
+    let submitButton = $("#complete_order_button");
+    submitButton.prop('disabled', false);
+        $.ajax({
+            method: "post",
+            url: $(this).attr("action"),
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    Swal.fire({
+                        title: 'Success',
+                        text: result.msg,
+                        icon: 'success',
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: result.msg,
+                        icon: 'error',
+                    });
+                }
+                $(".view_modal").modal("hide");
+                get_recent_transactions();
+            },
+        });
+        // Disable the button after it has been clicked
+    submitButton.prop('disabled', true);
 
+});
 $(document).on("click", ".print-invoice", function () {
     $(".modal").modal("hide");
     $.ajax({
@@ -2919,7 +2727,6 @@ $(document).on("change", ".discount_category", function (e) {
                 __write_number($(".discount_value"+product_id), 0);
                 __write_number($(".discount_amount"+product_id), 0);
             }
-            check_for_sale_promotion();
             calculate_sub_totals();
         },
     });

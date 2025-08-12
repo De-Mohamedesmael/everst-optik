@@ -2,6 +2,10 @@
 @section('title', __('lang.sales_list'))
 @section('styles')
 <style>
+    .btn-group a.btn {
+        margin: 0 5px;
+        border-radius: 3px !important;
+    }
     :root {
         --owf-color-primary: #0057bc;
         --owf-color-primary-gradient-from: #0057bc;

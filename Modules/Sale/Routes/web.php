@@ -52,6 +52,8 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('sale/get-import', [SellController::class,'getImport'])->name('sale.getImport');
     Route::get('sale/print/{id}', [SellController::class,'print'])->name('sale.print');
     Route::get('sale/get-total-details', [SellController::class,'getTotalDetails'])->name('sale.getTotalDetails');
+    Route::get('sale/complete/{id}', [SellController::class,'complete'])->name('transaction.complete');
+    Route::post('sale/complete/{id}', [SellController::class,'completeStore'])->name('transaction.complete.store');
     Route::resource('sale', SellController::class);
 
 

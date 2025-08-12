@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Modules\Customer\Entities\Customer;
 use Modules\Customer\Entities\DebtPayment;
 use Modules\Customer\Entities\DebtTransactionPayment;
+use Modules\Customer\Entities\Prescription;
 use Modules\Setting\Entities\MoneySafe;
 use Modules\Setting\Entities\StorePos;
 use Modules\AddStock\Entities\Transaction;
@@ -188,6 +189,22 @@ class TransactionPaymentController extends Controller
 
             $this->transactionUtil->updateTransactionPaymentStatus($transaction->id);
             if ($transaction->type == 'sell') {
+                if($request->is_delivered) {
+                    $transaction->is_delivered = 1;
+                    $transaction->status = 'final';
+                }
+                if($request->is_send_to_uts){
+                    $transaction->is_send_to_uts=1;
+                    foreach ($transaction->transaction_sell_lines as $line) {
+                        if ($line->is_lens){
+                            $pre=Prescription::where('sell_line_id',$line->id)->first();
+                            if ($pre && $pre->qr_code){
+                                $this->transactionUtil->sendToUts($transaction->customer,$line->product_id,(int)$line->quantity, $pre);
+                            }
+                        }
+                    }
+                }
+                $transaction->save();
                 $this->cashRegisterUtil->addPayments($transaction, $payment_data, 'credit', null, $transaction_payment->id);
 
                 if ($payment_data['method'] == 'bank_transfer' || $payment_data['method'] == 'card') {
@@ -200,7 +217,6 @@ class TransactionPaymentController extends Controller
                 'msg' => __('lang.success')
             ];
         } catch (\Exception $e) {
-            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
