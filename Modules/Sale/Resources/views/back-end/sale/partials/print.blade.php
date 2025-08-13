@@ -8,7 +8,7 @@
 </style>
 <div class="div-print-re" style="width: 100% ;overflow: hidden;background-color: #ffffff;" >
     <div class="row div-hider-item" >
-        <div class="col-md-6" style="width: 33%">
+        <div class="col-md-6" style="width: 50%">
             <div class="col-md-12">
                 <h6>@lang('lang.invoice_no'): {{ $sale->invoice_no }}
 
@@ -21,7 +21,7 @@
                 <h6>@lang('lang.store'): {{ $sale->store->name ?? '' }}</h6>
             </div>
         </div>
-        <div class="col-md-6" style="width: 33%">
+        <div class="col-md-6" style="width: 50%">
             <div class="col-md-12">
                 {!! Form::label('supplier_name', __('lang.customer_name'), []) !!}:
                 <b>{{ $sale->customer->name ?? '' }}</b>
@@ -38,24 +38,7 @@
                             }}</b>
             </div>
         </div>
-        <div class="col-md-6" style="width: 33%">
-            <div class="col-md-12">
-                <h6>@lang('lang.sale_note'):</h6>
-                <p>{{ $sale->sale_note }}</p>
-            </div>
-            <div class="col-md-12">
-                <h6>@lang('lang.staff_note'):</h6>
-                <p>{{ $sale->staff_note }}</p>
-            </div>
-            <div class="col-md-12">
-                <h6>@lang('lang.payment_note'):</h6>
-                @foreach($sale->transaction_payments as $payment )
-                    @if(isset($payment->payment_note))
-                        <p> - {{ $payment->payment_note }}</p>
-                    @endif
-                @endforeach
-            </div>
-        </div>
+       
     </div>
     <hr/>
         <div class="row">
@@ -732,7 +715,7 @@
         ])
     <hr/>
         <div class="row">
-            <div class="col-md-6" style="width: 50%">
+            <div class="col-md-6" style="width: 30%">
                 <div class="col-md-12">
                     <h6>@lang('lang.invoice_no'): {{ $sale->invoice_no }} @if (!empty($sale->return_parent))
                             <a data-href="{{ route('admin.sale-return.show', $sale->id) }}"
@@ -747,7 +730,7 @@
                     <h6>@lang('lang.store'): {{ $sale->store->name ?? '' }}</h6>
                 </div>
             </div>
-            <div class="col-md-6" style="width: 50%">
+            <div class="col-md-6" style="width: 30%">
                 <div class="col-md-12">
                     {!! Form::label('supplier_name', __('lang.customer_name'), []) !!}:
                     <b>{{ $sale->customer->name ?? '' }}</b>
@@ -764,28 +747,9 @@
                             }}</b>
                 </div>
             </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-6" style="width: 50%">
-                <div class="col-md-12">
-                    <h6>@lang('lang.sale_note'):</h6>
-                    <p>{{ $sale->sale_note }}</p>
-                </div>
-                <div class="col-md-12">
-                    <h6>@lang('lang.staff_note'):</h6>
-                    <p>{{ $sale->staff_note }}</p>
-                </div>
-                <div class="col-md-12">
-                    <h6>@lang('lang.payment_note'):</h6>
-                    @foreach($sale->transaction_payments as $payment )
-                    @if(isset($payment->payment_note))
-                    <p> - {{ $payment->payment_note }}</p>
-                    @endif
-                    @endforeach
-                </div>
-            </div>
-            <div class="col-md-6" style="width: 50%">
+    
+        
+            <div class="col-md-6" style="width: 40%">
                 <table class="table table-bordered">
                     <tr>
                         <th>@lang('lang.total_tax'):</th>
@@ -849,12 +813,6 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-            <div class="col-md-12">
-                <b>@lang('lang.terms_and_conditions'):</b>
-                @if (!empty($sale->terms_and_conditions))
-                {!! $sale->terms_and_conditions->description !!}
-                @endif
             </div>
         </div>
 </div>
